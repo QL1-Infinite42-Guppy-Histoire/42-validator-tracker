@@ -33,8 +33,8 @@
   .pricecard .chg-dn{color:#ff8fa3;font-weight:700}
   .pricecard .note{color:var(--sub);font-size:.82rem}
   .lang{margin-top:18px}
-  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .head-row{display:flex;flex-direction:column;gap:2px}
+  .langsw{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;font-size:.92rem;color:var(--sub);padding-top:2px;line-height:1.9;max-width:100%}
   .langsw b{color:var(--txt)}
   .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
   .alias{font-size:.6em;color:var(--sub);font-weight:600}
@@ -44,7 +44,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 Chain वैलिडेटर रीयल-टाइम ट्रैकर</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <b>हिन्दी</b> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.0</span></div></div>
+  <div class="head-row"><h1>42 Chain वैलिडेटर रीयल-टाइम ट्रैकर</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <b>हिन्दी</b> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.1</span></div></div>
   <p class="sub">यह साइट स्वयं वैलिडेटरों और उन पतों की गतिविधियों को स्वचालित रूप से एकत्र करती है जिनके उनके साथ सीधे लेन-देन की पुष्टि हुई है। किसी अनुभाग को चुनकर उस पर जाएँ।</p>
   <div class="status" id="status">लोड हो रहा है…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -118,7 +118,7 @@
 </main>
 <footer>
   डेटा स्रोत: स्वयं 42 Chain ब्लॉक (RPC के माध्यम से)। कवरेज केवल 42 Chain पर लेन-देन तक सीमित है (EVM chain ID 421018 और उसका Cosmos पक्ष, infinite_421018-1)। QL1 या किसी अन्य चेन पर लेन-देन शामिल नहीं हैं। अनुमानित पतों की गतिविधियाँ केवल नवीनतम गतिविधि में दिखाई देती हैं, स्पष्ट रूप से अनुमानित के रूप में चिह्नित; विशेष अनुभाग केवल पुष्ट जानकारी रखते हैं। अलर्ट केवल इस साइट पर दिखाए जाते हैं।
-  <br>संस्करण: <b>v0.5.0</b> (शीर्ष पेज)
+  <br>संस्करण: <b>v0.5.1</b> (शीर्ष पेज)
 </footer>
 <script>
 (async () => {

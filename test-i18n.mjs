@@ -58,8 +58,8 @@ for (const L of LANGS) {
     check(`${tag} RTL overrides present`, html.includes('Arabic RTL overrides') && html.includes("[dir='rtl'] .ev.lpadd")
       && home.includes('Arabic RTL overrides'));
   }
-  check(`${tag} version badge v0.5.0 (tracker)`, html.includes('<span class="verbadge">v0.5.0</span>'));
-  check(`${tag} version badge v0.5.0 (home)`, home.includes('<span class="verbadge">v0.5.0</span>'));
+  check(`${tag} version badge v0.5.1 (tracker)`, html.includes('<span class="verbadge">v0.5.1</span>'));
+  check(`${tag} version badge v0.5.1 (home)`, home.includes('<span class="verbadge">v0.5.1</span>'));
   for (const n of NATIVE) check(`${tag} switcher lists ${n}`, html.includes(`>${n}</a>`) || html.includes(`<b>${n}</b>`));
   // the page's own language is shown as <b>current</b>, not a self-link
   for (const f of TRACKER_FILES) check(`${tag} switcher links ${f}`, f === L.file ? html.includes(`<b>${L.native}</b>`) : html.includes(`href="${f}"`));
