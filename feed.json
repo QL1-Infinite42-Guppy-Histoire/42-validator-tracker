@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T04:59:15.895Z",
+ "generatedAt": "2026-11-05T05:35:41.597Z",
  "status": {
-  "lastProcessedBlock": 4275491,
-  "latestBlockSeen": 4275491,
-  "lastProcessedCosmosBlock": 4275491,
-  "lastProcessedAt": "2026-11-05T04:59:15.684Z",
-  "totalEvents": 7731,
+  "lastProcessedBlock": 4275895,
+  "latestBlockSeen": 4275895,
+  "lastProcessedCosmosBlock": 4275895,
+  "lastProcessedAt": "2026-11-05T05:35:41.495Z",
+  "totalEvents": 7733,
   "watchSummary": {
    "validators": 23,
    "directRelated": 99,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T04:59:15.911Z"
+   "checkedAt": "2026-11-05T05:35:41.619Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68824769,
-   "updatedAt": "2026-11-05T04:59:15.000Z",
+   "updatedAt": "2026-11-05T05:35:41.000Z",
    "change24hPct": null
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4275008,
+    "toBlock": 4275563,
     "fromTs": 1770178474,
-    "toTs": 1793852139
+    "toTs": 1793855135
    },
    "totals": {
     "delegate": {
@@ -737,6 +737,74 @@
   }
  ],
  "events": [
+  {
+   "id": "0xf750983f14563e078eafd3425d794d2e22e69d40ee729ff21a4952c9f4cb076e:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793855135,
+   "block": 4275563,
+   "txHash": "0xf750983f14563e078eafd3425d794d2e22e69d40ee729ff21a4952c9f4cb076e",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x01ad2ef98f30acfdedb2424ec729fb48df11ebb7d364243d2db25f915ffc231d:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1793854838,
+   "block": 4275508,
+   "txHash": "0x01ad2ef98f30acfdedb2424ec729fb48df11ebb7d364243d2db25f915ffc231d",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xc85681c929267a340aa99c47e5aea29cb41f355621ca3734c4e85c577f1a451a:0:transfer:0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
    "ts": 1793852139,
@@ -27950,106 +28018,6 @@
      "bidirectional"
     ]
    }
-  },
-  {
-   "id": "0x49eb31d5b903fd245421a8cbdf46daee9e2213291f07a11d848335e00bcdc3ae:4:swap-sell:0x85769973d85c2d3cdea764a70fba24c4293f2664",
-   "ts": 1793016155,
-   "block": 4120341,
-   "txHash": "0x49eb31d5b903fd245421a8cbdf46daee9e2213291f07a11d848335e00bcdc3ae",
-   "logIndex": 4,
-   "type": "swap-sell",
-   "actor": "0x85769973d85c2d3cdea764a70fba24c4293f2664",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xfac6a97837fd3ef5876e18457eea52415296c613",
-   "counterpartyLabel": "USDT/42 ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "FoxxOne",
-    "Metal Raptor"
-   ],
-   "sold": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "31559032446932377432",
-    "amount": "31.559032",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
-    "symbol": "USDT",
-    "amountRaw": "25548793924036355883",
-    "amount": "25.548793",
-    "whitelisted": true
-   },
-   "subjectSymbol": "42",
-   "price": 0.80955568,
-   "priceUnit": "USDT/42",
-   "pair": "0xfac6a97837fd3ef5876e18457eea52415296c613",
-   "pairLabel": "USDT/42 ペア",
-   "tokens": [
-    "42",
-    "USDT"
-   ],
-   "whitelisted": true,
-   "summary": "42を売り（受取 25.548793 USDT／価格 約0.80955568 USDT/42）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "FoxxOne"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 2,
-   "actorEvidence": {
-    "FoxxOne": [
-     "bidirectional",
-     "concentrated-repeat"
-    ]
-   }
-  },
-  {
-   "id": "cosmos:9CC02D004470B3DB0C5B4E803C546A5FA8FD9106231DBBC6E9F63B2BD54EA45C:0:delegate:0x73fb550c4fb705719aab3ed7199c489ebccdfad1",
-   "chain": "cosmos",
-   "ts": 1793013713,
-   "block": 4119888,
-   "txHash": "9CC02D004470B3DB0C5B4E803C546A5FA8FD9106231DBBC6E9F63B2BD54EA45C",
-   "logIndex": null,
-   "type": "delegate",
-   "actor": "0x73fb550c4fb705719aab3ed7199c489ebccdfad1",
-   "actorLabel": "CCUK",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x73fb550c4fb705719aab3ed7199c489ebccdfad1",
-   "counterpartyLabel": "CCUK",
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "CCUK",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "879000000000000000000",
-    "amount": "879",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "879 [42] を CCUK に委任",
-   "notableReasons": [],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
   },
   {
    "id": "0x3c160efbdf9f9e579d438fca7a7c123042e2d6cddce05136098801608dec0717:tx:transfer:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
