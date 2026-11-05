@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.4.1</title>
+<title>42 Chain Validator Real-Time Tracker v0.4.2</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -125,7 +125,7 @@
 <body>
 <header>
   <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b></div></div>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (everyone who transacted with them, and the counterparties of those counterparties) (EVM side + Cosmos side, v0.4.1). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (everyone who transacted with them, and the counterparties of those counterparties) (EVM side + Cosmos side, v0.4.2). Program (contract) addresses are not counted as a person's relations, and connections are never traced through them. An address is never treated as infrastructure just for being a shared wallet; the only test is whether it is a program (contract). Depth-2+ wallets are counted only when there is evidence they are the validator's own wallet (such as fund movements in both directions). General addresses without evidence are not counted. Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
   <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-lp">💧 Liquidity</a><a href="#sec-dormant">😴 Dormant</a><a href="#sec-newfaces">👤 New faces</a><a href="#sec-newpairs">🆕 New pairs</a><a href="#sec-feed">Latest</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
@@ -151,7 +151,7 @@
 
   <section class="bridgechart" id="sec-bridgechart">
     <h2>📊 Total USDT Bridged Out</h2>
-    <p class="rule">The total amount of USDT bridged out to external chains, broken down by name. Each bar is split by distance (depth) from the validator: darkest = the validator itself, middle = depth-1 related wallets (those that transacted directly with the validator), lightest = depth-2-or-deeper related wallets (counterparties of related wallets, linked by following the path). Depth-2+ attribution is inherited through the path, so it is a weaker link than the validator itself or depth-1. Each withdrawal is counted exactly once, under one representative name (the validator's own name for its own withdrawals; for related wallets, the first related validator name) — never double-counted.</p>
+    <p class="rule">How this chart is aggregated: for every validator (all 23), it sums the bridge-outs (USDT) of the validator itself, its depth-1 related wallets, and its depth-2+ related wallets that carry evidence. Depth-2+ wallets are counted only when there is evidence they are the validator's own wallet (such as fund movements in both directions). General addresses without evidence are not counted. Only personal wallets count as senders — infrastructure (program = contract) addresses are never counted, and neither are estimated addresses. Each bar is split into: the validator itself / related wallets that transacted directly with that validator (depth 1) / related wallets connected through other wallets (depth 2+, evidence only). A shared wallet's outflows are counted in the bar of EACH validator it is connected to, so the bars do not add up to the grand total; the deduplicated grand total is shown above.</p>
     <div id="bridgeChart"><p class="empty">Loading…</p></div>
   </section>
 
@@ -246,7 +246,7 @@
       <li><b>(3) 2-hop:</b> an indirect link of the form validator → another address → validator, where both transfers are confirmed. (Currently, no address has been newly registered under this type.)</li>
     </ul>
     <p><b>How estimates are handled:</b> moves by estimated addresses appear only in Latest activity, with a dashed border and an "Estimated" badge, and can be hidden by unchecking "Show estimated" above. They are never included in the Snipe Alerts, Notable, Insider Watch, or Bridge Withdrawals sections, nor in the bridge-out totals chart — all amounts there are totals of confirmed activity only.</p>
-    <p><b>Currently registered:</b> 6 estimated addresses (5 through-pool, 1 shared counterparty), as of v0.4.1, 5 November 2026.</p>
+    <p><b>Currently registered:</b> 4 estimated addresses (4 through-pool, 0 shared counterparties), as of v0.4.2, 5 November 2026.</p>
   </details>
   <div id="feed"><p class="empty">Loading…</p></div>
   </div></section>
@@ -270,7 +270,7 @@
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated addresses (Phase 3): addresses whose link cannot be confirmed by a direct transfer are also watched, estimated in three ways — through-pool, 2-hop, and shared counterparty. Their moves appear only in Latest activity, with a dashed border, an Estimated badge and the basis shown; they are never included in the Insider / Snipes / Notable / Bridge Withdrawals / Totals sections (those stay confirmed-only). The validator list is refreshed from the chain on every run: newly bonded validators are added automatically, and validators that leave the bonded set stay watched as history (marked inactive). Nothing is posted externally (no X bot) — alerts live on this site only.
   Scope of related addresses (v0.4.0): in addition to every address that sent to or received from a validator, the full-history expansion (counterparties of counterparties, without limit) has been applied to the whole record, past included (system / pair / token contracts, and contacts reachable only through an estimated address, are excluded). When a new counterparty appears, it is also added automatically as a related address on the spot. / New Pairs covers pairs created by the Don't Panic factory and displays only pairs containing at least one of the 17 listed tokens. / The [42] price is calculated from the 42/USDT pool's reserves; the pool is small, so the figure has a margin of error.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). Validator X is also known as Rioshi, shown in small text as (Rioshi) next to the name.
-  <br>Version: <b>v0.4.1</b> (v0.4.1: the bridge-out totals chart now splits each bar by depth — the validator itself / depth-1 related / depth-2+ related. Previously, v0.4.0 added six sections — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price; v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
+  <br>Version: <b>v0.4.2</b> (v0.4.2: all infrastructure (contract) addresses removed from the person graph — relations are counted through personal wallets (EOAs) only, never through a contract; the bridge-out totals chart is now aggregated per validator (all 23, unlimited depth, shared wallets counted in each connected validator's bar). v0.4.1: the bridge-out totals chart now splits each bar by depth — the validator itself / depth-1 related / depth-2+ related. Previously, v0.4.0 added six sections — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price; v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -429,10 +429,14 @@ function relationLine(ev){
   else if (rel.length >= 2) s = `Related validators: <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} more`;
   const badge = ev.actorShared ? ' <span class="badge shared">Shared counterparty</span>' : '';
   const noteEn = enNote(ev.actorContractNote);
-  const note = ev.actorShared
+  const sharedNote = ev.actorShared
     ? `<div class="note">A shared counterparty that transacts with multiple validators (not a validator itself)${noteEn ? ' / ' + noteEn : ''}</div>` : '';
+  // v0.4.2: depth>=2 related cards state WHY the wallet is tracked.
+  const EV_LABEL = {bidirectional: 'fund movements in both directions', 'funded-delegation': 'funded by the validator side and delegated back to that validator', 'concentrated-repeat': 'repeated interaction concentrated on the validator side', 'one-way-repeat': 'repeated one-way transfers from the validator side', delegation: 'a delegation to that validator', synchronized: 'moves synchronized with the validator'};
+  const evNote = ev.actorEvidence
+    ? `<div class="note">A depth-2+ relation, shown because there is evidence it is the validator's own wallet (evidence: ${[...new Set(Object.values(ev.actorEvidence).flat())].map((c) => EV_LABEL[c] ?? c).join(', ')})</div>` : '';
   const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
-  return line + note;
+  return line + sharedNote + evNote;
 }
 // v0.4.1: depth segment of a bridge-out event (0 = validator itself,
 // 1 = depth-1 related, 2 = depth-2-or-deeper related). actorDepth is set by
@@ -441,41 +445,33 @@ function bridgeSeg(ev){
   const d = typeof ev.actorDepth === 'number' ? ev.actorDepth : (ev.actorTier === 'validator' ? 0 : 1);
   return d <= 0 ? 0 : d === 1 ? 1 : 2;
 }
+// v0.4.2: the chart is pre-aggregated by the collector over the FULL
+// history (feed.stats.bridge) with per-validator attribution: one bar
+// per validator (all 23, zero bars included); a shared wallet counts
+// into EACH connected validator's bar, so bars do not sum to the
+// deduplicated grand total shown on top.
 function renderBridgeChart(){
-  const outs = FEED.events.filter((ev) => ev.type === 'bridge-out' && ev.actorTier !== 'estimated');
-  const groups = new Map(); let total = 0; const segTot = [0, 0, 0];
-  for (const ev of outs) {
-    const a = parseFloat(String((ev.amount && ev.amount.amount) || '0').replace(/,/g, '')) || 0;
-    total += a;
-    const s = bridgeSeg(ev); segTot[s] += a;
-    // Count-once attribution: the actor's own validator name if self, else
-    // the FIRST related validator name. Self and related merge into one bar.
-    let name;
-    if (ev.actorTier === 'validator' && ev.actorLabel) name = ev.actorLabel;
-    else { const rel = ev.actorValidators || []; name = rel.length ? rel[0] : (ev.actorLabel || shortAddr(ev.actor)); }
-    const g = groups.get(name) || {seg: [0, 0, 0], sum: 0, n: 0};
-    g.seg[s] += a; g.sum += a; g.n += 1; groups.set(name, g);
-  }
-  const rows = [...groups.entries()].sort((x, y) => y[1].sum - x[1].sum);
-  const max = rows.length ? rows[0][1].sum : 0;
+  const B = FEED.stats && FEED.stats.bridge;
+  const el = document.getElementById('bridgeChart');
+  if (!B || !Array.isArray(B.perValidator)) { el.innerHTML = '<p class="empty">No bridge withdrawals recorded yet.</p>'; return; }
   const fmt = (v) => v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
   const SEG_LABEL = ['the validator itself', 'depth-1 related', 'depth-2+ related'];
   const segLine = (seg) => seg.map((v, i) => v > 0 ? `${SEG_LABEL[i]} ${fmt(v)} USDT` : null).filter(Boolean).join(' / ');
-  document.getElementById('bridgeChart').innerHTML = outs.length
-    ? `<div class="bchart-total">Total ${fmt(total)} USDT (${outs.length} withdrawals)</div>`
-      + `<div class="bchart-segtotal">Overall breakdown: ${segLine(segTot)}</div>`
-      + `<div class="bchart-legend"><span class="sw seg0"></span>the validator itself<span class="sw seg1"></span>depth-1 related<span class="sw seg2"></span>depth-2+ related</div>`
-      + rows.map(([name, g]) => {
-        const parts = g.seg.map((v, i) => v > 0 ? `<div class="bchart-seg seg${i}" style="width:${max ? v / max * 100 : 0}%"></div>` : '').join('');
-        return `<div class="bchart-row"><div class="bchart-name">${valName(name)}</div><div class="bchart-barwrap">${parts}</div><div class="bchart-amt">${fmt(g.sum)} USDT <span class="bchart-cnt">×${g.n}</span></div><div class="bchart-break">${segLine(g.seg)}</div></div>`;
-      }).join('')
-    : '<p class="empty">No bridge withdrawals recorded yet.</p>';
+  const rows = B.perValidator;
+  const max = rows.length ? Math.max(...rows.map((g) => g.total)) : 0;
+  el.innerHTML = `<div class="bchart-total">Total (deduplicated) ${fmt(B.total)} USDT (${B.count} withdrawals)</div>`
+    + `<div class="bchart-segtotal">Overall breakdown (deduplicated): ${segLine(B.segTotals)}</div>`
+    + `<div class="bchart-legend"><span class="sw seg0"></span>the validator itself<span class="sw seg1"></span>depth-1 related<span class="sw seg2"></span>depth-2+ related</div>`
+    + rows.map((g) => {
+      const parts = g.seg.map((v, i) => v > 0 ? `<div class="bchart-seg seg${i}" style="width:${max ? v / max * 100 : 0}%"></div>` : '').join('');
+      return `<div class="bchart-row"><div class="bchart-name">${valName(g.moniker)}</div><div class="bchart-barwrap">${parts}</div><div class="bchart-amt">${fmt(g.total)} USDT <span class="bchart-cnt">×${g.count}</span></div><div class="bchart-break">${segLine(g.seg)}</div></div>`;
+    }).join('');
 }
 function bigName(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel) return {main: valName(ev.actorLabel), sub: 'the validator itself', cls: ' self'};
   const rel = ev.actorValidators || [];
   if (ev.actorTier === 'estimated') return {main: rel.length ? valName(rel[0]) : shortAddr(ev.actor), sub: rel.length > 1 ? ` — estimated related wallet (also estimated-related to ${rel.length - 1} more)` : ' — estimated related wallet', cls: ''};
-  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: rel.length > 1 ? ` — related wallet (also related to ${rel.length - 1} more)` : ' — related wallet', cls: ''};
+  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? ` — related wallet (also related to ${rel.length - 1} more)` : ' — related wallet') + ((ev.actorDepth ?? 1) >= 2 ? ' (depth 2+, evidence of being the validator\u2019s own wallet)' : ''), cls: ''};
   if (ev.actorIsCore && ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: 'core', cls: ''};
   if (ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: '', cls: ''};
   return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? 'related wallet' : '', cls: ''};

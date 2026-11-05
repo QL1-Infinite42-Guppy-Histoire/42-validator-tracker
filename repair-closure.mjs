@@ -27,8 +27,8 @@
 //     events.jsonl (events where they are merely the counterparty stay —
 //     they belong to the other side's record).
 //  4. Writes closure-repair-report.json with before/after bridge-out
-//     chart totals (chart rule) and the explicit outcome for the known
-//     case 0xa33e223b…3a23.
+//     chart totals (chart rule) and, when env TRACKED_CASE is set, the
+//     explicit outcome for that one case address.
 // Run: node repair-closure.mjs [--dry-run]
 import { createReadStream, readFileSync, writeFileSync } from 'node:fs';
 import { createInterface } from 'node:readline';
@@ -41,7 +41,9 @@ const FM = join(__dir, '..', '42-flowmap');
 const lc = (a) => (a ? String(a).toLowerCase() : a);
 const dryRun = process.argv.includes('--dry-run');
 const HOLDER = '0x7a6f6d4e0ce3abbba5ab6685c37a9599f6250a25';
-const USER_ADDR = '0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23';
+// Optional single case address to report on, supplied via env only
+// (never written into the repo in plaintext).
+const USER_ADDR = (process.env.TRACKED_CASE || '').toLowerCase() || null;
 
 const watchlist = JSON.parse(readFileSync(join(__dir, 'watchlist.json'), 'utf8'));
 const registries = JSON.parse(readFileSync(join(__dir, 'registries.json'), 'utf8'));
@@ -216,8 +218,8 @@ console.log(`events: ${evBefore} -> ${events.length} (removed ${evBefore - event
 const ent1 = new Map(watchlist.entries.map((e) => [e.address, e]));
 const after = chartNumbers(events, ent1);
 const fmtG = (g) => (g ? { total: +g.sum.toFixed(2), seg: g.seg.map((v) => +v.toFixed(2)) } : null);
-const userEntry = entries.get(USER_ADDR);
-const userOutcome = removedSet.has(USER_ADDR)
+const userEntry = USER_ADDR ? entries.get(USER_ADDR) : undefined;
+const userOutcome = !USER_ADDR ? { outcome: 'not-tracked' } : removedSet.has(USER_ADDR)
   ? { address: USER_ADDR, outcome: 'removed', detail: 'バリデーター側への到達経路が、ブリッジ系コントラクト 0xf2ecb173…f015 を経由するものしかなかったため、関連から除外' }
   : userEntry && userEntry.tier === 'related'
     ? { address: USER_ADDR, outcome: 'kept', detail: `depth ${userEntry.depth} via ${userEntry.via?.address}`, via: userEntry.via, validators: userEntry.relatedValidators }

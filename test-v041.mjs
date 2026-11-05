@@ -10,21 +10,22 @@
 //      segments by watchlist-derived depth): segment sums equal the grand
 //      total; the same computation over feed.json (the chart's input —
 //      bridge-outs are pinned into the feed) gives identical results.
-//  (3) Rendering (index.html + en.html, real page code in a vm): header
-//      total + segment totals, legend, one stacked bar per name whose
-//      segment widths sum to the bar total, per-row breakdown lines listing
-//      exactly the non-zero segments. Spot facts: after the contract-audit
-//      correction Metal Raptor has NO bar at all (the validator itself has
-//      never bridged out, and every remaining MR-linked shared wallet
-//      attributes to an earlier first validator); DRIVESTATS has a depth-1
-//      segment of 613.05 USDT plus a depth-2+ segment; light888's self and
-//      related money merge into ONE bar.
+//  (3) Rendering (index.html + en.html, real page code in a vm): since
+//      v0.4.2 the chart renders the collector's pre-aggregated
+//      feed.stats.bridge (per-validator attribution, all 23 validators) —
+//      header deduplicated total + segment totals, legend, one stacked
+//      bar per validator whose widths sum to its share, breakdown lines
+//      listing exactly the non-zero segments. (The count-once grouping
+//      of (2) now serves only as the independent recomputation of the
+//      DEDUPLICATED total and segment totals.)
 //  (4) Home portals: grand total + the three segment totals on the chart card.
-//  (5) Contract audit + closure repair (added mid-release on the user's
-//      discovery that 0xf2ec...f015 is a bridge-type CONTRACT, not a
-//      wallet): audit-core addresses are out of the related tiers, no
-//      closure entry routes via a contract, removed entries/events are
-//      gone, and the chart's before/after correction is on record.
+//  (5) Contract audit + closure repair: the v0.4.1 audit/repair facts
+//      (0xf2ec...f015 is a bridge-type CONTRACT, not a wallet; its
+//      correction record) plus the v0.4.2 full-census facts — every
+//      contract is out of the person tiers with NO exceptions (the
+//      0x71b1...30e0 LP-holder contract included), the EOA-only repair
+//      removed 49 entries and purged 11,697 events, and the corrected
+//      totals are on record in eoa-repair-report.json.
 // Run: node test-v041.mjs (exit 1 on failure)
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -87,12 +88,16 @@ check('feed parity: feed bridge-outs give the same grand total', near(RF.total, 
 check('feed parity: feed segment totals match', R.segTot.every((v, i) => near(v, RF.segTot[i])));
 check('feed parity: feed per-name groups match', RF.groups.size === R.groups.size && [...R.groups.entries()].every(([k, g]) => { const h = RF.groups.get(k); return h && near(h.sum, g.sum) && h.seg.every((v, i) => near(v, g.seg[i])); }));
 
-// spot facts under the chart rule
+// spot facts under the (deduplicated) chart recomputation. NOTE: the
+// v0.4.1 count-once spot fact "Metal Raptor has no group" still holds
+// for the deduplicated grouping (every MR-linked shared wallet's first
+// name is another validator); the RENDERED chart since v0.4.2 uses
+// per-validator attribution instead — see (3).
 const mr = R.groups.get('Metal Raptor');
-check('spot: Metal Raptor has NO bar after the audit correction (its v0.4.0 bar was entirely shared depth-2+ wallets routed via a bridge contract)', !mr, mr ? `unexpected ${fmt(mr.sum)}` : 'absent');
+check('spot: no count-once group for Metal Raptor (shared wallets attribute to earlier first names)', !mr, mr ? `unexpected ${fmt(mr.sum)}` : 'absent');
 const ds = R.groups.get('DRIVESTATS');
 check('spot: DRIVESTATS depth-1 segment is 613.05 USDT', !!ds && near(ds.seg[1], 613.05), ds ? `d1 ${fmt(ds.seg[1])}` : 'missing');
-check('spot: DRIVESTATS also has a depth-2+ segment', !!ds && ds.seg[2] > 0, ds ? `d2+ ${fmt(ds.seg[2])}` : 'missing');
+check('spot: DRIVESTATS depth-2+ segment is 0 after the v0.4.2 evidence gate (no evidence-backed DRIVESTATS depth-2+ bridge-outs remain)', !!ds && near(ds.seg[2], 0), ds ? `d2+ ${fmt(ds.seg[2])}` : 'missing');
 const l8 = R.groups.get('light888');
 check('spot: light888 merges self + depth-1 into one group', !!l8 && l8.seg[0] > 0 && l8.seg[1] > 0 && near(l8.seg[2], 0), l8 ? `self ${fmt(l8.seg[0])} / d1 ${fmt(l8.seg[1])}` : 'missing');
 
@@ -127,7 +132,10 @@ async function renderChart(file) {
   api.renderBridgeChart();
   return { html, chart: els['bridgeChart'].innerHTML };
 }
-const maxSum = Math.max(...[...R.groups.values()].map((g) => g.sum));
+// v0.4.2: rendering consumes feed.stats.bridge (per-validator bars).
+const S = feed.stats.bridge;
+const statByName = new Map(S.perValidator.map((g) => [g.moniker, g]));
+const maxStat = Math.max(...S.perValidator.map((g) => g.total));
 for (const [file, labels, otherLabels] of [
   ['index.html', ['本人', '1段目の関連', '2段目以降の関連'], ['the validator itself', 'depth-1 related', 'depth-2+ related']],
   ['en.html', ['the validator itself', 'depth-1 related', 'depth-2+ related'], ['本人', '1段目の関連', '2段目以降の関連']],
@@ -138,29 +146,32 @@ for (const [file, labels, otherLabels] of [
   check(`${tag}: no foreign-language segment labels in the chart`, !otherLabels.some((l) => chart.includes(l)));
   if (tag === 'EN') check('EN: chart fragment has no Japanese', !JA.test(chart), (chart.match(/.{0,30}[぀-ヿ一-鿿]+.{0,30}/)?.[0] ?? ''));
   const headTotal = parseFloat(chart.match(/<div class="bchart-total">[^<]*?([\d,]+\.\d{2}) USDT/)[1].replace(/,/g, ''));
-  check(`${tag}: header grand total matches recomputation`, near(headTotal, R.total), `${fmt(headTotal)} vs ${fmt(R.total)}`);
+  check(`${tag}: header deduplicated total matches the independent recomputation`, near(headTotal, R.total) && near(headTotal, S.total), `${fmt(headTotal)} vs ${fmt(R.total)}`);
   const segHead = stripTags(chart.match(/<div class="bchart-segtotal">([\s\S]*?)<\/div>/)[1]);
   const segHeadAmts = [...segHead.matchAll(/([\d,]+\.\d{2}) USDT/g)].map((m) => parseFloat(m[1].replace(/,/g, '')));
   check(`${tag}: header segment totals match recomputation`, segHeadAmts.length === 3 && segHeadAmts.every((v, i) => near(v, R.segTot[i])), segHead);
   const rows = parseRows(chart);
-  check(`${tag}: one stacked bar per name`, rows.length === R.groups.size, `${rows.length} rows vs ${R.groups.size} groups`);
+  check(`${tag}: one bar per validator (all 23, zero bars included)`, rows.length === S.perValidator.length && rows.length === 23, `${rows.length} rows`);
   let rowsOk = true, widthsOk = true;
   for (const row of rows) {
-    const g = R.groups.get(row.name);
-    if (!g || !near(row.amt, g.sum)) { rowsOk = false; break; }
+    const g = statByName.get(row.name);
+    if (!g || !near(row.amt, g.total)) { rowsOk = false; break; }
     const expectSegs = g.seg.map((v, i) => (v > 0 ? i : null)).filter((x) => x !== null);
     if (row.segs.length !== expectSegs.length || !row.segs.every((s) => expectSegs.includes(s.seg))) { rowsOk = false; break; }
     if (row.brkAmts.length !== expectSegs.length || !expectSegs.every((s, j) => near(row.brkAmts[j], g.seg[s]))) { rowsOk = false; break; }
     const wsum = row.segs.reduce((t, s) => t + s.width, 0);
-    if (Math.abs(wsum - (g.sum / maxSum) * 100) > 0.6) widthsOk = false;
+    if (Math.abs(wsum - (g.total / maxStat) * 100) > 0.6) widthsOk = false;
   }
-  check(`${tag}: every bar's segments + breakdown match its recomputed group`, rowsOk);
+  check(`${tag}: every bar's segments + breakdown match the collector aggregation`, rowsOk);
   check(`${tag}: stacked segment widths sum to the bar's share of the max`, widthsOk);
   const mrRow = rows.find((r) => r.name === 'Metal Raptor');
-  check(`${tag}: Metal Raptor renders NO bar after the audit correction`, !mrRow);
+  check(`${tag}: Metal Raptor renders a ZERO bar under the final scope (no self / depth-1 / evidence-backed depth-2+ bridge-outs left)`, !!mrRow && near(mrRow.amt, 0) && mrRow.segs.length === 0 && near(statByName.get('Metal Raptor').total, 0), mrRow ? `${fmt(mrRow.amt)}` : 'missing');
+  const zeroRow = rows.find((r) => r.name === 'Xenia');
+  check(`${tag}: zero-activity validators still render a 0 bar`, !!zeroRow && near(zeroRow.amt, statByName.get('Xenia').total) && zeroRow.segs.length === 0);
   const l8Rows = rows.filter((r) => r.name === 'light888');
-  check(`${tag}: light888 renders as ONE merged bar (self + depth-1)`, l8Rows.length === 1 && l8Rows[0].segs.length === 2 && l8Rows[0].segs.some((s) => s.seg === 0) && l8Rows[0].segs.some((s) => s.seg === 1));
-  check(`${tag}: definition text explains depth-2+ inherited attribution`, tag === 'JP' ? html.includes('2段目以降は経路からの継承による帰属') : html.includes('Depth-2+ attribution is inherited through the path'));
+  check(`${tag}: light888 renders as ONE bar (self + depth-1)`, l8Rows.length === 1 && l8Rows[0].segs.length === 2 && l8Rows[0].segs.some((s) => s.seg === 0) && l8Rows[0].segs.some((s) => s.seg === 1));
+  check(`${tag}: definition text states bars do not sum to the grand total`, tag === 'JP' ? html.includes('棒の合計は全体総額と一致しません') : html.includes('the bars do not add up to the grand total'));
+  check(`${tag}: definition text states contracts are judged by bytecode only / shared wallets stay personal`, tag === 'JP' ? html.includes('共有の財布というだけでは仕組み系にしません') : html.includes('never treated as infrastructure just for being a shared wallet'));
 }
 
 // ---------- (4) home portals ----------
@@ -180,45 +191,54 @@ for (const [file, segPrefix] of [['home.html', '本人'], ['home-en.html', 'Itse
   check(`${file}: portal segment totals match`, segText.startsWith(segPrefix) && segAmts.length === 3 && segAmts.every((v, i) => near(v, R.segTot[i])), segText);
 }
 
-// ---------- (5) contract audit + closure repair (parent steer, same release) ----------
+// ---------- (5) contract audits + closure repairs (v0.4.1 record + v0.4.2 full census) ----------
 const audit = JSON.parse(read('contract-audit.json'));
 const repair = JSON.parse(read('closure-repair-report.json'));
+const eoaRep = JSON.parse(read('eoa-repair-report.json'));
 const auditCore = Object.entries(audit.results).filter(([, r]) => r.decision === 'core').map(([a]) => a);
-check('audit: every related/estimated entry was code-checked (347 targets)', audit.targets === 347, String(audit.targets));
-check('audit: 34 addresses classified core (incl. bridge-type 0xf2ec...f015)', auditCore.length === 34, String(auditCore.length));
-check('audit: no undecided review bucket remains', (audit.counts?.review ?? 0) === 0, JSON.stringify(audit.counts));
-check('audit: 0x71b1...30e0 (known personal LP-holding contract) stays related', audit.results['0x71b138382598fbc4b890d2d20a14f9dedb1430e0']?.decision === 'stay-related' && ent.get('0x71b138382598fbc4b890d2d20a14f9dedb1430e0')?.tier === 'related');
+// v0.4.2 census: binary decisions only; every CURRENT person-tier entry
+// carries an 'eoa' verdict; 150 contracts in total.
+check('audit (v0.4.2): decisions are binary — eoa or core, nothing else', Object.values(audit.results).every((r) => r.decision === 'eoa' || r.decision === 'core'));
+check('audit (v0.4.2): 150 addresses classified core (contracts)', auditCore.length === 150, String(auditCore.length));
+check('audit (v0.4.2): every current related/estimated entry was code-checked and is an EOA', watchlist.entries.filter((e) => e.tier === 'related' || e.tier === 'estimated').every((e) => audit.results[e.address]?.decision === 'eoa'));
+check('audit (v0.4.2): 0x71b1...30e0 (LP-holder contract) is core now — the v0.4.1 stay-related exception is gone', audit.results['0x71b138382598fbc4b890d2d20a14f9dedb1430e0']?.decision === 'core' && ent.get('0x71b138382598fbc4b890d2d20a14f9dedb1430e0')?.tier === 'core');
 const f015 = ent.get('0xf2ecb173b63699c49ace3faae80af5ce677af015');
-check('0xf2ec...f015 is now core tier with the bridge-contract label', f015?.tier === 'core' && f015?.isCore === true && f015?.label === 'ブリッジ系コントラクト', `${f015?.tier}/${f015?.label}`);
-check('no audit-core address remains in the related/estimated tiers', auditCore.every((a) => ent.get(a)?.tier === 'core'));
+check('0xf2ec...f015 stays core tier with the bridge-contract label', f015?.tier === 'core' && f015?.isCore === true && f015?.label === 'ブリッジ系コントラクト', `${f015?.tier}/${f015?.label}`);
+check('probes: the two big via-parents 0x2fcfc230... / 0xbf2bb17f... are EOAs (bytecode fact from the census)', audit.results['0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf']?.decision === 'eoa' && audit.results['0xbf2bb17f408521607cf7e79798d0d0ab6be5603a']?.decision === 'eoa');
+check('probe outcomes: 0x2fcfc230... stays related (depth-1 original); 0xbf2bb17f... was depth-2 and is governed by the evidence gate instead', ent.get('0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf')?.tier === 'related');
+check('no audit-core address remains in the related/estimated tiers', auditCore.every((a) => !ent.has(a) || ent.get(a)?.tier === 'core'));
 check('no audit-core address keeps relatedValidators attribution', auditCore.every((a) => !(ent.get(a)?.relatedValidators ?? []).length));
 const auditCoreSet = new Set(auditCore);
 const autoEntries = watchlist.entries.filter((e) => e.autoAdded);
 check('no auto-added entry was routed via an audit-core contract', autoEntries.every((e) => !auditCoreSet.has(e.via?.address)), autoEntries.find((e) => auditCoreSet.has(e.via?.address))?.address);
 check('no auto-added entry hangs below 0xf2ec...f015', autoEntries.every((e) => e.via?.address !== '0xf2ecb173b63699c49ace3faae80af5ce677af015'));
-const removedSet = new Set(repair.removedEntries.map((r) => r.address));
-check('repair removed 47 closure entries, none still in the watchlist', repair.removedEntries.length === 47 && repair.removedEntries.every((r) => !ent.has(r.address)), String(repair.removedEntries.length));
-check('repair removed 1,439 actor events of removed entries', repair.eventsRemoved === 1439, String(repair.eventsRemoved));
-check('no stored event keeps a removed actor (except pair-created chain news re-derived without attribution)',
-  events.every((e) => !removedSet.has(e.actor) || e.type === 'pair-created'),
-  events.find((e) => removedSet.has(e.actor) && e.type !== 'pair-created')?.id);
-check('pair-created events of removed creators carry no tier attribution',
-  events.filter((e) => e.type === 'pair-created' && removedSet.has(e.actor)).every((e) => e.actorTier == null));
-const userAddr = ent.get('0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23');
-check('user address 0xa33e...3a23: kept via a non-contract path (NOT removed, NOT via 0xf2ec...f015)',
-  repair.userAddressOutcome?.outcome === 'kept' && userAddr?.tier === 'related' && userAddr?.via?.address === '0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf',
-  `${repair.userAddressOutcome?.outcome} via ${userAddr?.via?.address}`);
-check('chart before/after recorded: 19,113.43 -> 16,074.08 (the whole delta in depth>=2)',
+// v0.4.1 repair record (historical, unchanged file)
+check('v0.4.1 repair removed 47 closure entries', repair.removedEntries.length === 47 && repair.removedEntries.every((r) => !ent.has(r.address)), String(repair.removedEntries.length));
+check('v0.4.1 chart before/after recorded: 19,113.43 -> 16,074.08 (the whole delta in depth>=2)',
   near(repair.chartBefore.total, 19113.43) && near(repair.chartAfter.total, 16074.08)
   && near(repair.chartBefore.seg[2] - repair.chartAfter.seg[2], repair.chartBefore.total - repair.chartAfter.total)
   && near(repair.chartBefore.seg[0], repair.chartAfter.seg[0]) && near(repair.chartBefore.seg[1], repair.chartAfter.seg[1]),
   `${repair.chartBefore.total} -> ${repair.chartAfter.total}`);
-check('Metal Raptor chart group: 3,886.01 before -> NO bar after (846.66 at repair time, then first-validator attribution moved off it entirely)',
+check('v0.4.1 Metal Raptor chart group: 3,886.01 before -> no count-once group after',
   near(repair.chartBefore.metalRaptor.total, 3886.01) && near(repair.chartAfterAtRepair.metalRaptor.total, 846.66)
   && repair.chartAfter.metalRaptor === null,
   `atRepair ${JSON.stringify(repair.chartAfterAtRepair.metalRaptor)} final ${JSON.stringify(repair.chartAfter.metalRaptor)}`);
-check('current recomputation total equals the corrected total (no new bridge-outs since repair)',
-  near(R.total, repair.chartAfter.total), `${fmt(R.total)} vs ${fmt(repair.chartAfter.total)}`);
+// v0.4.2 EOA-only repair record
+const removedSet = new Set(eoaRep.closureRemoved.map((r) => r.address));
+const movedSet = new Set(eoaRep.contractsMovedToCore.map((c) => c.address));
+check('v0.4.2 repair moved 29 person-tier contracts to core (27 related + 2 estimated)', eoaRep.contractsMovedToCore.length === 29 && eoaRep.contractsMovedToCore.filter((c) => c.formerTier === 'related').length === 27 && eoaRep.contractsMovedToCore.filter((c) => c.formerTier === 'estimated').length === 2);
+check('v0.4.2 repair removed 49 closure entries, none still in the watchlist', eoaRep.closureRemoved.length === 49 && eoaRep.closureRemoved.every((r) => !ent.has(r.address)), String(eoaRep.closureRemoved.length));
+check('v0.4.2 repair purged 11,697 events (contracts 3,228 / removed entries 5,027 / permanently excluded 3,442)', eoaRep.eventsPurged.total === 11697 && eoaRep.eventsPurged.contractActors === 3228 && eoaRep.eventsPurged.removedEntries === 5027 && eoaRep.eventsPurged.excludedActors === 3442, JSON.stringify(eoaRep.eventsPurged));
+check('v0.4.2 repair removed exactly 1 permanently excluded entry (recorded as a count only)', eoaRep.excludedEntriesRemoved === 1);
+check('no stored event keeps a removed or contract-moved actor (except pair-created chain news re-derived without attribution)',
+  events.every((e) => !(removedSet.has(e.actor) || movedSet.has(e.actor)) || e.type === 'pair-created'),
+  events.find((e) => (removedSet.has(e.actor) || movedSet.has(e.actor)) && e.type !== 'pair-created')?.id);
+check('pair-created events of removed/moved creators carry no tier attribution',
+  events.filter((e) => e.type === 'pair-created' && (removedSet.has(e.actor) || movedSet.has(e.actor))).every((e) => e.actorTier == null));
+check('EOA repair record: watchlist shrank 413 -> 363 with tiers 23/183/153/4 at that stage', eoaRep.before.watchlistTotal === 413 && eoaRep.after.watchlistTotal === 363 && eoaRep.after.tiers.related === 183 && eoaRep.after.tiers.core === 153 && eoaRep.after.tiers.estimated === 4);
+check('v0.4.2 chart before/after (deduplicated): 16,074.08 -> 14,104.47, delta entirely in depth>=2', near(eoaRep.before.bridge.total, 16074.08) && near(eoaRep.after.bridge.total, 14104.47) && near(eoaRep.before.bridge.segTotals[0], eoaRep.after.bridge.segTotals[0]) && near(eoaRep.before.bridge.segTotals[1], eoaRep.after.bridge.segTotals[1]) && eoaRep.after.bridge.segTotals[2] < eoaRep.before.bridge.segTotals[2], `${eoaRep.before.bridge.total} -> ${eoaRep.after.bridge.total}`);
+const evRep = JSON.parse(read('evidence-repair-report.json'));
+check('current recomputation total equals the FINAL v0.4.2 total (after the evidence gate; no new bridge-outs since)', near(R.total, evRep.after.bridge.total), `${fmt(R.total)} vs ${fmt(evRep.after.bridge.total)}`);
 
 // ---------- (6) section order (user reorder, shipped in v0.4.1) ----------
 // Coloured special sections on top (insider, snipes, bridge-out, totals

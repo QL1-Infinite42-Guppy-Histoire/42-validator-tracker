@@ -36,33 +36,36 @@ const cnt = (t) => watchlist.entries.filter((e) => e.tier === t).length;
 // ---------- watchlist merge integrity ----------
 // v0.4.0: the related tier grew by the full-history closure (auto-added
 // entries). v0.4.1 contract audit + closure repair: 34 protocol contracts
-// moved related -> core (6 originals + 28 closure-added, so the non-auto
-// base grew by 28) and 47 closure entries reachable only through
-// contracts were removed — original related are now 104, core 124.
+// moved related -> core and 47 closure entries reachable only through
+// contracts were removed — original related 104, core 124.
+// v0.4.2: full bytecode census (no exceptions) moved 17 more originals
+// to core (original related 87, core 153), the EOA-only repair removed
+// 49 closure entries, and the evidence gate kept only 12 of the
+// remaining depth>=2 entries (84 general addresses deleted).
 const autoAddedEntries = watchlist.entries.filter((e) => e.autoAdded);
 check('validator tier still 23', cnt('validator') === 23, String(cnt('validator')));
-check('original related tier now 104 after audit (non-autoAdded)', watchlist.entries.filter((e) => e.tier === 'related' && !e.autoAdded).length === 104, String(watchlist.entries.filter((e) => e.tier === 'related' && !e.autoAdded).length));
-check('related tier = 104 + closure/live auto-added', cnt('related') === 104 + autoAddedEntries.length, String(cnt('related')));
-check('core tier now 124 after audit (90 + 34)', cnt('core') === 124, String(cnt('core')));
-check('estimated tier present (6)', cnt('estimated') === 6, String(cnt('estimated')));
-check('total entries = 257 + auto-added', watchlist.entries.length === 257 + autoAddedEntries.length, String(watchlist.entries.length));
+check('original related tier now 87 after the v0.4.2 census (non-autoAdded)', watchlist.entries.filter((e) => e.tier === 'related' && !e.autoAdded).length === 87, String(watchlist.entries.filter((e) => e.tier === 'related' && !e.autoAdded).length));
+check('related tier = 87 + closure/live auto-added', cnt('related') === 87 + autoAddedEntries.length, String(cnt('related')));
+check('core tier now 153 after the v0.4.2 census (124 + 29)', cnt('core') === 153, String(cnt('core')));
+check('estimated tier present (4)', cnt('estimated') === 4, String(cnt('estimated')));
+check('total entries = 267 + auto-added', watchlist.entries.length === 267 + autoAddedEntries.length, String(watchlist.entries.length));
 const lp = watchlist.entries.find((e) => e.address === '0x71b138382598fbc4b890d2d20a14f9dedb1430e0');
-check('shared LP contract stays confirmed related tier', lp?.tier === 'related');
+check('shared LP contract is CORE tier since v0.4.2 (bytecode rule, no exceptions)', lp?.tier === 'core');
 const xenia = watchlist.entries.find((e) => e.label === 'Xenia');
 check('Xenia stays validator tier', xenia?.tier === 'validator');
 // v0.3.2 (user correction): Xenia is NOT core/system infrastructure — she is
 // an ordinary validator; her 2-[42] seed distribution is her own activity.
 check('Xenia is NOT core (v0.3.2 user correction)', xenia?.isCore === false && !('coreNote' in xenia));
 check('no validator-tier entry carries a core flag', watchlist.entries.filter((e) => e.tier === 'validator').every((e) => !e.isCore));
-check('watchlist summary coreFlaggedTotal is 140 after audit (106 + 34)', watchlist.summary.coreFlaggedTotal === 140, String(watchlist.summary.coreFlaggedTotal));
+check('watchlist summary coreFlaggedTotal is 154 after the v0.4.2 census', watchlist.summary.coreFlaggedTotal === 154, String(watchlist.summary.coreFlaggedTotal));
 check('#1 holder 0x7a6f...0a25 keeps its core flag (not part of the correction)', watchlist.entries.find((e) => e.address === '0x7a6f6d4e0ce3abbba5ab6685c37a9599f6250a25')?.isCore === true);
 const est = watchlist.entries.filter((e) => e.tier === 'estimated');
 check('every estimated entry has basisType/basisText/basisTextEn', est.every((e) => ['pool', '2hop', 'shared'].includes(e.basisType) && e.basisText && e.basisTextEn));
 check('estimated basisTextEn has no Japanese', est.every((e) => !JA.test(e.basisTextEn)));
 check('estimated entries are watched and not pairs/core', est.every((e) => e.watch === true && !e.isPair && !e.isCore));
 check('no estimated address is a registered pair', est.every((e) => !(e.address in (registries.pairs ?? {}))));
-check('basis mix: pool 5 / shared 1 / 2hop 0 (all 2-hop intermediates were already confirmed)', est.filter((e) => e.basisType === 'pool').length === 5 && est.filter((e) => e.basisType === 'shared').length === 1 && est.filter((e) => e.basisType === '2hop').length === 0);
-check('watchlist summary counts agree', watchlist.summary.estimated === 6 && watchlist.summary.watchedActors === 133 + autoAddedEntries.length && watchlist.summary.totalEntries === 257 + autoAddedEntries.length && watchlist.summary.related === cnt('related') && watchlist.summary.autoAdded === autoAddedEntries.length);
+check('basis mix: pool 4 / shared 0 / 2hop 0 (the shared estimate was a contract, removed in v0.4.2)', est.filter((e) => e.basisType === 'pool').length === 4 && est.filter((e) => e.basisType === 'shared').length === 0 && est.filter((e) => e.basisType === '2hop').length === 0);
+check('watchlist summary counts agree', watchlist.summary.estimated === 4 && watchlist.summary.watchedActors === 114 + autoAddedEntries.length && watchlist.summary.totalEntries === 267 + autoAddedEntries.length && watchlist.summary.related === cnt('related') && watchlist.summary.autoAdded === autoAddedEntries.length);
 
 // ---------- enrichEvent guards ----------
 const ctx = makeCtx(watchlist, registries, {});
@@ -148,7 +151,7 @@ check('estimated bridge send keeps no bridge-out marker', !(ev3.notableReasons |
   check('added entry is self-tier with chain moniker + operator', addedEntry?.tier === 'validator' && addedEntry?.label === 'TestVal' && addedEntry?.operator === 'infinitevaloper1newval' && !!addedEntry?.autoAdded);
   check('unbonded chain validator is NOT added', !wl.entries.some((e) => e.address === '0x' + 'cd'.repeat(20)));
   check('departed validator stays watched, marked inactive', wl.entries.find((e) => e.address === dropped.address)?.inactive === true);
-  check('nothing removed by refresh', wl.entries.length === 258 + autoAddedEntries.length, String(wl.entries.length));
+  check('nothing removed by refresh', wl.entries.length === 268 + autoAddedEntries.length, String(wl.entries.length));
 }
 
 // ---------- stored-data + feed invariants ----------
@@ -157,7 +160,7 @@ check('stored estimated events all carry estimateBasis', storedEstAll.every((e) 
 check('stored estimated events: no snipe/insider/bridge-out', storedEstAll.every((e) => !e.isSnipe && !e.isInsider && e.type !== 'bridge-out' && !(e.notableReasons || []).includes('bridge-out')));
 check('feed.json contains estimated events (visible in latest range)', feed.events.some((e) => e.actorTier === 'estimated'), String(feed.events.filter((e) => e.actorTier === 'estimated').length));
 check('feed status has estimatedRule + chainValidators', !!feed.status.estimatedRule && !!feed.status.chainValidators);
-check('feed validators carry estimatedCount; link total = 7', feed.validators.every((v) => typeof v.estimatedCount === 'number') && feed.validators.reduce((t, v) => t + v.estimatedCount, 0) === 7);
+check('feed validators carry estimatedCount; link total = 4', feed.validators.every((v) => typeof v.estimatedCount === 'number') && feed.validators.reduce((t, v) => t + v.estimatedCount, 0) === 4);
 check('feed insiderRule names X (Rioshi)', (feed.status.insiderRule || '').includes('X（Rioshi）'));
 
 // ---------- frontend statics ----------
@@ -167,7 +170,7 @@ for (const [name, html] of [['index.html', jp], ['en.html', en]]) {
   check(`${name}: estimated toggle present`, html.includes('id="fEstimated"'));
   check(`${name}: confirmed-only guards in sections`, (html.match(/actorTier !== 'estimated'/g) || []).length >= 4, String((html.match(/actorTier !== 'estimated'/g) || []).length));
   check(`${name}: language switch top-right`, html.includes('class="langsw"') && html.includes('id="langOther"'));
-  check(`${name}: version v0.4.1`, html.includes('v0.4.1'));
+  check(`${name}: version v0.4.2`, html.includes('v0.4.2'));
 }
 check('index.html: 推定も表示 toggle label', jp.includes('推定も表示'));
 check('en.html: Show estimated toggle label', en.includes('Show estimated'));
@@ -179,7 +182,7 @@ for (const [name, html] of [['home.html', home], ['home-en.html', homeEn]]) {
   check(`${name}: language switch top-right`, html.includes('class="langsw"') && html.includes('id="langOther"'));
   check(`${name}: insider card names X (Rioshi)`, html.includes('(Rioshi)') && html.includes('X（Rioshi）') || html.includes('X (Rioshi)'));
   check(`${name}: counts exclude estimated from special sections`, html.includes("actorTier !== 'estimated'"));
-  check(`${name}: version v0.4.1`, html.includes('v0.4.1'));
+  check(`${name}: version v0.4.2`, html.includes('v0.4.2'));
 }
 check('home.html: 全記録 card mentions 推定', home.includes('推定アドレスの動きも、推定と明記して含みます'));
 check('home-en.html: full-record card mentions estimated', homeEn.includes('Moves by estimated addresses are included here'));

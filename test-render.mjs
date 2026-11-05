@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 // WS1 regression test (v0.2.0): headline shows the ACTOR only.
-// The block-4272345 event for 0x71b13838…30E0 (a shared counterparty of 8
-// validators) used to render with the v0.1.0 whoLabel as:
-//   "farmer・Metal Raptor・PhoenixRing・HeraMoon・ayc・panda42・Xenia・light888 関連"
-// which reads as if 8 validators acted together. The fixed renderer must
-// produce headline "関連 0x…30E0", a capped relation line
-// "関係バリデーター：farmer ほか7名", the 共有の相手先 badge + note, and for a
-// validator-self event (panda42, same block) headline "panda42" with NO
-// relation name list. Run: node test-render.mjs  (exit 1 on failure)
+// A shared counterparty's event (originally the block-4272345 event of
+// a contract shared by 8 validators, rendered by the v0.1.0 whoLabel as
+// a join of all 8 names — as if the validators acted together) must
+// render with an actor-only headline, a capped relation line
+// (first name + count), and the 共有の相手先 badge + note; a
+// validator-self event renders its own name with NO relation list.
+// Fixture since v0.4.2: an event of 0x2fcfc230...ecaf, a depth-1 EOA
+// shared by 3 validators (the old contract fixture's actor events were
+// purged when contracts left the person tiers).
+// Run: node test-render.mjs  (exit 1 on failure)
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -19,7 +21,7 @@ const watchlist = JSON.parse(readFileSync(join(__dir, 'watchlist.json'), 'utf8')
 const registries = JSON.parse(readFileSync(join(__dir, 'registries.json'), 'utf8'));
 const ctx = makeCtx(watchlist, registries, {});
 const events = readFileSync(join(__dir, 'events.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
-const evRelated = events.find((e) => e.block === 4272345 && e.actor === '0x71b138382598fbc4b890d2d20a14f9dedb1430e0');
+const evRelated = events.find((e) => e.actor === '0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf' && e.actorTier === 'related' && e.actorShared);
 const evPanda = events.find((e) => e.block === 4272345 && e.actorLabel === 'panda42' && e.type === 'transfer');
 if (!evRelated || !evPanda) { console.error('FAIL: fixture events not found in events.jsonl'); process.exit(1); }
 for (const ev of [evRelated, evPanda]) enrichEvent(ev, ctx, {});
@@ -33,19 +35,17 @@ vm.createContext(sandbox);
 vm.runInContext(script + '\n;globalThis.__api={renderEvent, whoLabel};', sandbox);
 const { renderEvent, whoLabel } = sandbox.__api;
 
-const OLD_HEADLINE = 'farmer・Metal Raptor・PhoenixRing・HeraMoon・ayc・panda42・Xenia・light888 関連';
 let fails = 0;
 const check = (name, cond) => { console.log((cond ? 'PASS' : 'FAIL') + ' ' + name); if (!cond) fails++; };
 
-console.log('old (v0.1.0) headline for the …30E0 event:', OLD_HEADLINE);
 console.log('new headline:', whoLabel(evRelated));
-check('related headline is actor-only', whoLabel(evRelated) === '関連 0x…30E0');
+check('related headline is actor-only', whoLabel(evRelated) === '関連 0x…ECAF');
 const relHtml = renderEvent(evRelated);
-check('relation line capped (first + count)', relHtml.includes('関係バリデーター：<b class="rel-name">farmer</b> ほか7名'));
+const relNames = evRelated.actorValidators || [];
+check('relation line capped (first + count)', relNames.length >= 3 && relHtml.includes(`関係バリデーター：<b class="rel-name">${relNames[0]}</b> ほか${relNames.length - 1}名`), relNames.join(','));
 check('shared-counterparty badge present', relHtml.includes('共有の相手先'));
 check('shared note present', relHtml.includes('複数のバリデーターと取引する共通の相手先です（バリデーター本人ではありません）'));
-check('contract note present for 0x71b1…', relHtml.includes('コントラクト'));
-check('no full name join anywhere', !relHtml.includes('Metal Raptor・PhoenixRing'));
+check('no full name join anywhere', !relHtml.includes(relNames.slice(0, 2).join('・')) && !relHtml.includes(relNames.slice(0, 2).join('・')));
 console.log('panda42 headline:', whoLabel(evPanda));
 check('validator-self headline is own name', whoLabel(evPanda) === 'panda42');
 check('validator-self has NO relation list', !renderEvent(evPanda).includes('関係バリデーター'));
@@ -58,10 +58,10 @@ const fxSelfHtml = renderEvent(fxSelf);
 check('WS5 validator bridge-out glows (class)', fxSelfHtml.includes('ev bridgeout') || fxSelfHtml.includes('bridgeout'));
 check('WS5 validator bridge-out badge wording', fxSelfHtml.includes('バリデーター本人のブリッジで外部へ送信'));
 check('WS5 marker not shown as raw reason text', !fxSelfHtml.includes('⭐注目：bridge-out'));
-const fxRel = { ...base, id: 'fx2', type: 'bridge-out', actor: '0x71b138382598fbc4b890d2d20a14f9dedb1430e0', actorLabel: null, actorTier: 'related', actorIsCore: false, actorValidators: ['farmer', 'Xenia'], actorShared: true, summary: 'ブリッジで外部へ送信：5 USDT をブリッジ経由で外部チェーンへ', notableReasons: ['bridge-out'] };
+const fxRel = { ...base, id: 'fx2', type: 'bridge-out', actor: '0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf', actorLabel: null, actorTier: 'related', actorIsCore: false, actorValidators: ['Metal Raptor', 'DRIVESTATS'], actorShared: true, summary: 'ブリッジで外部へ送信：5 USDT をブリッジ経由で外部チェーンへ', notableReasons: ['bridge-out'] };
 const fxRelHtml = renderEvent(fxRel);
 check('WS5 related bridge-out badge wording', fxRelHtml.includes('関連ウォレットのブリッジで外部へ送信'));
-check('WS5 related bridge-out headline is actor only', whoLabel(fxRel) === '関連 0x…30E0');
+check('WS5 related bridge-out headline is actor only', whoLabel(fxRel) === '関連 0x…ECAF');
 const fxIn = { ...base, id: 'fx3', type: 'transfer', actor: evPanda.actor, actorLabel: 'panda42', actorTier: 'validator', actorIsCore: false, direction: 'in', summary: '10 USDT を受取', notableReasons: [] };
 check('WS5 inbound receipt does NOT glow', !renderEvent(fxIn).includes('bridgeout'));
 const fxApprove = events.find((e) => e.type === 'approve');

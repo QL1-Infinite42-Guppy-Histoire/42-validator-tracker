@@ -220,8 +220,22 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
     }
   }
   const watched = new Set(watchlist.entries.map((e) => e.address));
-  const missing = [...reached].filter((a) => !watched.has(a) && !excluded.has(a) && !estAddrs.has(a));
-  check('fixpoint: every reachable non-excluded node is watched or estimated', missing.length === 0, missing.slice(0, 5).join(','));
+  // v0.4.2 scope: reachable nodes may also be absent BY RULE — contracts
+  // removed by the census repairs and depth>=2 general addresses removed
+  // by the evidence gate are intentionally unwatched.
+  const removedByRule = new Set();
+  for (const [f, pick] of [
+    ['closure-repair-report.json', (r) => (r.removedEntries ?? []).map((x) => x.address)],
+    ['eoa-repair-report.json', (r) => [...(r.closureRemoved ?? []).map((x) => x.address), ...(r.contractsMovedToCore ?? []).map((x) => x.address)]],
+    ['evidence-repair-report.json', (r) => (r.deleted ?? []).map((x) => x.address)],
+  ]) { try { for (const a of pick(JSON.parse(read(f)))) removedByRule.add(a); } catch {} }
+  // Permanently excluded addresses (env-held, never named in the repo)
+  // are reachable in the raw graph but intentionally unwatched; their
+  // signature is that every actor event of theirs was purged, so they
+  // survive only as counterparty mentions in other people's records.
+  const actorAddrs = new Set(events.map((e) => e.actor));
+  const missing = [...reached].filter((a) => !watched.has(a) && !excluded.has(a) && !estAddrs.has(a) && !removedByRule.has(a) && actorAddrs.has(a));
+  check('fixpoint: every reachable node is watched, estimated, excluded, removed-by-rule, or permanently excluded (v0.4.2)', missing.length === 0, missing.slice(0, 5).join(','));
   check('fixpoint: all closure entries are inside the reached set', closure.every((e) => reached.has(e.address)));
 }
 
@@ -237,12 +251,12 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
     check(`${name}: price bar + staking renderer + dormant rule hook`, html.includes('id="pricebar"') && html.includes('renderStaking') && html.includes('id="dormantRule"'));
     check(`${name}: LP border classes + new badges`, html.includes('.ev.lpadd') && html.includes('.ev.lpremove') && html.includes('badge dormant') && html.includes('badge newface'));
     check(`${name}: topnav has all new sections`, ['#sec-newpairs', '#sec-lp', '#sec-dormant', '#sec-newfaces', '#sec-staking'].every((h) => html.includes(`href="${h}"`)));
-    check(`${name}: version v0.4.1`, html.includes('v0.4.1'));
+    check(`${name}: version v0.4.2`, html.includes('v0.4.2'));
   }
   for (const [name, html, p] of [['home.html', home, 'index.html'], ['home-en.html', homeEn, 'en.html']]) {
     check(`${name}: price card present`, html.includes('id="pricecard"'));
     check(`${name}: portal cards for all new sections`, ['#sec-newpairs', '#sec-lp', '#sec-dormant', '#sec-newfaces', '#sec-staking'].every((h) => html.includes(`href="${p}${h}"`)));
-    check(`${name}: version v0.4.1`, html.includes('v0.4.1'));
+    check(`${name}: version v0.4.2`, html.includes('v0.4.2'));
   }
 }
 

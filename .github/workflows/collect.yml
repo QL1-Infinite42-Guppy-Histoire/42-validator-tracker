@@ -53,6 +53,11 @@ jobs:
           node-version: '22'
 
       - name: Collect new blocks
+        # EXCLUDED_ACTORS: permanently excluded addresses, held ONLY in
+        # this repo secret (never in any repo file). The collector reads
+        # it from the environment; an empty value disables the mechanism.
+        env:
+          EXCLUDED_ACTORS: ${{ secrets.EXCLUDED_ACTORS }}
         run: node collector.mjs --once
 
       - name: Commit updated data (if any)

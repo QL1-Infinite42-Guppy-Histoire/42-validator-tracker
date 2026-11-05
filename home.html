@@ -117,7 +117,7 @@
 </main>
 <footer>
   データの出どころ：42チェーンのブロックそのもの（RPC経由）。対象は 42 Chain（EVM チェーンID 421018 と、その Cosmos 側 infinite_421018-1）の取引のみです。QL1 など他のチェーンの取引は含みません。推定アドレスの動きは「最新の動き」にだけ推定と明記して表示し、特別欄は確定情報のみです。アラートはこのサイト内だけの表示です。
-  <br>バージョン：<b>v0.4.1</b>（トップページ）
+  <br>バージョン：<b>v0.4.2</b>（トップページ）
 </footer>
 <script>
 (async () => {
@@ -132,10 +132,13 @@
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length + ' 件';
     const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');
     const bamt = (e) => parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0;
-    const bsum = bouts.reduce((t, e) => t + bamt(e), 0);
+    // v0.4.2: totals come from the collector's full-history aggregation
+    // (feed.stats.bridge, deduplicated); fall back to the feed window.
+    const bst = FEED.stats && FEED.stats.bridge;
+    const bsum = bst ? bst.total : bouts.reduce((t, e) => t + bamt(e), 0);
     document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
-    const bseg = [0, 0, 0];
-    for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
+    const bseg = bst ? [...bst.segTotals] : [0, 0, 0];
+    if (!bst) for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
     const bfmt = (v) => v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('c-bridgeseg').textContent = `本人 ${bfmt(bseg[0])} ／ 1段目 ${bfmt(bseg[1])} ／ 2段目以降 ${bfmt(bseg[2])} USDT`;
     const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');

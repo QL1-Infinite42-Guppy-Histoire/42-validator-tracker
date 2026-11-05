@@ -1,7 +1,14 @@
 #!/usr/bin/env node
-// 42 Validator Tracker — collector (v0.4.1: actorDepth on every event —
-// the bridge-out totals chart splits each name's bar into depth segments
-// (validator itself / depth-1 related / depth>=2 related);
+// 42 Validator Tracker — collector (v0.4.2: EOA-only person graph —
+// live auto-add is bytecode-gated (contracts route to the core
+// registry, never to related); permanently excluded addresses are read
+// from env EXCLUDED_ACTORS only and are purged/never re-added; the
+// bridge-out totals chart is pre-aggregated per validator in
+// feed.stats.bridge (all validators, unlimited depth, shared wallets
+// counted into each connected validator's bar);
+// v0.4.1: actorDepth on every event — the bridge-out totals chart
+// splits each name's bar into depth segments (validator itself /
+// depth-1 related / depth>=2 related);
 // v0.4.0: six new sections — pair-created
 // events from the Don't Panic factory, LP feed pinning, collector-computed
 // staking stats, dormant-return flags (60d), new-counterparty flags with
@@ -151,6 +158,9 @@ export const SNIPE_RULE = 'スナイプの定義：ペアが作られてから3�
 // CONTRACT holding 90%+ of the LP shares of several FISH pairs and is a shared
 // counterparty of 8 validators — a shared service/LP contract, not a person.
 // Only addresses verified in research are listed here; do not add guesses.
+// (v0.4.2: under the EOA-only rule this address sits in the CORE tier like
+// every other contract; the constant remains as its verified identity label
+// and for the dormant-return eligibility exclusion.)
 export const KNOWN_CONTRACTS = {
   '0x71b138382598fbc4b890d2d20a14f9dedb1430e0': 'コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）',
 };
@@ -266,11 +276,26 @@ export const KNOWN_SYSTEM_CONTRACTS = new Set([
 // wallet and a legitimate seed), pair contracts, token contracts, the
 // factory, the zero/burn addresses, and the verified system contracts.
 const HOLDER_ADDR = '0x7a6f6d4e0ce3abbba5ab6685c37a9599f6250a25';
+// v0.4.2: permanent exclusions (owner-requested). The addresses are NEVER
+// written anywhere in this repository (it is public, so a plaintext list
+// would itself be a disclosure): they are supplied only at runtime via
+// the EXCLUDED_ACTORS environment variable — a GitHub Actions secret in
+// production, a plain env var for local runs. An excluded address is
+// never watched, never auto-added, never traversed by the closure, and
+// events where it is the actor are never recorded.
+export function excludedActorsFromEnv(env = process.env) {
+  const raw = env.EXCLUDED_ACTORS ?? '';
+  return new Set(raw.split(/[\s,]+/).map((a) => lc(a.trim())).filter((a) => /^0x[0-9a-f]{40}$/.test(a)));
+}
+export function isPermanentlyExcluded(addr, env = process.env) {
+  return !!addr && excludedActorsFromEnv(env).has(lc(addr));
+}
 export function buildExcludedSet(watchlist, registries) {
   const s = new Set([ZERO, DEAD_ADDR, FACTORY, ...KNOWN_SYSTEM_CONTRACTS]);
   for (const e of watchlist.entries) if (e.isCore && e.address !== HOLDER_ADDR) s.add(e.address);
   for (const a of Object.keys(registries.pairs ?? {})) s.add(lc(a));
   for (const a of Object.keys(registries.tokens ?? {})) s.add(lc(a));
+  for (const a of excludedActorsFromEnv()) s.add(a);
   return s;
 }
 // Dormant-return definition (printed on the site): a watched wallet (self /
@@ -351,6 +376,61 @@ export function computeStakingStats(events, ctx) {
     .map(({ _c, _d, ...rest }) => rest);
   return { range: { fromBlock: minBlock, toBlock: maxBlock, fromTs: minTs, toTs: maxTs }, totals: totalsOut, perValidator, unattributed: { commission: unattributedCommission, delegate: unattributedDelegate, undelegate: unattributedUndelegate } };
 }
+// Bridge-out totals chart aggregation (v0.4.2, user rule change):
+// PER-VALIDATOR attribution instead of v0.4.1's count-once rule.
+//  - One bar per validator — ALL validators, zero bars included.
+//  - A validator's bar sums the bridge-outs (USDT) of EVERY wallet
+//    connected to it (its relatedValidators attribution, unlimited
+//    depth). A shared wallet is counted in EACH connected validator's
+//    bar, so the bars intentionally do NOT sum to the grand total.
+//  - Segments per bar: 0 = the validator itself; 1 = a related wallet
+//    that transacted DIRECTLY with that validator (research-confirmed
+//    original related entry naming the validator, or an actor<->
+//    counterparty edge with the validator in the recorded events);
+//    2 = connected only through other wallets (inherited attribution).
+//  - Senders are personal wallets only: validator + related tiers.
+//    Estimated actors stay excluded (as before), and contract actors
+//    no longer exist in the person tiers at all (v0.4.2 EOA-only rule).
+//  - The deduplicated grand total (each bridge-out counted once) and
+//    its global-depth segment totals are reported alongside.
+export function computeBridgeChart(events, ctx) {
+  const valAddr = new Map(); // moniker -> address
+  for (const [, e] of ctx.watch) if (e.tier === 'validator' && e.label) valAddr.set(e.label, e.address);
+  const adj = new Set();
+  const key = (a, b) => (a < b ? `${a}|${b}` : `${b}|${a}`);
+  for (const ev of events) {
+    if (ev.actor && ev.counterparty) adj.add(key(lc(ev.actor), lc(ev.counterparty)));
+  }
+  const depthOf = (en) => (en.tier === 'validator' ? 0 : (en.depth ?? 1));
+  const per = new Map();
+  for (const name of valAddr.keys()) per.set(name, { moniker: name, seg: [0, 0, 0], total: 0, count: 0 });
+  let total = 0, count = 0; const segTotals = [0, 0, 0];
+  const amtOf = (e) => parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0;
+  for (const ev of events) {
+    if (ev.type !== 'bridge-out') continue;
+    const ae = ctx.entry(ev.actor);
+    if (!ae || (ae.tier !== 'validator' && ae.tier !== 'related')) continue;
+    const a = amtOf(ev);
+    total += a; count++;
+    const gd = depthOf(ae);
+    segTotals[gd <= 0 ? 0 : gd === 1 ? 1 : 2] += a;
+    const names = ae.tier === 'validator' ? (ae.label ? [ae.label] : []) : [...(ae.relatedValidators ?? [])];
+    for (const name of names) {
+      const g = per.get(name);
+      if (!g) continue;
+      let s;
+      if (ae.tier === 'validator' && ae.label === name) s = 0;
+      else if ((!ae.autoAdded && (ae.relatedValidators ?? []).includes(name)) || (valAddr.get(name) && adj.has(key(ae.address, valAddr.get(name))))) s = 1;
+      else s = 2;
+      g.seg[s] += a; g.total += a; g.count++;
+    }
+  }
+  const r6 = (v) => Math.round(v * 1e6) / 1e6;
+  const perValidator = [...per.values()]
+    .map((g) => ({ moniker: g.moniker, seg: g.seg.map(r6), total: r6(g.total), count: g.count }))
+    .sort((x, y) => (y.total - x.total) || x.moniker.localeCompare(y.moniker));
+  return { total: r6(total), count, segTotals: segTotals.map(r6), perValidator };
+}
 // Deterministic history pass (v0.4.0): derives isDormantReturn /
 // dormantDays and isNewCounterparty from the FULL event history in
 // chronological order. Recomputed from scratch on every run, so Actions
@@ -413,7 +493,7 @@ export function computeHistoryFlags(events, ctx) {
 // reachable only through an estimated wallet is not added either (it can
 // still be added later through a confirmed contact).
 // Returns the new entry, or null when nothing was added.
-export function maybeAutoAdd(watchlist, ctx, ev, excluded) {
+export function planAutoAdd(watchlist, ctx, ev, excluded) {
   const cp = ev.counterparty ? lc(ev.counterparty) : null;
   if (!cp || cp === lc(ev.actor)) return null;
   const ae = ctx.entry(ev.actor);
@@ -422,15 +502,156 @@ export function maybeAutoAdd(watchlist, ctx, ev, excluded) {
   const names = ae.tier === 'validator' ? (ae.label ? [ae.label] : []) : [...(ae.relatedValidators ?? [])];
   if (!names.length) return null;
   const depth = (ae.depth ?? (ae.tier === 'validator' ? 0 : 1)) + 1;
+  return { cp, names, depth, actor: lc(ev.actor), ts: ev.ts, txHash: ev.txHash ?? null };
+}
+export function applyAutoAdd(watchlist, ctx, plan) {
   const entry = {
-    address: cp, tier: 'related', label: null, isCore: false, isPair: false, watch: true,
-    validators: [], relatedValidators: names,
-    autoAdded: true, addedVia: 'live', addedAt: ev.ts, firstSeenTx: ev.txHash ?? null,
-    via: { address: lc(ev.actor), validators: names }, depth,
+    address: plan.cp, tier: 'related', label: null, isCore: false, isPair: false, watch: true,
+    validators: [], relatedValidators: plan.names,
+    autoAdded: true, addedVia: 'live', addedAt: plan.ts, firstSeenTx: plan.txHash,
+    via: { address: plan.actor, validators: plan.names }, depth: plan.depth,
+  };
+  if (plan.evidence) entry.evidence = plan.evidence;
+  watchlist.entries.push(entry);
+  ctx.watch.set(plan.cp, entry);
+  return entry;
+}
+export function maybeAutoAdd(watchlist, ctx, ev, excluded) {
+  const plan = planAutoAdd(watchlist, ctx, ev, excluded);
+  return plan ? applyAutoAdd(watchlist, ctx, plan) : null;
+}
+// v0.4.2 (user rule: 仕組み系は全部排除): the live auto-add is bytecode-
+// gated. A counterparty carrying contract bytecode is NEVER added as a
+// related wallet; it is registered on the core side instead (label only,
+// for counterparty display). Person tiers are EOA-only.
+const codeCache = new Map();
+export async function isContractAddress(addr) {
+  addr = lc(addr);
+  if (codeCache.has(addr)) return codeCache.get(addr);
+  let isC = false;
+  try {
+    const [code] = await rpcBatch([{ method: 'eth_getCode', params: [addr, 'latest'] }]);
+    isC = !!code && code !== '0x';
+  } catch { isC = false; } // RPC trouble: fall back to the sync rules; the periodic audit is the systematic gate
+  codeCache.set(addr, isC);
+  return isC;
+}
+export function registerCoreContract(watchlist, ctx, addr, label) {
+  addr = lc(addr);
+  const existing = ctx.entry(addr);
+  if (existing) return existing;
+  const entry = {
+    address: addr, tier: 'core', label: label ?? 'コントラクト（未分類）', isCore: true, isPair: !!ctx.pairs[addr], watch: false,
+    validators: [], relatedValidators: [],
+    coreNote: 'ライブ収集中にバイトコードありと判定し中核へ登録（v0.4.2：仕組み系は人の関連に入れない）',
   };
   watchlist.entries.push(entry);
-  ctx.watch.set(cp, entry);
+  ctx.watch.set(addr, entry);
   return entry;
+}
+// ---- Wallet-evidence rules (v0.4.2 final scope, user-approved) ----
+// Depth>=2 related addresses are tracked ONLY with evidence that they
+// are the validator's own wallet. evidenceCodesFor is the single
+// threshold implementation: repair-evidence.mjs feeds it flow-index
+// statistics; the live auto-add feeds it recorded-event statistics.
+//   STRONG (one is enough):
+//     bidirectional       — fund movements in BOTH directions with the
+//                           validator itself or its depth-1 wallets
+//     funded-delegation   — received funds from the self side and
+//                           delegated at least half of the [42]
+//                           received to that validator
+//     concentrated-repeat — >=5 transfers with the self side, and at
+//                           least half of all its validator-side
+//                           transfers are with this validator's side
+//   WEAK (two needed):
+//     one-way-repeat      — >=3 one-way transfers FROM the self side
+//     delegation          — any delegation to that validator
+//     synchronized        — a swap-buy within 10 minutes of a
+//                           self-side wallet's swap-buy
+export function evidenceCodesFor({ inN = 0, outN = 0, totalVS = 0, received42 = 0n, delegated42 = 0n, delegateCount = 0, sync = false }) {
+  const strong = [], weak = [];
+  if (inN >= 1 && outN >= 1) strong.push('bidirectional');
+  if (inN >= 1 && received42 > 0n && delegated42 > 0n && delegated42 * 2n >= received42) strong.push('funded-delegation');
+  if (inN + outN >= 5 && totalVS > 0 && (inN + outN) * 2 >= totalVS) strong.push('concentrated-repeat');
+  if (outN === 0 && inN >= 3) weak.push('one-way-repeat');
+  if (delegateCount >= 1) weak.push('delegation');
+  if (sync) weak.push('synchronized');
+  return { strong, weak, adopted: strong.length >= 1 || weak.length >= 2 };
+}
+// The "self side" of a validator: its own address + its depth-1
+// (original, research-confirmed) related wallets.
+export function selfSideMembers(ctx, name) {
+  const members = new Set();
+  for (const [, e] of ctx.watch) {
+    if (e.tier === 'validator' && e.label === name) members.add(e.address);
+    else if (e.tier === 'related' && !e.autoAdded && (e.relatedValidators ?? []).includes(name)) members.add(e.address);
+  }
+  return members;
+}
+const is42Amount = (a) => !!a && (a.token === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' || a.denom === 'drop');
+export function assessEvidenceFromEvents(addr, names, ctx, events) {
+  addr = lc(addr);
+  const allSide = new Set();
+  for (const [, e] of ctx.watch) {
+    if (e.tier === 'validator') allSide.add(e.address);
+    else if (e.tier === 'related' && !e.autoAdded) allSide.add(e.address);
+  }
+  let totalVS = 0;
+  const candBuys = [];
+  for (const ev of events) {
+    if (ev.type === 'transfer' && ev.counterparty) {
+      if (ev.actor === addr && allSide.has(ev.counterparty)) totalVS++;
+      else if (ev.counterparty === addr && allSide.has(ev.actor)) totalVS++;
+    }
+    if (ev.type === 'swap-buy' && ev.actor === addr) candBuys.push(ev.ts);
+  }
+  const adopted = {};
+  for (const name of names) {
+    const S = selfSideMembers(ctx, name);
+    let inN = 0, outN = 0, delegateCount = 0, sync = false;
+    let received42 = 0n, delegated42 = 0n;
+    const sideBuys = [];
+    for (const ev of events) {
+      if (ev.type === 'transfer' && ev.counterparty) {
+        if (ev.counterparty === addr && S.has(ev.actor)) { inN++; if (is42Amount(ev.amount)) { try { received42 += BigInt(ev.amount.amountRaw ?? '0'); } catch {} } }
+        else if (ev.actor === addr && S.has(ev.counterparty)) outN++;
+      } else if (ev.type === 'delegate' && ev.actor === addr && (ev.validatorNames ?? []).includes(name)) {
+        delegateCount++;
+        try { delegated42 += BigInt(ev.amount?.amountRaw ?? '0'); } catch {}
+      } else if (ev.type === 'swap-buy' && S.has(ev.actor)) sideBuys.push(ev.ts);
+    }
+    if (candBuys.length && sideBuys.length) {
+      outer: for (const t of candBuys) for (const s of sideBuys) if (Math.abs(t - s) <= 600) { sync = true; break outer; }
+    }
+    const r = evidenceCodesFor({ inN, outN, totalVS, received42, delegated42, delegateCount, sync });
+    if (r.adopted) adopted[name] = [...r.strong, ...r.weak];
+  }
+  return adopted;
+}
+// Live variant used by the collection loops: plans the add, checks the
+// counterparty's bytecode, and either applies the related add (returns
+// the new related entry) or registers a core contract (returns
+// { contract }). Returns null when nothing was added.
+// v0.4.2 gates: contracts never enter the person tiers (routed to the
+// core registry), and a depth>=2 newcomer enters ONLY with wallet
+// evidence (assessed from the recorded events against the inherited
+// validator names); unlimited automatic expansion is stopped.
+export async function maybeAutoAddLive(watchlist, ctx, ev, excluded, opts = {}) {
+  const isContractFn = opts.isContractFn ?? isContractAddress;
+  const plan = planAutoAdd(watchlist, ctx, ev, excluded);
+  if (!plan) return null;
+  if (await isContractFn(plan.cp)) {
+    const label = DEST_LABELS[plan.cp] ?? KNOWN_CONTRACTS[plan.cp] ?? null;
+    return { contract: registerCoreContract(watchlist, ctx, plan.cp, label) };
+  }
+  if (plan.depth >= 2) {
+    const adopted = opts.events ? assessEvidenceFromEvents(plan.cp, plan.names, ctx, opts.events) : {};
+    const passNames = plan.names.filter((n) => adopted[n]);
+    if (!passNames.length) return null;
+    plan.names = passNames;
+    plan.evidence = adopted;
+  }
+  return applyAutoAdd(watchlist, ctx, plan);
 }
 // Recompute the derived watchlist summary counts after any mutation
 // (validator refresh keeps its own fields; the research-derived link
@@ -883,6 +1104,9 @@ export function enrichEvent(ev, ctx, creations = {}) {
   // an original related entry without an explicit depth = 1; anything else
   // (core / unknown / estimated) = null.
   set('actorDepth', ae?.tier === 'validator' ? 0 : (ae?.depth ?? (ae?.tier === 'related' ? 1 : null)));
+  // v0.4.2: depth>=2 related actors carry their wallet-evidence codes
+  // (why they are tracked at all); null for everyone else.
+  set('actorEvidence', ae?.tier === 'related' && (ae?.depth ?? 1) >= 2 ? (ae.evidence ?? null) : null);
   const rel = ae?.tier === 'validator' ? [] : [...(ae?.relatedValidators ?? [])];
   set('actorValidators', rel);
   set('actorShared', ev.actorTier !== 'validator' && rel.length >= 3);
@@ -1585,7 +1809,7 @@ export function selectFeedEvents(sorted) {
   return [
     ...head, ...pinned,
     ...take((e) => e.type === 'pair-created', 100),
-    ...take((e) => e.type === 'lp-add' || e.type === 'lp-remove', 150),
+    ...take((e) => (e.type === 'lp-add' || e.type === 'lp-remove') && e.actorTier !== 'estimated', 150),
     ...take((e) => !!e.isDormantReturn, 200),
     ...take((e) => !!e.isNewCounterparty, 100),
   ];
@@ -1663,6 +1887,18 @@ async function main() {
     : { lastProcessedBlock: null, totalBlocksScanned: 0, totalTxsScanned: 0, totalEventsFound: 0, updatedAt: null };
   if (state.lastProcessedCosmosBlock === undefined) state.lastProcessedCosmosBlock = null;
   const allEvents = existsSync(eventsPath) ? readFileSync(eventsPath, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : [];
+  // v0.4.2: permanently excluded actors (env-supplied, see
+  // excludedActorsFromEnv) never keep stored events: purge any that are
+  // present (e.g. recorded before the exclusion took effect) on every run.
+  const permExcluded = excludedActorsFromEnv();
+  if (permExcluded.size) {
+    const beforePurge = allEvents.length;
+    for (let i = allEvents.length - 1; i >= 0; i--) if (permExcluded.has(lc(allEvents[i].actor))) allEvents.splice(i, 1);
+    if (allEvents.length !== beforePurge) {
+      writeFileSync(eventsPath, allEvents.map((e) => JSON.stringify(e)).join('\n') + '\n');
+      console.log(`[collector] migration: dropped ${beforePurge - allEvents.length} stored events by permanently excluded actors`);
+    }
+  }
   const seen = new Set(allEvents.map((e) => e.id));
 
   // Migration: enrich every stored event with v0.2.0 display/snipe fields
@@ -1710,7 +1946,7 @@ async function main() {
         actionRule: '操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。',
         ...(priceInfo ? { price: priceInfo } : {}),
       },
-      stats: { staking: computeStakingStats(allEvents, ctx) },
+      stats: { staking: computeStakingStats(allEvents, ctx), bridge: computeBridgeChart(allEvents, ctx) },
       validators,
       events: selectFeedEvents(sorted),
     };
@@ -1830,6 +2066,7 @@ async function main() {
             }
             enrichEvent(ev, ctx, creations);
             if (seen.has(ev.id)) continue;
+            if (isPermanentlyExcluded(ev.actor)) continue; // v0.4.2: excluded actors are never recorded
             // Repetition suppression for METHOD-CALL events ONLY (the WS4
             // successors of "other-contract", counted/reported under their
             // detailed classification names): a keeper-like related address
@@ -1849,11 +2086,17 @@ async function main() {
             // (recursive — auto-added wallets trigger adds themselves).
             // Runs BEFORE the append so the watchlistAdded marker is
             // persisted with the event itself.
-            const addedEntry = maybeAutoAdd(watchlist, ctx, ev, excluded);
-            if (addedEntry) {
+            // v0.4.2: bytecode-gated — a contract counterparty is
+            // registered on the core side instead of becoming a related
+            // wallet (see maybeAutoAddLive).
+            const addRes = await maybeAutoAddLive(watchlist, ctx, ev, excluded, { events: allEvents });
+            if (addRes?.contract) {
+              watchlistDirty = true;
+              console.log(`[collector] counterparty is a contract — registered as core, not related: ${addRes.contract.address}`);
+            } else if (addRes) {
               ev.watchlistAdded = true;
               watchlistDirty = true;
-              console.log(`[collector] auto-added related address ${addedEntry.address} (depth ${addedEntry.depth}, via ${addedEntry.via.address}: ${addedEntry.relatedValidators.join(', ')})`);
+              console.log(`[collector] auto-added related address ${addRes.address} (depth ${addRes.depth}, via ${addRes.via.address}: ${addRes.relatedValidators.join(', ')})`);
             }
             seen.add(ev.id); allEvents.push(ev);
             appendFileSync(eventsPath, JSON.stringify(ev) + '\n');
@@ -1897,11 +2140,15 @@ async function main() {
       for (const ev of evs) {
         enrichEvent(ev, ctx, creations);
         if (seen.has(ev.id)) continue;
-        const addedEntry = maybeAutoAdd(watchlist, ctx, ev, excluded);
-        if (addedEntry) {
+        if (isPermanentlyExcluded(ev.actor)) continue; // v0.4.2: excluded actors are never recorded
+        const addRes = await maybeAutoAddLive(watchlist, ctx, ev, excluded, { events: allEvents });
+        if (addRes?.contract) {
+          watchlistDirty = true;
+          console.log(`[collector] counterparty is a contract — registered as core, not related (cosmos): ${addRes.contract.address}`);
+        } else if (addRes) {
           ev.watchlistAdded = true;
           watchlistDirty = true;
-          console.log(`[collector] auto-added related address (cosmos) ${addedEntry.address} (depth ${addedEntry.depth}, via ${addedEntry.via.address}: ${addedEntry.relatedValidators.join(', ')})`);
+          console.log(`[collector] auto-added related address (cosmos) ${addRes.address} (depth ${addRes.depth}, via ${addRes.via.address}: ${addRes.relatedValidators.join(', ')})`);
         }
         seen.add(ev.id); allEvents.push(ev);
         appendFileSync(eventsPath, JSON.stringify(ev) + '\n');

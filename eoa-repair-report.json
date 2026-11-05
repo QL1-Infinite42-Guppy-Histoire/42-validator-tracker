@@ -1,0 +1,1385 @@
+{
+ "generatedAt": "2026-11-05T04:47:00.549Z",
+ "rule": "v0.4.2: bytecode-only test — contracts leave the person tiers; closure recomputed EOA-only; permanently excluded addresses removed (count only in this report)",
+ "auditDecisions": {
+  "eoa": 239,
+  "core": 150
+ },
+ "contractsMovedToCore": [
+  {
+   "address": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
+   "label": "FISH/ZAP ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "label": "FISH/42 ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0x53df50e949eb821ea1ad563b3db8d13abca5b07d",
+   "label": "FISH/FOXXEY ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0x5cfcb6e5999f06bdfaee2bd6adcc4d17afead3f5",
+   "label": "FOXXEY/42 ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "label": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 1167
+  },
+  {
+   "address": "0x80bacfb358a3c7d7d1b549c2028001e2ba3acdac",
+   "label": "42/DONT ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0x8667682b62caceda9e87b3caa21d5b09d9ae13c3",
+   "label": "ブリッジルーター",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 14454
+  },
+  {
+   "address": "0x95feabdecca6cbc808d231895b80703905be3b83",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 12253
+  },
+  {
+   "address": "0x963db3dd5f653e1544d61b3e2ad4bb20c2ccaee3",
+   "label": "CAT42/42 ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0xa7550206e84cd6018bb7bc27cc35c66f14dd8cd3",
+   "label": "FISH/DONT ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0xaabcc9186b6b3090b6b06d754b27970ae529af00",
+   "label": "FISH/CAT42 ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0xb647ce2aa7d436cce95dc961d066ef610ca451b7",
+   "label": "ZAP/42 ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0xbf07dfe35746894bae373f63f4bf2379f9bafec0",
+   "label": "DEXルーター",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 21996
+  },
+  {
+   "address": "0xc747c1a4a57955478701a0adf8a8716a0ccfed96",
+   "label": "FISH/MARVIN ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
+   "label": "FISH/USDT ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0xd0f48123638bd243c3a0ee49d0d7beb7404f9de4",
+   "label": "TOWEL",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 7627
+  },
+  {
+   "address": "0xfac6a97837fd3ef5876e18457eea52415296c613",
+   "label": "USDT/42 ペア",
+   "formerTier": "related",
+   "formerDepth": null,
+   "codeBytes": 11293
+  },
+  {
+   "address": "0x98fd9e32eaf45e0adf7f5c8bd7714f24a5dc0e88",
+   "label": "コントラクト（未分類）",
+   "formerTier": "estimated",
+   "formerDepth": null,
+   "codeBytes": 5315
+  },
+  {
+   "address": "0xfcebe4797ed94bac6d09503f04fa13d997675553",
+   "label": "コントラクト（未分類）",
+   "formerTier": "estimated",
+   "formerDepth": null,
+   "codeBytes": 6672
+  },
+  {
+   "address": "0xe5c35f94dd36a96e955da58fe4048b1e073e5221",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 2,
+   "codeBytes": 2023
+  },
+  {
+   "address": "0x08354d56d3b054381cc94e5d1f33afd032f1c480",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 2,
+   "codeBytes": 8119
+  },
+  {
+   "address": "0xafad9d2074cacb83bc42ee07f9d1e85af84de32a",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 2,
+   "codeBytes": 2023
+  },
+  {
+   "address": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 2,
+   "codeBytes": 1167
+  },
+  {
+   "address": "0x051bbfce088bc150727169d3b21dbaeacfaf133a",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 2,
+   "codeBytes": 15976
+  },
+  {
+   "address": "0xd5b83c0086466781dc7c9079a889009c97ce9057",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 2,
+   "codeBytes": 8867
+  },
+  {
+   "address": "0xf08d8c956d929a1d1166bbe5aeb7a5a70d47dc01",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 4,
+   "codeBytes": 16993
+  },
+  {
+   "address": "0xed697927cf6f7b5200eeb530588dd5700d3100cc",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 4,
+   "codeBytes": 24408
+  },
+  {
+   "address": "0x0b2a031c27620660f0ac0f1507b59ab774e0b6d5",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 2,
+   "codeBytes": 13911
+  },
+  {
+   "address": "0xfa69cb9a144052096f24d35bfa80b0b58dd174cf",
+   "label": "コントラクト（未分類）",
+   "formerTier": "related",
+   "formerDepth": 3,
+   "codeBytes": 2781
+  }
+ ],
+ "excludedEntriesRemoved": 1,
+ "closureRemoved": [
+  {
+   "address": "0xdaf4cca60076f8fe29619500400b9605bb5804f3",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xd6784290b1bd89ad0644aa58e98ccb798317427e",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xf36e54090dc51acacebbdce875bcd4778ee18120",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xb5533d0a3844ae55130c051122e19a17c1b6add1",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x2f31e7b30a9fc4b537ecbb2b1b6b0e45bce5fbcb",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xf1d5b95428a91d2a8a3543b75ebe9b7d3c06e46e",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x5fe3f287a1b47cee41609e28f0660b0ec531691e",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xda489026a4f7bf2882ecbf3b8860de8c256648f3",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xeb17cbfa8b16f677a2a6809ddeee9e63ecb75808",
+   "depth": 2,
+   "via": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xb4963e29d3fbff031feeeb1ac2753e3354a97c8b",
+   "depth": 3,
+   "via": "0xdaf4cca60076f8fe29619500400b9605bb5804f3",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x3722f05a1b73606cbbec42b85d81faf88e793793",
+   "depth": 3,
+   "via": "0xd5b83c0086466781dc7c9079a889009c97ce9057",
+   "validators": [
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
+   ]
+  },
+  {
+   "address": "0xb6c2328679f264831c95f1fe209bd9b2862751d5",
+   "depth": 4,
+   "via": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x749ff7d0a3651a3447e53b00166c2053040d8b4e",
+   "depth": 4,
+   "via": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x769a8f96d03d1253f6af7445fc41446a709d2271",
+   "depth": 3,
+   "via": "0x051bbfce088bc150727169d3b21dbaeacfaf133a",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x8ea71d500c8c947d885ba0fe735d5208cb7e7048",
+   "depth": 4,
+   "via": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0xbd11bfd62a623d2a3f16193b51894cc7438994c4",
+   "depth": 5,
+   "via": "0xabb06d2f65d6473cf93de689d585a85b47fb4191",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0xcdea8e8529df08f19710809b4142ec3539bc36e9",
+   "depth": 3,
+   "via": "0xf1d5b95428a91d2a8a3543b75ebe9b7d3c06e46e",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xf2b3ac3f7e6cdf7acc6e005b75bbf4f51a06491c",
+   "depth": 4,
+   "via": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x9a5da5f1948a031fccd8d2332a3f79aa8f819092",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xddb934daf7472aa7569ac0ce75e16250bb1acbe5",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x12e8474cdbf6090ba9fd539ab1f9a4a563c79de4",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xa913d4c788c649e90ba74a63e953f09e9a1c2607",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xf7cf468de95fd87207c4dedfaafa33a6573e1eed",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xd4f8de733695fa0f52ea447b8a9d2e0790af9ac4",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x76619030aea0ab11fdb77c599c76d4abebef8cee",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x3fd692c7ff050542ebef86f7e1fbd96122016d4b",
+   "depth": 3,
+   "via": "0xd6784290b1bd89ad0644aa58e98ccb798317427e",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xcf47aab79ac80f67a331494db5fc4840bed1afaa",
+   "depth": 3,
+   "via": "0xf36e54090dc51acacebbdce875bcd4778ee18120",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xe304a69dbf95403cb9504f5d986dbf04ce419726",
+   "depth": 3,
+   "via": "0xb5533d0a3844ae55130c051122e19a17c1b6add1",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x308791ff450eac417c4c53d2b7b5b470b2b9710d",
+   "depth": 3,
+   "via": "0xdaf4cca60076f8fe29619500400b9605bb5804f3",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "depth": 3,
+   "via": "0x051bbfce088bc150727169d3b21dbaeacfaf133a",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x01dab13fbdc9e3d2255423a4d344f8a2c9fc054f",
+   "depth": 3,
+   "via": "0xd5b83c0086466781dc7c9079a889009c97ce9057",
+   "validators": [
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
+   ]
+  },
+  {
+   "address": "0xe3d94ba0a0359a627d134cde4f8f726a4f257d5e",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x232a9d3338c896329f4c154f19a6b4ca87d6c98f",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xc7dfe4ee84794aa54c21d1b6c823322e4b24252e",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x4fa05a5289d283f7540c2d8d7a1db4c6dd029ddb",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xb6ed0afb0f965fbef7a51735f9d310aa1bcb68e6",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0xe00bf1b8c6a783cb1f85c74a02a6ff9a8b59330f",
+   "depth": 3,
+   "via": "0xa33e…3a23",
+   "validators": [
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x3441d1f915c2aa36c85bc8ccd17c2b265117169f",
+   "depth": 3,
+   "via": "0xdaf4cca60076f8fe29619500400b9605bb5804f3",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x8a1f10c9b8f143084e5accb8504ed4a78d8e7daa",
+   "depth": 3,
+   "via": "0xd6784290b1bd89ad0644aa58e98ccb798317427e",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x99a2ea6f8c94bb5f98dbc9f048d68c788ab6a382",
+   "depth": 3,
+   "via": "0xda489026a4f7bf2882ecbf3b8860de8c256648f3",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  },
+  {
+   "address": "0x546c1b731b06f99688df1a2323935a3c4daad4d2",
+   "depth": 4,
+   "via": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x1baf21ae97ee86f1c1bf73f5f549259763b4af6b",
+   "depth": 5,
+   "via": "0x749ff7d0a3651a3447e53b00166c2053040d8b4e",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x4f2102d198ac22f42b8525e09a2983bd485a6fcc",
+   "depth": 5,
+   "via": "0x749ff7d0a3651a3447e53b00166c2053040d8b4e",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x5202d3d35c6d60c990e8be2556cda9e1f8f14ff7",
+   "depth": 4,
+   "via": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0xa5f0c55b9a62596aaf357dfe9c34c28d58493a98",
+   "depth": 4,
+   "via": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0xd94d5c0f585d5818ce39450620fab80c018ac785",
+   "depth": 4,
+   "via": "0x92070181bea71895abe372ea48f2f1b6703ae488",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0xabb06d2f65d6473cf93de689d585a85b47fb4191",
+   "depth": 4,
+   "via": "0x769a8f96d03d1253f6af7445fc41446a709d2271",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x8ba5c5ad8013bd307c3b823ce9cbb37476e1a0ec",
+   "depth": 6,
+   "via": "0xbd11bfd62a623d2a3f16193b51894cc7438994c4",
+   "validators": [
+    "X"
+   ]
+  },
+  {
+   "address": "0x07a841e09054e34b7bf16e3c534049afe5ff09e5",
+   "depth": 4,
+   "via": "0x3fd692c7ff050542ebef86f7e1fbd96122016d4b",
+   "validators": [
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
+   ]
+  }
+ ],
+ "closureUpdated": 46,
+ "eventsPurged": {
+  "contractActors": 3228,
+  "excludedActors": 3442,
+  "removedEntries": 5027,
+  "total": 11697
+ },
+ "counterpartyRelabelled": 1147,
+ "before": {
+  "watchlistTotal": 413,
+  "tiers": {
+   "validator": 23,
+   "related": 260,
+   "core": 124,
+   "estimated": 6
+  },
+  "events": 30248,
+  "bridge": {
+   "total": 16074.079919,
+   "count": 78,
+   "segTotals": [
+    714.94186,
+    7155.282619,
+    8203.85544
+   ],
+   "perValidator": [
+    {
+     "moniker": "Metal Raptor",
+     "seg": [
+      0,
+      0,
+      6483.259582
+     ],
+     "total": 6483.259582,
+     "count": 53
+    },
+    {
+     "moniker": "light888",
+     "seg": [
+      714.94186,
+      474.556045,
+      4230.038998
+     ],
+     "total": 5419.536903,
+     "count": 26
+    },
+    {
+     "moniker": "DRIVESTATS",
+     "seg": [
+      0,
+      613.05,
+      4728.335469
+     ],
+     "total": 5341.385469,
+     "count": 47
+    },
+    {
+     "moniker": "farmer",
+     "seg": [
+      0,
+      1016.416574,
+      4230.038998
+     ],
+     "total": 5246.455572,
+     "count": 25
+    },
+    {
+     "moniker": "Zap",
+     "seg": [
+      0,
+      0,
+      4526.335469
+     ],
+     "total": 4526.335469,
+     "count": 44
+    },
+    {
+     "moniker": "ayc",
+     "seg": [
+      0,
+      0,
+      4230.038998
+     ],
+     "total": 4230.038998,
+     "count": 23
+    },
+    {
+     "moniker": "HeraMoon",
+     "seg": [
+      0,
+      0,
+      4230.038998
+     ],
+     "total": 4230.038998,
+     "count": 23
+    },
+    {
+     "moniker": "panda42",
+     "seg": [
+      0,
+      0,
+      4230.038998
+     ],
+     "total": 4230.038998,
+     "count": 23
+    },
+    {
+     "moniker": "PhoenixRing",
+     "seg": [
+      0,
+      0,
+      4230.038998
+     ],
+     "total": 4230.038998,
+     "count": 23
+    },
+    {
+     "moniker": "Xenia",
+     "seg": [
+      0,
+      0,
+      4230.038998
+     ],
+     "total": 4230.038998,
+     "count": 23
+    },
+    {
+     "moniker": "X",
+     "seg": [
+      0,
+      1504,
+      1230.03665
+     ],
+     "total": 2734.03665,
+     "count": 14
+    },
+    {
+     "moniker": "Luke",
+     "seg": [
+      0,
+      1965.75,
+      625.2
+     ],
+     "total": 2590.95,
+     "count": 4
+    },
+    {
+     "moniker": "XenIt",
+     "seg": [
+      0,
+      1581.51,
+      0
+     ],
+     "total": 1581.51,
+     "count": 2
+    },
+    {
+     "moniker": "Woman-In-Red-42",
+     "seg": [
+      0,
+      0,
+      1005.415772
+     ],
+     "total": 1005.415772,
+     "count": 1
+    },
+    {
+     "moniker": "FoxxOne",
+     "seg": [
+      0,
+      0,
+      893.395858
+     ],
+     "total": 893.395858,
+     "count": 7
+    },
+    {
+     "moniker": "CCUK",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "DON'T PANIC - DEX",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "dudenode",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "kimnmike",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "Popo",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "Sirius Cybernetics",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "the_rider",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "vethawk",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    }
+   ]
+  }
+ },
+ "after": {
+  "watchlistTotal": 363,
+  "tiers": {
+   "validator": 23,
+   "related": 183,
+   "core": 153,
+   "estimated": 4
+  },
+  "events": 18551,
+  "bridge": {
+   "total": 14104.467588,
+   "count": 62,
+   "segTotals": [
+    714.94186,
+    7155.282619,
+    6234.243109
+   ],
+   "perValidator": [
+    {
+     "moniker": "DRIVESTATS",
+     "seg": [
+      0,
+      613.05,
+      3498.298819
+     ],
+     "total": 4111.348819,
+     "count": 37
+    },
+    {
+     "moniker": "Metal Raptor",
+     "seg": [
+      0,
+      0,
+      3296.298819
+     ],
+     "total": 3296.298819,
+     "count": 34
+    },
+    {
+     "moniker": "Zap",
+     "seg": [
+      0,
+      0,
+      3296.298819
+     ],
+     "total": 3296.298819,
+     "count": 34
+    },
+    {
+     "moniker": "Luke",
+     "seg": [
+      0,
+      1965.75,
+      625.2
+     ],
+     "total": 2590.95,
+     "count": 4
+    },
+    {
+     "moniker": "XenIt",
+     "seg": [
+      0,
+      1581.51,
+      0
+     ],
+     "total": 1581.51,
+     "count": 2
+    },
+    {
+     "moniker": "X",
+     "seg": [
+      0,
+      1504,
+      0
+     ],
+     "total": 1504,
+     "count": 4
+    },
+    {
+     "moniker": "light888",
+     "seg": [
+      714.94186,
+      474.556045,
+      0
+     ],
+     "total": 1189.497905,
+     "count": 3
+    },
+    {
+     "moniker": "FoxxOne",
+     "seg": [
+      0,
+      0,
+      1105.328518
+     ],
+     "total": 1105.328518,
+     "count": 9
+    },
+    {
+     "moniker": "farmer",
+     "seg": [
+      0,
+      1016.416574,
+      0
+     ],
+     "total": 1016.416574,
+     "count": 2
+    },
+    {
+     "moniker": "Woman-In-Red-42",
+     "seg": [
+      0,
+      0,
+      1005.415772
+     ],
+     "total": 1005.415772,
+     "count": 1
+    },
+    {
+     "moniker": "HeraMoon",
+     "seg": [
+      0,
+      0,
+      211.93266
+     ],
+     "total": 211.93266,
+     "count": 2
+    },
+    {
+     "moniker": "ayc",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "CCUK",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "DON'T PANIC - DEX",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "dudenode",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "kimnmike",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "panda42",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "PhoenixRing",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "Popo",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "Sirius Cybernetics",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "the_rider",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "vethawk",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    },
+    {
+     "moniker": "Xenia",
+     "seg": [
+      0,
+      0,
+      0
+     ],
+     "total": 0,
+     "count": 0
+    }
+   ]
+  }
+ }
+}

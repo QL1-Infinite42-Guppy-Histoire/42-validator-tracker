@@ -21,9 +21,9 @@ const w = JSON.parse(read('watchlist.json'));
 const est = (w.entries || []).filter((e) => e.tier === 'estimated');
 const byBasis = {};
 for (const e of est) byBasis[e.basisType] = (byBasis[e.basisType] || 0) + 1;
-check('watchlist estimated total = 6', est.length === 6, String(est.length));
-check('watchlist estimated pool = 5', byBasis.pool === 5, String(byBasis.pool || 0));
-check('watchlist estimated shared = 1', byBasis.shared === 1, String(byBasis.shared || 0));
+check('watchlist estimated total = 4', est.length === 4, String(est.length));
+check('watchlist estimated pool = 4', byBasis.pool === 4, String(byBasis.pool || 0));
+check('watchlist estimated shared = 0 (the one shared estimate was a contract; removed in v0.4.2)', !byBasis.shared, String(byBasis.shared || 0));
 check('watchlist estimated 2hop = 0', !byBasis['2hop'], String(byBasis['2hop'] || 0));
 
 // --- JP definition block ---
@@ -42,8 +42,8 @@ for (const [label, s] of [
   ['2-hop honestly none registered', 'この種別で新しく登録されたアドレスはありません'],
   ['handling: dashed + badge, toggle hides', '点線の枠と「推定」バッジ付きで表示され'],
   ['handling: special sections excluded', 'スナイプ速報・注目・インサイダー・ブリッジ出金とその総額グラフには推定を一切含めません'],
-  ['counts stated', '推定関連は6件です（プール経由5件・共通の相手先1件'],
-  ['counts dated as v0.4.1 snapshot', 'v0.4.1 時点'],
+  ['counts stated', '推定関連は4件です（プール経由4件・共通の相手先0件'],
+  ['counts dated as v0.4.2 snapshot', 'v0.4.2 時点'],
 ]) check(`index.html definition: ${label}`, jp.includes(s));
 
 // --- EN definition block ---
@@ -63,15 +63,15 @@ for (const [label, s] of [
   ['2-hop honestly none registered', 'no address has been newly registered under this type'],
   ['handling: dashed + badge, toggle hides', 'with a dashed border and an "Estimated" badge, and can be hidden'],
   ['handling: special sections excluded', 'never included in the Snipe Alerts, Notable, Insider Watch, or Bridge Withdrawals sections'],
-  ['counts stated', '6 estimated addresses (5 through-pool, 1 shared counterparty)'],
-  ['counts dated as v0.4.1 snapshot', 'as of v0.4.1'],
+  ['counts stated', '4 estimated addresses (4 through-pool, 0 shared counterparties)'],
+  ['counts dated as v0.4.2 snapshot', 'as of v0.4.2'],
 ]) check(`en.html definition: ${label}`, en.includes(s));
 
 // --- home pages: one-line link + version ---
 check('home.html: link to definition', home.includes('href="index.html#estimated-def"') && home.includes('推定関連とは？'));
 check('home-en.html: link to definition', homeEn.includes('href="en.html#estimated-def"') && homeEn.includes('What are estimated relations?'));
 for (const [name, html] of [['index.html', jp], ['en.html', en], ['home.html', home], ['home-en.html', homeEn]]) {
-  check(`${name}: version v0.4.1`, html.includes('v0.4.1'));
+  check(`${name}: version v0.4.2`, html.includes('v0.4.2'));
 }
 
 console.log(fails === 0 ? 'ALL PASS' : `${fails} FAILED`);
