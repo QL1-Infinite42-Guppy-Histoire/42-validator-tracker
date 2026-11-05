@@ -235,12 +235,12 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
     check(`${name}: price bar + staking renderer + dormant rule hook`, html.includes('id="pricebar"') && html.includes('renderStaking') && html.includes('id="dormantRule"'));
     check(`${name}: LP border classes + new badges`, html.includes('.ev.lpadd') && html.includes('.ev.lpremove') && html.includes('badge dormant') && html.includes('badge newface'));
     check(`${name}: topnav has all new sections`, ['#sec-newpairs', '#sec-lp', '#sec-dormant', '#sec-newfaces', '#sec-staking'].every((h) => html.includes(`href="${h}"`)));
-    check(`${name}: version v0.4.0`, html.includes('v0.4.0'));
+    check(`${name}: version v0.4.1`, html.includes('v0.4.1'));
   }
   for (const [name, html, p] of [['home.html', home, 'index.html'], ['home-en.html', homeEn, 'en.html']]) {
     check(`${name}: price card present`, html.includes('id="pricecard"'));
     check(`${name}: portal cards for all new sections`, ['#sec-newpairs', '#sec-lp', '#sec-dormant', '#sec-newfaces', '#sec-staking'].every((h) => html.includes(`href="${p}${h}"`)));
-    check(`${name}: version v0.4.0`, html.includes('v0.4.0'));
+    check(`${name}: version v0.4.1`, html.includes('v0.4.1'));
   }
 }
 

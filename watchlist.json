@@ -9,18 +9,18 @@
  },
  "summary": {
   "validators": 23,
-  "directRelated": 341,
-  "coreLabelOnly": 90,
-  "coreFlaggedTotal": 106,
-  "watchedActors": 370,
-  "totalEntries": 460,
+  "directRelated": 260,
+  "coreLabelOnly": 124,
+  "coreFlaggedTotal": 140,
+  "watchedActors": 289,
+  "totalEntries": 413,
   "confirmedCounterpartyLinks": 212,
   "uniqueConfirmedCounterparties": 129,
-  "related": 341,
-  "core": 90,
+  "related": 260,
+  "core": 124,
   "estimated": 6,
-  "autoAdded": 231,
-  "autoAddedClosure": 231,
+  "autoAdded": 156,
+  "autoAddedClosure": 156,
   "autoAddedLive": 0
  },
  "entries": [
@@ -553,15 +553,14 @@
   },
   {
    "address": "0x388f7d825f745c673c71d695c125ce9a51f18b35",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "PaymentMasterRouterV4",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "light888"
-   ]
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x38ab7954c2b3d2414e572dafbb33a049b3d30571",
@@ -667,15 +666,14 @@
   },
   {
    "address": "0x551845e9186669b690966616d903eff85a90508e",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "FaucetDistributor",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
@@ -1074,27 +1072,25 @@
   },
   {
    "address": "0x985f6ecb68f308ea4c3b5fc9c5b187f4ee1dfa23",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "DepositPool",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "ayc"
-   ]
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "FoxxStaking",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ]
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x9e702eb30ab25e3d05f2e46e98eb59eee7b7d9d4",
@@ -1385,15 +1381,14 @@
   },
   {
    "address": "0xc46b052a170ca8d108ee740cbe1d2058eef0d8aa",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "FoxxOnePaymentRouterV1",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "X"
-   ]
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xc5d55f09f144d648dbdbdd13aaa7ef17b95db750",
@@ -1669,15 +1664,14 @@
   },
   {
    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "ブリッジ系コントラクト",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ]
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xf3ccbc9705dbbc4eee28d74ad79d4737005e04c4",
@@ -2810,26 +2804,14 @@
   },
   {
    "address": "0x263d005f47aaffb212e3591c8d2cdced81d7db3a",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "FoxxStaking",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "FoxxOne"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782407069,
-   "firstSeenTx": "0x25a2378cc22959b9f758f29f9246312a135d206b7f9fc659b9462c14bf8b5fcd",
-   "via": {
-    "address": "0x02845d10214dff41642bbcee2438a9cddee90d5c",
-    "validators": [
-     "FoxxOne"
-    ]
-   },
-   "depth": 2
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xaeca0c02baee386e45c273a1bf2d7ddfda48ed30",
@@ -3054,30 +3036,14 @@
   },
   {
    "address": "0xeed5b2bcff223f8e4d43eecf6b55ac69a6f26a70",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "First Ground",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "Metal Raptor",
-    "Zap"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1784351688,
-   "firstSeenTx": "0xe5a4cb574f248a4b7775a2c313abc89b93d5beff04b8f83f46f08f22af0e72cf",
-   "via": {
-    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
-    "validators": [
-     "DRIVESTATS",
-     "Metal Raptor",
-     "Zap"
-    ]
-   },
-   "depth": 2
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x22618d7113bb4b7ee7203b8ce42370a364f49244",
@@ -3097,9 +3063,11 @@
    "addedAt": 1782809488,
    "firstSeenTx": "0xc8c4172b7a5db23d388aea8dba1c7930736cc3e31b0c030ae7f72c192e814123",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
    "depth": 2
@@ -3122,9 +3090,11 @@
    "addedAt": 1782324082,
    "firstSeenTx": "0xa8aac1d1c9d2135e8b87cd36f8c0755760bdc66f2e5e4222bbfba5d47a425b55",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
    "depth": 2
@@ -3139,6 +3109,7 @@
    "validators": [],
    "relatedValidators": [
     "DRIVESTATS",
+    "FoxxOne",
     "HeraMoon",
     "Metal Raptor",
     "PhoenixRing",
@@ -3277,9 +3248,11 @@
    "addedAt": 1782815863,
    "firstSeenTx": "0xd14a0b341c9e5d3842095bab7be30de45b3d9beda989f5a27090307851071873",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
    "depth": 2
@@ -3363,9 +3336,11 @@
    "addedAt": 1782962990,
    "firstSeenTx": "0x0e03420563726969388ea848cfc218a1b107ab1298ed91cc6c3dae02db44c689",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
    "depth": 2
@@ -3422,9 +3397,11 @@
    "addedAt": 1782820012,
    "firstSeenTx": "0xaa4565f93acf5c88a322a3e223381f8c53b3e3c11d0f087fb1bad30cffaae6c7",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
    "depth": 2
@@ -3454,9 +3431,11 @@
    "addedAt": 1785955628,
    "firstSeenTx": "0x292dbb4663ddc3d17ffa0ea251f54f7bdefa950a2bf3ad03df3912029a188b11",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
    "depth": 2
@@ -3474,7 +3453,6 @@
     "HeraMoon",
     "Metal Raptor",
     "PhoenixRing",
-    "X",
     "Xenia",
     "Zap",
     "ayc",
@@ -3487,9 +3465,11 @@
    "addedAt": 1785974165,
    "firstSeenTx": "0x1b1aa878055c63f5881f08303d7b88be4dec77b674e39736e1b88c47a2a6bfa9",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
    "depth": 2
@@ -3638,26 +3618,14 @@
   },
   {
    "address": "0x24d0abb2a08037fef3da0da85d23ed35c1b1b980",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "LiquidityLocker（流動性ロッカー）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "light888"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1786498013,
-   "firstSeenTx": "0x272a1347f27f0362a9c2969a2603ee01f163818a76391f84a80e73480056a0c1",
-   "via": {
-    "address": "0x95feabdecca6cbc808d231895b80703905be3b83",
-    "validators": [
-     "light888"
-    ]
-   },
-   "depth": 2
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xddf09ec67832c6ab5d839cfc5f434b5bbcc8bf4c",
@@ -3871,27 +3839,14 @@
   },
   {
    "address": "0x01d814a76a11a3c2ebb701de90e5c9a4317929be",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "GoldenFoxCrown（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "FoxxOne",
-    "HeraMoon"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788634034,
-   "firstSeenTx": "0x0f2a44919311a447cc5c6adae108ade8040d65910069b60af77cae93cbbc59ab",
-   "via": {
-    "address": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-    "validators": [
-     "FoxxOne"
-    ]
-   },
-   "depth": 2
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x16c6c90fb351faf23bf225785e2e08686bdcc2c3",
@@ -3910,7 +3865,7 @@
    "addedAt": 1788684964,
    "firstSeenTx": "0x767df023bd6f349264a382837ad4a6db56715f53b6bec236eb61d3a119edfde2",
    "via": {
-    "address": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+    "address": "0x02845d10214dff41642bbcee2438a9cddee90d5c",
     "validators": [
      "FoxxOne"
     ]
@@ -3987,9 +3942,16 @@
    "addedAt": 1785690438,
    "firstSeenTx": "0x23bbab548ecc3dc23be9628d8636f375827dadd716a0e8024d62f2f1b84221fe",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
    "depth": 2
@@ -4128,9 +4090,16 @@
    "addedAt": 1784342516,
    "firstSeenTx": "0x282727e28fe53518f94b488685c6a40d38aefed623685c89ab09fa5dfbdc4011",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
    "depth": 2
@@ -4159,9 +4128,9 @@
    "addedAt": 1785816193,
    "firstSeenTx": "0x9f1499bf80cb5c60d57a211b19c95aa4f2dd6ed677b27a0e27eee6794a9d7654",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0xeb59b392a5558931354e574d3b3beaff44f9df81",
     "validators": [
-     "Metal Raptor"
+     "Woman-In-Red-42"
     ]
    },
    "depth": 2
@@ -4189,9 +4158,16 @@
    "addedAt": 1785692048,
    "firstSeenTx": "0x34d5ff20781d8c9390edf515671226e448a6b9f4fce2c4cf9c7aa1239fb2c125",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
    "depth": 2
@@ -4219,9 +4195,16 @@
    "addedAt": 1785694186,
    "firstSeenTx": "0x810ed7062ffd89d811a479053fbffeb73d217b270d5f24f7923eb612c82b742e",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
    "depth": 2
@@ -4286,9 +4269,16 @@
    "addedAt": 1785727046,
    "firstSeenTx": "0xa5928ac9978538190c47a9ea7d9b92ca54861f19bfaf5340a5491c54d741ad94",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
    "depth": 2
@@ -4353,16 +4343,9 @@
    "addedAt": 1788740860,
    "firstSeenTx": "0xe23d0e9a8ae3f876e5bc7582ce823ac4d1383de1b0b4a990823405e6c26d3f5e",
    "via": {
-    "address": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+    "address": "0xdac5fcc3b9c0f965888b346cf27faad5f90da274",
     "validators": [
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "Xenia",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
+     "HeraMoon"
     ]
    },
    "depth": 2
@@ -4627,17 +4610,16 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "FoxxOne",
-    "Metal Raptor"
+    "FoxxOne"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1784452043,
    "firstSeenTx": "0x5e4f66814d60cfbaffc6f8e364e980893a1c3f5084a94ba8b9c56b476d570f3e",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x02845d10214dff41642bbcee2438a9cddee90d5c",
     "validators": [
-     "Metal Raptor"
+     "FoxxOne"
     ]
    },
    "depth": 2
@@ -4658,7 +4640,7 @@
    "addedAt": 1793836838,
    "firstSeenTx": "0x61bbb292b88f29089f635074ef0faa1ab07516301f6ec9d69c6fd811ec7a9df8",
    "via": {
-    "address": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+    "address": "0x10007d008d8e577132fed69aa792a07a1eadf611",
     "validators": [
      "Woman-In-Red-42"
     ]
@@ -4674,42 +4656,33 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1785691220,
    "firstSeenTx": "0xff06df93bf078eb2dd49637e0487c45bdf7970c6617008c79d132c225aba70f2",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0xdaf4cca60076f8fe29619500400b9605bb5804f3",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
-   "depth": 2
-  },
-  {
-   "address": "0xf6cc1117a0f5920f3f4e13538ca4ff48e4af1fee",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785857142,
-   "firstSeenTx": "0xc532f4b64bf0ead813245df17f60fa64adcb412107abf1bcc5fda24c5c71331a",
-   "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
+   "depth": 3
   },
   {
    "address": "0xc6374b9bf279a6975776417dc76a5ba48373dc1a",
@@ -4720,65 +4693,44 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1786227117,
    "firstSeenTx": "0x0d213adaa2e9f2d0f48c8148b2b580cdd76718ce7fef5c7d309c5bf6ff39ea66",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0xa590fa6a4222c793dca22172a611f9c38c28ea3d",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
-   "depth": 2
+   "depth": 3
   },
   {
    "address": "0x5981f34acdde6f60607be174791bb657dc31d9be",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "FoxxStakingVault",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1786871883,
-   "firstSeenTx": "0xc67bfffae608dd9d1e91eb01f6a8597c29d8d87901222bff86a55f7b4c5ddfe2",
-   "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x112ae851f4a5f5ddb05fdcf20702d798caa40ef8",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1790316348,
-   "firstSeenTx": "0x928b0acf566f5027018907f0ea5c7565da779ae2ebde62106f6535e9819876da",
-   "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x27dd68eb0abb9ac95cedcb6d4c43277cb5a4e7cf",
@@ -4789,19 +4741,23 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1791974880,
    "firstSeenTx": "0x49a22106f033173e515d48bc845ea9bd9bf94dc7cf8557f4022dc496ee92b6a5",
    "via": {
-    "address": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+    "address": "0x741f34d0aa1d3c3d94c7f2118e1e2f37148d15fd",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
-   "depth": 2
+   "depth": 3
   },
   {
    "address": "0xb30ac743c8ea7338eca15ec0008a67b026bda33f",
@@ -4970,72 +4926,36 @@
   },
   {
    "address": "0x916fb1a761d0db8888c3f79d6c614c9fff73b657",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "ブリッジルーター",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1780761779,
-   "firstSeenTx": "0x49111892a04262639b47a708e0996adf4af538d5e54271805a792b25b871385d",
-   "via": {
-    "address": "0xe15c7747a2b978f46d73794c1eefd575f93c0b7d",
-    "validators": [
-     "DRIVESTATS"
-    ]
-   },
-   "depth": 2
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x59d6e50f5b0559a088e3eaac21e520be18453704",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "ブリッジルーター",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1780792734,
-   "firstSeenTx": "0xead92e875bf2a68af234140fc9544ecfeecc9f30984db71106ebace6cff1bbce",
-   "via": {
-    "address": "0xe15c7747a2b978f46d73794c1eefd575f93c0b7d",
-    "validators": [
-     "DRIVESTATS"
-    ]
-   },
-   "depth": 2
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x635d333954e598f4e396153e8e0c1086bd35bd4a",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "ブリッジルーター",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1781606747,
-   "firstSeenTx": "0xabcf1b09a3e1cae3efa40cdb6cf81b1ee9c17e6a8f0910acc27f50db466a379f",
-   "via": {
-    "address": "0xe15c7747a2b978f46d73794c1eefd575f93c0b7d",
-    "validators": [
-     "DRIVESTATS"
-    ]
-   },
-   "depth": 2
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x3722f05a1b73606cbbec42b85d81faf88e793793",
@@ -5046,19 +4966,23 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1781245742,
    "firstSeenTx": "0xc0ac26a7d164f6ae8946c27ca71ab5be569b4feba416b387c488bd4edcd6f759",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0xd5b83c0086466781dc7c9079a889009c97ce9057",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
-   "depth": 2
+   "depth": 3
   },
   {
    "address": "0xab753726ac03083c416ea0608a0259dec8c23b8f",
@@ -5069,108 +4993,16 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1782199533,
    "firstSeenTx": "0xc4a9fbda082d5a72919f862f57a409574ff36792c87a3022466741afecbeab29",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x67a347a2f7f8986066d7be9330da041128c1ca0b",
     "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0xb1b49c87b0047934b9743f5b34641c803477fc34",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782816217,
-   "firstSeenTx": "0xe05fed3235da4cbdb04a200c6d587b70aadde11279936d840a6677233848c256",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x90359c6913915b9824b9ce8abf4b85b30a5cf8cc",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782863113,
-   "firstSeenTx": "0x1b2c15c8aeb4f98cd46fc62f42cbb3ae538db69fd294495b176117f4beb0384f",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0xe45bbcbf0ad67dbfe89bf53f0c03458650a727b1",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782880997,
-   "firstSeenTx": "0x0dbf75061dde3ef9450cdf5a4a904c285da79a2a1b90a012d377b93e62460eb7",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x63549dd09d17fddff663948b7084dac780649d62",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782940831,
-   "firstSeenTx": "0x1486449941563ab4f3b8cd346f87614c70147a948d6ae6b1551907d64b5e0f54",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
+     "DRIVESTATS"
     ]
    },
    "depth": 2
@@ -5184,19 +5016,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1784423676,
    "firstSeenTx": "0x458c8aea149a8c3c07af86262715c20fc2013bb46c09e213674c8de13632cfef",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 2
+   "depth": 4
   },
   {
    "address": "0x749ff7d0a3651a3447e53b00166c2053040d8b4e",
@@ -5207,19 +5039,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1784691264,
    "firstSeenTx": "0x62788e488dc2bb16efdccd5f015689ab0eccd70bc7cffca3cda9cfe6698452cc",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 2
+   "depth": 4
   },
   {
    "address": "0x769a8f96d03d1253f6af7445fc41446a709d2271",
@@ -5230,134 +5062,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1784992559,
    "firstSeenTx": "0xf58d6d959a72f64ba9ceffcdf29c30f1f965c0f653f46f8c741a2b993a9b021e",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x051bbfce088bc150727169d3b21dbaeacfaf133a",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 2
-  },
-  {
-   "address": "0x051efcdc2224b2281e113e01f23ca11f48597a98",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785208366,
-   "firstSeenTx": "0x19be5205351295675a19f74f6b0c8f2c96b2699607a5be50fca6bbc0836e6836",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0xe056c6a456efaa76a413557c7441e4c3af433e10",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785358971,
-   "firstSeenTx": "0xa1472d45c4513a99e14bf81b8d373394516c7cf9086a6104637b44f11577cc70",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x0854fd3a3de6bc62ece24f009cd178c20b3fbb82",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785360549,
-   "firstSeenTx": "0x8ebdaeeb1846631597fb183d8c68d1eb94f032ee3cf39dcecee47f30fc609513",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0xc646c1b42788e1fd19b14ccf57dddc4e772993cc",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785783204,
-   "firstSeenTx": "0xeaeded7de933f20480c0c9e3270c0692d1af0dbfbd7d9faf30bde356d71ddb84",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x1ce3b2714e863a563bdaf6dc3725353da48f5c16",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785913067,
-   "firstSeenTx": "0xafc7c284d78b1e038dfdf292eaa1e01cf35d113976943ee1d308bd7724cfd46d",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
+   "depth": 3
   },
   {
    "address": "0x8ea71d500c8c947d885ba0fe735d5208cb7e7048",
@@ -5368,19 +5085,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1785917287,
    "firstSeenTx": "0x30c3b7c2893c89a5c50a9be4666a22090f5f9710015ec6ee6cd55fccf063422d",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 2
+   "depth": 4
   },
   {
    "address": "0xbd11bfd62a623d2a3f16193b51894cc7438994c4",
@@ -5391,19 +5108,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1786132881,
    "firstSeenTx": "0x8bec2823faae742aa762c9e3e76adf6f6c6cc519ce9e1de522054f478ce8eb6a",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0xabb06d2f65d6473cf93de689d585a85b47fb4191",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 2
+   "depth": 5
   },
   {
    "address": "0xcdea8e8529df08f19710809b4142ec3539bc36e9",
@@ -5414,65 +5131,33 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1786218571,
    "firstSeenTx": "0x5d1e2b743e199372c6fbf9493eeec40783ebe1b166f3b16301c08f0d761cc8b3",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0xf1d5b95428a91d2a8a3543b75ebe9b7d3c06e46e",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
-   "depth": 2
-  },
-  {
-   "address": "0xe34f67f3f3bbc035e9e853477030d311c0138ad0",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1786266525,
-   "firstSeenTx": "0x6ea05c90ccd2539a9d6ed7009da2edb74d157b868479370f68e785ca62c99169",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x909e9a5c84bd638b5b4c292b7f7fde4ccbec2864",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1786451628,
-   "firstSeenTx": "0x7055dc306968ba0a92951fcafa831f5c5a2af1c084a5943c4b8575c1a0efe4a0",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
+   "depth": 3
   },
   {
    "address": "0xf2b3ac3f7e6cdf7acc6e005b75bbf4f51a06491c",
@@ -5483,19 +5168,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1786538837,
    "firstSeenTx": "0x7f9287b358efc25c4e8699c2c3d018b532fe0b234652fe323907359ead0383c7",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 2
+   "depth": 4
   },
   {
    "address": "0x19ce22b121bd4adc245888ffd4c1562946a8ea6f",
@@ -5506,19 +5191,23 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1786735514,
    "firstSeenTx": "0x3b31bfd37d39cd68c5f2182e8e9ae8a0fb9d27b83615e163037bc0ff4e55631f",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x07f53638cb45eb4c62fc9bfc4241aa67db96a782",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
-   "depth": 2
+   "depth": 4
   },
   {
    "address": "0x421b407b18c1a2c02f6dd157885af687732c9adc",
@@ -5529,65 +5218,23 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1786737356,
    "firstSeenTx": "0x0f8ba69af6fce10847bfd608a24af79e7b1b61c9177637c00dd2a16cc705b284",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x19ce22b121bd4adc245888ffd4c1562946a8ea6f",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
-   "depth": 2
-  },
-  {
-   "address": "0x8bb97e22c110cd14b808f7ac58d47e005d02076b",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1787591294,
-   "firstSeenTx": "0xb77d429cfd5805cc76c3c9b14eb9326facb41eb380b0f5693fed50a882f72d34",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0xdc6843045da8a716eac189b3b1d87a886d99e427",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1787937096,
-   "firstSeenTx": "0x158a99ec010faf490e65b96ba8922cb2c2b070886a5ce66d61307000659f1cba",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
+   "depth": 5
   },
   {
    "address": "0x9a5da5f1948a031fccd8d2332a3f79aa8f819092",
@@ -5598,111 +5245,39 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS",
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "X",
+    "Xenia",
+    "Zap",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1788161256,
    "firstSeenTx": "0x1832ebb881bbd990a79a058569edf99f94cf8ed1a90560a823cf2280deb3d5b0",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "X",
+     "Xenia",
+     "Zap",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
-   "depth": 2
-  },
-  {
-   "address": "0xe8faa8c58b3086550067e27933daed8f9dab0801",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788253726,
-   "firstSeenTx": "0x1d4a117d95e2eafed7cbbebc25c913c6ce3a2e40fcc6aed12c54c22fbbbb2f8e",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x3a0fe479aed9d9307680e9f19fe2d5290643bbab",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788442902,
-   "firstSeenTx": "0x546c4543952f45d5d1ad3361b7b0ab5bcdd3c2cb6d6051d8aa6a26f35db15607",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0xd6db63fe8156811d0e388ec63897452dbc70d749",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788651729,
-   "firstSeenTx": "0xe734b77177785cf4a313a76de7e0dc45af09917b75769e749b6c6e0984ad1c34",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x113c4f6859852a9e5fffa6c316c308d8dac03306",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788661868,
-   "firstSeenTx": "0xec08b9921dd9504f9a9c0b042ea0099ee9997d06be7f0eab49ee496742a56938",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
+   "depth": 3
   },
   {
    "address": "0x73a34393d792a9528fc8cc5942892a3f1a2ac42a",
@@ -5713,62 +5288,16 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "Luke"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1788695741,
    "firstSeenTx": "0x0466b2fa4c1611fa6c72c72969230f8d5df710c4d0b3556918b60c5680efd879",
    "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
+    "address": "0x85996a6b22ea606af88dabd184681b5776e86f0d",
     "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0xf6e2dbf3e2db4fd06bb68a1acdffd0c7836ab785",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788764143,
-   "firstSeenTx": "0x4c7bf17ff9c519f3de1fb10eaa157b162a3d866e5562d1dc4d53b3f513fda22f",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 2
-  },
-  {
-   "address": "0x31cd4d77d50e4de522e5a743f1598617c15c6390",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788964720,
-   "firstSeenTx": "0xea12831ffc5e4a5b40b567c9d981883b998454a9f280b9134a9e2ca8a0b5e0d7",
-   "via": {
-    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
-    "validators": [
-     "Metal Raptor"
+     "Luke"
     ]
    },
    "depth": 2
@@ -5798,44 +5327,14 @@
   },
   {
    "address": "0xc6dbc941beb3a962fe81bd5724ac17ad3c0419ab",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "FoxxStakingVault",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "FoxxOne",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1781885927,
-   "firstSeenTx": "0xd53ddb0bb06a682b6ded7bd00a48e5e89c22c5d79289a0ed1beb00bc5d69ccb4",
-   "via": {
-    "address": "0xaeca0c02baee386e45c273a1bf2d7ddfda48ed30",
-    "validators": [
-     "FoxxOne",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xcee24b1f4437c36b329f895c3d5aea33d9c1b5fb",
@@ -5846,41 +5345,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "DON'T PANIC - DEX",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "Woman-In-Red-42",
-    "Xenia",
-    "ayc",
-    "farmer",
-    "kimnmike",
-    "light888",
-    "panda42",
-    "vethawk"
+    "PhoenixRing"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1790499997,
    "firstSeenTx": "1b1061e628c6e87c414f1ea8af8ad2eba644e304cc11cea648b62f7d7d3494d0",
    "via": {
-    "address": "0x656a51b8b128ea9e350f884b67554f3fcc712144",
+    "address": "0x2cceba1e224d073e5b901a5f3cc1ee3332c4058d",
     "validators": [
-     "DON'T PANIC - DEX",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "Woman-In-Red-42",
-     "Xenia",
-     "ayc",
-     "farmer",
-     "kimnmike",
-     "light888",
-     "panda42",
-     "vethawk"
+     "PhoenixRing"
     ]
    },
-   "depth": 3
+   "depth": 2
   },
   {
    "address": "0x2dd5829c183177c4704fc7b9888d7382f375439c",
@@ -5973,6 +5450,7 @@
    "validators": [],
    "relatedValidators": [
     "DRIVESTATS",
+    "FoxxOne",
     "HeraMoon",
     "Metal Raptor",
     "PhoenixRing",
@@ -5991,6 +5469,7 @@
     "address": "0xeeb19abd19d5ae2ff31437332a32b122deddece1",
     "validators": [
      "DRIVESTATS",
+     "FoxxOne",
      "HeraMoon",
      "Metal Raptor",
      "PhoenixRing",
@@ -6590,10 +6069,12 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
+    "DRIVESTATS",
     "HeraMoon",
     "Metal Raptor",
     "PhoenixRing",
     "Xenia",
+    "Zap",
     "ayc",
     "farmer",
     "light888",
@@ -6604,12 +6085,14 @@
    "addedAt": 1791698020,
    "firstSeenTx": "0x3dedfdfc093544899794ea8629db2fb2ea08954cbabf0832d2b23b805f4a71ab",
    "via": {
-    "address": "0x93e58fabbf23df4bdcd653b83e8bf3d3d582a463",
+    "address": "0x9ba1e56dd420e45794f338734860ccd379175e9d",
     "validators": [
+     "DRIVESTATS",
      "HeraMoon",
      "Metal Raptor",
      "PhoenixRing",
      "Xenia",
+     "Zap",
      "ayc",
      "farmer",
      "light888",
@@ -6660,16 +6143,30 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1789949160,
    "firstSeenTx": "0x29675b9e1fab30cf1bb9e72413f98f29f9176690224879a8c796162b758f5028",
    "via": {
-    "address": "0xb4963e29d3fbff031feeeb1ac2753e3354a97c8b",
+    "address": "0xdaf4cca60076f8fe29619500400b9605bb5804f3",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
    "depth": 3
@@ -6752,19 +6249,23 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1787054119,
    "firstSeenTx": "0xbeaf34b2f346c479198d13c091d90da56360b55563af0de453aea889a9157ce5",
    "via": {
-    "address": "0x3722f05a1b73606cbbec42b85d81faf88e793793",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
-   "depth": 3
+   "depth": 2
   },
   {
    "address": "0xf08d8c956d929a1d1166bbe5aeb7a5a70d47dc01",
@@ -6775,7 +6276,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -6784,10 +6285,10 @@
    "via": {
     "address": "0x769a8f96d03d1253f6af7445fc41446a709d2271",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
+   "depth": 4
   },
   {
    "address": "0xed697927cf6f7b5200eeb530588dd5700d3100cc",
@@ -6798,7 +6299,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -6807,79 +6308,10 @@
    "via": {
     "address": "0x769a8f96d03d1253f6af7445fc41446a709d2271",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
-  },
-  {
-   "address": "0x6867c2d5a6635217c4b590513f66430512699f91",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788249493,
-   "firstSeenTx": "0x9eb59e9a5c6424e56bb7f081196841ff051f0432a52f3d8d60f232a41fc6741f",
-   "via": {
-    "address": "0xe8faa8c58b3086550067e27933daed8f9dab0801",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0x1488b0bf93a73688c5e0cc87719c21610ff4866b",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1787438676,
-   "firstSeenTx": "0x9e28700fb42e921aeb56ac2201b3c3a0e8e29a2b3498af3b0d738640b4bbb32a",
-   "via": {
-    "address": "0xd6db63fe8156811d0e388ec63897452dbc70d749",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0x7b8fbb3608b870fee2c5f811eea2d5e40d8abac7",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788762828,
-   "firstSeenTx": "0x982ab9bcbf20a10a31de2ca42f0293a6d3fd7eeb05ed2abd09a6abe3835adee1",
-   "via": {
-    "address": "0xf6e2dbf3e2db4fd06bb68a1acdffd0c7836ab785",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
+   "depth": 4
   },
   {
    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
@@ -6913,7 +6345,9 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -6921,168 +6355,6 @@
    "firstSeenTx": "0xbeaf34b2f346c479198d13c091d90da56360b55563af0de453aea889a9157ce5",
    "via": {
     "address": "0xd5b83c0086466781dc7c9079a889009c97ce9057",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 4
-  },
-  {
-   "address": "0x4fd7931f1b606e03f2c5df7a76fe7243185774c3",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788762736,
-   "firstSeenTx": "0x3a64a7d785c991fd4d55df4ab9d3f0421ae9e431765e6b405bb14959beef5493",
-   "via": {
-    "address": "0x7b8fbb3608b870fee2c5f811eea2d5e40d8abac7",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 4
-  },
-  {
-   "address": "0x0b2a031c27620660f0ac0f1507b59ab774e0b6d5",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1792295762,
-   "firstSeenTx": "0x64c06ce6863b3b5eaf06f167a94b8eff8b6fa539d0867b145ebfee810fc17cf1",
-   "via": {
-    "address": "0x01dab13fbdc9e3d2255423a4d344f8a2c9fc054f",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 5
-  },
-  {
-   "address": "0x0d1e66935c10fe61fa410b0cde3f50582b031b3f",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "FoxxOne",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1783281009,
-   "firstSeenTx": "0x75f49f1ac47053b3714a1585d2645f4dc84eb861f254239dc5662504773c57c3",
-   "via": {
-    "address": "0xaeca0c02baee386e45c273a1bf2d7ddfda48ed30",
-    "validators": [
-     "FoxxOne",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0xbf9c8301c1b32374b8a76554e8d2abccd89367ac",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "FoxxOne",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785956104,
-   "firstSeenTx": "0xf5a30c38da2542835c70c747f5805936564e8e8a28135d491f757bc612110932",
-   "via": {
-    "address": "0xaeca0c02baee386e45c273a1bf2d7ddfda48ed30",
-    "validators": [
-     "FoxxOne",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0x5a3c9b142cbfd0ca9130fba515e0a3cabe1e0b7e",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "CCUK",
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1784387349,
-   "firstSeenTx": "0x0289f976c02a05f7083a93acd0e10be7c727af6d0ee14f270ae358dd7c492da3",
-   "via": {
-    "address": "0x22618d7113bb4b7ee7203b8ce42370a364f49244",
     "validators": [
      "DRIVESTATS",
      "Metal Raptor",
@@ -7092,7 +6364,7 @@
    "depth": 3
   },
   {
-   "address": "0x8b2fccb11eda17897b0203d441516ee63d4b264f",
+   "address": "0x0b2a031c27620660f0ac0f1507b59ab774e0b6d5",
    "tier": "related",
    "label": null,
    "isCore": false,
@@ -7106,17 +6378,73 @@
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
-   "addedAt": 1788839941,
-   "firstSeenTx": "0x978478f89f00d1bb813a1f225d9cb6cda16c4bfdbab4f17b217408cc99c356cc",
+   "addedAt": 1792295762,
+   "firstSeenTx": "0x64c06ce6863b3b5eaf06f167a94b8eff8b6fa539d0867b145ebfee810fc17cf1",
    "via": {
-    "address": "0xbf2bb17f408521607cf7e79798d0d0ab6be5603a",
+    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
     "validators": [
      "DRIVESTATS",
      "Metal Raptor",
      "Zap"
     ]
    },
-   "depth": 3
+   "depth": 2
+  },
+  {
+   "address": "0x0d1e66935c10fe61fa410b0cde3f50582b031b3f",
+   "tier": "core",
+   "label": "FoxxOnePaymentRouterV1",
+   "isCore": true,
+   "isPair": false,
+   "watch": false,
+   "validators": [],
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
+  },
+  {
+   "address": "0xbf9c8301c1b32374b8a76554e8d2abccd89367ac",
+   "tier": "core",
+   "label": "FoxxOneFeaturedRegistry",
+   "isCore": true,
+   "isPair": false,
+   "watch": false,
+   "validators": [],
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
+  },
+  {
+   "address": "0x5a3c9b142cbfd0ca9130fba515e0a3cabe1e0b7e",
+   "tier": "core",
+   "label": "First Ground",
+   "isCore": true,
+   "isPair": false,
+   "watch": false,
+   "validators": [],
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
+  },
+  {
+   "address": "0x8b2fccb11eda17897b0203d441516ee63d4b264f",
+   "tier": "related",
+   "label": null,
+   "isCore": false,
+   "isPair": false,
+   "watch": true,
+   "validators": [],
+   "relatedValidators": [
+    "farmer"
+   ],
+   "autoAdded": true,
+   "addedVia": "closure-v0.4.0",
+   "addedAt": 1788839941,
+   "firstSeenTx": "0x978478f89f00d1bb813a1f225d9cb6cda16c4bfdbab4f17b217408cc99c356cc",
+   "via": {
+    "address": "0x1fab3f8ca0294ebbdeed3214a57a15e550f84329",
+    "validators": [
+     "farmer"
+    ]
+   },
+   "depth": 2
   },
   {
    "address": "0x8e8516ca048047e6aabf83bebeeec9df5ce3ccd1",
@@ -7129,6 +6457,7 @@
    "relatedValidators": [
     "CCUK",
     "DRIVESTATS",
+    "FoxxOne",
     "HeraMoon",
     "Metal Raptor",
     "PhoenixRing",
@@ -7145,47 +6474,34 @@
    "addedAt": 1788757560,
    "firstSeenTx": "0x7f0a7a3095775b8a1db41a142d0964e404fc1479a41135bd2402f9f18033634b",
    "via": {
-    "address": "0xc6374b9bf279a6975776417dc76a5ba48373dc1a",
+    "address": "0xe1794313faaaed9c5e038df778224b3d8eda96ed",
     "validators": [
-     "Metal Raptor"
+     "CCUK",
+     "DRIVESTATS",
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "X",
+     "Xenia",
+     "Zap",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
    "depth": 3
   },
   {
    "address": "0x70931d2902790c0e7aab80727255df877fb31dbe",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "42 Improbabilities（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782540453,
-   "firstSeenTx": "0x5042d7cc6aba130e0bb2df769b3bb4a13d587e725fcca55f8f16e36fabfb14db",
-   "via": {
-    "address": "0x2493c525577701ea4833de6d08d7e86405b54200",
-    "validators": [
-     "DRIVESTATS",
-     "Metal Raptor",
-     "Zap"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xfa69cb9a144052096f24d35bfa80b0b58dd174cf",
@@ -7224,468 +6540,124 @@
   },
   {
    "address": "0x3523c2b4ef58ccf50520dcecbaf27852fda5676c",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "NFTコントラクト",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1790941155,
-   "firstSeenTx": "0x27d4ec9eb39d081dc420fd62a365ee74f4c655829adb5e3c37c403c7f08d0395",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x734b2dacf82abf9290af398cedb2f379cfc556cf",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "Guppy's Prayer（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1790941451,
-   "firstSeenTx": "0xeaef6e6a0eefa2319163024c379056c944198e66768f2e8bb38aaa93897e9508",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xdf16ef67bfae88d06995f6de3e7ae2cb67a9d892",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "Guppy's Prayer（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1790946021,
-   "firstSeenTx": "0xc5c3faef76522f0348c5dd5b04196f323a4e6b2a9b85784c328d4c6abd7cc74f",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x2c818800cfd0bb9f00f98194d06b9338bd2b1964",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "NFTコントラクト",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1790955193,
-   "firstSeenTx": "0x4bfa20c6cd1647fafc56f3365036e62b4aa2d54ed1f7fba2230f658f07fa1255",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xca2fe87f4902001279e4d4b2a557ad6ee626be56",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "Guppys Prayer（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1790955424,
-   "firstSeenTx": "0x08d3da74aaf18e117f9d1c47854036dc6db29e76724b6cc311a7f50949c39f93",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x8ce09d4e98d477ad732a0d524b91ceef9fc01436",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "NFTコントラクト",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791015546,
-   "firstSeenTx": "0x8a4320802c400ac3e21d5a29da6ad9ebd7db6205ce073f42a708d26b42dd705d",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x1b414531d825b9caa201142c0e5d4fc3b4b6d8bc",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "Guppys Moonlit Dream（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791016031,
-   "firstSeenTx": "0x33f2e388fe6a975a3dc103551a77c004accba134738dc2a4ee6a15241b157fa4",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x97a04cbfcc480c0f4631c1c86018c51eb1337584",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "InfiniteDrivePunkz（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1790955979,
-   "firstSeenTx": "0x7e7cb90f6fbe44d601fe73a0bb64eb7e2466356b6cb91a0c5abf99cfac321cd5",
-   "via": {
-    "address": "0x2493c525577701ea4833de6d08d7e86405b54200",
-    "validators": [
-     "DRIVESTATS",
-     "Metal Raptor",
-     "Zap"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x8c111d68671a38415c1efb46cf65cca32c8a7e6c",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "Infinite Gyudon Knights（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791343015,
-   "firstSeenTx": "0xd42a12b6c39c66077c8cb3e20c05374f3700ace6b6e8110e83861eb9d4df71a3",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xdac40f0a3c21805679685c7712f1268688317e39",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "Thirteen Roses（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791351411,
-   "firstSeenTx": "0x9ac42f0bea4bf305a04fd8e04d617a9c4e39a5b7ba5851854c4480290a1076d0",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x5d97e27f087fbea25c61767df2beb9d5485ac1fe",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "I AM LUCKY!（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791460758,
-   "firstSeenTx": "0x32be6ccfd56a037ba851d6199db33d554ed8db81fe8dd7d9c216635927b7292d",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xe3d94ba0a0359a627d134cde4f8f726a4f257d5e",
@@ -7775,81 +6747,25 @@
   },
   {
    "address": "0x7d2593dae4c8db8c0924ccd6212ce0a01d02b39c",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "IID Punks（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791216935,
-   "firstSeenTx": "0x1847e2c59cba6afd8843145b4764279cae7f8a4ffe64a8239baf6ab54ec5175a",
-   "via": {
-    "address": "0x2493c525577701ea4833de6d08d7e86405b54200",
-    "validators": [
-     "DRIVESTATS",
-     "Metal Raptor",
-     "Zap"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x5896dbe9e9a1201d62f73c5c79e5d311b5fa14b3",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "The Thirteenth Hour（NFT）",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791942261,
-   "firstSeenTx": "0x7eab84d57fc971c34e084fef9a1830543715e364aacc0e7daf9b1362c4de0b68",
-   "via": {
-    "address": "0xa33e223bcf1bb82d475ea29a11f3add9c2e73a23",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xc7dfe4ee84794aa54c21d1b6c823322e4b24252e",
@@ -8185,7 +7101,6 @@
     "HeraMoon",
     "Metal Raptor",
     "PhoenixRing",
-    "X",
     "Xenia",
     "Zap",
     "ayc",
@@ -8204,7 +7119,6 @@
      "HeraMoon",
      "Metal Raptor",
      "PhoenixRing",
-     "X",
      "Xenia",
      "Zap",
      "ayc",
@@ -8228,7 +7142,6 @@
     "HeraMoon",
     "Metal Raptor",
     "PhoenixRing",
-    "X",
     "Xenia",
     "Zap",
     "ayc",
@@ -8247,7 +7160,6 @@
      "HeraMoon",
      "Metal Raptor",
      "PhoenixRing",
-     "X",
      "Xenia",
      "Zap",
      "ayc",
@@ -8271,7 +7183,6 @@
     "HeraMoon",
     "Metal Raptor",
     "PhoenixRing",
-    "X",
     "Xenia",
     "Zap",
     "ayc",
@@ -8290,7 +7201,6 @@
      "HeraMoon",
      "Metal Raptor",
      "PhoenixRing",
-     "X",
      "Xenia",
      "Zap",
      "ayc",
@@ -8579,7 +7489,14 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "HeraMoon",
+    "Metal Raptor",
+    "PhoenixRing",
+    "Xenia",
+    "ayc",
+    "farmer",
+    "light888",
+    "panda42"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -8588,102 +7505,28 @@
    "via": {
     "address": "0xc6374b9bf279a6975776417dc76a5ba48373dc1a",
     "validators": [
-     "Metal Raptor"
+     "HeraMoon",
+     "Metal Raptor",
+     "PhoenixRing",
+     "Xenia",
+     "ayc",
+     "farmer",
+     "light888",
+     "panda42"
     ]
    },
-   "depth": 3
+   "depth": 4
   },
   {
    "address": "0xf9d4d773802abd6e825a6249618b0450ea6b8107",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "ValidatorAnnounce",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Xenia"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782226921,
-   "firstSeenTx": "0x354f72325b9897e2de94511fa1792a2cfefa016f07f718f77d3b3213b1a81dac",
-   "via": {
-    "address": "0x41ac68990758828feb8566a529c0abcb7a592757",
-    "validators": [
-     "Xenia"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0x6399e54dc4601a028becd83f1cdbb40500e0ad8e",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782862799,
-   "firstSeenTx": "0xd7cff6889a82d1c386e3596da59090a31e842a075e3f355e949c909711eb821a",
-   "via": {
-    "address": "0x90359c6913915b9824b9ce8abf4b85b30a5cf8cc",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0x0cdd1ebbbcb55601b207b384245dde646882b86b",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782862866,
-   "firstSeenTx": "0x5df2180f437179dc4b475254c1fdb454295069372221ee784dfb16557f37541e",
-   "via": {
-    "address": "0x90359c6913915b9824b9ce8abf4b85b30a5cf8cc",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0xc8159e5b5ca960756abe04a324de78c7b650056a",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1782862922,
-   "firstSeenTx": "0x13809073d31fcd93de8950846d2faee242efa90ab7cd196b77286508fd211845",
-   "via": {
-    "address": "0x90359c6913915b9824b9ce8abf4b85b30a5cf8cc",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0x546c1b731b06f99688df1a2323935a3c4daad4d2",
@@ -8694,19 +7537,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1784423996,
    "firstSeenTx": "0xdd799a2e8e91d6b0f85bd431b6cb29a61c8f3c2ec6a7da561f931823ed4eb903",
    "via": {
-    "address": "0xb6c2328679f264831c95f1fe209bd9b2862751d5",
+    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
+   "depth": 4
   },
   {
    "address": "0x1baf21ae97ee86f1c1bf73f5f549259763b4af6b",
@@ -8717,7 +7560,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -8726,10 +7569,10 @@
    "via": {
     "address": "0x749ff7d0a3651a3447e53b00166c2053040d8b4e",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
+   "depth": 5
   },
   {
    "address": "0x4f2102d198ac22f42b8525e09a2983bd485a6fcc",
@@ -8740,7 +7583,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -8749,10 +7592,10 @@
    "via": {
     "address": "0x749ff7d0a3651a3447e53b00166c2053040d8b4e",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
+   "depth": 5
   },
   {
    "address": "0x5202d3d35c6d60c990e8be2556cda9e1f8f14ff7",
@@ -8763,19 +7606,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1785866130,
    "firstSeenTx": "0x07ee4fd22a0ef5b0e23462c387838dbae0215d7293ab791e92ef66a60636652b",
    "via": {
-    "address": "0x8ea71d500c8c947d885ba0fe735d5208cb7e7048",
+    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
+   "depth": 4
   },
   {
    "address": "0xa5f0c55b9a62596aaf357dfe9c34c28d58493a98",
@@ -8786,19 +7629,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1785866141,
    "firstSeenTx": "0xedd7eea81d7fe26ebc211561867035355ba38e56e9136f0d3b14542b93127747",
    "via": {
-    "address": "0x8ea71d500c8c947d885ba0fe735d5208cb7e7048",
+    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
+   "depth": 4
   },
   {
    "address": "0xd94d5c0f585d5818ce39450620fab80c018ac785",
@@ -8809,19 +7652,19 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1785866158,
    "firstSeenTx": "0x7e2e6b30929a74cab4254d1f9ba5bd9f69e40df15e28efce7801393104064e17",
    "via": {
-    "address": "0x8ea71d500c8c947d885ba0fe735d5208cb7e7048",
+    "address": "0x92070181bea71895abe372ea48f2f1b6703ae488",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
+   "depth": 4
   },
   {
    "address": "0xabb06d2f65d6473cf93de689d585a85b47fb4191",
@@ -8832,7 +7675,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -8841,33 +7684,10 @@
    "via": {
     "address": "0x769a8f96d03d1253f6af7445fc41446a709d2271",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
-  },
-  {
-   "address": "0x7a4e51655d025fc882b4417ae1f2694f8d9fc791",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1790892377,
-   "firstSeenTx": "0xcac9c2d69f0b9fc0267aeb87369f3de2b83fb19e7e5fd2e3845ceac8097324e8",
-   "via": {
-    "address": "0xe056c6a456efaa76a413557c7441e4c3af433e10",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
+   "depth": 4
   },
   {
    "address": "0x8ba5c5ad8013bd307c3b823ce9cbb37476e1a0ec",
@@ -8878,7 +7698,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "X"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -8887,33 +7707,10 @@
    "via": {
     "address": "0xbd11bfd62a623d2a3f16193b51894cc7438994c4",
     "validators": [
-     "Metal Raptor"
+     "X"
     ]
    },
-   "depth": 3
-  },
-  {
-   "address": "0xc0bd527af206dc830f3a802faf14d5348a814e94",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1786223599,
-   "firstSeenTx": "0x84d7e48eca9dcf3a90b532f011c237b50d6b5b2911cac1fcd91c6c9ff48687a1",
-   "via": {
-    "address": "0xe34f67f3f3bbc035e9e853477030d311c0138ad0",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
+   "depth": 6
   },
   {
    "address": "0xe810ad8724556f997fdd8954f2eb78006c9d564f",
@@ -8924,157 +7721,23 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor"
+    "DRIVESTATS",
+    "Metal Raptor",
+    "Zap"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
    "addedAt": 1792941027,
    "firstSeenTx": "0x5636b89c38d2a76027d68349af02627a541c97c113893b5853f2f004b5caf75d",
    "via": {
-    "address": "0x421b407b18c1a2c02f6dd157885af687732c9adc",
+    "address": "0x24689b275fedd49e81ff09e12e556210439a97ba",
     "validators": [
-     "Metal Raptor"
+     "DRIVESTATS",
+     "Metal Raptor",
+     "Zap"
     ]
    },
-   "depth": 3
-  },
-  {
-   "address": "0x3ce56057bd29e8969cbfc56e07e9f550f50c123d",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1787587168,
-   "firstSeenTx": "0xb3e10f6949aa81f219a8986997c16937172ba44119839e6c0350329f844a7f40",
-   "via": {
-    "address": "0x8bb97e22c110cd14b808f7ac58d47e005d02076b",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0x38f7896c32bb9b9c336be7c3c6b56e8453dbf70d",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1787587179,
-   "firstSeenTx": "0x4162bd8d25cceddc8bf9f50ea730b33d0c8076079c15cba4ec91d7c418fb88ff",
-   "via": {
-    "address": "0x8bb97e22c110cd14b808f7ac58d47e005d02076b",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0x02db784c146319f16b60ab3aaeda2c1bf986869f",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785757891,
-   "firstSeenTx": "0x9bc86aa88a6bb4c12c2fefe0489fbbac29a2be598f76c064211946d011ed6967",
-   "via": {
-    "address": "0x3a0fe479aed9d9307680e9f19fe2d5290643bbab",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0xf1e7769f9fac1c2b70e0b9e632b6ee661ab80065",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1785797698,
-   "firstSeenTx": "0x2b7da24b610c4950779620f87f3666d8dc4e5075bc25db11d28f16ccb07d3df7",
-   "via": {
-    "address": "0x3a0fe479aed9d9307680e9f19fe2d5290643bbab",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0xf8a4ed113a157ec355986ab92e2d95ad034c1a8f",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1789653682,
-   "firstSeenTx": "0x7fa4fd812d7b5e2a76c60507beab98d82e841a67216226506c13acaa71b006ce",
-   "via": {
-    "address": "0xd6db63fe8156811d0e388ec63897452dbc70d749",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
-  },
-  {
-   "address": "0xb28331f2c58cb736106a45dff878e9d399769d7c",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788962825,
-   "firstSeenTx": "0xc768536a07e5402a058af6354d0eadc18d748d13162d36085105ad4b7b4a8600",
-   "via": {
-    "address": "0x31cd4d77d50e4de522e5a743f1598617c15c6390",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 3
+   "depth": 5
   },
   {
    "address": "0xe4d953bea787c14dfae13d73ffef0f8e23b663b0",
@@ -9157,208 +7820,15 @@
    "depth": 4
   },
   {
-   "address": "0xc8e273216c97da644fa4a781abc967c6b151b29e",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1786294224,
-   "firstSeenTx": "0xa5ab01f977c9c02f9a58e489cab0667ff1f99138cd849884be001b3e9891bac4",
-   "via": {
-    "address": "0x02db784c146319f16b60ab3aaeda2c1bf986869f",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 4
-  },
-  {
    "address": "0x9adfc495b653df7191841d2086950686c97d8536",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
+   "tier": "core",
+   "label": "FeeForwarder",
+   "isCore": true,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "HeraMoon",
-    "Metal Raptor",
-    "PhoenixRing",
-    "X",
-    "Xenia",
-    "Zap",
-    "ayc",
-    "farmer",
-    "light888",
-    "panda42"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791550147,
-   "firstSeenTx": "0x17a010fdcc426b1ce4ef3d55035899f321c856b682a65871a107058d5ef65291",
-   "via": {
-    "address": "0xe4d953bea787c14dfae13d73ffef0f8e23b663b0",
-    "validators": [
-     "DRIVESTATS",
-     "HeraMoon",
-     "Metal Raptor",
-     "PhoenixRing",
-     "X",
-     "Xenia",
-     "Zap",
-     "ayc",
-     "farmer",
-     "light888",
-     "panda42"
-    ]
-   },
-   "depth": 5
-  },
-  {
-   "address": "0x3b6a3922fdea614e79cf9d7ce0215ba5e921cba3",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1789565438,
-   "firstSeenTx": "0xdb580ca619b67393c96c67b07a48d99e03b846ee0b8a287df651add6b5d5cfed",
-   "via": {
-    "address": "0xc8e273216c97da644fa4a781abc967c6b151b29e",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 5
-  },
-  {
-   "address": "0x537c88d61d1766b1331e4adeb5c47bba53a3d1f7",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791130585,
-   "firstSeenTx": "0x5e4743abc4e56d6eae9055954d8af5fc6d154d2afd023d40be8a16f4f0bd0dfa",
-   "via": {
-    "address": "0xc8e273216c97da644fa4a781abc967c6b151b29e",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 5
-  },
-  {
-   "address": "0x98c1fe1b96db8f1a0d9d11d96e5a652b0d226ed6",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791130687,
-   "firstSeenTx": "0xa5f3e9be99d5ca70ed906f34e817e735b9162ca4f505cd3f8fe1ab608a49d33d",
-   "via": {
-    "address": "0xc8e273216c97da644fa4a781abc967c6b151b29e",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 5
-  },
-  {
-   "address": "0x074e4dd22c8bc5b8daa8caa22ccc745ee71d7681",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1793122430,
-   "firstSeenTx": "0x497c265828989a7c165689aaa68be70b8285201c4957af1e3bb43484baeebbef",
-   "via": {
-    "address": "0xc8e273216c97da644fa4a781abc967c6b151b29e",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 5
-  },
-  {
-   "address": "0x89830864d67d83f788620fb81356d6a82fb6192a",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791464212,
-   "firstSeenTx": "0x20396652acfd9876c9c294c7f5f96830cc11a98f188cc251f0c215fdee077254",
-   "via": {
-    "address": "0x3b6a3922fdea614e79cf9d7ce0215ba5e921cba3",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 6
-  },
-  {
-   "address": "0xaa120edf9ada4f1a1036bb1fe221b88070c55fd3",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1791464347,
-   "firstSeenTx": "0x4d4061191d9cf8a9a4fb7579994d772b0955e292cd7706cac08966984541b71c",
-   "via": {
-    "address": "0x98c1fe1b96db8f1a0d9d11d96e5a652b0d226ed6",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 6
+   "relatedValidators": [],
+   "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
    "address": "0xcd72c926cbcdc4c1e173023105589c9e42ec4ede",
@@ -9369,9 +7839,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "DRIVESTATS",
-    "Metal Raptor",
-    "Zap"
+    "farmer"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -9380,12 +7848,10 @@
    "via": {
     "address": "0x8b2fccb11eda17897b0203d441516ee63d4b264f",
     "validators": [
-     "DRIVESTATS",
-     "Metal Raptor",
-     "Zap"
+     "farmer"
     ]
    },
-   "depth": 4
+   "depth": 3
   },
   {
    "address": "0x77096a50f1b2b9ce2fac9c0edcc676c1aed32bfb",
@@ -9396,9 +7862,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "DRIVESTATS",
-    "Metal Raptor",
-    "Zap"
+    "farmer"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -9407,12 +7871,10 @@
    "via": {
     "address": "0x8b2fccb11eda17897b0203d441516ee63d4b264f",
     "validators": [
-     "DRIVESTATS",
-     "Metal Raptor",
-     "Zap"
+     "farmer"
     ]
    },
-   "depth": 4
+   "depth": 3
   },
   {
    "address": "0x6e2376bea99a1f14230714b6140280bc0428477a",
@@ -9423,9 +7885,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "DRIVESTATS",
-    "Metal Raptor",
-    "Zap"
+    "farmer"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -9434,12 +7894,10 @@
    "via": {
     "address": "0x8b2fccb11eda17897b0203d441516ee63d4b264f",
     "validators": [
-     "DRIVESTATS",
-     "Metal Raptor",
-     "Zap"
+     "farmer"
     ]
    },
-   "depth": 4
+   "depth": 3
   },
   {
    "address": "0xf9c3b5e63416ed9e4db661b10d66e1baec6b6c83",
@@ -9450,9 +7908,7 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "DRIVESTATS",
-    "Metal Raptor",
-    "Zap"
+    "farmer"
    ],
    "autoAdded": true,
    "addedVia": "closure-v0.4.0",
@@ -9461,12 +7917,10 @@
    "via": {
     "address": "0x8b2fccb11eda17897b0203d441516ee63d4b264f",
     "validators": [
-     "DRIVESTATS",
-     "Metal Raptor",
-     "Zap"
+     "farmer"
     ]
    },
-   "depth": 4
+   "depth": 3
   },
   {
    "address": "0x24689b275fedd49e81ff09e12e556210439a97ba",
@@ -9535,98 +7989,6 @@
     ]
    },
    "depth": 4
-  },
-  {
-   "address": "0x7b8f419868657556386f8d87de51c7e4b1a5bd48",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788962804,
-   "firstSeenTx": "0x019f10142f10e74a3e3526afcbd1c7107bb7add7eb00560a81091736b1ab8992",
-   "via": {
-    "address": "0xb28331f2c58cb736106a45dff878e9d399769d7c",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 4
-  },
-  {
-   "address": "0xb85c856f77c9a6c0b2c3047c1e7499324de54e70",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788962788,
-   "firstSeenTx": "0x3805e789acbfebb67f26efac9c6ca1da5e2aea4ca91f9d8fc261a3fcb97fb0b9",
-   "via": {
-    "address": "0x7b8f419868657556386f8d87de51c7e4b1a5bd48",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 5
-  },
-  {
-   "address": "0xf2665e8a2403eaf0341dca33769e49e7828b91f2",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788962766,
-   "firstSeenTx": "0xea1d354c3245dc572b35fb8420fc4ec45d6c3e704822283699893f14d24bc6d1",
-   "via": {
-    "address": "0xb85c856f77c9a6c0b2c3047c1e7499324de54e70",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 6
-  },
-  {
-   "address": "0xbe08a903e98e6351ecfb07072df08dd4322d399f",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Metal Raptor"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788961940,
-   "firstSeenTx": "0x0f392e77740415b1aeeb4e2ed0312528c25bd9c7818ff8c790d4a22ecbb45ede",
-   "via": {
-    "address": "0xf2665e8a2403eaf0341dca33769e49e7828b91f2",
-    "validators": [
-     "Metal Raptor"
-    ]
-   },
-   "depth": 7
   }
  ]
 }

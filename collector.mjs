@@ -1,5 +1,8 @@
 #!/usr/bin/env node
-// 42 Validator Tracker — collector (v0.4.0: six new sections — pair-created
+// 42 Validator Tracker — collector (v0.4.1: actorDepth on every event —
+// the bridge-out totals chart splits each name's bar into depth segments
+// (validator itself / depth-1 related / depth>=2 related);
+// v0.4.0: six new sections — pair-created
 // events from the Don't Panic factory, LP feed pinning, collector-computed
 // staking stats, dormant-return flags (60d), new-counterparty flags with
 // LIVE auto-add to the watchlist, and a 42/USDT price in feed.status;
@@ -873,6 +876,13 @@ export function enrichEvent(ev, ctx, creations = {}) {
   set('actorIsCore', !!ae?.isCore);
   const ce0 = ev.counterparty ? ctx.entry(ev.counterparty) : null;
   set('counterpartyIsCore', !!ce0?.isCore);
+  // v0.4.1: actor depth, re-derived from the CURRENT watchlist on every
+  // migration pass (same repair mechanism as the core flags). The bridge-out
+  // totals chart segments each name's bar by this depth: validator itself
+  // = 0; a related entry's explicit depth (closure entries carry theirs);
+  // an original related entry without an explicit depth = 1; anything else
+  // (core / unknown / estimated) = null.
+  set('actorDepth', ae?.tier === 'validator' ? 0 : (ae?.depth ?? (ae?.tier === 'related' ? 1 : null)));
   const rel = ae?.tier === 'validator' ? [] : [...(ae?.relatedValidators ?? [])];
   set('actorValidators', rel);
   set('actorShared', ev.actorTier !== 'validator' && rel.length >= 3);

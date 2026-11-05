@@ -45,6 +45,15 @@ const entries = new Map(watchlist.entries.map((e) => [e.address, e]));
 const estimated = new Set(watchlist.entries.filter((e) => e.tier === 'estimated').map((e) => e.address));
 const excluded = buildExcludedSet(watchlist, registries);
 for (const a of estimated) excluded.add(a); // never traversed, never upgraded by proxy
+// v0.4.1 contract-audit guard: addresses the audit (contract-audit.json)
+// classified as protocol contracts are never traversed through and never
+// re-added as related (0xf2ecb173…f015, a bridge-type contract, originally
+// entered as a plain related wallet and pulled its many users into the
+// depth-2 closure — mechanisms are not person links).
+try {
+  const audit = JSON.parse(readFileSync(join(__dir, 'contract-audit.json'), 'utf8'));
+  for (const [addr, r] of Object.entries(audit.results ?? {})) if (r.decision === 'core') excluded.add(addr);
+} catch { /* no audit file — buildExcludedSet's isCore coverage applies */ }
 
 // ---- interaction graph: undirected, with earliest interaction per edge ----
 const adj = new Map();

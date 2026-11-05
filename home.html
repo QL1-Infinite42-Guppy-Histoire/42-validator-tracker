@@ -18,6 +18,7 @@
   a.card h2{font-size:1.15rem;margin:0 0 6px}
   a.card p{color:var(--sub);font-size:.9rem;margin:0}
   a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
+  a.card .segsub{font-size:.85rem;color:var(--sub);margin-top:3px}
   a.card.insider{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
   a.card.insider h2{color:#e9d5ff}
   a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
@@ -71,8 +72,9 @@
     </a>
     <a class="card bridge" href="index.html#sec-bridgechart">
       <h2>📊 ブリッジ出金 総額（USDT）</h2>
-      <p>USDTをブリッジで外部へ送り出した総額と、名前別の内訳を棒グラフで表示します。</p>
+      <p>USDTをブリッジで外部へ送り出した総額と、名前別の内訳を棒グラフで表示します（本人／1段目の関連／2段目以降の関連に色分け）。</p>
       <div class="count" id="c-bridgetotal">—</div>
+      <div class="segsub" id="c-bridgeseg">—</div>
     </a>
     <a class="card alerts" href="index.html#sec-alerts">
       <h2>⭐ 注目</h2>
@@ -115,7 +117,7 @@
 </main>
 <footer>
   データの出どころ：42チェーンのブロックそのもの（RPC経由）。対象は 42 Chain（EVM チェーンID 421018 と、その Cosmos 側 infinite_421018-1）の取引のみです。QL1 など他のチェーンの取引は含みません。推定アドレスの動きは「最新の動き」にだけ推定と明記して表示し、特別欄は確定情報のみです。アラートはこのサイト内だけの表示です。
-  <br>バージョン：<b>v0.4.0</b>（トップページ）
+  <br>バージョン：<b>v0.4.1</b>（トップページ）
 </footer>
 <script>
 (async () => {
@@ -128,8 +130,14 @@
     document.getElementById('c-insider').textContent = insider + ' 件';
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length + ' 件';
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length + ' 件';
-    const bsum = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').reduce((t, e) => t + (parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0), 0);
+    const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');
+    const bamt = (e) => parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0;
+    const bsum = bouts.reduce((t, e) => t + bamt(e), 0);
     document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
+    const bseg = [0, 0, 0];
+    for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
+    const bfmt = (v) => v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('c-bridgeseg').textContent = `本人 ${bfmt(bseg[0])} ／ 1段目 ${bfmt(bseg[1])} ／ 2段目以降 ${bfmt(bseg[2])} USDT`;
     const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
     document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length + ' 件';
     if (s.price) {

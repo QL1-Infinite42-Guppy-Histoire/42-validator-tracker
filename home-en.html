@@ -18,6 +18,7 @@
   a.card h2{font-size:1.15rem;margin:0 0 6px}
   a.card p{color:var(--sub);font-size:.9rem;margin:0}
   a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
+  a.card .segsub{font-size:.85rem;color:var(--sub);margin-top:3px}
   a.card.insider{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
   a.card.insider h2{color:#e9d5ff}
   a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
@@ -71,8 +72,9 @@
     </a>
     <a class="card bridge" href="en.html#sec-bridgechart">
       <h2>📊 Total USDT Bridged Out</h2>
-      <p>The total amount of USDT bridged out to external chains, with a per-name bar chart.</p>
+      <p>The total amount of USDT bridged out to external chains, with a per-name bar chart split by depth (the validator itself / depth-1 related / depth-2+ related).</p>
       <div class="count" id="c-bridgetotal">—</div>
+      <div class="segsub" id="c-bridgeseg">—</div>
     </a>
     <a class="card alerts" href="en.html#sec-alerts">
       <h2>⭐ Notable</h2>
@@ -115,7 +117,7 @@
 </main>
 <footer>
   Data source: the 42 Chain blocks themselves (via RPC). Coverage is limited to transactions on the 42 Chain only (EVM chain ID 421018 and its Cosmos side, infinite_421018-1). Transactions on QL1 or any other chain are not included. Moves by estimated addresses appear in Latest Activity only, clearly marked as estimated; the special sections stay confirmed-only. Alerts are shown on this site only.
-  <br>Version: <b>v0.4.0</b> (top page)
+  <br>Version: <b>v0.4.1</b> (top page)
 </footer>
 <script>
 (async () => {
@@ -128,8 +130,14 @@
     document.getElementById('c-insider').textContent = insider;
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
-    const bsum = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').reduce((t, e) => t + (parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0), 0);
+    const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');
+    const bamt = (e) => parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0;
+    const bsum = bouts.reduce((t, e) => t + bamt(e), 0);
     document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
+    const bseg = [0, 0, 0];
+    for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
+    const bfmt = (v) => v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('c-bridgeseg').textContent = `Itself ${bfmt(bseg[0])} / Depth-1 ${bfmt(bseg[1])} / Depth-2+ ${bfmt(bseg[2])} USDT`;
     const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
     document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
     if (s.price) {

@@ -56,7 +56,10 @@ const snipes = events.filter((e) => e.isSnipe);
 check('stored snipes are buys only (>= 52)', snipes.length >= 52 && snipes.every((e) => e.type === 'swap-buy'), String(snipes.length));
 check('no LP add carries a snipe flag', events.every((e) => e.type !== 'lp-add' || !e.isSnipe));
 const insider = events.filter((e) => e.isInsider);
-check('stored insider events exist (>= 683)', insider.length >= 683, String(insider.length));
+// v0.4.1: 682 — the contract audit cleared exactly one insider flag: an
+// event by 0xc46b052a... (a payment-router contract, bytecode-identical to
+// FoxxOnePaymentRouterV1) that had counted as "X-related" through it.
+check('stored insider events exist (>= 682)', insider.length >= 682, String(insider.length));
 const anchor = events.find((e) => e.txHash === '0x1f5bc6205f0c8e9f1b204cd6f40e1398fe98adcecbaac284e8f60f2d9f3d6cc1');
 check('listing-day anchor buy (0xa8d5d100, 2026-06-30 13:31 JST) is insider-flagged', !!anchor && anchor.isInsider === true && anchor.actor === '0xa8d5d10095d0d94b758e2d74c00107cfca311fd3');
 check('anchor renders in English without Japanese', !!anchor && !JA.test(renderEvent(anchor)), anchor ? summaryEn(anchor) : '');

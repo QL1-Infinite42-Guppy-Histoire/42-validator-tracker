@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.4.0</title>
+<title>42 Chain Validator Real-Time Tracker v0.4.1</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -78,13 +78,21 @@
   section.bridgechart{background:#0e2416;border:1px solid #2f9e44;border-radius:10px;padding:6px 14px 12px}
   section.bridgechart h2{color:#69db7c}
   section.bridgechart .rule{color:#8ce99a}
-  .bchart-total{font-size:1.5rem;font-weight:800;margin:6px 0 10px}
-  .bchart-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+  .bchart-total{font-size:1.5rem;font-weight:800;margin:6px 0 4px}
+  .bchart-segtotal{font-size:1rem;font-weight:700;margin:0 0 4px}
+  .bchart-legend{font-size:.85rem;color:#8ce99a;margin:2px 0 8px}
+  .bchart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin:0 5px 0 14px;vertical-align:-1px}
+  .bchart-legend .sw:first-child{margin-left:0}
+  .bchart-row{display:flex;align-items:center;gap:10px;margin:7px 0;flex-wrap:wrap}
   .bchart-name{flex:0 0 34%;font-weight:700;font-size:1.02rem;word-break:break-word}
-  .bchart-barwrap{flex:1;background:#12291a;border-radius:6px;height:22px;overflow:hidden}
-  .bchart-bar{height:100%;background:linear-gradient(90deg,#2f9e44,#69db7c);border-radius:6px}
+  .bchart-barwrap{flex:1;display:flex;background:#12291a;border-radius:6px;height:22px;overflow:hidden}
+  .bchart-seg{height:100%}
+  .seg0{background:#2f9e44}
+  .seg1{background:#51cf66}
+  .seg2{background:#b2f2bb}
   .bchart-amt{flex:0 0 auto;font-weight:700;white-space:nowrap}
   .bchart-cnt{color:var(--sub);font-size:.82rem;font-weight:400}
+  .bchart-break{flex:0 0 100%;font-size:.82rem;color:#8ce99a;margin-top:-3px}
   .pricebar{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:.95rem;margin-top:10px}
   .pricebar b{font-size:1.25rem;color:var(--ok)}
   .pricebar .chg-up{color:#69db7c;font-weight:700}
@@ -117,7 +125,7 @@
 <body>
 <header>
   <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b></div></div>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (everyone who transacted with them, and the counterparties of those counterparties) (EVM side + Cosmos side, v0.4.0). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (everyone who transacted with them, and the counterparties of those counterparties) (EVM side + Cosmos side, v0.4.1). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
   <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-newpairs">🆕 New pairs</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-lp">💧 Liquidity</a><a href="#sec-dormant">😴 Dormant</a><a href="#sec-newfaces">👤 New faces</a><a href="#sec-feed">Latest</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
@@ -149,7 +157,7 @@
 
   <section class="bridgechart" id="sec-bridgechart">
     <h2>📊 Total USDT Bridged Out</h2>
-    <p class="rule">The total amount of USDT bridged out to external chains, broken down by name. Withdrawals by related wallets are grouped under the first related validator name (each event is counted once, never double-counted).</p>
+    <p class="rule">The total amount of USDT bridged out to external chains, broken down by name. Each bar is split by distance (depth) from the validator: darkest = the validator itself, middle = depth-1 related wallets (those that transacted directly with the validator), lightest = depth-2-or-deeper related wallets (counterparties of related wallets, linked by following the path). Depth-2+ attribution is inherited through the path, so it is a weaker link than the validator itself or depth-1. Each withdrawal is counted exactly once, under one representative name (the validator's own name for its own withdrawals; for related wallets, the first related validator name) — never double-counted.</p>
     <div id="bridgeChart"><p class="empty">Loading…</p></div>
   </section>
 
@@ -238,7 +246,7 @@
       <li><b>(3) 2-hop:</b> an indirect link of the form validator → another address → validator, where both transfers are confirmed. (Currently, no address has been newly registered under this type.)</li>
     </ul>
     <p><b>How estimates are handled:</b> moves by estimated addresses appear only in Latest activity, with a dashed border and an "Estimated" badge, and can be hidden by unchecking "Show estimated" above. They are never included in the Snipe Alerts, Notable, Insider Watch, or Bridge Withdrawals sections, nor in the bridge-out totals chart — all amounts there are totals of confirmed activity only.</p>
-    <p><b>Currently registered:</b> 6 estimated addresses (5 through-pool, 1 shared counterparty), as of v0.4.0, 5 November 2026.</p>
+    <p><b>Currently registered:</b> 6 estimated addresses (5 through-pool, 1 shared counterparty), as of v0.4.1, 5 November 2026.</p>
   </details>
   <div id="feed"><p class="empty">Loading…</p></div>
   </div></section>
@@ -262,7 +270,7 @@
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated addresses (Phase 3): addresses whose link cannot be confirmed by a direct transfer are also watched, estimated in three ways — through-pool, 2-hop, and shared counterparty. Their moves appear only in Latest activity, with a dashed border, an Estimated badge and the basis shown; they are never included in the Insider / Snipes / Notable / Bridge Withdrawals / Totals sections (those stay confirmed-only). The validator list is refreshed from the chain on every run: newly bonded validators are added automatically, and validators that leave the bonded set stay watched as history (marked inactive). Nothing is posted externally (no X bot) — alerts live on this site only.
   Scope of related addresses (v0.4.0): in addition to every address that sent to or received from a validator, the full-history expansion (counterparties of counterparties, without limit) has been applied to the whole record, past included (system / pair / token contracts, and contacts reachable only through an estimated address, are excluded). When a new counterparty appears, it is also added automatically as a related address on the spot. / New Pairs covers pairs created by the Don't Panic factory and displays only pairs containing at least one of the 17 listed tokens. / The [42] price is calculated from the 42/USDT pool's reserves; the pool is small, so the figure has a margin of error.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). Validator X is also known as Rioshi, shown in small text as (Rioshi) next to the name.
-  <br>Version: <b>v0.4.0</b> (v0.4.0: six additions — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price. Previously, v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
+  <br>Version: <b>v0.4.1</b> (v0.4.1: the bridge-out totals chart now splits each bar by depth — the validator itself / depth-1 related / depth-2+ related. Previously, v0.4.0 added six sections — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price; v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -277,7 +285,7 @@ const TYPE_EN = {'transfer':'Transfer','swap-buy':'Buy','swap-sell':'Sell','lp-a
 // few are Japanese; translate the known ones, turn "X/Y ペア" into
 // "X/Y pair", and fall back to the short address for anything else that
 // still contains Japanese (the English page never shows Japanese text).
-const LABEL_EN = {'ブリッジルーター':'Bridge router','FISH報酬コントラクト':'FISH reward contract','Hyperlaneメールボックス':'Hyperlane mailbox','残高1位アドレス':'Top-balance address','DEXルーター':'DEX router','ステーキングプリコンパイル（0x0800）':'Staking precompile (0x0800)','報酬配布プリコンパイル（0x0801）':'Distribution precompile (0x0801)','NFTマーケット':'NFT marketplace','st42バルト':'st42 vault','st42注文板（St42Book）':'st42 order book (St42Book)','W42（Wrapped 42）':'W42 (Wrapped 42)','Zaphod Girls The Thirteen（NFT）':'Zaphod Girls The Thirteen (NFT)'};
+const LABEL_EN = {'ブリッジルーター':'Bridge router','ブリッジ系コントラクト':'Bridge contract','LiquidityLocker（流動性ロッカー）':'LiquidityLocker (liquidity locker)','NFTコントラクト':'NFT contract','FISH報酬コントラクト':'FISH reward contract','Hyperlaneメールボックス':'Hyperlane mailbox','残高1位アドレス':'Top-balance address','DEXルーター':'DEX router','ステーキングプリコンパイル（0x0800）':'Staking precompile (0x0800)','報酬配布プリコンパイル（0x0801）':'Distribution precompile (0x0801)','NFTマーケット':'NFT marketplace','st42バルト':'st42 vault','st42注文板（St42Book）':'st42 order book (St42Book)','W42（Wrapped 42）':'W42 (Wrapped 42)','Zaphod Girls The Thirteen（NFT）':'Zaphod Girls The Thirteen (NFT)'};
 const NOTE_EN = {'コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）':'a contract (a shared contract holding LP shares of several FISH pairs)'};
 const hasJa = (s) => /[぀-ヿ一-鿿]/.test(s || '');
 function enLabel(s){
@@ -426,23 +434,41 @@ function relationLine(ev){
   const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
   return line + note;
 }
+// v0.4.1: depth segment of a bridge-out event (0 = validator itself,
+// 1 = depth-1 related, 2 = depth-2-or-deeper related). actorDepth is set by
+// the collector; the fallback mirrors its derivation for stale feeds.
+function bridgeSeg(ev){
+  const d = typeof ev.actorDepth === 'number' ? ev.actorDepth : (ev.actorTier === 'validator' ? 0 : 1);
+  return d <= 0 ? 0 : d === 1 ? 1 : 2;
+}
 function renderBridgeChart(){
   const outs = FEED.events.filter((ev) => ev.type === 'bridge-out' && ev.actorTier !== 'estimated');
-  const groups = new Map(); let total = 0;
+  const groups = new Map(); let total = 0; const segTot = [0, 0, 0];
   for (const ev of outs) {
     const a = parseFloat(String((ev.amount && ev.amount.amount) || '0').replace(/,/g, '')) || 0;
     total += a;
+    const s = bridgeSeg(ev); segTot[s] += a;
+    // Count-once attribution: the actor's own validator name if self, else
+    // the FIRST related validator name. Self and related merge into one bar.
     let name;
-    if (ev.actorTier === 'validator' && ev.actorLabel) name = valName(ev.actorLabel) + ' (itself)';
-    else { const rel = ev.actorValidators || []; name = rel.length ? valName(rel[0]) + ' — related' : (ev.actorLabel || shortAddr(ev.actor)); }
-    const g = groups.get(name) || {sum: 0, n: 0}; g.sum += a; g.n += 1; groups.set(name, g);
+    if (ev.actorTier === 'validator' && ev.actorLabel) name = ev.actorLabel;
+    else { const rel = ev.actorValidators || []; name = rel.length ? rel[0] : (ev.actorLabel || shortAddr(ev.actor)); }
+    const g = groups.get(name) || {seg: [0, 0, 0], sum: 0, n: 0};
+    g.seg[s] += a; g.sum += a; g.n += 1; groups.set(name, g);
   }
   const rows = [...groups.entries()].sort((x, y) => y[1].sum - x[1].sum);
   const max = rows.length ? rows[0][1].sum : 0;
   const fmt = (v) => v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const SEG_LABEL = ['the validator itself', 'depth-1 related', 'depth-2+ related'];
+  const segLine = (seg) => seg.map((v, i) => v > 0 ? `${SEG_LABEL[i]} ${fmt(v)} USDT` : null).filter(Boolean).join(' / ');
   document.getElementById('bridgeChart').innerHTML = outs.length
-    ? `<div class="bchart-total">Total ${fmt(total)} USDT (${outs.length} withdrawals)</div>` + rows.map(([name, g]) =>
-      `<div class="bchart-row"><div class="bchart-name">${name}</div><div class="bchart-barwrap"><div class="bchart-bar" style="width:${max ? Math.max(2, g.sum / max * 100) : 0}%"></div></div><div class="bchart-amt">${fmt(g.sum)} USDT <span class="bchart-cnt">×${g.n}</span></div></div>`).join('')
+    ? `<div class="bchart-total">Total ${fmt(total)} USDT (${outs.length} withdrawals)</div>`
+      + `<div class="bchart-segtotal">Overall breakdown: ${segLine(segTot)}</div>`
+      + `<div class="bchart-legend"><span class="sw seg0"></span>the validator itself<span class="sw seg1"></span>depth-1 related<span class="sw seg2"></span>depth-2+ related</div>`
+      + rows.map(([name, g]) => {
+        const parts = g.seg.map((v, i) => v > 0 ? `<div class="bchart-seg seg${i}" style="width:${max ? v / max * 100 : 0}%"></div>` : '').join('');
+        return `<div class="bchart-row"><div class="bchart-name">${valName(name)}</div><div class="bchart-barwrap">${parts}</div><div class="bchart-amt">${fmt(g.sum)} USDT <span class="bchart-cnt">×${g.n}</span></div><div class="bchart-break">${segLine(g.seg)}</div></div>`;
+      }).join('')
     : '<p class="empty">No bridge withdrawals recorded yet.</p>';
 }
 function bigName(ev){
@@ -450,8 +476,8 @@ function bigName(ev){
   const rel = ev.actorValidators || [];
   if (ev.actorTier === 'estimated') return {main: rel.length ? valName(rel[0]) : shortAddr(ev.actor), sub: rel.length > 1 ? ` — estimated related wallet (also estimated-related to ${rel.length - 1} more)` : ' — estimated related wallet', cls: ''};
   if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: rel.length > 1 ? ` — related wallet (also related to ${rel.length - 1} more)` : ' — related wallet', cls: ''};
-  if (ev.actorIsCore && ev.actorLabel) return {main: ev.actorLabel, sub: 'core', cls: ''};
-  if (ev.actorLabel) return {main: ev.actorLabel, sub: '', cls: ''};
+  if (ev.actorIsCore && ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: 'core', cls: ''};
+  if (ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: '', cls: ''};
   return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? 'related wallet' : '', cls: ''};
 }
 function renderEvent(ev){
