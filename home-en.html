@@ -54,6 +54,11 @@
       <p>USDT sent out to external chains via a bridge by a validator itself or a related wallet, in its own green section (inbound is not included).</p>
       <div class="count" id="c-bridge">—</div>
     </a>
+    <a class="card bridge" href="en.html#sec-bridgechart">
+      <h2>📊 Total USDT Bridged Out</h2>
+      <p>The total amount of USDT bridged out to external chains, with a per-name bar chart.</p>
+      <div class="count" id="c-bridgetotal">—</div>
+    </a>
     <a class="card alerts" href="en.html#sec-alerts">
       <h2>⭐ Notable</h2>
       <p>Validator-self trades and large moves of 1,000 [42] or more.</p>
@@ -74,7 +79,7 @@
 </main>
 <footer>
   Data source: the 42 Chain blocks themselves (via RPC). Estimated links are not included. Alerts are shown on this site only.
-  <br>Version: <b>v0.2.6</b> (top pages added)
+  <br>Version: <b>v0.2.9</b> (top page)
 </footer>
 <script>
 (async () => {
@@ -87,6 +92,8 @@
     document.getElementById('c-insider').textContent = insider;
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe).length;
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out').length;
+    const bsum = ev.filter((e) => e.type === 'bridge-out').reduce((t, e) => t + (parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0), 0);
+    document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
     const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
     document.getElementById('c-alerts').textContent = ev.filter((e) => !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
     document.getElementById('c-total').textContent = s.totalEvents;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.2.8</title>
+<title>42 Chain Validator Real-Time Tracker v0.2.9</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -50,10 +50,10 @@
   .empty{color:var(--sub);padding:18px 0}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
-  section.insider>h2,section.snipes>h2,section.bridge>h2,section.alerts>h2,section.fold>h2{cursor:pointer;user-select:none}
-  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2::after,section.alerts>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.insider>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.alerts>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.alerts>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
   section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.alerts.open>h2::after,section.fold.open>h2::after{content:' ▼'}
-  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.alerts:not(.open)>:not(h2){display:none}
+  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.alerts:not(.open)>:not(h2){display:none}
   section.fold:not(.open)>.fold-body{display:none}
   section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.fold>h2{margin-top:8px}
@@ -64,14 +64,24 @@
   .bigname{font-size:1.6rem;font-weight:800;line-height:1.15;margin:0 0 2px;color:var(--txt)}
   .bigname .sub{font-size:.82rem;font-weight:600;color:var(--sub);margin-left:6px}
   .bigname.self{color:var(--acc)}
+  section.bridgechart{background:#0e2416;border:1px solid #2f9e44;border-radius:10px;padding:6px 14px 12px}
+  section.bridgechart h2{color:#69db7c}
+  section.bridgechart .rule{color:#8ce99a}
+  .bchart-total{font-size:1.5rem;font-weight:800;margin:6px 0 10px}
+  .bchart-row{display:flex;align-items:center;gap:10px;margin:7px 0}
+  .bchart-name{flex:0 0 34%;font-weight:700;font-size:1.02rem;word-break:break-word}
+  .bchart-barwrap{flex:1;background:#12291a;border-radius:6px;height:22px;overflow:hidden}
+  .bchart-bar{height:100%;background:linear-gradient(90deg,#2f9e44,#69db7c);border-radius:6px}
+  .bchart-amt{flex:0 0 auto;font-weight:700;white-space:nowrap}
+  .bchart-cnt{color:var(--sub);font-size:.82rem;font-weight:400}
 </style>
 </head>
 <body>
 <header>
   <h1>42 Chain Validator Real-Time Tracker</h1>
   <p class="sub"><a href="index.html">日本語版</a></p>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.8). Estimated links are not included.</p>
-  <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-feed">Latest</a><a href="#sec-validators">Validators</a></nav>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.9). Estimated links are not included.</p>
+  <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-feed">Latest</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
 </header>
 <main>
@@ -91,6 +101,12 @@
     <h2>🌉 Bridge Withdrawals (USDT, outbound)</h2>
     <p class="rule" id="bridgeOutRule"></p>
     <div id="bridgeouts"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="bridgechart" id="sec-bridgechart">
+    <h2>📊 Total USDT Bridged Out</h2>
+    <p class="rule">The total amount of USDT bridged out to external chains, broken down by name. Withdrawals by related wallets are grouped under the first related validator name (each event is counted once, never double-counted).</p>
+    <div id="bridgeChart"><p class="empty">Loading…</p></div>
   </section>
 
   <section class="alerts" id="sec-alerts">
@@ -159,7 +175,7 @@
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated links are Phase 3. Nothing is posted externally (no X bot) — alerts live on this site only.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark).
-  <br>Version: <b>v0.2.8</b> (v0.2.7 + a big name header on every event card in every section: the validator name in large type, and for related wallets their validator name shown large) with count badges linking into each section, plus tap-to-open collapsible sections on the tracker pages to keep the page compact)
+  <br>Version: <b>v0.2.9</b> (v0.2.8 + a new "Total USDT Bridged Out" section with the grand total and a per-name bar chart) with count badges linking into each section, plus tap-to-open collapsible sections on the tracker pages to keep the page compact)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -302,6 +318,25 @@ function relationLine(ev){
   const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
   return line + note;
 }
+function renderBridgeChart(){
+  const outs = FEED.events.filter((ev) => ev.type === 'bridge-out');
+  const groups = new Map(); let total = 0;
+  for (const ev of outs) {
+    const a = parseFloat(String((ev.amount && ev.amount.amount) || '0').replace(/,/g, '')) || 0;
+    total += a;
+    let name;
+    if (ev.actorTier === 'validator' && ev.actorLabel) name = ev.actorLabel + ' (itself)';
+    else { const rel = ev.actorValidators || []; name = rel.length ? rel[0] + ' — related' : (ev.actorLabel || shortAddr(ev.actor)); }
+    const g = groups.get(name) || {sum: 0, n: 0}; g.sum += a; g.n += 1; groups.set(name, g);
+  }
+  const rows = [...groups.entries()].sort((x, y) => y[1].sum - x[1].sum);
+  const max = rows.length ? rows[0][1].sum : 0;
+  const fmt = (v) => v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  document.getElementById('bridgeChart').innerHTML = outs.length
+    ? `<div class="bchart-total">Total ${fmt(total)} USDT (${outs.length} withdrawals)</div>` + rows.map(([name, g]) =>
+      `<div class="bchart-row"><div class="bchart-name">${name}</div><div class="bchart-barwrap"><div class="bchart-bar" style="width:${max ? Math.max(2, g.sum / max * 100) : 0}%"></div></div><div class="bchart-amt">${fmt(g.sum)} USDT <span class="bchart-cnt">×${g.n}</span></div></div>`).join('')
+    : '<p class="empty">No bridge withdrawals recorded yet.</p>';
+}
 function bigName(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel) return {main: ev.actorLabel, sub: 'the validator itself', cls: ' self'};
   const rel = ev.actorValidators || [];
@@ -356,7 +391,7 @@ function applyFilters(){
     ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">Showing the 100 most recent of ${insiders.length} moves (all of them are kept in the record)</p>` : '')
     : '<p class="empty">No matching pre-listing buys.</p>';
 }
-if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.alerts, section.fold')) {
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.alerts, section.fold')) {
   const h = sec.querySelector('h2');
   if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
 }
@@ -379,6 +414,7 @@ async function load(){
     document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
       `<div class="val"><b>${v.moniker}</b>${v.isCore ? ' <span class="badge core">also core infra</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} related addresses</span></div>`).join('');
     applyFilters();
+    renderBridgeChart();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
   } catch (e) {
     document.getElementById('status').textContent = 'Could not load feed.json (the collector may not have run yet).';
