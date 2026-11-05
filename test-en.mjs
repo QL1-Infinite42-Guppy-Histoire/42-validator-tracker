@@ -45,15 +45,27 @@ check(`full sweep (${events.length} events) has no Japanese`, !JA.test(all), (al
 // section membership after v0.2.3 demotion
 const bo = events.filter((e) => e.type === 'bridge-out');
 const bso = events.filter((e) => e.type === 'bridge-send-other');
-check('stored bridge-out == 15', bo.length === 15, String(bo.length));
+check('stored bridge-out >= 15 (v0.2.3 migration baseline)', bo.length >= 15, String(bo.length));
 check('stored bridge-out are all USDT', bo.every((e) => e.amount?.symbol === 'USDT'));
-check('stored bridge-send-other == 11', bso.length === 11, String(bso.length));
+check('stored bridge-send-other >= 11 (v0.2.3 demotions; backfills may add more)', bso.length >= 11, String(bso.length));
 check('bridge-send-other kept no marker', bso.every((e) => !(e.notableReasons || []).includes('bridge-out')));
 check('EN bridge badge wording (validator)', renderEvent({ ...bo.find((e) => e.actorTier === 'validator') }).includes("Validator's own USDT bridge-out"));
+
+// v0.2.4 stored-data invariants: buys-only snipes + insider backfill
+const snipes = events.filter((e) => e.isSnipe);
+check('stored snipes are buys only (>= 52)', snipes.length >= 52 && snipes.every((e) => e.type === 'swap-buy'), String(snipes.length));
+check('no LP add carries a snipe flag', events.every((e) => e.type !== 'lp-add' || !e.isSnipe));
+const insider = events.filter((e) => e.isInsider);
+check('stored insider events exist (>= 683)', insider.length >= 683, String(insider.length));
+const anchor = events.find((e) => e.txHash === '0x1f5bc6205f0c8e9f1b204cd6f40e1398fe98adcecbaac284e8f60f2d9f3d6cc1');
+check('listing-day anchor buy (0xa8d5d100, 2026-06-30 13:31 JST) is insider-flagged', !!anchor && anchor.isInsider === true && anchor.actor === '0xa8d5d10095d0d94b758e2d74c00107cfca311fd3');
+check('anchor renders in English without Japanese', !!anchor && !JA.test(renderEvent(anchor)), anchor ? summaryEn(anchor) : '');
 
 // template-level checks
 check('en.html links back to index.html', html.includes('href="index.html"'));
 check('en.html has English section headings', html.includes('Snipe Alerts') && html.includes('Bridge Withdrawals (USDT, outbound)') && html.includes('Notable') && html.includes('Latest activity'));
+check('en.html has Insider Watch section', html.includes('⚠ Insider Watch — X') && html.includes('id="insiders"'));
+check('jp index.html has Insider section', jpHtml.includes('⚠ インサイダー') && jpHtml.includes('id="insiders"'));
 check('en.html template contains no Japanese summary text', !html.includes('ブリッジで外部へ送信：') && !html.includes('を送金'));
 
 console.log(fails === 0 ? 'ALL PASS' : `${fails} FAILED`);

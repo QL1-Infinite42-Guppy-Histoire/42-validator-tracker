@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// 42 Validator Tracker — collector (v0.2.3: EVM side + Cosmos side,
-// USDT-only bridge-out section).
+// 42 Validator Tracker — collector (v0.2.4: EVM side + Cosmos side,
+// USDT-only bridge-out section, buys-only snipes, insider flag for X).
 //
 // Polls the 42 Chain EVM RPC for new blocks, decodes receipts with NO external
 // dependencies (topic hashes are the standard ERC-20 / Uniswap V2 ones,
@@ -51,6 +51,10 @@
 //    USDT token (transfer of USDT to a bridge target, or transferRemote on
 //    the USDT BridgeRouter) is "bridge-out"; bridge sends of any other
 //    token are recorded as plain "bridge-send-other" moves.
+//  - v0.2.4: snipes are BUYS ONLY (user rule) — LP adds no longer count.
+//    Plus the ⚠ Insider flag (isInsider): validator X itself or an
+//    X-related wallet moving [42] or DONT (whitelist PANIC contract);
+//    insider events are pinned into the feed like snipes/bridge-outs.
 //
 // Standing rules honoured here:
 //  - NO minimum-amount filtering anywhere: a watched transfer of any size,
@@ -107,7 +111,7 @@ export const NOTABLE_42_THRESHOLD = 1000;
 // pair's creation. The 3-hour window matches the user's earlier sniping
 // research ("first 3 hours" lists).
 export const SNIPE_WINDOW_SECS = 3 * 3600;
-export const SNIPE_RULE = 'スナイプの定義：ペアが作られてから3時間以内に、バリデーター本人または直接関連ウォレットが、そのペアで買う（買い）またはLP追加した動き';
+export const SNIPE_RULE = 'スナイプの定義：ペアが作られてから3時間以内に、バリデーター本人または直接関連ウォレットが、そのペアで買った（買い）動き。LP追加はスナイプに含みません';
 
 // Known contracts among watched addresses, from the 2026-10-31 validator
 // research (~/workspace/42-flowmap validator dossiers): 0x71b13838…30E0 is a
@@ -192,6 +196,31 @@ export const NFT_COLLECTIONS = {
 // recorded as plain moves and never enter this section; inbound receipts
 // are plain transfers, never glowing.
 export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター本人または直接関連ウォレットが、USDTをブリッジ経由で42チェーンから外部チェーンへ送り出した動き。専用の「ブリッジ出金（USDT・外部へ）」欄で緑色に光って表示されます（注目欄には入れません）。USDT以外の銘柄のブリッジ送信は通常の動きとして記録し、この欄には入れません。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
+
+// ---------------- v0.2.4: ⚠ Insider section (validator X) ----------------
+// User rule: a dedicated warning-style section at the very top of the site
+// showing ONLY validator X's own moves and X-related wallets' moves in
+// [42] and DONT. Relations are the watchlist's CONFIRMED direct relations
+// only (no estimates): the actor must be X itself, or a related-tier,
+// non-pair, non-core address whose relatedValidators include 'X'. (The
+// FISH/42 pair and the DEX router also carry an X relation in the
+// watchlist, but they are infrastructure — they appear as counterparties,
+// never as the acting wallet. Xenia is a separate validator and is not
+// part of X's insider set either.)
+export const X_VALIDATOR_ADDR = '0xdb34ff92995c74d170755a563a1a2c35a3db4738'; // watchlist validator entry, moniker 'X'
+export const DONT_TOKEN = '0xfaa842c8871f7f99c183f77871f79ce07dd056cd'; // whitelist PANIC contract == DONT
+export const INSIDER_RULE = 'インサイダー欄：バリデーターX本人とXの直接関連アドレスによる、[42] と DONT（PANIC）の動きだけを表示します';
+export function isInsiderEvent(ev, ctx) {
+  const ae = ctx.entry(ev.actor);
+  if (!ae) return false;
+  const xSide = (ae.tier === 'validator' && ae.label === 'X')
+    || (ae.tier === 'related' && !ae.isPair && !ae.isCore && (ae.relatedValidators ?? []).includes('X'));
+  if (!xSide) return false;
+  const addrs = [ev.amount?.token, ev.sold?.token, ev.bought?.token, ...((ev.amounts ?? []).map((a) => a.token)), ev.counterparty].filter(Boolean).map(lc);
+  if (addrs.includes(W42) || addrs.includes(DONT_TOKEN)) return true;
+  const syms = ev.tokens ?? [];
+  return syms.includes('42') || syms.includes('PANIC') || syms.includes('DONT');
+}
 
 // Method-call event types that keep the v0.1.0 repetition suppression
 // (same actor + destination + method within ~360 blocks). Transfers, swaps,
@@ -657,9 +686,17 @@ export function enrichEvent(ev, ctx, creations = {}) {
       set('pairCreatedTs', c.createdTs);
       const age = ev.ts - c.createdTs;
       set('pairAgeSecs', age);
-      set('isSnipe', age >= 0 && age <= SNIPE_WINDOW_SECS);
+      // v0.2.4 (Part D, user rule): snipes are BUYS ONLY — an LP add never
+      // counts as a snipe, however fresh the pair is.
+      set('isSnipe', ev.type === 'swap-buy' && age >= 0 && age <= SNIPE_WINDOW_SECS);
     }
   }
+  // Part D demotion: a stored non-buy event that still carries the old
+  // (pre-v0.2.4) snipe flag loses it. The event itself is kept as a normal
+  // record — only the flag is removed.
+  if (ev.type !== 'swap-buy' && ev.isSnipe) set('isSnipe', false);
+  // v0.2.4 (Part C): insider flag for the ⚠ Insider section (validator X).
+  set('isInsider', isInsiderEvent(ev, ctx));
   return changed;
 }
 
@@ -1128,16 +1165,16 @@ async function ensureCreations(events, creations, creationsPath, cap = 8) {
   }
 }
 
-// Feed selection: the latest 500 events, PLUS every snipe / bridge-out event
-// ever recorded (deduplicated, sort order preserved). The two special site
-// sections (🎯スナイプ速報 / 🌉ブリッジ出金) are fed from these flags, and
-// the v0.2.2 historical backfill (events flagged `backfill:true`, recovered
-// from the full per-tx flow index) must stay visible permanently instead of
-// falling out of the latest-500 window.
+// Feed selection: the latest 500 events, PLUS every snipe / bridge-out /
+// insider event ever recorded (deduplicated, sort order preserved). The
+// special site sections (⚠インサイダー / 🎯スナイプ速報 / 🌉ブリッジ出金)
+// are fed from these flags, and the historical backfills (events flagged
+// `backfill:true`, recovered from the full per-tx flow index) must stay
+// visible permanently instead of falling out of the latest-500 window.
 export function selectFeedEvents(sorted) {
   const head = sorted.slice(0, 500);
   const seenIds = new Set(head.map((e) => e.id));
-  const pinned = sorted.filter((e) => (e.isSnipe || e.type === 'bridge-out') && !seenIds.has(e.id));
+  const pinned = sorted.filter((e) => (e.isSnipe || e.type === 'bridge-out' || e.isInsider) && !seenIds.has(e.id));
   return [...head, ...pinned];
 }
 
@@ -1201,6 +1238,7 @@ async function main() {
         notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）`,
         snipeRule: SNIPE_RULE,
         bridgeOutRule: BRIDGE_OUT_RULE,
+        insiderRule: INSIDER_RULE,
         actionRule: '操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。',
       },
       validators,

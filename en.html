@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.2.3</title>
+<title>42 Chain Validator Real-Time Tracker v0.2.4</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -12,6 +12,10 @@
   .sub{color:var(--sub);font-size:.9rem}
   .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem}
   .status b{color:var(--ok)}
+  section.insider{background:#1d1030;border:2px solid #9333ea;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 22px rgba(147,51,234,.5)}
+  section.insider h2{color:#e9d5ff;font-size:1.3rem}
+  section.insider .rule{color:#c084fc}
+  .badge.insider{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
   section.alerts{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
   section.snipes{background:#33121a;border:2px solid #ff5964;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(255,89,100,.25)}
   .ev.bridgeout{border:2px solid #2f9e44;background:#0e2416;box-shadow:0 0 18px rgba(47,158,68,.65)}
@@ -51,10 +55,16 @@
 <header>
   <h1>42 Chain Validator Real-Time Tracker</h1>
   <p class="sub"><a href="index.html">日本語版</a></p>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.3). Estimated links are not included.</p>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.4). Estimated links are not included.</p>
   <div class="status" id="status">Loading…</div>
 </header>
 <main>
+  <section class="insider">
+    <h2>⚠ Insider Watch — X</h2>
+    <p class="rule" id="insiderRule"></p>
+    <div id="insiders"><p class="empty">Loading…</p></div>
+  </section>
+
   <section class="snipes">
     <h2>🎯 Snipe Alerts</h2>
     <p class="rule" id="snipeRule"></p>
@@ -131,7 +141,7 @@
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated links are Phase 3. Nothing is posted externally (no X bot) — alerts live on this site only.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark).
-  <br>Version: <b>v0.2.3</b> (v0.2.2 + Bridge Withdrawals section narrowed to USDT only + this full English version)
+  <br>Version: <b>v0.2.4</b> (v0.2.3 + a purple warning-style "⚠ Insider Watch — X" section at the very top: only validator X's own and X-related wallets' moves in [42] and DONT, with historical moves backfilled from the full-history index + the snipe definition narrowed to buys only, LP adds explicitly excluded)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -285,9 +295,10 @@ function renderEvent(ev){
   const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "Validator's own USDT bridge-out" : ev.actorTier === 'related' ? "Related wallet's USDT bridge-out" : 'USDT bridge-out'}</span>` : '';
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
   const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 Snipe (${ageEn(ev.pairAgeSecs)})</span>` : '';
+  const insider = ev.isInsider ? ' <span class="badge insider">⚠ Insider (X)</span>' : '';
   return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}">
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
-    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${cosmos}${snipe}</div>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${cosmos}${snipe}${insider}</div>
     <div class="summary"><b>${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
     ${relationLine(ev)}
     <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
@@ -307,6 +318,14 @@ function applyFilters(){
   document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">No recent bridge withdrawals.</p>';
   const snipes = FEED.events.filter((ev) => ev.isSnipe);
   document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">No snipes detected in the recent feed.</p>';
+  // ⚠ Insider section (v0.2.4): X-cluster [42]/DONT moves, newest first,
+  // display capped at 100 with the total shown (records are never dropped).
+  const insiders = FEED.events.filter((ev) => ev.isInsider)
+    .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
+  document.getElementById('insiderRule').textContent = 'Insider Watch: only the moves in [42] and DONT (PANIC) made by validator X itself and the addresses directly related to X.' + (insiders.length ? ` (${insiders.length} matching moves)` : '');
+  document.getElementById('insiders').innerHTML = insiders.length
+    ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">Showing the 100 most recent of ${insiders.length} moves (all of them are kept in the record)</p>` : '')
+    : '<p class="empty">No insider-matching moves in the recent feed.</p>';
 }
 async function load(){
   try {
@@ -316,7 +335,7 @@ async function load(){
       `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> (chain tip ${s.latestBlockSeen ?? '—'}) / Cosmos last processed: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / Recorded moves: ${s.totalEvents} / Watching: ${s.watchSummary.validators} validators + ${s.watchSummary.directRelated} directly related addresses`;
     document.getElementById('alertRule').textContent = 'Notable rule: (1) a validator\u2019s own buys and sells, (2) moves of 1,000 [42] or more. USDT bridge withdrawals are shown separately in the green section above. Only moves matching these rules are listed here (shown on this site only; nothing is posted externally).';
     document.getElementById('bridgeOutRule').textContent = 'Bridge withdrawal = a validator itself, or a directly related wallet, sending USDT out of the 42 Chain to an external chain through a bridge. These moves glow green in this dedicated section (they are not put in Notable). Bridge sends of tokens other than USDT are recorded as regular moves and are not shown here. Inbound receipts (receiving on the 42 Chain side) are treated as ordinary transfers.';
-    document.getElementById('snipeRule').textContent = 'Snipe = a validator itself, or a directly related wallet, buying or adding liquidity on a pair within 3 hours of that pair\u2019s creation. Matching moves are listed here, prominently.';
+    document.getElementById('snipeRule').textContent = 'Snipe = a validator itself, or a directly related wallet, buying on a pair within 3 hours of that pair\u2019s creation (buys only \u2014 LP adds are not counted as snipes). Matching moves are listed here, prominently.';
     const vsel = document.getElementById('fValidator');
     if (vsel.options.length <= 1) for (const v of FEED.validators) { const o = document.createElement('option'); o.value = v.moniker; o.textContent = v.moniker; vsel.appendChild(o); }
     const tsel = document.getElementById('fToken');
