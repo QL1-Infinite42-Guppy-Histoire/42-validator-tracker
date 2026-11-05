@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T10:05:10.610Z",
+ "generatedAt": "2026-11-05T10:10:12.045Z",
  "status": {
-  "lastProcessedBlock": 4278891,
-  "latestBlockSeen": 4278891,
-  "lastProcessedCosmosBlock": 4278891,
-  "lastProcessedAt": "2026-11-05T10:05:10.502Z",
-  "totalEvents": 9181,
+  "lastProcessedBlock": 4278947,
+  "latestBlockSeen": 4278947,
+  "lastProcessedCosmosBlock": 4278947,
+  "lastProcessedAt": "2026-11-05T10:10:11.935Z",
+  "totalEvents": 9182,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T10:05:10.632Z"
+   "checkedAt": "2026-11-05T10:10:12.069Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68533039,
-   "updatedAt": "2026-11-05T10:05:10.000Z",
+   "updatedAt": "2026-11-05T10:10:11.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4278842,
+    "toBlock": 4278897,
     "fromTs": 1770178474,
-    "toTs": 1793872836
+    "toTs": 1793873134
    },
    "totals": {
     "delegate": {
@@ -679,7 +679,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 73,
+   "relatedActivity": 74,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -784,6 +784,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xe9ed63a968420ec9e9ebfef57dacd2a60b67221d20150dfb84eed7bf8dbaecb2:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793873134,
+   "block": 4278897,
+   "txHash": "0xe9ed63a968420ec9e9ebfef57dacd2a60b67221d20150dfb84eed7bf8dbaecb2",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x1c2f070e9f02fa61b26004eeaea570e5dbb670ac7a40adaca955a6a45ac61049:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1793872836,
@@ -24482,63 +24516,6 @@
    "isInsider": true,
    "actorDepth": 1,
    "actorEvidence": null
-  },
-  {
-   "id": "0xc4a19f84cc296e7f0fa556b22a2d745a40ded006472d623f940f499af9f77556:3:swap-buy:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "ts": 1793230272,
-   "block": 4159896,
-   "txHash": "0xc4a19f84cc296e7f0fa556b22a2d745a40ded006472d623f940f499af9f77556",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x61e34770a601588eaacde5d443f27fc08e743492",
-   "counterpartyLabel": "FISH/O ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "1418021446798713639",
-    "amount": "1.418021",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xf4c14c0322e361f35eb9465c992fb1c21c91c156",
-    "symbol": "O",
-    "amountRaw": "6507896290825921285365815",
-    "amount": "6,507,896.290825",
-    "whitelisted": true
-   },
-   "subjectSymbol": "O",
-   "price": 2.2e-7,
-   "priceUnit": "FISH/O",
-   "pair": "0x61e34770a601588eaacde5d443f27fc08e743492",
-   "pairLabel": "FISH/O ペア",
-   "tokens": [
-    "FISH",
-    "O"
-   ],
-   "whitelisted": true,
-   "summary": "Oを買い（支払い 1.418021 FISH／価格 約2.2e-7 FISH/O）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1789554223,
-   "pairAgeSecs": 3676049,
-   "isSnipe": false,
-   "isInsider": false,
-   "backfill": true
   },
   {
    "id": "0xa2a30bba3060b48386fa381c611bbf1f9bf577c9f30ba8b8a6214531b0393d18:tx:transfer:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
