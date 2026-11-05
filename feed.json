@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T07:00:13.454Z",
+ "generatedAt": "2026-11-05T07:05:10.879Z",
  "status": {
-  "lastProcessedBlock": 4276836,
-  "latestBlockSeen": 4276836,
-  "lastProcessedCosmosBlock": 4276836,
-  "lastProcessedAt": "2026-11-05T07:00:13.290Z",
-  "totalEvents": 7743,
+  "lastProcessedBlock": 4276891,
+  "latestBlockSeen": 4276891,
+  "lastProcessedCosmosBlock": 4276891,
+  "lastProcessedAt": "2026-11-05T07:05:10.776Z",
+  "totalEvents": 7744,
   "watchSummary": {
    "validators": 23,
    "directRelated": 99,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T07:00:13.470Z"
+   "checkedAt": "2026-11-05T07:05:10.900Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68824769,
-   "updatedAt": "2026-11-05T07:00:13.000Z",
+   "updatedAt": "2026-11-05T07:05:10.000Z",
    "change24hPct": null
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4276382,
+    "toBlock": 4276842,
     "fromTs": 1770178474,
-    "toTs": 1793859554
+    "toTs": 1793862038
    },
    "totals": {
     "delegate": {
@@ -737,6 +737,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x507da6c7601e82c601bd55da4657852a1958da404627c708e8de46926f21a62d:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1793862038,
+   "block": 4276842,
+   "txHash": "0x507da6c7601e82c601bd55da4657852a1958da404627c708e8de46926f21a62d",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x6407e49a3ef56202d7e32ac09a218a51461d371e3ecba06026c4e7bc961fbc2a:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
    "ts": 1793859554,
@@ -27744,71 +27778,6 @@
    "isInsider": false,
    "backfill": true,
    "actorDepth": 0,
-   "actorEvidence": null
-  },
-  {
-   "id": "0xa908864d04d15d32b29bb50a3ab31389a3a888439918093f5895c57a3d3b10b0:3:swap-buy:0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "ts": 1793061541,
-   "block": 4128722,
-   "txHash": "0xa908864d04d15d32b29bb50a3ab31389a3a888439918093f5895c57a3d3b10b0",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "actorLabel": null,
-   "actorTier": "estimated",
-   "actorIsCore": false,
-   "counterparty": "0x61e34770a601588eaacde5d443f27fc08e743492",
-   "counterpartyLabel": "FISH/O ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "XenIt"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "161234470655935334",
-    "amount": "0.161234",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xf4c14c0322e361f35eb9465c992fb1c21c91c156",
-    "symbol": "O",
-    "amountRaw": "687470992555572871805359",
-    "amount": "687,470.992555",
-    "whitelisted": true
-   },
-   "subjectSymbol": "O",
-   "price": 2.3e-7,
-   "priceUnit": "FISH/O",
-   "pair": "0x61e34770a601588eaacde5d443f27fc08e743492",
-   "pairLabel": "FISH/O ペア",
-   "tokens": [
-    "FISH",
-    "O"
-   ],
-   "whitelisted": true,
-   "summary": "Oを買い（支払い 0.161234 FISH／価格 約2.3e-7 FISH/O）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "XenIt"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1789554223,
-   "pairAgeSecs": 3507318,
-   "isSnipe": false,
-   "isInsider": false,
-   "estimateBasis": {
-    "type": "pool",
-    "validators": [
-     "XenIt"
-    ],
-    "text": "プール経由の推定：XenIt がプールへ売った FISH と、このアドレスが後に同じプールから買った分が、金額差 8.213%・時間差 約24.0時間で一致（スコア 0.643）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-    "textEn": "Through-pool estimate: XenIt sold FISH into a pool, and this address bought from the same pool shortly after — amount gap 8.213%, time gap about 24.0h (score 0.643). It may simply be a different person using the same pool; this is not a confirmed transfer"
-   },
-   "backfill": true,
-   "actorDepth": null,
    "actorEvidence": null
   },
   {
