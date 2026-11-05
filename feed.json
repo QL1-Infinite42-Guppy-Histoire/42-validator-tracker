@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T23:05:12.568Z",
+ "generatedAt": "2026-11-05T23:10:14.001Z",
  "status": {
-  "lastProcessedBlock": 4287555,
-  "latestBlockSeen": 4287555,
-  "lastProcessedCosmosBlock": 4287555,
-  "lastProcessedAt": "2026-11-05T23:05:12.433Z",
-  "totalEvents": 9229,
+  "lastProcessedBlock": 4287611,
+  "latestBlockSeen": 4287611,
+  "lastProcessedCosmosBlock": 4287611,
+  "lastProcessedAt": "2026-11-05T23:10:13.831Z",
+  "totalEvents": 9230,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T23:05:12.589Z"
+   "checkedAt": "2026-11-05T23:10:14.032Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68519849,
-   "updatedAt": "2026-11-05T23:05:12.000Z",
+   "updatedAt": "2026-11-05T23:10:13.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4287506,
+    "toBlock": 4287563,
     "fromTs": 1770178474,
-    "toTs": 1793919638
+    "toTs": 1793919945
    },
    "totals": {
     "delegate": {
@@ -813,7 +813,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 99,
+   "relatedActivity": 100,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x3669090e8bc9e1095819eb3865343e1feafa2037bd7fdbf0cc15152fb2e6781c:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793919945,
+   "block": 4287563,
+   "txHash": "0x3669090e8bc9e1095819eb3865343e1feafa2037bd7fdbf0cc15152fb2e6781c",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x56f766e9e2f8041d4b9cb3ad5bfd373c96daa85793b89f5bd1086ea8257f1279:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1793919638,
@@ -23951,50 +23985,6 @@
    ],
    "whitelisted": true,
    "summary": "747,240,133.743667 O を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true
-  },
-  {
-   "id": "0x8604fb1b63c60df56f8aa0744f12eba30789d804248dce18cfd6093eb9336dd2:0:transfer:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "ts": 1793265008,
-   "block": 4166323,
-   "txHash": "0x8604fb1b63c60df56f8aa0744f12eba30789d804248dce18cfd6093eb9336dd2",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x4e3e79981a64d5678e2e70fd7b4b9550c2b41db2",
-    "symbol": "HAWK",
-    "amountRaw": "2000000000000000000000000",
-    "amount": "2,000,000",
-    "whitelisted": true
-   },
-   "from": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "to": "0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "tokens": [
-    "HAWK"
-   ],
-   "whitelisted": true,
-   "summary": "2,000,000 HAWK を送金",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
