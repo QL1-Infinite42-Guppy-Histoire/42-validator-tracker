@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.3.0</title>
+<title>42 Chain Validator Real-Time Tracker v0.3.1</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -34,6 +34,10 @@
   .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
   .langsw b{color:var(--txt)}
   .est-toggle{align-self:center;font-size:.92rem;cursor:pointer}
+  .estdef{border:1.5px dashed #b5893c;border-radius:10px;padding:8px 14px 10px;margin:12px 0 4px;background:rgba(232,196,118,.07)}
+  .estdef>summary{cursor:pointer;font-weight:700;font-size:.98rem}
+  .estdef p,.estdef li{font-size:.92rem;line-height:1.6}
+  .estdef ul{margin:6px 0 6px 18px;padding:0}
   .badge.cosmos{color:#081018;background:#63e6be;border-color:#63e6be;font-weight:700}
   .badge.snipe{color:#fff;background:#ff5964;border-color:#ff5964;font-weight:700}
   .note{color:var(--warn);font-size:.82rem;margin-top:2px}
@@ -86,7 +90,7 @@
 <body>
 <header>
   <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b></div></div>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.3.0). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.3.1). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
   <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-feed">Latest</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
 </header>
@@ -170,6 +174,19 @@
     <select id="fToken"><option value="">Token: All</option></select>
     <label class="est-toggle"><input type="checkbox" id="fEstimated" checked> Show estimated</label>
   </div>
+  <p class="sub">Moves marked "Estimated" come from addresses whose direct transfers with a validator could not be confirmed. Full definition: <a href="#estimated-def" onclick="document.getElementById('estimated-def').open=true">What are estimated relations?</a></p>
+  <details class="estdef" id="estimated-def">
+    <summary>Definition: what "estimated relations" means</summary>
+    <p><b>An estimated relation</b> is an address we watch because it <i>may</i> be connected to a validator, even though no direct transfer between that address and the validator has been confirmed — so it cannot be stated to be a related party. Estimated relations are kept strictly separate from the confirmed related addresses (those with a confirmed direct transfer). An estimate is only a possibility, never a conclusion.</p>
+    <p>There are three kinds of basis, and the basis for each address is always written out on that address's cards:</p>
+    <ul>
+      <li><b>(1) Through-pool:</b> the amount a validator received from a pool (a shared place for buying and selling) closely matches an amount that this address had sold into the same pool shortly before — within 24 hours and within 10% in amount. It is unlikely for both the amount and the timing to line up by chance, so the two may effectively be connected through the pool. The basis text shows the amount difference, the time gap, and a score (how close the match is; closer to 1 means more likely).</li>
+      <li><b>(2) Shared counterparty:</b> a third party that transacts directly with 2 or more validators. It is worth watching because it deals with several validators, but it cannot be concluded to be a "related party" of each of those validators, so it is treated as estimated.</li>
+      <li><b>(3) 2-hop:</b> an indirect link of the form validator → another address → validator, where both transfers are confirmed. (Currently, no address has been newly registered under this type.)</li>
+    </ul>
+    <p><b>How estimates are handled:</b> moves by estimated addresses appear only in Latest activity, with a dashed border and an "Estimated" badge, and can be hidden by unchecking "Show estimated" above. They are never included in the Snipe Alerts, Notable, Insider Watch, or Bridge Withdrawals sections, nor in the bridge-out totals chart — all amounts there are totals of confirmed activity only.</p>
+    <p><b>Currently registered:</b> 6 estimated addresses (5 through-pool, 1 shared counterparty), as of v0.3.1, 5 November 2026.</p>
+  </details>
   <div id="feed"><p class="empty">Loading…</p></div>
   </div></section>
 
@@ -183,7 +200,7 @@
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated addresses (Phase 3): addresses whose link cannot be confirmed by a direct transfer are also watched, estimated in three ways — through-pool, 2-hop, and shared counterparty. Their moves appear only in Latest activity, with a dashed border, an Estimated badge and the basis shown; they are never included in the Insider / Snipes / Notable / Bridge Withdrawals / Totals sections (those stay confirmed-only). The validator list is refreshed from the chain on every run: newly bonded validators are added automatically, and validators that leave the bonded set stay watched as history (marked inactive). Nothing is posted externally (no X bot) — alerts live on this site only.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). Validator X is also known as Rioshi, shown in small text as (Rioshi) next to the name.
-  <br>Version: <b>v0.3.0</b> (Phase 3 complete: estimated-address watching + validator-list auto-refresh. Also: the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
+  <br>Version: <b>v0.3.1</b> (v0.3.1: added the definition of estimated relations next to the Latest activity filters. Previously, v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -444,6 +461,7 @@ async function load(){
     applyFilters();
     renderBridgeChart();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
+    { const d = document.getElementById('estimated-def'); if (d && location.hash === '#estimated-def') { d.open = true; setTimeout(() => d.scrollIntoView({behavior:'smooth'}), 80); } }
   } catch (e) {
     document.getElementById('status').textContent = 'Could not load feed.json (the collector may not have run yet).';
   }

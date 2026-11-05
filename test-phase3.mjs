@@ -130,7 +130,7 @@ for (const [name, html] of [['index.html', jp], ['en.html', en]]) {
   check(`${name}: estimated toggle present`, html.includes('id="fEstimated"'));
   check(`${name}: confirmed-only guards in sections`, (html.match(/actorTier !== 'estimated'/g) || []).length >= 4, String((html.match(/actorTier !== 'estimated'/g) || []).length));
   check(`${name}: language switch top-right`, html.includes('class="langsw"') && html.includes('id="langOther"'));
-  check(`${name}: version v0.3.0`, html.includes('v0.3.0'));
+  check(`${name}: version v0.3.1`, html.includes('v0.3.1'));
 }
 check('index.html: 推定も表示 toggle label', jp.includes('推定も表示'));
 check('en.html: Show estimated toggle label', en.includes('Show estimated'));
@@ -142,7 +142,7 @@ for (const [name, html] of [['home.html', home], ['home-en.html', homeEn]]) {
   check(`${name}: language switch top-right`, html.includes('class="langsw"') && html.includes('id="langOther"'));
   check(`${name}: insider card names X (Rioshi)`, html.includes('(Rioshi)') && html.includes('X（Rioshi）') || html.includes('X (Rioshi)'));
   check(`${name}: counts exclude estimated from special sections`, html.includes("actorTier !== 'estimated'"));
-  check(`${name}: version v0.3.0`, html.includes('v0.3.0'));
+  check(`${name}: version v0.3.1`, html.includes('v0.3.1'));
 }
 check('home.html: 全記録 card mentions 推定', home.includes('推定アドレスの動きも、推定と明記して含みます'));
 check('home-en.html: full-record card mentions estimated', homeEn.includes('Moves by estimated addresses are included here'));

@@ -1,6 +1,6 @@
-# 42チェーン バリデーター リアルタイム追跡ツール v0.3.0（Phase 3）
+# 42チェーン バリデーター リアルタイム追跡ツール v0.3.1（Phase 3）
 
-**現在のバージョン：v0.3.0**（2026-11-05、Phase 3 完了：推定アドレスの監視＋バリデーター名簿の自動更新。あわせてバリデーター X の別名 (Rioshi) 併記と、全ページ右上の言語切替「日本語 | English」を追加。前身の v0.2.9 は「📊 ブリッジ出金 総額（USDT）」欄の追加＋各項目の折りたたみ式表示）— バージョン対応：v0.1.0 = Phase 1（EVM側）、v0.2.0 = Phase 2（Cosmos側）、v0.3.0 = Phase 3（推定リンク・名簿自動更新）、v1.0.0 = 全フェーズ完了＋運用安定時点
+**現在のバージョン：v0.3.1**（2026-11-05、推定関連の定義をサイト上に掲載。前身の v0.3.0 は Phase 3 完了：推定アドレスの監視＋バリデーター名簿の自動更新。あわせてバリデーター X の別名 (Rioshi) 併記と、全ページ右上の言語切替「日本語 | English」を追加。前身の v0.2.9 は「📊 ブリッジ出金 総額（USDT）」欄の追加＋各項目の折りたたみ式表示）— バージョン対応：v0.1.0 = Phase 1（EVM側）、v0.2.0 = Phase 2（Cosmos側）、v0.3.0 = Phase 3（推定リンク・名簿自動更新）、v1.0.0 = 全フェーズ完了＋運用安定時点
 
 42 Chain（EVM chainId 421018 / Cosmos chainId infinite_421018-1）のバリデーター23名と、その本人と**直接**やり取りした関連アドレスの動きを、新しいブロックから自動で拾い、時系列フィードで公開するためのツールです。EVM側と Cosmos側の両方を見ます（Cosmos のアカウントと EVM アドレスは同じ20バイトなので、同一人物として統合されます）。v0.3.0 からは、直接の送金では確認できない**推定**のつながりのアドレスも監視しますが、推定の動きは「最新の動き」にだけ、推定と明記して表示します（特別欄は確定情報のみ）。
 
@@ -98,9 +98,10 @@ node test-en.mjs                  # v0.2.3 英語版の回帰テスト（全イ�
 node test-ws4.mjs                 # WS4/WS4b/WS5 分類テスト（実在のGuide settle TxフィクスチャでNFTミント検出を照合）
 node test-cosmos.mjs              # Cosmos復号の照合（bech32往復／MsgSendと msg_index レッグの一致）
 node test-phase3.mjs              # v0.3.0 回帰テスト（推定区分のタグ付け・特別欄からの除外・トグル・watchlist統合の不変性・名簿自動更新）
+node test-estdef.mjs              # v0.3.1 回帰テスト（推定関連の定義ブロックの掲載・文言・登録数と watchlist の一致）
 ```
 
-ファイル構成：`collector.mjs`（収集・分類、EVM＋Cosmos、名簿自動更新つき）／`build-watchlist.mjs`（監視リスト生成）／`build-estimates.mjs`（推定区分の統合）／`backfill-estimates.mjs`（推定分の過去掘り起こし）／`watchlist.json`・`registries.json`（生成物）／`events.jsonl`（全イベント追記、`chain` フィールド付き）／`feed.json`（最新500件）／`state.json`（EVM／Cosmos チェックポイント）／`pairs-cache.json`（新規ペアの token0/token1 キャッシュ）／`pairs-creation.json`（ペア作成ブロック・時刻のキャッシュ）／`index.html`（サイト本体、外部CDNなし）／`en.html`（完全英語版、同じ feed.json を使用）／`home.html`・`home-en.html`（トップページ日英）／`server.mjs`（ローカル確認用）／`test-decoder.mjs`・`test-render.mjs`・`test-cosmos.mjs`・`test-ws4.mjs`・`test-en.mjs`・`test-phase3.mjs`（検証）
+ファイル構成：`collector.mjs`（収集・分類、EVM＋Cosmos、名簿自動更新つき）／`build-watchlist.mjs`（監視リスト生成）／`build-estimates.mjs`（推定区分の統合）／`backfill-estimates.mjs`（推定分の過去掘り起こし）／`watchlist.json`・`registries.json`（生成物）／`events.jsonl`（全イベント追記、`chain` フィールド付き）／`feed.json`（最新500件）／`state.json`（EVM／Cosmos チェックポイント）／`pairs-cache.json`（新規ペアの token0/token1 キャッシュ）／`pairs-creation.json`（ペア作成ブロック・時刻のキャッシュ）／`index.html`（サイト本体、外部CDNなし）／`en.html`（完全英語版、同じ feed.json を使用）／`home.html`・`home-en.html`（トップページ日英）／`server.mjs`（ローカル確認用）／`test-decoder.mjs`・`test-render.mjs`・`test-cosmos.mjs`・`test-ws4.mjs`・`test-en.mjs`・`test-phase3.mjs`・`test-estdef.mjs`（検証）
 
 RPCの注意：42 Chain の RPC はブラウザ風 User-Agent を付けないと接続を切ることがあります（実測済み）。`collector.mjs` は最初から付けており、ホスト2系統（infinitepanda → mschihuahua）の切替＋リトライも入っています。ブロック間隔は実測で約5.4秒と安定しています。
 
@@ -160,6 +161,12 @@ RPCの注意：42 Chain の RPC はブラウザ風 User-Agent を付けないと
 - **アンカー確認**：2026-06-30 リスティング当日、X関連 0xa8d5d100… が 13:31:59〜13:34:02 JST（開始28分前）に [42] → DONT を6回連続買い（合計 2,807.6 [42] → DONT 12,012,091）した6件は全て収録され、feed にも含まれます（当日は他に買い2件＋売り1件で計9スワップ）
 - **スナイプ定義を変更**（Part D）：ペア作成3時間以内の **買いのみ**。掘り起こし済みのLP追加33件は `isSnipe` を外しました（イベント自体は通常のLP追加として記録に残ります）。結果、**スナイプは買い52件のみ**になりました。定義文（サイト表示・collector・README）をすべて更新済みです
 - feed.json は「最新500件＋全スナイプ＋全ブリッジ出金＋全インサイダー」の合算になりました
+
+## v0.3.1 の変更（推定関連の定義をサイトに掲載）
+
+- **「推定関連の定義」ブロックを追加**（index.html / en.html の「推定も表示」トグルのすぐ下、折りたたみ式 `#estimated-def`）：推定関連とは何か（直接の送り合いが未確認で「関係の可能性」にとどまること、確定の関連アドレスとは別枠で断定ではないこと）、根拠3種の説明（①プール経由＝24時間以内・金額差10%以内、根拠文に出る金額差・時間差・スコアの意味／②共通の相手先＝2名以上のバリデーターと直接取引する第三者だが関係者とは断定できない／③2ホップ経由＝両レッグ確認済みの間接経路で、現在この種別の新規登録は0件と明記）、扱いのルール（最新の動きにだけ点線枠＋推定バッジ、トグルで非表示可、特別欄と金額集計には含めない）、現在の登録数（6件＝プール経由5件・共通の相手先1件、2026-11-05 v0.3.1 時点の数字として日付つき）を、初心者向けの平易な文で明記しました。EN版にも同内容の定義を掲載。
+- トップページ（home.html / home-en.html）には定義への1行リンクを追加。
+- 回帰テスト `test-estdef.mjs` を追加（定義ブロックの有無・トグルとの位置関係・文言・登録数が watchlist.json の実数と一致すること）。
 
 ## v0.3.0 の変更（Phase 3：推定アドレス＋バリデーター名簿の自動更新）
 
