@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>متتبع مدققي 42 Chain — الصفحة الرئيسية</title>
+<style>
+  :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--ok:#69db7c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
+  header,main{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:1.4rem;margin:8px 0 4px}
+  .sub{color:var(--sub);font-size:.92rem}
+  .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem;margin-top:10px}
+  .status b{color:var(--ok)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:16px}
+  a.card{display:block;text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  a.card:hover{border-color:var(--acc)}
+  a.card h2{font-size:1.15rem;margin:0 0 6px}
+  a.card p{color:var(--sub);font-size:.9rem;margin:0}
+  a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
+  a.card .segsub{font-size:.85rem;color:var(--sub);margin-top:3px}
+  a.card.insider{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
+  a.card.insider h2{color:#e9d5ff}
+  a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  a.card.snipes h2{color:#ff8fa3}
+  a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
+  a.card.bridge h2{color:#69db7c}
+  a.card.alerts{background:#2a2110;border:1px solid #6b5518}
+  a.card.alerts h2{color:#ffd166}
+  .pricecard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:1rem}
+  .pricecard b{font-size:1.6rem;color:var(--ok)}
+  .pricecard .chg-up{color:#69db7c;font-weight:700}
+  .pricecard .chg-dn{color:#ff8fa3;font-weight:700}
+  .pricecard .note{color:var(--sub);font-size:.82rem}
+  .lang{margin-top:18px}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .langsw b{color:var(--txt)}
+  .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
+  .alias{font-size:.6em;color:var(--sub);font-weight:600}
+  footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+  a{color:var(--acc)}
+  /* RTL overrides (v0.5.0, Arabic) */
+  .verbadge{margin-left:0;margin-right:10px}
+
+  /* v0.5.0 Arabic RTL overrides: mirror physical properties; keep data links LTR */
+  [dir='rtl'] .verbadge{margin-left:0;margin-right:10px}
+  [dir='rtl'] .bigname .sub{margin-left:0;margin-right:6px}
+  [dir='rtl'] .estdef ul{margin:6px 18px 6px 0}
+  [dir='rtl'] .bchart-legend .sw{margin:0 14px 0 5px}
+  [dir='rtl'] .bchart-legend .sw:first-child{margin-right:0}
+  [dir='rtl'] .ev.lpadd{border-left-width:1px;border-right:5px solid #2dd4bf}
+  [dir='rtl'] .ev.lpremove{border-left-width:1px;border-right:5px solid #ffa94d}
+  [dir='rtl'] table.staking th,[dir='rtl'] table.staking td{text-align:left}
+  [dir='rtl'] table.staking th:first-child,[dir='rtl'] table.staking td:first-child{text-align:right}
+  [dir='rtl'] section>h2::after{content:' ◀' !important}
+  [dir='rtl'] section.open>h2::after{content:' ▼' !important}
+  [dir='rtl'] .ev a,[dir='rtl'] .val a,[dir='rtl'] .meta a{direction:ltr;unicode-bidi:embed}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <b>العربية</b> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.0</span></div></div>
+  <p class="sub">يجمع هذا الموقع تلقائيًا حركات المدققين أنفسهم والعناوين المؤكد تعاملها المباشر معهم. اختر قسمًا للانتقال إليه.</p>
+  <div class="status" id="status">جارٍ التحميل…</div>
+  <div class="pricecard" id="pricecard" style="display:none"></div>
+</header>
+<main>
+  <div class="cards">
+    <a class="card insider" href="ar.html#sec-insider">
+      <h2>⚠ مراقبة المطلعين — X<span class="alias"> (Rioshi)</span></h2>
+      <p>فقط عمليات شراء [42] وDONT التي قام بها المدقق X ‏(Rioshi) نفسه والعناوين ذات الصلة بـ X ‏(Rioshi) قبل الساعة 14:00 JST في يوم الإدراج (30 يونيو 2026).</p>
+      <div class="count" id="c-insider">—</div>
+    </a>
+    <a class="card snipes" href="ar.html#sec-snipes">
+      <h2>🎯 تنبيهات القنص</h2>
+      <p>عمليات شراء من مدقق نفسه أو محفظة ذات صلة مباشرة خلال 3 ساعات من إنشاء الزوج (إضافات السيولة لا تُحسب).</p>
+      <div class="count" id="c-snipes">—</div>
+    </a>
+    <a class="card bridge" href="ar.html#sec-bridge">
+      <h2>🌉 عمليات السحب عبر الجسر (USDT، صادرة)</h2>
+      <p>USDT المرسل إلى سلاسل خارجية عبر جسر من مدقق نفسه أو محفظة ذات صلة، في قسمه الأخضر الخاص (الوارد غير مشمول).</p>
+      <div class="count" id="c-bridge">—</div>
+    </a>
+    <a class="card bridge" href="ar.html#sec-bridgechart">
+      <h2>📊 إجمالي USDT المسحوب عبر الجسر</h2>
+      <p>المبلغ الإجمالي لـ USDT المسحوب عبر الجسر إلى سلاسل خارجية، مع رسم أعمدة لكل اسم مقسّم حسب العمق (المدقق نفسه / ذو الصلة من العمق 1 / ذو الصلة من العمق 2+).</p>
+      <div class="count" id="c-bridgetotal">—</div>
+      <div class="segsub" id="c-bridgeseg">—</div>
+    </a>
+    <a class="card alerts" href="ar.html#sec-alerts">
+      <h2>⭐ جدير بالملاحظة</h2>
+      <p>صفقات المدققين أنفسهم والحركات الكبيرة بقيمة 1,000 [42] أو أكثر.</p>
+      <div class="count" id="c-alerts">—</div>
+    </a>
+    <a class="card" href="ar.html#sec-lp">
+      <h2>💧 حركات السيولة</h2>
+      <p>إضافات السيولة (الإيداعات في المجمعات) والإزالات (السحوبات) في قسم واحد. قد تكون الإزالة الكبيرة علامة على الخروج.</p>
+      <div class="count" id="c-lp">—</div>
+    </a>
+    <a class="card" href="ar.html#sec-dormant">
+      <h2>😴 العودة بعد صمت طويل</h2>
+      <p>عناوين خاضعة للمراقبة تحركت مجددًا بعد 60 يومًا أو أكثر من الصمت.</p>
+      <div class="count" id="c-dormant">—</div>
+    </a>
+    <a class="card" href="ar.html#sec-newfaces">
+      <h2>👤 وجوه جديدة</h2>
+      <p>أطراف مقابلة تعامل معها عنوان خاضع للمراقبة لأول مرة في السجل بأكمله. تُضاف الأطراف المقابلة الجديدة الظهور تلقائيًا إلى قائمة المراقبة.</p>
+      <div class="count" id="c-newfaces">—</div>
+    </a>
+    <a class="card" href="ar.html#sec-newpairs">
+      <h2>🆕 أزواج جديدة</h2>
+      <p>أزواج أُنشئت حديثًا على DEX ‏Don't Panic (تُعرض فقط الأزواج التي تحتوي على واحد على الأقل من الرموز الـ17 المدرجة)، مع المنشئ والسيولة الأولى.</p>
+      <div class="count" id="c-newpairs">—</div>
+    </a>
+    <a class="card" href="ar.html#sec-feed">
+      <h2>📜 أحدث نشاط (السجل الكامل)</h2>
+      <p>كل حركة مسجلة على جانبي EVM وCosmos، قابلة للتصفية حسب المدقق والنوع والرمز. تُضمّن حركات العناوين التقديرية هنا، موسومة بوضوح بأنها تقديرية (الأقسام الخاصة لا تحتوي إلا على المعلومات المؤكدة).</p>
+      <div class="count" id="c-total">—</div>
+    </a>
+    <a class="card" href="ar.html#sec-staking">
+      <h2>🏦 التفويضات والمكافآت</h2>
+      <p>إجماليات التفويضات وإلغاءات التفويض ومطالبات المكافآت (مكافآت التفويض ومكافآت التشغيل الخاصة بالمدققين أنفسهم)، مع تفصيل لكل مدقق.</p>
+      <div class="count" id="c-staking">—</div>
+    </a>
+    <a class="card" href="ar.html#sec-validators">
+      <h2>👥 المدققون</h2>
+      <p>المدققون الخاضعون للمراقبة (تُحدّث القائمة تلقائيًا من السلسلة).</p>
+      <div class="count" id="c-validators">—</div>
+    </a>
+  </div>
+  <p style="font-size:.95rem">❓ <a href="ar.html#estimated-def">ما هي العلاقات التقديرية؟ (اقرأ التعريف)</a> — عناوين خاضعة للمراقبة لاحتمال اتصال، من دون تحويل مباشر مؤكد.</p>
+  <p class="lang">🌐 日本語版： <a href="home.html">トップページ</a> ／ <a href="index.html">追跡ページ</a></p>
+</main>
+<footer>
+  مصدر البيانات: كتل 42 Chain نفسها (عبر RPC). تقتصر التغطية على معاملات 42 Chain فقط (معرّف سلسلة EVM 421018 وجانبها Cosmos، infinite_421018-1). لا تُضمّن معاملات QL1 أو أي سلسلة أخرى. تظهر حركات العناوين التقديرية فقط في أحدث نشاط، موسومة بوضوح بأنها تقديرية؛ الأقسام الخاصة تحتوي على المعلومات المؤكدة فقط. تُعرض التنبيهات على هذا الموقع فقط.
+  <br>الإصدار: <b>v0.5.0</b> (الصفحة الرئيسية)
+</footer>
+<script>
+(async () => {
+  try {
+    const FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
+    const s = FEED.status, ev = FEED.events;
+    document.getElementById('status').innerHTML =
+      `آخر كتلة معالجة: <b>${s.lastProcessedBlock ?? '—'}</b> / جانب Cosmos: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / حُدّث: ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('ar-u-nu-latn',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / الحركات المسجلة: ${s.totalEvents}`;
+    const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
+    document.getElementById('c-insider').textContent = insider;
+    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
+    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
+    const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');
+    const bamt = (e) => parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0;
+    // v0.4.2: totals come from the collector's full-history aggregation
+    // (feed.stats.bridge, deduplicated); fall back to the feed window.
+    const bst = FEED.stats && FEED.stats.bridge;
+    const bsum = bst ? bst.total : bouts.reduce((t, e) => t + bamt(e), 0);
+    document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('ar-u-nu-latn', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
+    const bseg = bst ? [...bst.segTotals] : [0, 0, 0];
+    if (!bst) for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
+    const bfmt = (v) => v.toLocaleString('ar-u-nu-latn', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('c-bridgeseg').textContent = `نفسه ${bfmt(bseg[0])} / العمق 1 ‏${bfmt(bseg[1])} / العمق 2+ ‏${bfmt(bseg[2])} USDT`;
+    const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
+    document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
+    if (s.price) {
+      const pc = document.getElementById('pricecard');
+      const chg = s.price.change24hPct;
+      const chgHtml = chg == null ? 'مقارنة بما قبل 24 ساعة —' : `مقارنة بما قبل 24 ساعة <span class="${chg >= 0 ? 'chg-up' : 'chg-dn'}">${chg >= 0 ? '+' : ''}${chg}%</span>`;
+      pc.innerHTML = `سعر [42]: <b>حوالي ${s.price.usdt} USDT</b> ‏(${chgHtml})<br><span class="note">محسوب من احتياطيات مجمع التداول. المجمع صغير، لذا للرقم هامش خطأ.</span>`;
+      pc.style.display = '';
+    }
+    document.getElementById('c-newpairs').textContent = ev.filter((e) => e.type === 'pair-created' && (e.pairWhitelist || []).some(Boolean)).length;
+    document.getElementById('c-lp').textContent = ev.filter((e) => (e.type === 'lp-add' || e.type === 'lp-remove') && e.actorTier !== 'estimated').length;
+    document.getElementById('c-dormant').textContent = ev.filter((e) => e.isDormantReturn && e.actorTier !== 'estimated').length;
+    document.getElementById('c-newfaces').textContent = ev.filter((e) => e.isNewCounterparty && e.actorTier !== 'estimated').length;
+    const st = FEED.stats && FEED.stats.staking;
+    document.getElementById('c-staking').textContent = st ? `${st.totals.delegate.count} تفويضًا / عمولة ${st.totals.commission.amount42} [42]` : '—';
+    document.getElementById('c-total').textContent = s.totalEvents;
+    document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23);
+  } catch (e) {
+    document.getElementById('status').textContent = 'تعذّر تحميل البيانات.';
+  }
+})();
+</script>
+</body>
+</html>

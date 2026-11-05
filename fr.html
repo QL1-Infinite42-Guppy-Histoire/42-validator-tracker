@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traqueur en temps réel des validateurs 42 Chain v0.5.0</title>
+<style>
+  :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
+  header,main{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:1.35rem;margin:8px 0 4px} h2{font-size:1.1rem;margin:22px 0 8px}
+  .sub{color:var(--sub);font-size:.9rem}
+  .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem}
+  .status b{color:var(--ok)}
+  section.insider{background:#1d1030;border:2px solid #9333ea;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 22px rgba(147,51,234,.5)}
+  section.insider h2{color:#e9d5ff;font-size:1.3rem}
+  section.insider .rule{color:#c084fc}
+  .badge.insider{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
+  section.alerts{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.snipes{background:#33121a;border:2px solid #ff5964;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  .ev.bridgeout{border:2px solid #2f9e44;background:#0e2416;box-shadow:0 0 18px rgba(47,158,68,.65)}
+  .badge.bridgeout{color:#fff;background:#2f9e44;border-color:#69db7c;font-weight:700;box-shadow:0 0 10px rgba(105,219,124,.8)}
+  section.bridge{background:#0e2416;border:2px solid #2f9e44;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(47,158,68,.35)}
+  section.bridge h2{color:#69db7c}
+  section.bridge .rule{color:#8ce99a}
+  section.snipes h2{color:#ff8fa3;font-size:1.25rem}
+  .rule{font-size:.82rem;color:var(--warn)}
+  section.snipes .rule{color:#ffb3ba}
+  .badge.shared{color:#081018;background:#ffa94d;border-color:#ffa94d;font-weight:700}
+  .badge.estimated{color:#081018;background:#e8c476;border-color:#e8c476;font-weight:700}
+  .ev.estimated{border-style:dashed;border-color:#b5893c}
+  .alias{font-size:.6em;color:var(--sub);font-weight:600}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .langsw b{color:var(--txt)}
+  .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
+  .est-toggle{align-self:center;font-size:.92rem;cursor:pointer}
+  .estdef{border:1.5px dashed #b5893c;border-radius:10px;padding:8px 14px 10px;margin:12px 0 4px;background:rgba(232,196,118,.07)}
+  .estdef>summary{cursor:pointer;font-weight:700;font-size:.98rem}
+  .estdef p,.estdef li{font-size:.92rem;line-height:1.6}
+  .estdef ul{margin:6px 0 6px 18px;padding:0}
+  .badge.cosmos{color:#081018;background:#63e6be;border-color:#63e6be;font-weight:700}
+  .badge.snipe{color:#fff;background:#ff5964;border-color:#ff5964;font-weight:700}
+  .note{color:var(--warn);font-size:.82rem;margin-top:2px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  select{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:.95rem}
+  .ev{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+  .ev.notable{border-color:#6b5518;background:#241e10}
+  .ev .top{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+  .time{color:var(--sub);font-size:.85rem}
+  .badge{font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--line);color:var(--sub)}
+  .badge.self{color:#081018;background:var(--acc);border-color:var(--acc);font-weight:700}
+  .badge.related{color:var(--acc);border-color:var(--acc)}
+  .badge.core{color:var(--core);border-color:var(--core)}
+  .badge.type{color:var(--txt);background:var(--card2)}
+  .badge.notable{color:#081018;background:var(--warn);border-color:var(--warn);font-weight:700}
+  .summary{font-size:1rem;margin-top:2px}
+  .meta{color:var(--sub);font-size:.85rem}
+  a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+  .vals{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+  .val{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.92rem}
+  .empty{color:var(--sub);padding:18px 0}
+  footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+  .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
+  section.insider>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.alerts>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.alerts>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.alerts.open>h2::after,section.fold.open>h2::after{content:' ▼'}
+  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.alerts:not(.open)>:not(h2){display:none}
+  section.fold:not(.open)>.fold-body{display:none}
+  section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
+  section.fold>h2{margin-top:8px}
+  .summary b.who-self{font-size:1.45rem;color:var(--acc)}
+  .summary b.who-rel{font-size:1.2rem}
+  .meta b.rel-name{font-size:1.1rem;color:var(--txt)}
+  .val b{font-size:1.15rem}
+  .bigname{font-size:1.6rem;font-weight:800;line-height:1.15;margin:0 0 2px;color:var(--txt)}
+  .bigname .sub{font-size:.82rem;font-weight:600;color:var(--sub);margin-left:6px}
+  .bigname.self{color:var(--acc)}
+  section.bridgechart{background:#0e2416;border:1px solid #2f9e44;border-radius:10px;padding:6px 14px 12px}
+  section.bridgechart h2{color:#69db7c}
+  section.bridgechart .rule{color:#8ce99a}
+  .bchart-total{font-size:1.5rem;font-weight:800;margin:6px 0 4px}
+  .bchart-segtotal{font-size:1rem;font-weight:700;margin:0 0 4px}
+  .bchart-legend{font-size:.85rem;color:#8ce99a;margin:2px 0 8px}
+  .bchart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin:0 5px 0 14px;vertical-align:-1px}
+  .bchart-legend .sw:first-child{margin-left:0}
+  .bchart-row{display:flex;align-items:center;gap:10px;margin:7px 0;flex-wrap:wrap}
+  .bchart-name{flex:0 0 34%;font-weight:700;font-size:1.02rem;word-break:break-word}
+  .bchart-barwrap{flex:1;display:flex;background:#12291a;border-radius:6px;height:22px;overflow:hidden}
+  .bchart-seg{height:100%}
+  .seg0{background:#2f9e44}
+  .seg1{background:#51cf66}
+  .seg2{background:#b2f2bb}
+  .bchart-amt{flex:0 0 auto;font-weight:700;white-space:nowrap}
+  .bchart-cnt{color:var(--sub);font-size:.82rem;font-weight:400}
+  .bchart-break{flex:0 0 100%;font-size:.82rem;color:#8ce99a;margin-top:-3px}
+  .pricebar{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:.95rem;margin-top:10px}
+  .pricebar b{font-size:1.25rem;color:var(--ok)}
+  .pricebar .chg-up{color:#69db7c;font-weight:700}
+  .pricebar .chg-dn{color:#ff8fa3;font-weight:700}
+  .pricebar .note{color:var(--sub);font-size:.8rem}
+  .ev.lpadd{border-left:5px solid #2dd4bf}
+  .ev.lpremove{border-left:5px solid #ffa94d}
+  .badge.dormant{color:#e9d5ff;background:#5b21b6;border-color:#c084fc;font-weight:700}
+  .badge.newface{color:#081018;background:#7dd3fc;border-color:#7dd3fc;font-weight:700}
+  .badge.added{color:#081018;background:#69db7c;border-color:#69db7c;font-weight:700}
+  section.newpairs>h2{color:#93c5fd}
+  section.lp>h2{color:#2dd4bf}
+  section.dormant>h2{color:#c084fc}
+  section.newfaces>h2{color:#7dd3fc}
+  section.staking>h2{color:#ffd166}
+  section.newpairs:not(.open)>:not(h2),section.lp:not(.open)>:not(h2),section.dormant:not(.open)>:not(h2),section.newfaces:not(.open)>:not(h2),section.staking:not(.open)>:not(h2){display:none}
+  section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{cursor:pointer;user-select:none}
+  section.newpairs>h2::after,section.lp>h2::after,section.dormant>h2::after,section.newfaces>h2::after,section.staking>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.newpairs.open>h2::after,section.lp.open>h2::after,section.dormant.open>h2::after,section.newfaces.open>h2::after,section.staking.open>h2::after{content:' ▼'}
+  section.newpairs,section.lp,section.dormant,section.newfaces,section.staking{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
+  section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{margin-top:8px}
+  table.staking{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
+  table.staking th,table.staking td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right}
+  table.staking th:first-child,table.staking td:first-child{text-align:left}
+  table.staking th{color:var(--sub);font-weight:600}
+  .staking-totals{font-size:1rem;margin:8px 0}
+  .staking-totals b{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-row"><h1>Traqueur en temps réel des validateurs 42 Chain</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <b>Français</b> <span class="verbadge">v0.5.0</span></div></div>
+  <p class="sub">Cette page collecte automatiquement, à partir des nouveaux blocs, les mouvements des validateurs eux-mêmes et de leurs adresses liées (toutes celles qui ont transigé avec eux, ainsi que les contreparties de ces contreparties) (côté EVM + côté Cosmos, v0.5.0). Les adresses de programmes (contrats) ne comptent pas comme des relations d’une personne, et les liens ne sont jamais tracés à travers elles. Une adresse n’est jamais traitée comme une infrastructure simplement parce qu’il s’agit d’un portefeuille partagé ; le seul critère est de savoir si c’est un programme (un contrat). Les portefeuilles de profondeur 2 et plus ne sont comptés que lorsqu’il existe des preuves qu’il s’agit du propre portefeuille du validateur (comme des flux de fonds dans les deux sens). Les adresses ordinaires sans preuve ne sont pas comptées. Les mouvements des adresses dont le lien n’est qu’estimé apparaissent uniquement dans Activité récente, clairement marqués comme estimés (les sections spéciales ne contiennent que des informations confirmées).</p>
+  <nav class="topnav"><a href="home-fr.html">🏠 Accueil</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Retraits via pont</a><a href="#sec-bridgechart">📊 Totaux</a><a href="#sec-alerts">⭐ À noter</a><a href="#sec-lp">💧 Liquidité</a><a href="#sec-dormant">😴 Inactifs</a><a href="#sec-newfaces">👤 Nouveaux visages</a><a href="#sec-newpairs">🆕 Nouvelles paires</a><a href="#sec-feed">Activité récente</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validateurs</a></nav>
+  <div class="status" id="status">Chargement…</div>
+  <div class="pricebar" id="pricebar" style="display:none"></div>
+</header>
+<main>
+  <section class="insider" id="sec-insider">
+    <h2>⚠ Surveillance Insider — X<span class="alias"> (Rioshi)</span></h2>
+    <p class="rule" id="insiderRule"></p>
+    <div id="insiders"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="snipes" id="sec-snipes">
+    <h2>🎯 Alertes de snipe</h2>
+    <p class="rule" id="snipeRule"></p>
+    <div id="snipes"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="bridge" id="sec-bridge">
+    <h2>🌉 Retraits via pont (USDT, sortant)</h2>
+    <p class="rule" id="bridgeOutRule"></p>
+    <div id="bridgeouts"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="bridgechart" id="sec-bridgechart">
+    <h2>📊 Montant total des USDT retirés via pont</h2>
+    <p class="rule">Comment ce graphique est agrégé : pour chaque validateur (tous les 23), il additionne les retraits via pont (USDT) du validateur lui-même, de ses portefeuilles liés de profondeur 1 et de ses portefeuilles liés de profondeur 2 et plus munis de preuves. Les portefeuilles de profondeur 2 et plus ne sont comptés que lorsqu’il existe des preuves qu’il s’agit du propre portefeuille du validateur (comme des flux de fonds dans les deux sens). Les adresses ordinaires sans preuve ne sont pas comptées. Seuls les portefeuilles personnels comptent comme émetteurs — les adresses d’infrastructure (programme = contrat) ne sont jamais comptées, ni les adresses estimées. Chaque barre est divisée en : le validateur lui-même / les portefeuilles liés ayant transigé directement avec ce validateur (profondeur 1) / les portefeuilles liés reliés par d’autres portefeuilles (profondeur 2 et plus, uniquement avec preuve). Les retraits d’un portefeuille partagé sont comptés dans la barre de CHAQUE validateur auquel il est lié, donc les barres ne totalisent pas le grand total ; le grand total sans doublons est affiché ci-dessus.</p>
+    <div id="bridgeChart"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="alerts" id="sec-alerts">
+    <h2>⭐ À noter</h2>
+    <p class="rule" id="alertRule"></p>
+    <div id="alerts"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="lp" id="sec-lp">
+    <h2>💧 Mouvements de liquidité</h2>
+    <p class="rule">Ajouter de la liquidité = placer de l’argent dans un pool pour soutenir les échanges ; retirer de la liquidité = reprendre ce qui a été déposé. Un retrait important peut être le signe d’une sortie du marché, c’est donc un point à surveiller. Les ajouts ont une ligne bleu-vert, les retraits une ligne orange. Les adresses estimées ne sont pas incluses (informations confirmées uniquement).</p>
+    <div id="lpmoves"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="dormant" id="sec-dormant">
+    <h2>😴 De retour après un long silence</h2>
+    <p class="rule" id="dormantRule"></p>
+    <div id="dormant"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="newfaces" id="sec-newfaces">
+    <h2>👤 Nouveaux visages</h2>
+    <p class="rule">Contreparties avec lesquelles une adresse surveillée (le validateur lui-même, une adresse liée ou une adresse cœur) a transigé pour la première fois dans tout l’historique de ce site. Les adresses liées ont été étendues sur tout l’historique, passé inclus (contreparties de contreparties, sans limite), et une contrepartie nouvellement apparue est automatiquement ajoutée à la liste de surveillance en tant qu’adresse liée (v0.4.0, en service depuis novembre 2026). Les cartes marquées « Ajouté à la liste de surveillance » sont celles ajoutées automatiquement. Les contrats système, de paire et de jeton ne sont jamais ajoutés.</p>
+    <div id="newfaces"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="newpairs" id="sec-newpairs">
+    <h2>🆕 Nouvelles paires</h2>
+    <p class="rule">Paires nouvellement créées sur le DEX Don’t Panic. Seules les paires contenant au moins l’un des 17 jetons listés sont affichées (les paires dont les deux côtés ne sont pas listés sont enregistrées mais ne sont pas affichées ici). Une paire avec un côté non listé porte un badge « Jeton non listé ». Lorsque le créateur de la paire est connu, son nom est affiché.</p>
+    <div id="newpairs"><p class="empty">Chargement…</p></div>
+  </section>
+
+  <section class="fold open" id="sec-feed"><h2>Activité récente</h2><div class="fold-body">
+  <p class="sub">À propos des adresses estimées (v0.3.0 / Phase 3) : des adresses dont le lien avec un validateur n’a pas pu être confirmé par un transfert direct, estimées de trois manières — (1) à travers le pool (une transaction de l’autre côté du même pool qui correspond à 10 % près en montant et à 24 heures près en temps), (2) 2 sauts (validateur → cette adresse → validateur, les deux transferts étant confirmés), (3) contrepartie partagée (un tiers qui transige directement avec 2 validateurs ou plus et qui n’est pas encore confirmé comme lié). Les mouvements estimés apparaissent uniquement dans Activité récente, avec un badge Estimé et la base affichée. Les sections spéciales (Insider / Snipes / À noter / Retraits via pont / Totaux) n’utilisent que des liens confirmés et n’incluent jamais les estimations.</p>
+  <div class="filters">
+    <select id="fValidator"><option value="">Validateur : tous</option></select>
+    <select id="fType">
+      <option value="">Type : tous</option>
+      <option value="transfer">Transfert</option>
+      <option value="swap-buy">Achat</option>
+      <option value="swap-sell">Vente</option>
+      <option value="lp-add">Ajout de liquidité</option>
+      <option value="lp-remove">Retrait de liquidité</option>
+      <option value="pair-created">Nouvelle paire</option>
+      <option value="delegate">Déléguer</option>
+      <option value="undelegate">Retrait de délégation</option>
+      <option value="redelegate">Redéléguer</option>
+      <option value="reward">Réclamation de récompense (récompenses de délégation)</option>
+      <option value="commission">Réclamation de récompense de validateur (commission)</option>
+      <option value="reward-claim-fish">Réclamation de récompense (distribution FISH)</option>
+      <option value="reward-claim-staking">Réclamation de récompense (récompenses de staking)</option>
+      <option value="reward-claim-starlight">Réclamation de récompense Starlight</option>
+      <option value="reward-distribution-fish">Distribution en lot de récompenses FISH</option>
+      <option value="bridge-out">Envoi par pont (USDT, sortant)</option>
+      <option value="bridge-send-other">Envoi par pont (non-USDT)</option>
+      <option value="bridge-delivery">Traitement de livraison par pont</option>
+      <option value="nft-mint">Frappe de NFT</option>
+      <option value="nft-transfer">Transfert de NFT</option>
+      <option value="fluke-commit">Participation Fluke (commit)</option>
+      <option value="fluke-reveal">Révélation Fluke</option>
+      <option value="fluke-boost">Boost Fluke</option>
+      <option value="fluke-settle">Règlement Fluke (nouvelle Guide émise)</option>
+      <option value="fluke-seed">Financement du fonds de prix Fluke</option>
+      <option value="guide-write">Écriture de texte Guide</option>
+      <option value="guide-append">Ajout de texte Guide</option>
+      <option value="starlight-register">Enregistrement Starlight</option>
+      <option value="st42-deposit">Dépôt st42</option>
+      <option value="st42-redeem-request">Demande de rachat st42</option>
+      <option value="st42-claim">Réclamation st42</option>
+      <option value="st42-instant-exit">Sortie instantanée st42</option>
+      <option value="st42-order">Ordre st42</option>
+      <option value="approve">Approbation (approve)</option>
+      <option value="token-burn">Destruction de jetons</option>
+      <option value="dex-swap">Échange DEX</option>
+      <option value="wrap">Conversion en W42 (wrap)</option>
+      <option value="unwrap">Déconversion W42 (unwrap)</option>
+      <option value="nft-approve-all">Approbation totale des NFT</option>
+      <option value="unclassified">Action non classée</option>
+    </select>
+    <select id="fToken"><option value="">Jeton : tous</option></select>
+    <label class="est-toggle"><input type="checkbox" id="fEstimated" checked> Afficher les estimations</label>
+  </div>
+  <p class="sub">Les mouvements marqués « Estimé » proviennent d’adresses dont les transferts directs avec un validateur n’ont pas pu être confirmés. Définition complète : <a href="#estimated-def" onclick="document.getElementById('estimated-def').open=true">Qu’est-ce qu’une relation estimée ?</a></p>
+  <details class="estdef" id="estimated-def">
+    <summary>Définition : ce que signifie « relations estimées »</summary>
+    <p><b>Une relation estimée</b> est une adresse que nous surveillons parce qu’elle <i>pourrait</i> être liée à un validateur, même si aucun transfert direct entre cette adresse et le validateur n’a été confirmé — on ne peut donc pas affirmer qu’il s’agit d’une partie liée. Les relations estimées sont strictement séparées des adresses liées confirmées (celles ayant un transfert direct confirmé). Une estimation n’est qu’une possibilité, jamais une conclusion.</p>
+    <p>Il existe trois types de base, et la base de chaque adresse est toujours écrite sur les cartes de cette adresse :</p>
+    <ul>
+      <li><b>(1) À travers le pool :</b> le montant qu’un validateur a reçu d’un pool (un lieu partagé d’achat et de vente) correspond étroitement à un montant que cette adresse avait vendu dans le même pool peu avant — dans les 24 heures et à 10 % près en montant. Il est improbable que le montant et le moment coïncident par hasard, donc les deux peuvent effectivement être liés à travers le pool. Le texte de la base indique la différence de montant, la différence de temps et un score (à quel point la correspondance est proche ; plus il est proche de 1, plus elle est probable).</li>
+      <li><b>(2) Contrepartie partagée :</b> un tiers qui transige directement avec 2 validateurs ou plus. Il vaut la peine d’être surveillé parce qu’il traite avec plusieurs validateurs, mais on ne peut pas conclure qu’il s’agit d’une « partie liée » de chacun de ces validateurs, il est donc traité comme estimé.</li>
+      <li><b>(3) 2 sauts :</b> un lien indirect de la forme validateur → une autre adresse → validateur, dont les deux transferts sont confirmés. (Actuellement, aucune adresse n’a été récemment enregistrée sous ce type.)</li>
+    </ul>
+    <p><b>Comment les estimations sont traitées :</b> les mouvements des adresses estimées apparaissent uniquement dans Activité récente, avec une bordure en pointillés et un badge « Estimé », et peuvent être masqués en décochant « Afficher les estimations » ci-dessus. Ils ne sont jamais inclus dans les sections Alertes de snipe, À noter, Surveillance Insider ou Retraits via pont, ni dans le graphique des totaux des retraits via pont — toutes les valeurs qui s’y trouvent sont des totaux d’activité confirmée uniquement.</p>
+    <p><b>Actuellement enregistrés :</b> 4 adresses estimées (4 à travers le pool, 0 contrepartie partagée), au 5 novembre 2026, v0.4.2.</p>
+  </details>
+  <div id="feed"><p class="empty">Chargement…</p></div>
+  </div></section>
+
+  <section class="staking" id="sec-staking">
+    <h2>🏦 Délégations et récompenses</h2>
+    <p class="rule" id="stakingRange"></p>
+    <div id="stakingTotals"><p class="empty">Chargement…</p></div>
+    <div id="stakingTable"></div>
+    <p class="sub" id="stakingNote"></p>
+  </section>
+
+  <section class="fold" id="sec-validators"><h2>Validateurs (23)</h2><div class="fold-body">
+  <p class="sub">« N adresses liées » est le nombre d’adresses confirmées ayant transigé avec ce validateur (contreparties directes et, au-delà, leurs contreparties aussi ; « dont ajoutées automatiquement » compte celles ajoutées automatiquement depuis l’historique) ; « M estimées » compte les adresses liées uniquement par l’une des trois méthodes d’estimation (sans transfert direct confirmé).</p>
+  <div class="vals" id="validators"></div>
+  </div></section>
+</main>
+<footer>
+  Source des données : les blocs de la 42 Chain elle-même (via RPC). La couverture est limitée aux seules transactions sur la 42 Chain (identifiant de chaîne EVM 421018 et son côté Cosmos, infinite_421018-1). Les transactions sur QL1 ou sur toute autre chaîne ne sont pas incluses. Toucher une transaction ou une adresse ouvre l’explorateur officiel, scan.infinitedrive.xyz.
+  Les jetons affichés sont principalement les 17 jetons listés sur Don’t Panic (tout autre est marqué comme jeton non listé). Aucun mouvement n’est ignoré en raison de sa taille — les petits transferts sont tous enregistrés.
+  Portée : côté EVM + côté Cosmos (transferts, délégations, réclamations de récompenses). Les types d’action sont affichés avec des noms concrets chaque fois que le contrat de destination et la méthode les identifient (participation Fluke, frappe de NFT, réclamation de récompense, envoi par pont, etc.) ; tout ce qui ne peut pas être identifié est affiché honnêtement comme « Action non classée (méthode / destination) ». La section Retraits via pont ne couvre que les mouvements qui envoient des USDT vers une chaîne externe (les envois par pont d’autres jetons sont enregistrés comme des mouvements ordinaires et ne sont pas affichés dans la section verte ; les réceptions entrantes sont des réceptions ordinaires). Adresses estimées (Phase 3) : les adresses dont le lien ne peut pas être confirmé par un transfert direct sont également surveillées, estimées de trois manières — à travers le pool, 2 sauts et contrepartie partagée. Leurs mouvements apparaissent uniquement dans Activité récente, avec une bordure en pointillés, un badge Estimé et la base affichée ; ils ne sont jamais inclus dans les sections Insider / Snipes / À noter / Retraits via pont / Totaux (celles-ci ne contiennent que des informations confirmées). La liste des validateurs est actualisée depuis la chaîne à chaque exécution : les validateurs nouvellement liés sont ajoutés automatiquement, et les validateurs qui quittent l’ensemble lié restent surveillés comme historique (marqués inactifs). Rien n’est publié à l’extérieur (pas de bot X) — les alertes vivent uniquement sur ce site.
+  Portée des adresses liées (v0.4.0) : au-delà de chaque adresse ayant envoyé vers un validateur ou reçu de lui, l’expansion sur tout l’historique (contreparties de contreparties, sans limite) a été appliquée à l’ensemble de l’historique, passé inclus (les contrats système / de paire / de jeton, ainsi que les contacts atteignables uniquement par une adresse estimée, sont exclus). Lorsqu’une nouvelle contrepartie apparaît, elle est aussi automatiquement ajoutée comme adresse liée sur-le-champ. / Nouvelles paires couvre les paires créées par la fabrique Don’t Panic et n’affiche que les paires contenant au moins l’un des 17 jetons listés. / Le prix du [42] est calculé à partir des réserves du pool 42/USDT ; le pool est petit, la valeur comporte donc une marge d’erreur.
+  Les liens de transaction du côté Cosmos ouvrent notre propre scanner Cosmos (42 Cosmos Scan). Les titres n’affichent que l’adresse qui a réellement bougé ; les validateurs liés sont listés sur une ligne distincte, avec un plafond (une adresse qui transige avec de nombreux validateurs reçoit une marque « Contrepartie partagée »). Le validateur X est aussi connu sous le nom de Rioshi, affiché en petit texte comme (Rioshi) à côté du nom.
+  <br>Version : <b>v0.5.0</b> (v0.5.0 : le site est désormais disponible en huit langues — 日本語, English, 简体中文, Español, हिन्दी, العربية, Português et Français — chaque langue étant rendue à partir du même feed.json, composé à partir des champs structurés plutôt que des résumés japonais stockés. v0.4.3 : un badge de version se trouve désormais en haut à droite de l’en-tête, à côté du sélecteur de langue, sur chaque page. v0.4.2 : toutes les adresses d’infrastructure (contrats) retirées du graphe des personnes — les relations sont comptées uniquement à travers les portefeuilles personnels (EOA), jamais à travers un contrat ; le graphique des totaux des retraits via pont est désormais agrégé par validateur (tous les 23, profondeur illimitée, les portefeuilles partagés comptés dans la barre de chaque validateur lié). v0.4.1 : le graphique des totaux des retraits via pont divise désormais chaque barre par profondeur — le validateur lui-même / liés de profondeur 1 / liés de profondeur 2 et plus. Auparavant, v0.4.0 avait ajouté six sections — Nouvelles paires, Mouvements de liquidité, totaux Délégations et récompenses, retours après inactivité, Nouveaux visages (extension des adresses liées sur tout l’historique + ajouts automatiques) et le prix du [42] ; v0.3.2 a reclassé Xenia d’infrastructure cœur vers validateur ordinaire — une correction de classification ; v0.3.1 a ajouté la définition des relations estimées à côté des filtres d’Activité récente ; et v0.3.0 a achevé la Phase 3 : surveillance des adresses estimées + actualisation automatique de la liste des validateurs, l’alias (Rioshi) à côté de X, et un sélecteur de langue « 日本語 | English » en haut à droite)
+</footer>
+<script>
+const SCAN = 'https://scan.infinitedrive.xyz';
+const COSMOS_SCAN = 'https://ql1-infinite42-guppy-histoire.github.io/42-cosmos-scan/';
+const shortAddr = (a) => a ? '0x…' + a.slice(-4).toUpperCase() : '—';
+const addrLink = (a, label) => a ? `<a href="${SCAN}/address/${a}" target="_blank" rel="noopener" title="${a}">${label ?? shortAddr(a)}</a>` : '—';
+const txLink = (ev) => !ev.txHash ? '<span>Tx —</span>' : ev.chain === 'cosmos'
+  ? `<a href="${COSMOS_SCAN}#/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()} (Cosmos)</a>`
+  : `<a href="${SCAN}/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()}</a>`;
+const TYPE_EN = {'transfer':'Transfert','swap-buy':'Achat','swap-sell':'Vente','lp-add':'Ajout de liquidité','lp-remove':'Retrait de liquidité','pair-created':'Nouvelle paire','delegate':'Déléguer','undelegate':'Retrait de délégation','redelegate':'Redéléguer','reward':'Réclamation de récompense (récompenses de délégation)','commission':'Réclamation de récompense de validateur (commission)','reward-claim-fish':'Réclamation de récompense (distribution FISH)','reward-claim-staking':'Réclamation de récompense (récompenses de staking)','reward-claim-starlight':'Réclamation de récompense Starlight','reward-distribution-fish':'Distribution en lot de récompenses FISH','bridge-out':'Envoi par pont (USDT, sortant)','bridge-send-other':'Envoi par pont (non-USDT)','bridge-delivery':'Traitement de livraison par pont','nft-mint':'Frappe de NFT','nft-transfer':'Transfert de NFT','fluke-commit':'Participation Fluke (commit)','fluke-reveal':'Révélation Fluke','fluke-boost':'Boost Fluke','fluke-settle':'Règlement Fluke (nouvelle Guide émise)','fluke-seed':'Financement du fonds de prix Fluke','guide-write':'Écriture de texte Guide','guide-append':'Ajout de texte Guide','starlight-register':'Enregistrement Starlight','st42-deposit':'Dépôt st42','st42-redeem-request':'Demande de rachat st42','st42-claim':'Réclamation st42','st42-instant-exit':'Sortie instantanée st42','st42-order':'Ordre st42','approve':'Approbation (approve)','token-burn':'Destruction de jetons','dex-swap':'Échange DEX','wrap':'Conversion en W42 (wrap)','unwrap':'Déconversion W42 (unwrap)','nft-approve-all':'Approbation totale des NFT','unclassified':'Action non classée','other-contract':'Action non classée'};
+// Stored counterparty / destination labels come from the collector and a
+// few are Japanese; translate the known ones, turn "X/Y ペア" into
+// "X/Y pair", and fall back to the short address for anything else that
+// still contains Japanese (the English page never shows Japanese text).
+const LABEL_EN = {'ブリッジルーター':'Routeur de pont','ブリッジ系コントラクト':'Contrat de pont','LiquidityLocker（流動性ロッカー）':'LiquidityLocker (verrouilleur de liquidité)','NFTコントラクト':'Contrat NFT','FISH報酬コントラクト':'Contrat de récompenses FISH','Hyperlaneメールボックス':'Boîte aux lettres Hyperlane','残高1位アドレス':'Adresse au solde n° 1','DEXルーター':'Routeur DEX','ステーキングプリコンパイル（0x0800）':'Précompilé de staking (0x0800)','報酬配布プリコンパイル（0x0801）':'Précompilé de distribution (0x0801)','NFTマーケット':'Place de marché NFT','st42バルト':'Coffre st42','st42注文板（St42Book）':'Carnet d’ordres st42 (St42Book)','W42（Wrapped 42）':'W42 (Wrapped 42)','Zaphod Girls The Thirteen（NFT）':'Zaphod Girls The Thirteen (NFT)'};
+const NOTE_EN = {'コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）':'un contrat (un contrat partagé détenant des parts de LP de plusieurs paires FISH)'};
+const hasJa = (s) => /[぀-ヿ一-鿿]/.test(s || '');
+function enLabel(s){
+  if (!s) return null;
+  if (LABEL_EN[s]) return LABEL_EN[s];
+  const t = s.replace(/ ペア$/, ' pair');
+  return hasJa(t) ? null : t;
+}
+const enNote = (s) => !s ? null : (NOTE_EN[s] || (hasJa(s) ? null : s));
+const REASON_EN = {'バリデーター本人の売買':'Échanges propres du validateur','大きな[42]の移動（1,000 [42]以上）':'Gros mouvement de [42] (≥ 1 000 [42])'};
+const ageEn = (secs) => { if (secs == null) return ''; const m = Math.round(secs/60); if (m < 60) return `${m} min après la création de la paire`; const h = Math.floor(m/60); return `${h} h${m%60 ? ' ' + (m%60) + ' min' : ''} après la création de la paire`; };
+const jstEn = (ts) => new Date(ts*1000).toLocaleString('fr',{timeZone:'Asia/Tokyo',month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}) + ' JST';
+const sym = (s) => s === '42' ? '[42]' : s;
+const amtStr = (a) => a ? `${a.amount} ${sym(a.symbol)}` : '';
+
+let FEED = null;
+
+// Display-name helpers (v0.3.0): validator X is also known as Rioshi
+// (user-provided fact). Display-only suffix — monikers and filter values
+// stay the raw chain moniker. valName is for HTML, valNameText for text.
+const valName = (n) => n === 'X' ? 'X <span class="alias">(Rioshi)</span>' : n;
+const valNameText = (n) => n === 'X' ? 'X (Rioshi)' : n;
+
+function tierBadge(ev){
+  if (ev.actorIsCore) return '<span class="badge core">Cœur (infrastructure)</span>';
+  if (ev.actorTier === 'validator') return '<span class="badge self">Validateur</span>';
+  if (ev.actorTier === 'related') return '<span class="badge related">Adresse liée</span>';
+  if (ev.actorTier === 'estimated') return '<span class="badge estimated">Estimé</span>';
+  return '';
+}
+// Headline = the ACTOR only (same rule as the Japanese page).
+function whoLabel(ev){
+  if (ev.actorTier === 'validator' && ev.actorLabel && !hasJa(ev.actorLabel)) return valName(ev.actorLabel);
+  if (ev.actorIsCore) return enLabel(ev.actorLabel) || shortAddr(ev.actor);
+  if (ev.actorTier === 'related') return 'Lié ' + shortAddr(ev.actor);
+  if (ev.actorTier === 'estimated') return 'Estimé ' + shortAddr(ev.actor);
+  return enLabel(ev.actorLabel) || shortAddr(ev.actor);
+}
+function cpName(ev){
+  if (!ev.counterparty) return '';
+  return enLabel(ev.counterpartyLabel) || shortAddr(ev.counterparty);
+}
+// English summary composed from the structured fields only — the stored
+// Japanese ev.summary is never reused on this page.
+function summaryEn(ev){
+  const amt = amtStr(ev.amount);
+  const cp = cpName(ev);
+  const dest = enLabel(ev.destLabel);
+  switch (ev.type) {
+    case 'transfer':
+      if (!amt) return 'Transfert';
+      return ev.direction === 'out' ? `A envoyé ${amt}${cp ? ' à ' + cp : ''}` : `A reçu ${amt}${cp ? ' de ' + cp : ''}`;
+    case 'swap-buy': {
+      const b = ev.bought ? `${ev.bought.amount} ${sym(ev.bought.symbol)}` : (ev.subjectSymbol || '');
+      const s = ev.sold ? ` (a payé ${ev.sold.amount} ${sym(ev.sold.symbol)}${ev.price ? ` · prix ≈ ${ev.price} ${ev.priceUnit || ''}`.trimEnd() : ''})` : '';
+      return `A acheté ${b}${s}`;
+    }
+    case 'swap-sell': {
+      const s = ev.sold ? `${ev.sold.amount} ${sym(ev.sold.symbol)}` : (ev.subjectSymbol || '');
+      const b = ev.bought ? ` (a reçu ${ev.bought.amount} ${sym(ev.bought.symbol)}${ev.price ? ` · prix ≈ ${ev.price} ${ev.priceUnit || ''}`.trimEnd() : ''})` : '';
+      return `A vendu ${s}${b}`;
+    }
+    case 'lp-add':
+      return `Liquidité ajoutée : ${(ev.amounts || []).map((a) => `${a.amount} ${sym(a.symbol)}`).join(' + ')}${ev.pairLabel ? ` (${enLabel(ev.pairLabel) || 'paire'})` : ''}`;
+    case 'lp-remove':
+      return `Liquidité retirée : ${(ev.amounts || []).map((a) => `${a.amount} ${sym(a.symbol)}`).join(' + ')}${ev.pairLabel ? ` (${enLabel(ev.pairLabel) || 'paire'})` : ''}`;
+    case 'pair-created': {
+      const ps = (ev.pairSymbols || ev.tokens || []).map(sym).join('/');
+      const fm = ev.firstMint ? ` Première liquidité : ${ev.firstMint.amount0.amount} ${sym(ev.firstMint.amount0.symbol)} + ${ev.firstMint.amount1.amount} ${sym(ev.firstMint.amount1.symbol)}.` : '';
+      return `Nouvelle paire créée : ${ps}.${fm}`;
+    }
+    case 'delegate':
+      return `A délégué ${amt}${cp ? ' à ' + cp : ''}`;
+    case 'undelegate':
+      return `A retiré la délégation${cp ? ' de ' + cp : ''}${amt ? ` (${amt})` : ''}`;
+    case 'redelegate':
+      return `A redélégué ${amt}${cp ? ' à ' + cp : ''}`;
+    case 'reward':
+      return `A réclamé des récompenses de délégation${cp ? ' de ' + cp : ''}${amt ? ` : ${amt}` : ''}`;
+    case 'commission':
+      return `A réclamé la commission du validateur${amt ? ` : ${amt}` : ''}`;
+    case 'reward-claim-fish':
+      return `A réclamé des récompenses de la distribution FISH${dest ? ` (${dest})` : ''}`;
+    case 'reward-distribution-fish':
+      return 'A distribué des récompenses FISH en lot (via le contrat de récompenses)';
+    case 'reward-claim-staking':
+      return `A réclamé des récompenses de staking${amt ? ` : ${amt}` : ''}`;
+    case 'reward-claim-starlight':
+      return 'A réclamé des récompenses Starlight';
+    case 'bridge-out':
+      return `A retiré des USDT par pont vers une chaîne externe${amt ? ` : ${amt}` : ''}`;
+    case 'bridge-send-other':
+      return `Envoi par pont (non-USDT) vers une chaîne externe${amt ? ` : ${amt}` : ''}`;
+    case 'bridge-delivery':
+      return 'A traité une livraison par pont (processus de la boîte aux lettres Hyperlane)';
+    case 'nft-mint':
+      return ev.nft ? `Frappe de NFT : a reçu ${ev.nft.collectionName} #${ev.nft.tokenId} (nouvellement émis)` : 'Frappe de NFT';
+    case 'nft-transfer':
+      if (!ev.nft) return 'Transfert de NFT';
+      return ev.direction === 'out' ? `A envoyé le NFT ${ev.nft.collectionName} #${ev.nft.tokenId}` : `A reçu le NFT ${ev.nft.collectionName} #${ev.nft.tokenId}`;
+    case 'fluke-commit': return 'A participé à Fluke (commit)';
+    case 'fluke-reveal': return 'A révélé une participation Fluke';
+    case 'fluke-boost': return 'A boosté une participation Fluke';
+    case 'fluke-settle': return 'A réglé Fluke (une nouvelle Guide a été émise)';
+    case 'fluke-seed': return 'A financé le fonds de prix Fluke';
+    case 'guide-write': return 'A écrit du texte dans une Guide';
+    case 'guide-append': return 'A ajouté du texte à une Guide';
+    case 'starlight-register': return 'A enregistré une Guide sur Starlight';
+    case 'st42-deposit': return 'A déposé sur st42';
+    case 'st42-redeem-request': return 'A demandé un rachat de st42';
+    case 'st42-claim': return 'A réclamé du st42';
+    case 'st42-instant-exit': return 'Est sorti instantanément de st42';
+    case 'st42-order': return `A placé un ordre st42${dest ? ` (${dest})` : ''}`;
+    case 'approve':
+      return `A approuvé un jeton${dest ? ` pour utilisation par ${dest}` : (cp ? ` (jeton : ${cp})` : '')}`;
+    case 'token-burn':
+      return `Destruction de jetons${cp ? ` (contrat du jeton : ${cp})` : ''}`;
+    case 'dex-swap': return 'A échangé sur le DEX';
+    case 'wrap': return 'A converti [42] en W42';
+    case 'unwrap': return 'A déconverti W42 en [42]';
+    case 'nft-approve-all': return 'A approuvé tous les NFT d’une collection (setApprovalForAll)';
+    case 'unclassified':
+      return `Action non classée (méthode ${ev.method || '—'} / destination ${shortAddr(ev.counterparty)})`;
+    default:
+      return `${TYPE_EN[ev.type] || 'Mouvement'}${amt ? ` : ${amt}` : ''}${cp ? ` — contrepartie ${cp}` : ''}${dest ? ` (${dest})` : ''}`;
+  }
+}
+function relationLine(ev){
+  if (ev.actorTier === 'validator') return '';
+  const rel = ev.actorValidators || [];
+  if (ev.actorTier === 'estimated') {
+    let s = '';
+    if (rel.length === 1) s = `Validateurs liés (estimé) : <b class="rel-name">${valName(rel[0])}</b>`;
+    else if (rel.length >= 2) s = `Validateurs liés (estimé) : <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} autres`;
+    const basisEn = ev.estimateBasis && ev.estimateBasis.textEn && !hasJa(ev.estimateBasis.textEn) ? ev.estimateBasis.textEn : '';
+    const note = basisEn ? `<div class="note">Base de l’estimation : ${basisEn}</div>` : '';
+    return (s ? `<div class="meta">${s}</div>` : '') + note;
+  }
+  let s = '';
+  if (rel.length === 1) s = `Validateurs liés : <b class="rel-name">${valName(rel[0])}</b>`;
+  else if (rel.length >= 2) s = `Validateurs liés : <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} autres`;
+  const badge = ev.actorShared ? ' <span class="badge shared">Shared counterparty</span>' : '';
+  const noteEn = enNote(ev.actorContractNote);
+  const sharedNote = ev.actorShared
+    ? `<div class="note">Une contrepartie partagée qui transige avec plusieurs validateurs (ce n’est pas elle-même un validateur)${noteEn ? ' / ' + noteEn : ''}</div>` : '';
+  // v0.4.2: depth>=2 related cards state WHY the wallet is tracked.
+  const EV_LABEL = {bidirectional: 'flux de fonds dans les deux sens','funded-delegation': 'financé par le côté du validateur et délégué en retour à ce validateur','concentrated-repeat': 'interaction répétée concentrée sur le côté du validateur','one-way-repeat': 'transferts unidirectionnels répétés depuis le côté du validateur',delegation: 'une délégation à ce validateur',synchronized: 'mouvements synchronisés avec le validateur'};
+  const evNote = ev.actorEvidence
+    ? `<div class="note">Une relation de profondeur 2 et plus, affichée parce qu’il existe des preuves qu’il s’agit du propre portefeuille du validateur (preuve : ${[...new Set(Object.values(ev.actorEvidence).flat())].map((c) => EV_LABEL[c] ?? c).join(', ')})</div>` : '';
+  const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
+  return line + sharedNote + evNote;
+}
+// v0.4.1: depth segment of a bridge-out event (0 = validator itself,
+// 1 = depth-1 related, 2 = depth-2-or-deeper related). actorDepth is set by
+// the collector; the fallback mirrors its derivation for stale feeds.
+function bridgeSeg(ev){
+  const d = typeof ev.actorDepth === 'number' ? ev.actorDepth : (ev.actorTier === 'validator' ? 0 : 1);
+  return d <= 0 ? 0 : d === 1 ? 1 : 2;
+}
+// v0.4.2: the chart is pre-aggregated by the collector over the FULL
+// history (feed.stats.bridge) with per-validator attribution: one bar
+// per validator (all 23, zero bars included); a shared wallet counts
+// into EACH connected validator's bar, so bars do not sum to the
+// deduplicated grand total shown on top.
+function renderBridgeChart(){
+  const B = FEED.stats && FEED.stats.bridge;
+  const el = document.getElementById('bridgeChart');
+  if (!B || !Array.isArray(B.perValidator)) { el.innerHTML = '<p class="empty">Aucun retrait via pont enregistré pour l’instant.</p>'; return; }
+  const fmt = (v) => v.toLocaleString('fr', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const SEG_LABEL = ['le validateur lui-même', 'liés de profondeur 1', 'liés de profondeur 2 et plus'];
+  const segLine = (seg) => seg.map((v, i) => v > 0 ? `${SEG_LABEL[i]} ${fmt(v)} USDT` : null).filter(Boolean).join(' / ');
+  const rows = B.perValidator;
+  const max = rows.length ? Math.max(...rows.map((g) => g.total)) : 0;
+  el.innerHTML = `<div class="bchart-total">Total (sans doublons) ${fmt(B.total)} USDT (${B.count} retraits)</div>`
+    + `<div class="bchart-segtotal">Répartition globale (sans doublons) : ${segLine(B.segTotals)}</div>`
+    + `<div class="bchart-legend"><span class="sw seg0"></span>le validateur lui-même<span class="sw seg1"></span>liés de profondeur 1<span class="sw seg2"></span>liés de profondeur 2 et plus</div>`
+    + rows.map((g) => {
+      const parts = g.seg.map((v, i) => v > 0 ? `<div class="bchart-seg seg${i}" style="width:${max ? v / max * 100 : 0}%"></div>` : '').join('');
+      return `<div class="bchart-row"><div class="bchart-name">${valName(g.moniker)}</div><div class="bchart-barwrap">${parts}</div><div class="bchart-amt">${fmt(g.total)} USDT <span class="bchart-cnt">×${g.count}</span></div><div class="bchart-break">${segLine(g.seg)}</div></div>`;
+    }).join('');
+}
+function bigName(ev){
+  if (ev.actorTier === 'validator' && ev.actorLabel) return {main: valName(ev.actorLabel), sub: 'le validateur lui-même', cls: ' self'};
+  const rel = ev.actorValidators || [];
+  if (ev.actorTier === 'estimated') return {main: rel.length ? valName(rel[0]) : shortAddr(ev.actor), sub: rel.length > 1 ? ` — portefeuille lié estimé (également estimé avec ${rel.length - 1} autres)` : ' — portefeuille lié estimé', cls: ''};
+  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? ` — portefeuille lié (également lié à ${rel.length - 1} autres)` : ' — portefeuille lié') + ((ev.actorDepth ?? 1) >= 2 ? ' (profondeur 2 et plus, preuve qu’il s’agit du propre portefeuille du validateur)' : ''), cls: ''};
+  if (ev.actorIsCore && ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: 'cœur', cls: ''};
+  if (ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: '', cls: ''};
+  return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? 'portefeuille lié' : '', cls: ''};
+}
+function renderEvent(ev){
+  const cpLabel = enLabel(ev.counterpartyLabel);
+  const cp = ev.counterparty ? ` / Contrepartie : ${addrLink(ev.counterparty, cpLabel ? cpLabel + ' ' + shortAddr(ev.counterparty) : null)}${ev.counterpartyIsCore ? ' <span class="badge core">Cœur</span>' : ''}` : '';
+  const wl = ev.whitelisted === false ? ' <span class="badge">Contient un jeton non listé</span>' : '';
+  const reasons = (ev.notableReasons || []).filter((r) => r !== 'bridge-out');
+  const mapped = reasons.map((r) => REASON_EN[r]).filter(Boolean);
+  const notable = reasons.length ? `<span class="badge notable">⭐ À noter${mapped.length ? ' : ' + mapped.join(' · ') : ''}</span>` : '';
+  const isBridgeOut = ev.type === 'bridge-out' || (ev.notableReasons || []).includes('bridge-out');
+  const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "Retrait USDT par pont du validateur lui-même" : ev.actorTier === 'related' ? "Retrait USDT par pont d’un portefeuille lié" : 'Retrait USDT par pont'}</span>` : '';
+  const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
+  const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 Snipe (${ageEn(ev.pairAgeSecs)})</span>` : '';
+  const insider = ev.isInsider ? ` <span class="badge insider">⚠ Insider (${valName('X')})</span>` : '';
+  const dormant = ev.isDormantReturn ? ` <span class="badge dormant">😴 Premier mouvement depuis ${ev.dormantDays} jours</span>` : '';
+  const newface = ev.isNewCounterparty ? ` <span class="badge newface">👤 Nouvelle contrepartie</span>` : '';
+  const added = ev.watchlistAdded ? ` <span class="badge added">Ajouté à la liste de surveillance</span>` : '';
+  const pairWl = ev.type === 'pair-created' && ev.nonWhitelistedSide ? ' <span class="badge">Jeton non listé</span>' : '';
+  const lpCls = ev.type === 'lp-add' ? ' lpadd' : ev.type === 'lp-remove' ? ' lpremove' : '';
+  const bn = bigName(ev);
+  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
+    <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
+    <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${insider}${dormant}${newface}${added}</div>
+    <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
+    ${relationLine(ev)}
+    <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
+}
+function renderStaking(){
+  const st = FEED.stats && FEED.stats.staking;
+  if (!st) return;
+  const t = st.totals;
+  const r = st.range || {};
+  document.getElementById('stakingRange').textContent = `Portée : le collecteur agrège tout l’historique de ce site (blocs ${r.fromBlock ?? '—'} à ${r.toBlock ?? '—'}) à chaque exécution.`;
+  document.getElementById('stakingTotals').innerHTML =
+    `<div class="staking-totals">Délégations <b>${t.delegate.count} (${t.delegate.amount42} [42])</b> / Retraits de délégation <b>${t.undelegate.count} (${t.undelegate.amount42} [42])</b> / Redélégations <b>${t.redelegate.count}</b> / Réclamations de récompenses de délégation <b>${t.reward.count} (${t.reward.amount42} [42])</b> / Réclamations de commission de validateurs <b>${t.commission.count} (${t.commission.amount42} [42])</b></div>`;
+  document.getElementById('stakingTable').innerHTML = st.perValidator.length
+    ? `<table class="staking"><tr><th>Validateur</th><th>Récompenses d’exploitation qu’il a lui-même reçues (commission)</th><th>Délégué à ce validateur</th><th>Délégation retirée de ce validateur</th></tr>` + st.perValidator.map((v) =>
+      `<tr><td><b>${valName(v.moniker)}</b></td><td>${v.commission42} [42] (${v.commissionCount} réclamations)</td><td>${v.delegateIn42} [42] (${v.delegateInCount})</td><td>${v.undelegateOut42} [42] (${v.undelegateOutCount})</td></tr>`).join('') + '</table>'
+    : '<p class="empty">Pas encore de totaux par validateur.</p>';
+  const u = st.unattributed || {};
+  document.getElementById('stakingNote').textContent = `Remarque : « Récompenses d’exploitation qu’il a lui-même reçues » ne compte que la commission réclamée depuis la propre adresse de ce validateur. Les délégations et les retraits sont attribués par validateur uniquement lorsque le validateur contrepartie est certain (les cas ambigus — commission ${u.commission ?? 0}, délégations ${u.delegate ?? 0}, retraits ${u.undelegate ?? 0} — sont inclus uniquement dans les totaux généraux).`;
+}
+function applyFilters(){
+  if (!FEED) return;
+  const v = document.getElementById('fValidator').value;
+  const t = document.getElementById('fType').value;
+  const tk = document.getElementById('fToken').value;
+  const showEst = document.getElementById('fEstimated').checked;
+  const match = (ev) => (!v || (ev.validatorNames||[]).includes(v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk)) && (showEst || ev.actorTier !== 'estimated');
+  const list = FEED.events.filter(match);
+  document.getElementById('feed').innerHTML = list.length ? list.map(renderEvent).join('') : '<p class="empty">Aucun mouvement ne correspond encore aux filtres sélectionnés.</p>';
+  // Special sections are CONFIRMED-ONLY (v0.3.0): estimated actors excluded.
+  const isBO = (ev) => ev.type === 'bridge-out' || (ev.notableReasons||[]).includes('bridge-out');
+  const alerts = FEED.events.filter((ev) => ev.actorTier !== 'estimated' && !isBO(ev) && (ev.notableReasons||[]).filter((r) => r !== 'bridge-out').length);
+  document.getElementById('alerts').innerHTML = alerts.length ? alerts.slice(0,20).map(renderEvent).join('') : '<p class="empty">Aucun mouvement notable pour le moment.</p>';
+  const bridgeouts = FEED.events.filter((ev) => isBO(ev) && ev.actorTier !== 'estimated');
+  document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">Aucun retrait via pont récent.</p>';
+  const snipes = FEED.events.filter((ev) => ev.isSnipe && ev.actorTier !== 'estimated');
+  document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">Aucun snipe détecté dans le flux récent.</p>';
+  // 🆕 New pairs (v0.4.0): display only pairs with at least one whitelisted side.
+  const newpairs = FEED.events.filter((ev) => ev.type === 'pair-created' && (ev.pairWhitelist || []).some(Boolean));
+  document.getElementById('newpairs').innerHTML = newpairs.length ? newpairs.slice(0,100).map(renderEvent).join('') : '<p class="empty">Aucune nouvelle paire présentable pour l’instant.</p>';
+  // 💧 Liquidity moves (v0.4.0): confirmed-only, like the other sections.
+  const lps = FEED.events.filter((ev) => (ev.type === 'lp-add' || ev.type === 'lp-remove') && ev.actorTier !== 'estimated');
+  document.getElementById('lpmoves').innerHTML = lps.length
+    ? `<p class="sub">Affichage de ${lps.length} mouvements (${lps.filter((e) => e.type === 'lp-add').length} ajouts, ${lps.filter((e) => e.type === 'lp-remove').length} retraits)</p>` + lps.map(renderEvent).join('')
+    : '<p class="empty">Aucun mouvement de liquidité pour l’instant.</p>';
+  // 😴 Dormant returns (v0.4.0): 60+ days of silence, then a move.
+  const dormant = FEED.events.filter((ev) => ev.isDormantReturn && ev.actorTier !== 'estimated');
+  document.getElementById('dormant').innerHTML = dormant.length ? dormant.slice(0,100).map(renderEvent).join('') : '<p class="empty">Aucune adresse ne s’est encore déplacée après 60 jours ou plus de silence.</p>';
+  // 👤 New faces (v0.4.0): first-appearance counterparties in the whole record.
+  const newfaces = FEED.events.filter((ev) => ev.isNewCounterparty && ev.actorTier !== 'estimated');
+  document.getElementById('newfaces').innerHTML = newfaces.length ? newfaces.slice(0,100).map(renderEvent).join('') : '<p class="empty">Pas encore de nouveaux visages.</p>';
+  // ⚠ Insider section (v0.2.5, user-narrowed): ONLY buys by X / X-related
+  // before 14:00 JST on listing day 2026-06-30 (window epochs below).
+  // Display capped at 100 with the total shown (records are never dropped).
+  const insiders = FEED.events.filter((ev) => ev.isInsider && ev.actorTier !== 'estimated' && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
+    .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
+  document.getElementById('insiderRule').textContent = 'Surveillance Insider : uniquement les ACHATS de [42] et de DONT (PANIC) effectués par le validateur X (Rioshi) lui-même et par les adresses directement liées à X (Rioshi) avant 14h00 JST le jour de cotation (30 juin 2026). Tous les autres mouvements se trouvent dans l’historique ordinaire.' + (insiders.length ? ` (${insiders.length} achats correspondants)` : '');
+  document.getElementById('insiders').innerHTML = insiders.length
+    ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">Affichage des 100 plus récents parmi ${insiders.length} mouvements (tous sont conservés dans l’historique)</p>` : '')
+    : '<p class="empty">Aucun achat pré-cotation correspondant.</p>';
+}
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.alerts, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
+  const h = sec.querySelector('h2');
+  if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
+}
+async function load(){
+  try {
+    FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
+    const s = FEED.status;
+    document.getElementById('status').innerHTML =
+      `Dernier bloc traité : <b>${s.lastProcessedBlock ?? '—'}</b> (pointe de la chaîne ${s.latestBlockSeen ?? '—'}) / Dernier bloc Cosmos traité : <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Mis à jour : ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / Mouvements enregistrés : ${s.totalEvents} / Surveillance : ${s.watchSummary.validators} validateurs + ${s.watchSummary.directRelated} adresses directement liées + ${s.watchSummary.estimated ?? 0} estimées${s.validatorsAdded ? ` / Validateurs ajoutés automatiquement à cette exécution : ${s.validatorsAdded.map(valNameText).join(', ')}` : ''}`;
+    document.getElementById('alertRule').textContent = 'Règle « À noter » : (1) les achats et ventes propres d’un validateur, (2) les mouvements de 1 000 [42] ou plus. Les retraits USDT via pont sont affichés séparément dans la section verte ci-dessus. Seuls les mouvements correspondant à ces règles sont listés ici (affichés uniquement sur ce site ; rien n’est publié à l’extérieur).';
+    document.getElementById('bridgeOutRule').textContent = 'Retrait via pont = un validateur lui-même, ou un portefeuille directement lié, qui envoie des USDT hors de la 42 Chain vers une chaîne externe via un pont. Ces mouvements brillent en vert dans cette section dédiée (ils ne sont pas placés dans À noter). Les envois par pont de jetons non-USDT sont enregistrés comme des mouvements ordinaires et ne sont pas affichés ici. Les réceptions entrantes (recevoir du côté de la 42 Chain) sont traitées comme des transferts ordinaires.';
+    document.getElementById('snipeRule').textContent = 'Snipe = un validateur lui-même, ou un portefeuille directement lié, qui achète sur une paire dans les 3 heures suivant la création de cette paire (achats uniquement — les ajouts de liquidité ne comptent pas comme des snipes). Les mouvements correspondants sont listés ici, en bonne place.';
+    document.getElementById('dormantRule').textContent = 'Retour après inactivité : une adresse surveillée (un validateur lui-même, une adresse liée ou un EOA étiqueté cœur — les paires et autres contrats ainsi que les adresses estimées sont exclus) qui bouge à nouveau après 60 jours ou plus sans mouvement dans l’historique de ce site. Le mouvement de retour est marqué « Premier mouvement depuis N jours ».';
+    if (s.price) {
+      const pb = document.getElementById('pricebar');
+      const chg = s.price.change24hPct;
+      const chgHtml = chg == null ? 'par rapport à il y a 24 h —' : `par rapport à il y a 24 h <span class="${chg >= 0 ? 'chg-up' : 'chg-dn'}">${chg >= 0 ? '+' : ''}${chg}%</span>`;
+      pb.innerHTML = `Prix du [42] : <b>environ ${s.price.usdt} USDT</b> (${chgHtml})<br><span class="note">Calculé à partir des réserves du pool d’échange. Le pool est petit, la valeur comporte donc une marge d’erreur.</span>`;
+      pb.style.display = '';
+    }
+    const vsel = document.getElementById('fValidator');
+    if (vsel.options.length <= 1) for (const v of FEED.validators) { const o = document.createElement('option'); o.value = v.moniker; o.textContent = valNameText(v.moniker); vsel.appendChild(o); }
+    const tsel = document.getElementById('fToken');
+    if (tsel.options.length <= 1) {
+      const toks = [...new Set(FEED.events.flatMap((e) => e.tokens || []))].sort();
+      for (const tk of toks) { const o = document.createElement('option'); o.value = tk; o.textContent = tk; tsel.appendChild(o); }
+    }
+    document.querySelector('#sec-validators h2').textContent = `Validateurs (${FEED.validators.length})`;
+    document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
+      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">également infrastructure cœur</span>' : ''}${v.inactive ? ' <span class="badge">actuellement inactif</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} adresses liées (dont ${v.autoAddedCount ?? 0} ajoutées automatiquement) / ${v.estimatedCount ?? 0} estimées</span></div>`).join('');
+    applyFilters();
+    renderBridgeChart();
+    renderStaking();
+    if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
+    { const d = document.getElementById('estimated-def'); if (d && location.hash === '#estimated-def') { d.open = true; setTimeout(() => d.scrollIntoView({behavior:'smooth'}), 80); } }
+  } catch (e) {
+    document.getElementById('status').textContent = 'Impossible de charger feed.json (le collecteur n’a peut-être pas encore été exécuté).';
+  }
+}
+for (const id of ['fValidator','fType','fToken','fEstimated']) document.getElementById(id).addEventListener('change', applyFilters);
+{ if (typeof location !== 'undefined' && location.hash && document.querySelectorAll) for (const a of document.querySelectorAll('.langsw a')) a.href = a.getAttribute('href') + location.hash; }
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traqueur des validateurs 42 Chain — Accueil</title>
+<style>
+  :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--ok:#69db7c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
+  header,main{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:1.4rem;margin:8px 0 4px}
+  .sub{color:var(--sub);font-size:.92rem}
+  .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem;margin-top:10px}
+  .status b{color:var(--ok)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:16px}
+  a.card{display:block;text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  a.card:hover{border-color:var(--acc)}
+  a.card h2{font-size:1.15rem;margin:0 0 6px}
+  a.card p{color:var(--sub);font-size:.9rem;margin:0}
+  a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
+  a.card .segsub{font-size:.85rem;color:var(--sub);margin-top:3px}
+  a.card.insider{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
+  a.card.insider h2{color:#e9d5ff}
+  a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  a.card.snipes h2{color:#ff8fa3}
+  a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
+  a.card.bridge h2{color:#69db7c}
+  a.card.alerts{background:#2a2110;border:1px solid #6b5518}
+  a.card.alerts h2{color:#ffd166}
+  .pricecard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:1rem}
+  .pricecard b{font-size:1.6rem;color:var(--ok)}
+  .pricecard .chg-up{color:#69db7c;font-weight:700}
+  .pricecard .chg-dn{color:#ff8fa3;font-weight:700}
+  .pricecard .note{color:var(--sub);font-size:.82rem}
+  .lang{margin-top:18px}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .langsw b{color:var(--txt)}
+  .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
+  .alias{font-size:.6em;color:var(--sub);font-weight:600}
+  footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+  a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-row"><h1>Traqueur en temps réel des validateurs 42 Chain</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <b>Français</b> <span class="verbadge">v0.5.0</span></div></div>
+  <p class="sub">Ce site collecte automatiquement les mouvements des validateurs eux-mêmes et des adresses confirmées qui transigent directement avec eux. Choisissez une section pour y accéder.</p>
+  <div class="status" id="status">Chargement…</div>
+  <div class="pricecard" id="pricecard" style="display:none"></div>
+</header>
+<main>
+  <div class="cards">
+    <a class="card insider" href="fr.html#sec-insider">
+      <h2>⚠ Surveillance Insider — X<span class="alias"> (Rioshi)</span></h2>
+      <p>Uniquement les achats de [42] et de DONT effectués par le validateur X (Rioshi) lui-même et par les adresses liées à X (Rioshi) avant 14h00 JST le jour de cotation (30 juin 2026).</p>
+      <div class="count" id="c-insider">—</div>
+    </a>
+    <a class="card snipes" href="fr.html#sec-snipes">
+      <h2>🎯 Alertes de snipe</h2>
+      <p>Achats d’un validateur lui-même ou d’un portefeuille directement lié dans les 3 heures suivant la création d’une paire (les ajouts de liquidité ne comptent pas).</p>
+      <div class="count" id="c-snipes">—</div>
+    </a>
+    <a class="card bridge" href="fr.html#sec-bridge">
+      <h2>🌉 Retraits via pont (USDT, sortant)</h2>
+      <p>Les USDT envoyés vers des chaînes externes via un pont par un validateur lui-même ou un portefeuille lié, dans leur propre section verte (les entrants ne sont pas inclus).</p>
+      <div class="count" id="c-bridge">—</div>
+    </a>
+    <a class="card bridge" href="fr.html#sec-bridgechart">
+      <h2>📊 Montant total des USDT retirés via pont</h2>
+      <p>Le montant total des USDT retirés via pont vers des chaînes externes, avec un graphique en barres par nom ventilé par profondeur (le validateur lui-même / liés de profondeur 1 / liés de profondeur 2 et plus).</p>
+      <div class="count" id="c-bridgetotal">—</div>
+      <div class="segsub" id="c-bridgeseg">—</div>
+    </a>
+    <a class="card alerts" href="fr.html#sec-alerts">
+      <h2>⭐ À noter</h2>
+      <p>Les échanges propres des validateurs et les gros mouvements de 1 000 [42] ou plus.</p>
+      <div class="count" id="c-alerts">—</div>
+    </a>
+    <a class="card" href="fr.html#sec-lp">
+      <h2>💧 Mouvements de liquidité</h2>
+      <p>Les ajouts de liquidité (dépôts dans des pools) et les retraits (enlèvements) dans une seule section. Un retrait important peut être le signe d’une sortie.</p>
+      <div class="count" id="c-lp">—</div>
+    </a>
+    <a class="card" href="fr.html#sec-dormant">
+      <h2>😴 De retour après un long silence</h2>
+      <p>Adresses surveillées qui ont bougé à nouveau après 60 jours ou plus de silence.</p>
+      <div class="count" id="c-dormant">—</div>
+    </a>
+    <a class="card" href="fr.html#sec-newfaces">
+      <h2>👤 Nouveaux visages</h2>
+      <p>Contreparties avec lesquelles une adresse surveillée a transigé pour la première fois dans tout l’historique. Les contreparties nouvellement apparues sont automatiquement ajoutées à la liste de surveillance.</p>
+      <div class="count" id="c-newfaces">—</div>
+    </a>
+    <a class="card" href="fr.html#sec-newpairs">
+      <h2>🆕 Nouvelles paires</h2>
+      <p>Paires nouvellement créées sur le DEX Don’t Panic (seules les paires contenant au moins l’un des 17 jetons listés sont affichées), avec le créateur et la première liquidité.</p>
+      <div class="count" id="c-newpairs">—</div>
+    </a>
+    <a class="card" href="fr.html#sec-feed">
+      <h2>📜 Activité récente (historique complet)</h2>
+      <p>Chaque mouvement enregistré sur les côtés EVM et Cosmos, filtrable par validateur, type et jeton. Les mouvements des adresses estimées sont inclus ici, clairement marqués comme estimés (les sections spéciales ne contiennent que des informations confirmées).</p>
+      <div class="count" id="c-total">—</div>
+    </a>
+    <a class="card" href="fr.html#sec-staking">
+      <h2>🏦 Délégations et récompenses</h2>
+      <p>Totaux des délégations, des retraits de délégation et des réclamations de récompenses (récompenses de délégation et propres récompenses d’exploitation des validateurs), avec une ventilation par validateur.</p>
+      <div class="count" id="c-staking">—</div>
+    </a>
+    <a class="card" href="fr.html#sec-validators">
+      <h2>👥 Validateurs</h2>
+      <p>Les validateurs à surveiller (la liste se met à jour automatiquement depuis la chaîne).</p>
+      <div class="count" id="c-validators">—</div>
+    </a>
+  </div>
+  <p style="font-size:.95rem">❓ <a href="fr.html#estimated-def">Qu’est-ce qu’une relation estimée ? (lire la définition)</a> — des adresses surveillées pour un lien possible, sans transfert direct confirmé.</p>
+  <p class="lang">🌐 日本語版： <a href="home.html">トップページ</a> ／ <a href="index.html">追跡ページ</a></p>
+</main>
+<footer>
+  Source des données : les blocs de la 42 Chain elle-même (via RPC). La couverture est limitée aux seules transactions sur la 42 Chain (identifiant de chaîne EVM 421018 et son côté Cosmos, infinite_421018-1). Les transactions sur QL1 ou sur toute autre chaîne ne sont pas incluses. Les mouvements des adresses estimées apparaissent uniquement dans Activité récente, clairement marqués comme estimés ; les sections spéciales ne contiennent que des informations confirmées. Les alertes sont affichées uniquement sur ce site.
+  <br>Version : <b>v0.5.0</b> (accueil)
+</footer>
+<script>
+(async () => {
+  try {
+    const FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
+    const s = FEED.status, ev = FEED.events;
+    document.getElementById('status').innerHTML =
+      `Dernier bloc traité : <b>${s.lastProcessedBlock ?? '—'}</b> / Côté Cosmos : <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Mis à jour : ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('fr',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / Mouvements enregistrés : ${s.totalEvents}`;
+    const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
+    document.getElementById('c-insider').textContent = insider;
+    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
+    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
+    const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');
+    const bamt = (e) => parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0;
+    // v0.4.2: totals come from the collector's full-history aggregation
+    // (feed.stats.bridge, deduplicated); fall back to the feed window.
+    const bst = FEED.stats && FEED.stats.bridge;
+    const bsum = bst ? bst.total : bouts.reduce((t, e) => t + bamt(e), 0);
+    document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('fr', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
+    const bseg = bst ? [...bst.segTotals] : [0, 0, 0];
+    if (!bst) for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
+    const bfmt = (v) => v.toLocaleString('fr', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('c-bridgeseg').textContent = `Lui-même ${bfmt(bseg[0])} / Profondeur 1 ${bfmt(bseg[1])} / Profondeur 2+ ${bfmt(bseg[2])} USDT`;
+    const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
+    document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
+    if (s.price) {
+      const pc = document.getElementById('pricecard');
+      const chg = s.price.change24hPct;
+      const chgHtml = chg == null ? 'par rapport à il y a 24 h —' : `par rapport à il y a 24 h <span class="${chg >= 0 ? 'chg-up' : 'chg-dn'}">${chg >= 0 ? '+' : ''}${chg}%</span>`;
+      pc.innerHTML = `Prix du [42] : <b>environ ${s.price.usdt} USDT</b> (${chgHtml})<br><span class="note">Calculé à partir des réserves du pool d’échange. Le pool est petit, la valeur comporte donc une marge d’erreur.</span>`;
+      pc.style.display = '';
+    }
+    document.getElementById('c-newpairs').textContent = ev.filter((e) => e.type === 'pair-created' && (e.pairWhitelist || []).some(Boolean)).length;
+    document.getElementById('c-lp').textContent = ev.filter((e) => (e.type === 'lp-add' || e.type === 'lp-remove') && e.actorTier !== 'estimated').length;
+    document.getElementById('c-dormant').textContent = ev.filter((e) => e.isDormantReturn && e.actorTier !== 'estimated').length;
+    document.getElementById('c-newfaces').textContent = ev.filter((e) => e.isNewCounterparty && e.actorTier !== 'estimated').length;
+    const st = FEED.stats && FEED.stats.staking;
+    document.getElementById('c-staking').textContent = st ? `${st.totals.delegate.count} délégations / ${st.totals.commission.amount42} [42] de commission` : '—';
+    document.getElementById('c-total').textContent = s.totalEvents;
+    document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23);
+  } catch (e) {
+    document.getElementById('status').textContent = 'Impossible de charger les données.';
+  }
+})();
+</script>
+</body>
+</html>

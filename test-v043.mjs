@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// v0.4.3 regression test: the version BADGE at the top right of the
-// header (next to the language switcher) exists on all 4 pages, and
+// v0.4.3 regression test (extended in v0.5.0 to all 16 pages / 8
+// languages): the version BADGE at the top right of the
+// header (next to the language switcher) exists on all pages, and
 // every CURRENT-version display across the site (badge, page titles,
 // intro line, footer "Version:" line, README current-version line)
 // agrees on the same version — the one this release ships.
@@ -14,12 +15,24 @@ import { fileURLToPath } from 'node:url';
 const __dir = dirname(fileURLToPath(import.meta.url));
 const read = (f) => readFileSync(join(__dir, f), 'utf8');
 
-const EXPECTED = 'v0.4.3';
+const EXPECTED = 'v0.5.0';
 const pages = {
   'index.html': read('index.html'),
   'en.html': read('en.html'),
+  'zh.html': read('zh.html'),
+  'es.html': read('es.html'),
+  'hi.html': read('hi.html'),
+  'ar.html': read('ar.html'),
+  'pt.html': read('pt.html'),
+  'fr.html': read('fr.html'),
   'home.html': read('home.html'),
   'home-en.html': read('home-en.html'),
+  'home-zh.html': read('home-zh.html'),
+  'home-es.html': read('home-es.html'),
+  'home-hi.html': read('home-hi.html'),
+  'home-ar.html': read('home-ar.html'),
+  'home-pt.html': read('home-pt.html'),
+  'home-fr.html': read('home-fr.html'),
 };
 const readme = read('README.md');
 
@@ -45,13 +58,13 @@ const displays = {}; // label -> version string found
 for (const [name, html] of Object.entries(pages)) {
   const m = html.match(/<span class="verbadge">(v[\d.]+)<\/span>/);
   displays[`${name} badge`] = m && m[1];
-  const f = html.match(/(?:バージョン：|Version: )<b>(v[\d.]+)<\/b>/);
+  const f = html.match(/(?:バージョン：|Version: |版本：|Versión: |संस्करण: |الإصدار: |Versão: |Version : )<b>(v[\d.]+)<\/b>/);
   displays[`${name} footer`] = f && f[1];
 }
-const tJp = pages['index.html'].match(/<title>[^<]*?(v[\d.]+)<\/title>/);
-displays['index.html title'] = tJp && tJp[1];
-const tEn = pages['en.html'].match(/<title>[^<]*?(v[\d.]+)<\/title>/);
-displays['en.html title'] = tEn && tEn[1];
+for (const name of ['index.html', 'en.html', 'zh.html', 'es.html', 'hi.html', 'ar.html', 'pt.html', 'fr.html']) {
+  const t = pages[name].match(/<title>[^<]*?(v[\d.]+)<\/title>/);
+  displays[`${name} title`] = t && t[1];
+}
 const iJp = pages['index.html'].match(/Cosmos側・(v[\d.]+)）/);
 displays['index.html intro'] = iJp && iJp[1];
 const iEn = pages['en.html'].match(/Cosmos side, (v[\d.]+)\)/);

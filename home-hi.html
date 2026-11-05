@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>42 Chain वैलिडेटर ट्रैकर — शीर्ष पेज</title>
+<style>
+  :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--ok:#69db7c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
+  header,main{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:1.4rem;margin:8px 0 4px}
+  .sub{color:var(--sub);font-size:.92rem}
+  .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem;margin-top:10px}
+  .status b{color:var(--ok)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:16px}
+  a.card{display:block;text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  a.card:hover{border-color:var(--acc)}
+  a.card h2{font-size:1.15rem;margin:0 0 6px}
+  a.card p{color:var(--sub);font-size:.9rem;margin:0}
+  a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
+  a.card .segsub{font-size:.85rem;color:var(--sub);margin-top:3px}
+  a.card.insider{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
+  a.card.insider h2{color:#e9d5ff}
+  a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  a.card.snipes h2{color:#ff8fa3}
+  a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
+  a.card.bridge h2{color:#69db7c}
+  a.card.alerts{background:#2a2110;border:1px solid #6b5518}
+  a.card.alerts h2{color:#ffd166}
+  .pricecard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:1rem}
+  .pricecard b{font-size:1.6rem;color:var(--ok)}
+  .pricecard .chg-up{color:#69db7c;font-weight:700}
+  .pricecard .chg-dn{color:#ff8fa3;font-weight:700}
+  .pricecard .note{color:var(--sub);font-size:.82rem}
+  .lang{margin-top:18px}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .langsw b{color:var(--txt)}
+  .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
+  .alias{font-size:.6em;color:var(--sub);font-weight:600}
+  footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+  a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-row"><h1>42 Chain वैलिडेटर रीयल-टाइम ट्रैकर</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <b>हिन्दी</b> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.0</span></div></div>
+  <p class="sub">यह साइट स्वयं वैलिडेटरों और उन पतों की गतिविधियों को स्वचालित रूप से एकत्र करती है जिनके उनके साथ सीधे लेन-देन की पुष्टि हुई है। किसी अनुभाग को चुनकर उस पर जाएँ।</p>
+  <div class="status" id="status">लोड हो रहा है…</div>
+  <div class="pricecard" id="pricecard" style="display:none"></div>
+</header>
+<main>
+  <div class="cards">
+    <a class="card insider" href="hi.html#sec-insider">
+      <h2>⚠ इनसाइडर वॉच — X<span class="alias"> (Rioshi)</span></h2>
+      <p>केवल स्वयं वैलिडेटर X (Rioshi) और X (Rioshi)-संबंधित पतों द्वारा लिस्टिंग दिवस (30 जून 2026) को 14:00 JST से पहले [42] और DONT की खरीद।</p>
+      <div class="count" id="c-insider">—</div>
+    </a>
+    <a class="card snipes" href="hi.html#sec-snipes">
+      <h2>🎯 स्नाइप अलर्ट</h2>
+      <p>स्वयं एक वैलिडेटर या एक सीधे संबंधित वॉलेट द्वारा पेयर बनने के 3 घंटे के भीतर की खरीद (लिक्विडिटी जोड़ना नहीं गिना जाता है)।</p>
+      <div class="count" id="c-snipes">—</div>
+    </a>
+    <a class="card bridge" href="hi.html#sec-bridge">
+      <h2>🌉 ब्रिज निकासी (USDT, बहिर्गामी)</h2>
+      <p>स्वयं एक वैलिडेटर या एक संबंधित वॉलेट द्वारा ब्रिज के माध्यम से बाहरी चेनों पर भेजा गया USDT, अपने हरे अनुभाग में (आने वाला शामिल नहीं है)।</p>
+      <div class="count" id="c-bridge">—</div>
+    </a>
+    <a class="card bridge" href="hi.html#sec-bridgechart">
+      <h2>📊 कुल USDT ब्रिज निकासी</h2>
+      <p>बाहरी चेनों पर ब्रिज से भेजे गए USDT की कुल राशि, गहराई के अनुसार विभाजित प्रति-नाम बार चार्ट के साथ (स्वयं वैलिडेटर / गहराई-1 संबंधित / गहराई-2+ संबंधित)।</p>
+      <div class="count" id="c-bridgetotal">—</div>
+      <div class="segsub" id="c-bridgeseg">—</div>
+    </a>
+    <a class="card alerts" href="hi.html#sec-alerts">
+      <h2>⭐ उल्लेखनीय</h2>
+      <p>स्वयं वैलिडेटरों के व्यापार और 1,000 [42] या अधिक की बड़ी गतिविधियाँ।</p>
+      <div class="count" id="c-alerts">—</div>
+    </a>
+    <a class="card" href="hi.html#sec-lp">
+      <h2>💧 लिक्विडिटी गतिविधियाँ</h2>
+      <p>लिक्विडिटी जोड़ना (पूल में जमा) और हटाना (निकासी) एक ही अनुभाग में। एक बड़ी निकासी बाहर निकलने का संकेत हो सकती है।</p>
+      <div class="count" id="c-lp">—</div>
+    </a>
+    <a class="card" href="hi.html#sec-dormant">
+      <h2>😴 लंबी चुप्पी के बाद वापसी</h2>
+      <p>निगरानी किए गए पते जो 60 या अधिक दिनों की चुप्पी के बाद फिर से चले।</p>
+      <div class="count" id="c-dormant">—</div>
+    </a>
+    <a class="card" href="hi.html#sec-newfaces">
+      <h2>👤 नए चेहरे</h2>
+      <p>वे प्रतिपक्ष जिनके साथ एक निगरानी किया गया पता पूरे रिकॉर्ड में पहली बार लेन-देन करता है। नए दिखने वाले प्रतिपक्ष स्वचालित रूप से निगरानी सूची में जोड़े जाते हैं।</p>
+      <div class="count" id="c-newfaces">—</div>
+    </a>
+    <a class="card" href="hi.html#sec-newpairs">
+      <h2>🆕 नए पेयर</h2>
+      <p>Don't Panic DEX पर नए बनाए गए पेयर (केवल वे पेयर दिखाए जाते हैं जिनमें 17 सूचीबद्ध टोकनों में से कम से कम एक हो), निर्माता और पहली लिक्विडिटी के साथ।</p>
+      <div class="count" id="c-newpairs">—</div>
+    </a>
+    <a class="card" href="hi.html#sec-feed">
+      <h2>📜 नवीनतम गतिविधि (पूरा रिकॉर्ड)</h2>
+      <p>EVM और Cosmos दोनों पक्षों पर प्रत्येक दर्ज गतिविधि, वैलिडेटर, प्रकार और टोकन द्वारा फ़िल्टर करने योग्य। अनुमानित पतों की गतिविधियाँ यहाँ शामिल हैं, स्पष्ट रूप से अनुमानित के रूप में चिह्नित (विशेष अनुभाग केवल पुष्ट जानकारी रखते हैं)।</p>
+      <div class="count" id="c-total">—</div>
+    </a>
+    <a class="card" href="hi.html#sec-staking">
+      <h2>🏦 डेलीगेशन और रिवॉर्ड</h2>
+      <p>डेलीगेशन, डेलीगेशन हटाने और रिवॉर्ड दावों (डेलीगेशन रिवॉर्ड और वैलिडेटरों के अपने संचालन रिवॉर्ड) के कुल योग, प्रति-वैलिडेटर विवरण के साथ।</p>
+      <div class="count" id="c-staking">—</div>
+    </a>
+    <a class="card" href="hi.html#sec-validators">
+      <h2>👥 वैलिडेटर</h2>
+      <p>निगरानी किए जा रहे वैलिडेटर (सूची चेन से स्वचालित रूप से ताज़ा होती है)।</p>
+      <div class="count" id="c-validators">—</div>
+    </a>
+  </div>
+  <p style="font-size:.95rem">❓ <a href="hi.html#estimated-def">अनुमानित संबंध क्या हैं? (परिभाषा पढ़ें)</a> — बिना पुष्ट सीधे स्थानांतरण के, संभावित कनेक्शन पर निगरानी किए गए पते।</p>
+  <p class="lang">🌐 日本語版： <a href="home.html">トップページ</a> ／ <a href="index.html">追跡ページ</a></p>
+</main>
+<footer>
+  डेटा स्रोत: स्वयं 42 Chain ब्लॉक (RPC के माध्यम से)। कवरेज केवल 42 Chain पर लेन-देन तक सीमित है (EVM chain ID 421018 और उसका Cosmos पक्ष, infinite_421018-1)। QL1 या किसी अन्य चेन पर लेन-देन शामिल नहीं हैं। अनुमानित पतों की गतिविधियाँ केवल नवीनतम गतिविधि में दिखाई देती हैं, स्पष्ट रूप से अनुमानित के रूप में चिह्नित; विशेष अनुभाग केवल पुष्ट जानकारी रखते हैं। अलर्ट केवल इस साइट पर दिखाए जाते हैं।
+  <br>संस्करण: <b>v0.5.0</b> (शीर्ष पेज)
+</footer>
+<script>
+(async () => {
+  try {
+    const FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
+    const s = FEED.status, ev = FEED.events;
+    document.getElementById('status').innerHTML =
+      `अंतिम संसाधित ब्लॉक: <b>${s.lastProcessedBlock ?? '—'}</b> / Cosmos पक्ष: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / अपडेट किया गया: ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('hi-IN-u-nu-latn',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / दर्ज गतिविधियाँ: ${s.totalEvents}`;
+    const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
+    document.getElementById('c-insider').textContent = insider;
+    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
+    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
+    const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');
+    const bamt = (e) => parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0;
+    // v0.4.2: totals come from the collector's full-history aggregation
+    // (feed.stats.bridge, deduplicated); fall back to the feed window.
+    const bst = FEED.stats && FEED.stats.bridge;
+    const bsum = bst ? bst.total : bouts.reduce((t, e) => t + bamt(e), 0);
+    document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('hi-IN-u-nu-latn', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
+    const bseg = bst ? [...bst.segTotals] : [0, 0, 0];
+    if (!bst) for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
+    const bfmt = (v) => v.toLocaleString('hi-IN-u-nu-latn', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    document.getElementById('c-bridgeseg').textContent = `स्वयं ${bfmt(bseg[0])} / गहराई-1 ${bfmt(bseg[1])} / गहराई-2+ ${bfmt(bseg[2])} USDT`;
+    const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
+    document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
+    if (s.price) {
+      const pc = document.getElementById('pricecard');
+      const chg = s.price.change24hPct;
+      const chgHtml = chg == null ? '24 घंटे पहले की तुलना में —' : `24 घंटे पहले की तुलना में <span class="${chg >= 0 ? 'chg-up' : 'chg-dn'}">${chg >= 0 ? '+' : ''}${chg}%</span>`;
+      pc.innerHTML = `[42] कीमत: <b>लगभग ${s.price.usdt} USDT</b> (${chgHtml})<br><span class="note">ट्रेडिंग पूल के भंडार से गणना की गई। पूल छोटा है, इसलिए आंकड़े में त्रुटि की गुंजाइश है।</span>`;
+      pc.style.display = '';
+    }
+    document.getElementById('c-newpairs').textContent = ev.filter((e) => e.type === 'pair-created' && (e.pairWhitelist || []).some(Boolean)).length;
+    document.getElementById('c-lp').textContent = ev.filter((e) => (e.type === 'lp-add' || e.type === 'lp-remove') && e.actorTier !== 'estimated').length;
+    document.getElementById('c-dormant').textContent = ev.filter((e) => e.isDormantReturn && e.actorTier !== 'estimated').length;
+    document.getElementById('c-newfaces').textContent = ev.filter((e) => e.isNewCounterparty && e.actorTier !== 'estimated').length;
+    const st = FEED.stats && FEED.stats.staking;
+    document.getElementById('c-staking').textContent = st ? `${st.totals.delegate.count} डेलीगेशन / ${st.totals.commission.amount42} [42] कमीशन` : '—';
+    document.getElementById('c-total').textContent = s.totalEvents;
+    document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23);
+  } catch (e) {
+    document.getElementById('status').textContent = 'डेटा लोड नहीं हो सका।';
+  }
+})();
+</script>
+</body>
+</html>

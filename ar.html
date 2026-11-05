@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>متتبع المدققين على 42 Chain في الوقت الفعلي v0.5.0</title>
+<style>
+  :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
+  header,main{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:1.35rem;margin:8px 0 4px} h2{font-size:1.1rem;margin:22px 0 8px}
+  .sub{color:var(--sub);font-size:.9rem}
+  .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem}
+  .status b{color:var(--ok)}
+  section.insider{background:#1d1030;border:2px solid #9333ea;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 22px rgba(147,51,234,.5)}
+  section.insider h2{color:#e9d5ff;font-size:1.3rem}
+  section.insider .rule{color:#c084fc}
+  .badge.insider{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
+  section.alerts{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.snipes{background:#33121a;border:2px solid #ff5964;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  .ev.bridgeout{border:2px solid #2f9e44;background:#0e2416;box-shadow:0 0 18px rgba(47,158,68,.65)}
+  .badge.bridgeout{color:#fff;background:#2f9e44;border-color:#69db7c;font-weight:700;box-shadow:0 0 10px rgba(105,219,124,.8)}
+  section.bridge{background:#0e2416;border:2px solid #2f9e44;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(47,158,68,.35)}
+  section.bridge h2{color:#69db7c}
+  section.bridge .rule{color:#8ce99a}
+  section.snipes h2{color:#ff8fa3;font-size:1.25rem}
+  .rule{font-size:.82rem;color:var(--warn)}
+  section.snipes .rule{color:#ffb3ba}
+  .badge.shared{color:#081018;background:#ffa94d;border-color:#ffa94d;font-weight:700}
+  .badge.estimated{color:#081018;background:#e8c476;border-color:#e8c476;font-weight:700}
+  .ev.estimated{border-style:dashed;border-color:#b5893c}
+  .alias{font-size:.6em;color:var(--sub);font-weight:600}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .langsw b{color:var(--txt)}
+  .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
+  .est-toggle{align-self:center;font-size:.92rem;cursor:pointer}
+  .estdef{border:1.5px dashed #b5893c;border-radius:10px;padding:8px 14px 10px;margin:12px 0 4px;background:rgba(232,196,118,.07)}
+  .estdef>summary{cursor:pointer;font-weight:700;font-size:.98rem}
+  .estdef p,.estdef li{font-size:.92rem;line-height:1.6}
+  .estdef ul{margin:6px 0 6px 18px;padding:0}
+  .badge.cosmos{color:#081018;background:#63e6be;border-color:#63e6be;font-weight:700}
+  .badge.snipe{color:#fff;background:#ff5964;border-color:#ff5964;font-weight:700}
+  .note{color:var(--warn);font-size:.82rem;margin-top:2px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  select{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:.95rem}
+  .ev{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+  .ev.notable{border-color:#6b5518;background:#241e10}
+  .ev .top{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+  .time{color:var(--sub);font-size:.85rem}
+  .badge{font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--line);color:var(--sub)}
+  .badge.self{color:#081018;background:var(--acc);border-color:var(--acc);font-weight:700}
+  .badge.related{color:var(--acc);border-color:var(--acc)}
+  .badge.core{color:var(--core);border-color:var(--core)}
+  .badge.type{color:var(--txt);background:var(--card2)}
+  .badge.notable{color:#081018;background:var(--warn);border-color:var(--warn);font-weight:700}
+  .summary{font-size:1rem;margin-top:2px}
+  .meta{color:var(--sub);font-size:.85rem}
+  a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+  .vals{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+  .val{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.92rem}
+  .empty{color:var(--sub);padding:18px 0}
+  footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+  .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
+  section.insider>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.alerts>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.alerts>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.alerts.open>h2::after,section.fold.open>h2::after{content:' ▼'}
+  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.alerts:not(.open)>:not(h2){display:none}
+  section.fold:not(.open)>.fold-body{display:none}
+  section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
+  section.fold>h2{margin-top:8px}
+  .summary b.who-self{font-size:1.45rem;color:var(--acc)}
+  .summary b.who-rel{font-size:1.2rem}
+  .meta b.rel-name{font-size:1.1rem;color:var(--txt)}
+  .val b{font-size:1.15rem}
+  .bigname{font-size:1.6rem;font-weight:800;line-height:1.15;margin:0 0 2px;color:var(--txt)}
+  .bigname .sub{font-size:.82rem;font-weight:600;color:var(--sub);margin-left:6px}
+  .bigname.self{color:var(--acc)}
+  section.bridgechart{background:#0e2416;border:1px solid #2f9e44;border-radius:10px;padding:6px 14px 12px}
+  section.bridgechart h2{color:#69db7c}
+  section.bridgechart .rule{color:#8ce99a}
+  .bchart-total{font-size:1.5rem;font-weight:800;margin:6px 0 4px}
+  .bchart-segtotal{font-size:1rem;font-weight:700;margin:0 0 4px}
+  .bchart-legend{font-size:.85rem;color:#8ce99a;margin:2px 0 8px}
+  .bchart-legend .sw{display:inline-block;width:12px;height:12px;border-radius:3px;margin:0 5px 0 14px;vertical-align:-1px}
+  .bchart-legend .sw:first-child{margin-left:0}
+  .bchart-row{display:flex;align-items:center;gap:10px;margin:7px 0;flex-wrap:wrap}
+  .bchart-name{flex:0 0 34%;font-weight:700;font-size:1.02rem;word-break:break-word}
+  .bchart-barwrap{flex:1;display:flex;background:#12291a;border-radius:6px;height:22px;overflow:hidden}
+  .bchart-seg{height:100%}
+  .seg0{background:#2f9e44}
+  .seg1{background:#51cf66}
+  .seg2{background:#b2f2bb}
+  .bchart-amt{flex:0 0 auto;font-weight:700;white-space:nowrap}
+  .bchart-cnt{color:var(--sub);font-size:.82rem;font-weight:400}
+  .bchart-break{flex:0 0 100%;font-size:.82rem;color:#8ce99a;margin-top:-3px}
+  .pricebar{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:.95rem;margin-top:10px}
+  .pricebar b{font-size:1.25rem;color:var(--ok)}
+  .pricebar .chg-up{color:#69db7c;font-weight:700}
+  .pricebar .chg-dn{color:#ff8fa3;font-weight:700}
+  .pricebar .note{color:var(--sub);font-size:.8rem}
+  .ev.lpadd{border-left:5px solid #2dd4bf}
+  .ev.lpremove{border-left:5px solid #ffa94d}
+  .badge.dormant{color:#e9d5ff;background:#5b21b6;border-color:#c084fc;font-weight:700}
+  .badge.newface{color:#081018;background:#7dd3fc;border-color:#7dd3fc;font-weight:700}
+  .badge.added{color:#081018;background:#69db7c;border-color:#69db7c;font-weight:700}
+  section.newpairs>h2{color:#93c5fd}
+  section.lp>h2{color:#2dd4bf}
+  section.dormant>h2{color:#c084fc}
+  section.newfaces>h2{color:#7dd3fc}
+  section.staking>h2{color:#ffd166}
+  section.newpairs:not(.open)>:not(h2),section.lp:not(.open)>:not(h2),section.dormant:not(.open)>:not(h2),section.newfaces:not(.open)>:not(h2),section.staking:not(.open)>:not(h2){display:none}
+  section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{cursor:pointer;user-select:none}
+  section.newpairs>h2::after,section.lp>h2::after,section.dormant>h2::after,section.newfaces>h2::after,section.staking>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.newpairs.open>h2::after,section.lp.open>h2::after,section.dormant.open>h2::after,section.newfaces.open>h2::after,section.staking.open>h2::after{content:' ▼'}
+  section.newpairs,section.lp,section.dormant,section.newfaces,section.staking{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
+  section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{margin-top:8px}
+  table.staking{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
+  table.staking th,table.staking td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right}
+  table.staking th:first-child,table.staking td:first-child{text-align:left}
+  table.staking th{color:var(--sub);font-weight:600}
+  .staking-totals{font-size:1rem;margin:8px 0}
+  .staking-totals b{color:var(--acc)}
+  /* RTL overrides (v0.5.0, Arabic) */
+  .verbadge{margin-left:0;margin-right:10px}
+  .estdef ul{margin:6px 18px 6px 0}
+  table.staking th:first-child,table.staking td:first-child{text-align:right}
+  .bchart-legend .sw{margin:0 14px 0 5px}
+  .bchart-legend .sw:first-child{margin-right:0}
+  .ev.lpadd{border-left:1px solid var(--line);border-right:5px solid #2dd4bf}
+  .ev.lpremove{border-left:1px solid var(--line);border-right:5px solid #ffa94d}
+
+  /* v0.5.0 Arabic RTL overrides: mirror physical properties; keep data links LTR */
+  [dir='rtl'] .verbadge{margin-left:0;margin-right:10px}
+  [dir='rtl'] .bigname .sub{margin-left:0;margin-right:6px}
+  [dir='rtl'] .estdef ul{margin:6px 18px 6px 0}
+  [dir='rtl'] .bchart-legend .sw{margin:0 14px 0 5px}
+  [dir='rtl'] .bchart-legend .sw:first-child{margin-right:0}
+  [dir='rtl'] .ev.lpadd{border-left-width:1px;border-right:5px solid #2dd4bf}
+  [dir='rtl'] .ev.lpremove{border-left-width:1px;border-right:5px solid #ffa94d}
+  [dir='rtl'] table.staking th,[dir='rtl'] table.staking td{text-align:left}
+  [dir='rtl'] table.staking th:first-child,[dir='rtl'] table.staking td:first-child{text-align:right}
+  [dir='rtl'] section>h2::after{content:' ◀' !important}
+  [dir='rtl'] section.open>h2::after{content:' ▼' !important}
+  [dir='rtl'] .ev a,[dir='rtl'] .val a,[dir='rtl'] .meta a{direction:ltr;unicode-bidi:embed}
+</style>
+</head>
+<body>
+<header>
+  <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <b>العربية</b> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.0</span></div></div>
+  <p class="sub">تجمع هذه الصفحة تلقائيًا، من الكتل الجديدة، حركات المدققين أنفسهم وعناوينهم ذات الصلة (كل من تعامل معهم، والأطراف المقابلة لأولئك الأطراف) (جانب EVM + جانب Cosmos، v0.5.0). لا تُحسب عناوين البرامج (العقود) كعلاقات لأي شخص، ولا تُتتبّع الروابط عبرها أبدًا. لا يُعامل أي عنوان كبنية تحتية لمجرد كونه محفظة مشتركة؛ فالمعيار الوحيد هو ما إذا كان برنامجًا (عقدًا). لا تُحسب محافظ العمق 2+ إلا عندما يوجد دليل على أنها محفظة المدقق نفسه (مثل حركة الأموال في كلا الاتجاهين). لا تُحسب العناوين العامة التي لا دليل عليها. تظهر حركات العناوين التي يكون ارتباطها تقديريًا فقط في أحدث نشاط، موسومة بوضوح بأنها تقديرية (الأقسام الخاصة لا تحتوي إلا على المعلومات المؤكدة).</p>
+  <nav class="topnav"><a href="home-ar.html">🏠 الصفحة الرئيسية</a><a href="#sec-insider">⚠ المطلعون</a><a href="#sec-snipes">🎯 القنص</a><a href="#sec-bridge">🌉 السحب عبر الجسر</a><a href="#sec-bridgechart">📊 الإجماليات</a><a href="#sec-alerts">⭐ جدير بالملاحظة</a><a href="#sec-lp">💧 السيولة</a><a href="#sec-dormant">😴 الخاملون</a><a href="#sec-newfaces">👤 وجوه جديدة</a><a href="#sec-newpairs">🆕 أزواج جديدة</a><a href="#sec-feed">أحدث نشاط</a><a href="#sec-staking">🏦 التخزين</a><a href="#sec-validators">المدققون</a></nav>
+  <div class="status" id="status">جارٍ التحميل…</div>
+  <div class="pricebar" id="pricebar" style="display:none"></div>
+</header>
+<main>
+  <section class="insider" id="sec-insider">
+    <h2>⚠ مراقبة المطلعين — X<span class="alias"> (Rioshi)</span></h2>
+    <p class="rule" id="insiderRule"></p>
+    <div id="insiders"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="snipes" id="sec-snipes">
+    <h2>🎯 تنبيهات القنص</h2>
+    <p class="rule" id="snipeRule"></p>
+    <div id="snipes"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="bridge" id="sec-bridge">
+    <h2>🌉 عمليات السحب عبر الجسر (USDT، صادرة)</h2>
+    <p class="rule" id="bridgeOutRule"></p>
+    <div id="bridgeouts"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="bridgechart" id="sec-bridgechart">
+    <h2>📊 إجمالي USDT المسحوب عبر الجسر</h2>
+    <p class="rule">كيف يُجمّع هذا الرسم البياني: لكل مدقق (الكل 23)، يجمع عمليات السحب عبر الجسر (USDT) الخاصة بالمدقق نفسه، ومحافظه ذات الصلة من العمق 1، ومحافظه ذات الصلة من العمق 2+ التي تحمل دليلًا. لا تُحسب محافظ العمق 2+ إلا عندما يوجد دليل على أنها محفظة المدقق نفسه (مثل حركة الأموال في كلا الاتجاهين). لا تُحسب العناوين العامة التي لا دليل عليها. تُحسب المحافظ الشخصية فقط كمرسِلين — لا تُحسب عناوين البنية التحتية (برنامج = عقد) أبدًا، ولا العناوين التقديرية. ينقسم كل عمود إلى: المدقق نفسه / المحافظ ذات الصلة التي تعاملت مباشرة مع ذلك المدقق (العمق 1) / المحافظ ذات الصلة المتصلة عبر محافظ أخرى (العمق 2+، بالدليل فقط). تُحسب تدفقات المحفظة المشتركة الخارجة في عمود كل مدقق متصلة به، لذا لا تجمع الأعمدة إلى الإجمالي العام؛ يظهر الإجمالي العام من دون تكرار في الأعلى.</p>
+    <div id="bridgeChart"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="alerts" id="sec-alerts">
+    <h2>⭐ جدير بالملاحظة</h2>
+    <p class="rule" id="alertRule"></p>
+    <div id="alerts"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="lp" id="sec-lp">
+    <h2>💧 حركات السيولة</h2>
+    <p class="rule">إضافة السيولة = وضع الأموال في مجمع لدعم التداول؛ إزالة السيولة = سحب ما أُودع. قد تكون الإزالة الكبيرة علامة على الانسحاب من السوق، لذا تستحق المراقبة. الإضافات بخط أخضر مزرقّ، والإزالات بخط برتقالي. لا تُضمّن العناوين التقديرية (المعلومات المؤكدة فقط).</p>
+    <div id="lpmoves"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="dormant" id="sec-dormant">
+    <h2>😴 العودة بعد صمت طويل</h2>
+    <p class="rule" id="dormantRule"></p>
+    <div id="dormant"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="newfaces" id="sec-newfaces">
+    <h2>👤 وجوه جديدة</h2>
+    <p class="rule">الأطراف المقابلة التي تعامل معها عنوان خاضع للمراقبة (المدقق نفسه، أو ذو صلة، أو أساسي) لأول مرة في سجل هذا الموقع بالكامل. جرى توسيع العناوين ذات الصلة عبر السجل الكامل، بما في ذلك الماضي (الأطراف المقابلة للأطراف المقابلة، من دون حد)، ويُضاف الطرف المقابل الجديد الظهور تلقائيًا إلى قائمة المراقبة كعنوان ذي صلة (v0.4.0، قيد التشغيل منذ نوفمبر 2026). البطاقات الموسومة بـ«أُضيف إلى قائمة المراقبة» هي التي أُضيفت تلقائيًا. لا تُضاف أبدًا عقود النظام والأزواج والرموز.</p>
+    <div id="newfaces"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="newpairs" id="sec-newpairs">
+    <h2>🆕 أزواج جديدة</h2>
+    <p class="rule">أزواج أُنشئت حديثًا على DEX ‏Don't Panic. تُعرض فقط الأزواج التي تحتوي على واحد على الأقل من الرموز الـ17 المدرجة (الأزواج التي يكون كلا جانبيها غير مدرجين تُحفظ في السجل لكنها لا تُعرض هنا). يحمل الزوج الذي أحد جانبيه غير مدرج شارة «رمز غير مدرج». عندما يكون منشئ الزوج معروفًا، يظهر اسمه.</p>
+    <div id="newpairs"><p class="empty">جارٍ التحميل…</p></div>
+  </section>
+
+  <section class="fold open" id="sec-feed"><h2>أحدث نشاط</h2><div class="fold-body">
+  <p class="sub">حول العناوين التقديرية (v0.3.0 / المرحلة 3): العناوين التي لم يمكن تأكيد ارتباطها بمدقق عبر تحويل مباشر، والمقدّرة بثلاث طرق — (1) عبر المجمع (صفقة على الجانب الآخر من المجمع نفسه تطابق ضمن 10٪ في المبلغ و24 ساعة في الوقت)، (2) قفزتان (مدقق ← هذا العنوان ← مدقق، وكلتا الساقين تحويلات مؤكدة)، (3) طرف مقابل مشترك (طرف ثالث يتعامل مباشرة مع مدققين اثنين أو أكثر ولم يُؤكَّد ارتباطه بعد). تظهر الحركات التقديرية فقط في أحدث نشاط، مع شارة «تقديري» والأساس المعروض. تستخدم الأقسام الخاصة (المطلعون / القنص / جدير بالملاحظة / السحب عبر الجسر / الإجماليات) الروابط المؤكدة فقط ولا تتضمن التقديرات أبدًا.</p>
+  <div class="filters">
+    <select id="fValidator"><option value="">المدقق: الكل</option></select>
+    <select id="fType">
+      <option value="">النوع: الكل</option>
+      <option value="transfer">تحويل</option>
+      <option value="swap-buy">شراء</option>
+      <option value="swap-sell">بيع</option>
+      <option value="lp-add">إضافة سيولة</option>
+      <option value="lp-remove">إزالة سيولة</option>
+      <option value="pair-created">زوج جديد</option>
+      <option value="delegate">تفويض</option>
+      <option value="undelegate">إلغاء التفويض</option>
+      <option value="redelegate">إعادة تفويض</option>
+      <option value="reward">مطالبة بالمكافأة (مكافآت التفويض)</option>
+      <option value="commission">مطالبة بمكافأة المدقق (العمولة)</option>
+      <option value="reward-claim-fish">مطالبة بالمكافأة (توزيع FISH)</option>
+      <option value="reward-claim-staking">مطالبة بالمكافأة (مكافآت التخزين)</option>
+      <option value="reward-claim-starlight">مطالبة بمكافأة Starlight</option>
+      <option value="reward-distribution-fish">توزيع مكافآت FISH بالجملة</option>
+      <option value="bridge-out">إرسال عبر الجسر (USDT، صادر)</option>
+      <option value="bridge-send-other">إرسال عبر الجسر (غير USDT)</option>
+      <option value="bridge-delivery">معالجة تسليم الجسر</option>
+      <option value="nft-mint">سكّ NFT</option>
+      <option value="nft-transfer">تحويل NFT</option>
+      <option value="fluke-commit">مشاركة Fluke (commit)</option>
+      <option value="fluke-reveal">كشف Fluke</option>
+      <option value="fluke-boost">تعزيز Fluke</option>
+      <option value="fluke-settle">تسوية Fluke (إصدار Guide جديد)</option>
+      <option value="fluke-seed">تمويل صندوق جوائز Fluke</option>
+      <option value="guide-write">كتابة نص في Guide</option>
+      <option value="guide-append">إضافة نص إلى Guide</option>
+      <option value="starlight-register">تسجيل Starlight</option>
+      <option value="st42-deposit">إيداع st42</option>
+      <option value="st42-redeem-request">طلب استرداد st42</option>
+      <option value="st42-claim">مطالبة st42</option>
+      <option value="st42-instant-exit">خروج فوري من st42</option>
+      <option value="st42-order">طلب st42</option>
+      <option value="approve">موافقة (approve)</option>
+      <option value="token-burn">حرق الرموز</option>
+      <option value="dex-swap">مبادلة على DEX</option>
+      <option value="wrap">تحويل إلى W42</option>
+      <option value="unwrap">فكّ W42</option>
+      <option value="nft-approve-all">موافقة على كل NFT</option>
+      <option value="unclassified">إجراء غير مصنّف</option>
+    </select>
+    <select id="fToken"><option value="">الرمز: الكل</option></select>
+    <label class="est-toggle"><input type="checkbox" id="fEstimated" checked> إظهار التقديري</label>
+  </div>
+  <p class="sub">الحركات الموسومة بـ«تقديري» تأتي من عناوين لم يمكن تأكيد تحويلاتها المباشرة مع مدقق. التعريف الكامل: <a href="#estimated-def" onclick="document.getElementById('estimated-def').open=true">ما هي العلاقات التقديرية؟</a></p>
+  <details class="estdef" id="estimated-def">
+    <summary>التعريف: ماذا تعني «العلاقات التقديرية»</summary>
+    <p><b>العلاقة التقديرية</b> هي عنوان نراقبه لأنه <i>قد</i> يكون متصلًا بمدقق، رغم أنه لم يُؤكَّد أي تحويل مباشر بين ذلك العنوان والمدقق — لذا لا يمكن الجزم بأنه طرف ذو صلة. تُبقى العلاقات التقديرية منفصلة تمامًا عن العناوين ذات الصلة المؤكدة (تلك التي لها تحويل مباشر مؤكد). التقدير مجرد احتمال، وليس استنتاجًا أبدًا.</p>
+    <p>هناك ثلاثة أنواع من الأساس، وأساس كل عنوان مكتوب دائمًا على بطاقات ذلك العنوان:</p>
+    <ul>
+      <li><b>(1) عبر المجمع:</b> المبلغ الذي تلقاه مدقق من مجمع (مكان مشترك للشراء والبيع) يطابق عن كثب مبلغًا كانت هذه العنوان قد باعته في المجمع نفسه قبل ذلك بقليل — ضمن 24 ساعة وضمن 10٪ في المبلغ. من غير المرجح أن يصطف كل من المبلغ والتوقيت بالصدفة، لذا قد يكون الطرفان متصلين فعليًا عبر المجمع. يعرض نص الأساس فرق المبلغ والفجوة الزمنية ودرجة (مدى قرب التطابق؛ الأقرب إلى 1 يعني الأكثر احتمالًا).</li>
+      <li><b>(2) طرف مقابل مشترك:</b> طرف ثالث يتعامل مباشرة مع مدققين اثنين أو أكثر. يستحق المراقبة لأنه يتعامل مع عدة مدققين، لكن لا يمكن استنتاج أنه «طرف ذو صلة» لكل من أولئك المدققين، لذا يُعامل كتقديري.</li>
+      <li><b>(3) قفزتان:</b> رابط غير مباشر على شكل مدقق ← عنوان آخر ← مدقق، حيث كلا التحويلين مؤكد. (حاليًا، لم يُسجَّل أي عنوان حديثًا تحت هذا النوع.)</li>
+    </ul>
+    <p><b>كيف تُعامل التقديرات:</b> تظهر حركات العناوين التقديرية فقط في أحدث نشاط، بحد متقطع وشارة «تقديري»، ويمكن إخفاؤها بإلغاء تحديد «إظهار التقديري» أعلاه. لا تُضمّن أبدًا في أقسام تنبيهات القنص أو جدير بالملاحظة أو مراقبة المطلعين أو السحب عبر الجسر، ولا في رسم إجماليات السحب عبر الجسر — كل المبالغ هناك هي إجماليات للنشاط المؤكد فقط.</p>
+    <p><b>المسجّل حاليًا:</b> 4 عناوين تقديرية (4 عبر المجمع، 0 طرف مقابل مشترك)، اعتبارًا من v0.4.2، 5 نوفمبر 2026.</p>
+  </details>
+  <div id="feed"><p class="empty">جارٍ التحميل…</p></div>
+  </div></section>
+
+  <section class="staking" id="sec-staking">
+    <h2>🏦 التفويضات والمكافآت</h2>
+    <p class="rule" id="stakingRange"></p>
+    <div id="stakingTotals"><p class="empty">جارٍ التحميل…</p></div>
+    <div id="stakingTable"></div>
+    <p class="sub" id="stakingNote"></p>
+  </section>
+
+  <section class="fold" id="sec-validators"><h2>المدققون (23)</h2><div class="fold-body">
+  <p class="sub">«N عنوانًا ذا صلة» هو عدد العناوين المؤكد تعاملها مع ذلك المدقق (الأطراف المقابلة المباشرة، وما وراءها أطرافهم المقابلة أيضًا؛ «بما في ذلك المضاف تلقائيًا» يحسب تلك المضافة تلقائيًا من السجل)؛ «M تقديري» يحسب العناوين المرتبطة فقط بإحدى طرق التقدير الثلاث (لا تحويل مباشر مؤكد).</p>
+  <div class="vals" id="validators"></div>
+  </div></section>
+</main>
+<footer>
+  مصدر البيانات: كتل 42 Chain نفسها (عبر RPC). تقتصر التغطية على معاملات 42 Chain فقط (معرّف سلسلة EVM 421018 وجانبها Cosmos، infinite_421018-1). لا تُضمّن معاملات QL1 أو أي سلسلة أخرى. النقر على معاملة أو عنوان يفتح المستكشف الرسمي، scan.infinitedrive.xyz.
+  الرموز المعروضة هي أساسًا الرموز الـ17 المدرجة على Don't Panic (أي شيء آخر يُوسم كرمز غير مدرج). لا تُسقط أي حركة بسبب حجمها — تُسجّل التحويلات الصغيرة كلها.
+  النطاق: جانب EVM + جانب Cosmos (التحويلات، التفويضات، مطالبات المكافآت). تُعرض أنواع الإجراءات بأسماء ملموسة حيثما يحددها عقد الوجهة والطريقة (مشاركة Fluke، سكّ NFT، مطالبة بالمكافأة، إرسال عبر الجسر، وهكذا)؛ أي شيء لا يمكن تحديده يُعرض بصدق على أنه «إجراء غير مصنّف (الطريقة / الوجهة)». يغطي قسم السحب عبر الجسر فقط الحركات التي ترسل USDT إلى سلسلة خارجية (تُسجّل عمليات الإرسال عبر الجسر للرموز الأخرى كحركات عادية ولا تُعرض في القسم الأخضر؛ الإيصالات الواردة إيصالات عادية). العناوين التقديرية (المرحلة 3): تُراقب أيضًا العناوين التي لا يمكن تأكيد ارتباطها بتحويل مباشر، والمقدّرة بثلاث طرق — عبر المجمع، قفزتان، وطرف مقابل مشترك. تظهر حركاتها فقط في أحدث نشاط، بحد متقطع وشارة تقديري والأساس المعروض؛ ولا تُضمّن أبدًا في أقسام المطلعين / القنص / جدير بالملاحظة / السحب عبر الجسر / الإجماليات (تلك تبقى مؤكدة فقط). تُحدّث قائمة المدققين من السلسلة في كل تشغيل: يُضاف المدققون المرتبطون حديثًا تلقائيًا، ويبقى المدققون الذين يغادرون المجموعة المرتبطة خاضعين للمراقبة كسجل (موسومون بأنهم غير نشطين). لا يُنشر أي شيء خارجيًا (لا بوت X) — التنبيهات تعيش على هذا الموقع فقط.
+  نطاق العناوين ذات الصلة (v0.4.0): بالإضافة إلى كل عنوان أرسل إلى مدقق أو تلقى منه، طُبّق توسيع السجل الكامل (الأطراف المقابلة للأطراف المقابلة، من دون حد) على السجل بأكمله، بما في ذلك الماضي (تُستبعد عقود النظام / الأزواج / الرموز، وجهات الاتصال التي لا يمكن الوصول إليها إلا عبر عنوان تقديري). عندما يظهر طرف مقابل جديد، يُضاف أيضًا تلقائيًا كعنوان ذي صلة على الفور. / يغطي قسم الأزواج الجديدة الأزواج التي أنشأتها مصنع Don't Panic ويعرض فقط الأزواج التي تحتوي على واحد على الأقل من الرموز الـ17 المدرجة. / يُحسب سعر [42] من احتياطيات مجمع 42/USDT؛ المجمع صغير، لذا للرقم هامش خطأ.
+  روابط معاملات جانب Cosmos تفتح ماسِح Cosmos الخاص بنا (42 Cosmos Scan). تُظهر العناوين فقط العنوان الذي تحرك فعليًا؛ تُدرج المدققون ذوو الصلة في سطر منفصل، بحد أقصى (العنوان الذي يتعامل مع العديد من المدققين يحصل على علامة «طرف مقابل مشترك»). المدقق X معروف أيضًا باسم Rioshi، ويظهر بنص صغير كـ (Rioshi) بجانب الاسم.
+  <br>الإصدار: <b>v0.5.0</b> (v0.5.0: الموقع متاح الآن بثماني لغات — 日本語 وEnglish و简体中文 وEspañol وहिन्दी والعربية وPortuguês وFrançais — كل لغة تُعرَض من نفس feed.json، مركّبة من الحقول المنظمة بدلًا من الملخصات اليابانية المخزّنة. v0.4.3: توجد الآن شارة إصدار في أعلى يمين الترويسة، بجانب مبدّل اللغة، على كل صفحة. v0.4.2: أُزيلت كل عناوين البنية التحتية (العقود) من مخطط الأشخاص — تُحسب العلاقات عبر المحافظ الشخصية (EOA) فقط، ولا عبر عقد أبدًا؛ يُجمّع الآن رسم إجماليات السحب عبر الجسر لكل مدقق (الكل 23، عمق غير محدود، المحافظ المشتركة تُحسب في عمود كل مدقق متصل). v0.4.1: يقسّم الآن رسم إجماليات السحب عبر الجسر كل عمود حسب العمق — المدقق نفسه / ذو الصلة من العمق 1 / ذو الصلة من العمق 2+. في السابق، أضاف v0.4.0 ستة أقسام — أزواج جديدة، حركات سيولة، إجماليات التفويضات والمكافآت، عودات الخاملين، وجوه جديدة (توسيع العناوين ذات الصلة عبر السجل الكامل + الإضافات التلقائية)، وسعر [42]؛ أعاد v0.3.2 تصنيف Xenia من بنية تحتية أساسية إلى مدقق عادي — تصحيح تصنيف؛ أضاف v0.3.1 تعريف العلاقات التقديرية بجانب مرشحات أحدث نشاط؛ وأكمل v0.3.0 المرحلة 3: مراقبة العناوين التقديرية + التحديث التلقائي لقائمة المدققين، والاسم المستعار (Rioshi) بجانب X، ومبدّل لغة «日本語 | English» في أعلى اليمين)
+</footer>
+<script>
+const SCAN = 'https://scan.infinitedrive.xyz';
+const COSMOS_SCAN = 'https://ql1-infinite42-guppy-histoire.github.io/42-cosmos-scan/';
+const shortAddr = (a) => a ? '0x…' + a.slice(-4).toUpperCase() : '—';
+const addrLink = (a, label) => a ? `<a href="${SCAN}/address/${a}" target="_blank" rel="noopener" title="${a}">${label ?? shortAddr(a)}</a>` : '—';
+const txLink = (ev) => !ev.txHash ? '<span>Tx —</span>' : ev.chain === 'cosmos'
+  ? `<a href="${COSMOS_SCAN}#/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()} (Cosmos)</a>`
+  : `<a href="${SCAN}/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()}</a>`;
+const TYPE_EN = {'transfer':'تحويل','swap-buy':'شراء','swap-sell':'بيع','lp-add':'إضافة سيولة','lp-remove':'إزالة سيولة','pair-created':'زوج جديد','delegate':'تفويض','undelegate':'إلغاء التفويض','redelegate':'إعادة تفويض','reward':'مطالبة بالمكافأة (مكافآت التفويض)','commission':'مطالبة بمكافأة المدقق (العمولة)','reward-claim-fish':'مطالبة بالمكافأة (توزيع FISH)','reward-claim-staking':'مطالبة بالمكافأة (مكافآت التخزين)','reward-claim-starlight':'مطالبة بمكافأة Starlight','reward-distribution-fish':'توزيع مكافآت FISH بالجملة','bridge-out':'إرسال عبر الجسر (USDT، صادر)','bridge-send-other':'إرسال عبر الجسر (غير USDT)','bridge-delivery':'معالجة تسليم الجسر','nft-mint':'سكّ NFT','nft-transfer':'تحويل NFT','fluke-commit':'مشاركة Fluke (commit)','fluke-reveal':'كشف Fluke','fluke-boost':'تعزيز Fluke','fluke-settle':'تسوية Fluke (إصدار Guide جديد)','fluke-seed':'تمويل صندوق جوائز Fluke','guide-write':'كتابة نص في Guide','guide-append':'إضافة نص إلى Guide','starlight-register':'تسجيل Starlight','st42-deposit':'إيداع st42','st42-redeem-request':'طلب استرداد st42','st42-claim':'مطالبة st42','st42-instant-exit':'خروج فوري من st42','st42-order':'طلب st42','approve':'موافقة (approve)','token-burn':'حرق الرموز','dex-swap':'مبادلة على DEX','wrap':'تحويل إلى W42','unwrap':'فكّ W42','nft-approve-all':'موافقة على كل NFT','unclassified':'إجراء غير مصنّف','other-contract':'إجراء غير مصنّف'};
+// Stored counterparty / destination labels come from the collector and a
+// few are Japanese; translate the known ones, turn "X/Y ペア" into
+// "X/Y pair", and fall back to the short address for anything else that
+// still contains Japanese (the English page never shows Japanese text).
+const LABEL_EN = {'ブリッジルーター':'موجّه الجسر','ブリッジ系コントラクト':'عقد الجسر','LiquidityLocker（流動性ロッカー）':'LiquidityLocker (قفل السيولة)','NFTコントラクト':'عقد NFT','FISH報酬コントラクト':'عقد مكافآت FISH','Hyperlaneメールボックス':'صندوق بريد Hyperlane','残高1位アドレス':'العنوان صاحب أكبر رصيد','DEXルーター':'موجّه DEX','ステーキングプリコンパイル（0x0800）':'المترجم المسبق للتخزين (0x0800)','報酬配布プリコンパイル（0x0801）':'المترجم المسبق للتوزيع (0x0801)','NFTマーケット':'سوق NFT','st42バルト':'خزنة st42','st42注文板（St42Book）':'دفتر أوامر st42 (St42Book)','W42（Wrapped 42）':'W42 (Wrapped 42)','Zaphod Girls The Thirteen（NFT）':'Zaphod Girls The Thirteen (NFT)'};
+const NOTE_EN = {'コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）':'عقد (عقد مشترك يمتلك حصص LP لعدة أزواج FISH)'};
+const hasJa = (s) => /[぀-ヿ一-鿿]/.test(s || '');
+function enLabel(s){
+  if (!s) return null;
+  if (LABEL_EN[s]) return LABEL_EN[s];
+  const t = s.replace(/ ペア$/, ' pair');
+  return hasJa(t) ? null : t;
+}
+const enNote = (s) => !s ? null : (NOTE_EN[s] || (hasJa(s) ? null : s));
+const REASON_EN = {'バリデーター本人の売買':'صفقة المدقق نفسه','大きな[42]の移動（1,000 [42]以上）':'حركة كبيرة من [42] ‏(≥ 1,000 [42])'};
+const ageEn = (secs) => { if (secs == null) return ''; const m = Math.round(secs/60); if (m < 60) return `${m} دقيقة بعد إنشاء الزوج`; const h = Math.floor(m/60); return `${h} ساعة${m%60 ? ' و' + (m%60) + ' دقيقة' : ''} بعد إنشاء الزوج`; };
+const jstEn = (ts) => new Date(ts*1000).toLocaleString('ar-u-nu-latn',{timeZone:'Asia/Tokyo',month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}) + ' JST';
+const sym = (s) => s === '42' ? '[42]' : s;
+const amtStr = (a) => a ? `${a.amount} ${sym(a.symbol)}` : '';
+
+let FEED = null;
+
+// Display-name helpers (v0.3.0): validator X is also known as Rioshi
+// (user-provided fact). Display-only suffix — monikers and filter values
+// stay the raw chain moniker. valName is for HTML, valNameText for text.
+const valName = (n) => n === 'X' ? 'X <span class="alias">(Rioshi)</span>' : n;
+const valNameText = (n) => n === 'X' ? 'X (Rioshi)' : n;
+
+function tierBadge(ev){
+  if (ev.actorIsCore) return '<span class="badge core">أساسي (بنية تحتية)</span>';
+  if (ev.actorTier === 'validator') return '<span class="badge self">مدقق</span>';
+  if (ev.actorTier === 'related') return '<span class="badge related">عنوان ذو صلة</span>';
+  if (ev.actorTier === 'estimated') return '<span class="badge estimated">تقديري</span>';
+  return '';
+}
+// Headline = the ACTOR only (same rule as the Japanese page).
+function whoLabel(ev){
+  if (ev.actorTier === 'validator' && ev.actorLabel && !hasJa(ev.actorLabel)) return valName(ev.actorLabel);
+  if (ev.actorIsCore) return enLabel(ev.actorLabel) || shortAddr(ev.actor);
+  if (ev.actorTier === 'related') return 'ذو صلة ' + shortAddr(ev.actor);
+  if (ev.actorTier === 'estimated') return 'تقديري ' + shortAddr(ev.actor);
+  return enLabel(ev.actorLabel) || shortAddr(ev.actor);
+}
+function cpName(ev){
+  if (!ev.counterparty) return '';
+  return enLabel(ev.counterpartyLabel) || shortAddr(ev.counterparty);
+}
+// English summary composed from the structured fields only — the stored
+// Japanese ev.summary is never reused on this page.
+function summaryEn(ev){
+  const amt = amtStr(ev.amount);
+  const cp = cpName(ev);
+  const dest = enLabel(ev.destLabel);
+  switch (ev.type) {
+    case 'transfer':
+      if (!amt) return 'تحويل';
+      return ev.direction === 'out' ? `أرسل ${amt}${cp ? ' إلى ' + cp : ''}` : `تلقى ${amt}${cp ? ' من ' + cp : ''}`;
+    case 'swap-buy': {
+      const b = ev.bought ? `${ev.bought.amount} ${sym(ev.bought.symbol)}` : (ev.subjectSymbol || '');
+      const s = ev.sold ? ` (دفع ${ev.sold.amount} ${sym(ev.sold.symbol)}${ev.price ? ` · السعر ≈ ${ev.price} ${ev.priceUnit || ''}`.trimEnd() : ''})` : '';
+      return `اشترى ${b}${s}`;
+    }
+    case 'swap-sell': {
+      const s = ev.sold ? `${ev.sold.amount} ${sym(ev.sold.symbol)}` : (ev.subjectSymbol || '');
+      const b = ev.bought ? ` (تلقى ${ev.bought.amount} ${sym(ev.bought.symbol)}${ev.price ? ` · السعر ≈ ${ev.price} ${ev.priceUnit || ''}`.trimEnd() : ''})` : '';
+      return `باع ${s}${b}`;
+    }
+    case 'lp-add':
+      return `أضاف سيولة: ${(ev.amounts || []).map((a) => `${a.amount} ${sym(a.symbol)}`).join(' + ')}${ev.pairLabel ? ` (${enLabel(ev.pairLabel) || 'زوج'})` : ''}`;
+    case 'lp-remove':
+      return `أزال سيولة: ${(ev.amounts || []).map((a) => `${a.amount} ${sym(a.symbol)}`).join(' + ')}${ev.pairLabel ? ` (${enLabel(ev.pairLabel) || 'زوج'})` : ''}`;
+    case 'pair-created': {
+      const ps = (ev.pairSymbols || ev.tokens || []).map(sym).join('/');
+      const fm = ev.firstMint ? ` أول سيولة: ${ev.firstMint.amount0.amount} ${sym(ev.firstMint.amount0.symbol)} + ${ev.firstMint.amount1.amount} ${sym(ev.firstMint.amount1.symbol)}.` : '';
+      return `أُنشئ زوج جديد: ${ps}.${fm}`;
+    }
+    case 'delegate':
+      return `فوّض ${amt}${cp ? ' إلى ' + cp : ''}`;
+    case 'undelegate':
+      return `ألغى التفويض${cp ? ' من ' + cp : ''}${amt ? ` (${amt})` : ''}`;
+    case 'redelegate':
+      return `أعاد تفويض ${amt}${cp ? ' إلى ' + cp : ''}`;
+    case 'reward':
+      return `طالب بمكافآت التفويض${cp ? ' من ' + cp : ''}${amt ? `: ${amt}` : ''}`;
+    case 'commission':
+      return `طالب بعمولة المدقق${amt ? `: ${amt}` : ''}`;
+    case 'reward-claim-fish':
+      return `طالب بمكافآت توزيع FISH${dest ? ` (${dest})` : ''}`;
+    case 'reward-distribution-fish':
+      return 'وزّع مكافآت FISH بالجملة (عبر عقد المكافآت)';
+    case 'reward-claim-staking':
+      return `طالب بمكافآت التخزين${amt ? `: ${amt}` : ''}`;
+    case 'reward-claim-starlight':
+      return 'طالب بمكافآت Starlight';
+    case 'bridge-out':
+      return `أرسل USDT عبر الجسر إلى سلسلة خارجية${amt ? `: ${amt}` : ''}`;
+    case 'bridge-send-other':
+      return `إرسال عبر الجسر (غير USDT) إلى سلسلة خارجية${amt ? `: ${amt}` : ''}`;
+    case 'bridge-delivery':
+      return 'عالج تسليمًا عبر الجسر (عملية صندوق بريد Hyperlane)';
+    case 'nft-mint':
+      return ev.nft ? `سكّ NFT: تلقى ${ev.nft.collectionName} #${ev.nft.tokenId} (صادر حديثًا)` : 'سكّ NFT';
+    case 'nft-transfer':
+      if (!ev.nft) return 'تحويل NFT';
+      return ev.direction === 'out' ? `أرسل NFT ‏${ev.nft.collectionName} #${ev.nft.tokenId}` : `تلقى NFT ‏${ev.nft.collectionName} #${ev.nft.tokenId}`;
+    case 'fluke-commit': return 'شارك في Fluke ‏(commit)';
+    case 'fluke-reveal': return 'كشف مشاركة Fluke';
+    case 'fluke-boost': return 'عزّز مشاركة Fluke';
+    case 'fluke-settle': return 'سوّى Fluke (صدرت Guide جديدة)';
+    case 'fluke-seed': return 'موّل صندوق جوائز Fluke';
+    case 'guide-write': return 'كتب نصًا في Guide';
+    case 'guide-append': return 'أضاف نصًا إلى Guide';
+    case 'starlight-register': return 'سجّل Guide في Starlight';
+    case 'st42-deposit': return 'أودع في st42';
+    case 'st42-redeem-request': return 'طلب استرداد st42';
+    case 'st42-claim': return 'طالب بـ st42';
+    case 'st42-instant-exit': return 'خرج فوريًا من st42';
+    case 'st42-order': return `قدّم طلب st42${dest ? ` (${dest})` : ''}`;
+    case 'approve':
+      return `وافق على رمز${dest ? ` لاستخدامه من قبل ${dest}` : (cp ? ` (الرمز: ${cp})` : '')}`;
+    case 'token-burn':
+      return `حرق رموز${cp ? ` (عقد الرمز: ${cp})` : ''}`;
+    case 'dex-swap': return 'بادل على DEX';
+    case 'wrap': return 'حوّل [42] إلى W42';
+    case 'unwrap': return 'فكّ W42 عودة إلى [42]';
+    case 'nft-approve-all': return 'وافق على كل NFT لمجموعة (setApprovalForAll)';
+    case 'unclassified':
+      return `إجراء غير مصنّف (الطريقة ${ev.method || '—'} / الوجهة ${shortAddr(ev.counterparty)})`;
+    default:
+      return `${TYPE_EN[ev.type] || 'حركة'}${amt ? `: ${amt}` : ''}${cp ? ` — الطرف المقابل ${cp}` : ''}${dest ? ` (${dest})` : ''}`;
+  }
+}
+function relationLine(ev){
+  if (ev.actorTier === 'validator') return '';
+  const rel = ev.actorValidators || [];
+  if (ev.actorTier === 'estimated') {
+    let s = '';
+    if (rel.length === 1) s = `المدققون ذوو الصلة (تقديري): <b class="rel-name">${valName(rel[0])}</b>`;
+    else if (rel.length >= 2) s = `المدققون ذوو الصلة (تقديري): <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} آخرون`;
+    const basisEn = ev.estimateBasis && ev.estimateBasis.textEn && !hasJa(ev.estimateBasis.textEn) ? ev.estimateBasis.textEn : '';
+    const note = basisEn ? `<div class="note">أساس التقدير: ${basisEn}</div>` : '';
+    return (s ? `<div class="meta">${s}</div>` : '') + note;
+  }
+  let s = '';
+  if (rel.length === 1) s = `المدققون ذوو الصلة: <b class="rel-name">${valName(rel[0])}</b>`;
+  else if (rel.length >= 2) s = `المدققون ذوو الصلة: <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} آخرون`;
+  const badge = ev.actorShared ? ' <span class="badge shared">Shared counterparty</span>' : '';
+  const noteEn = enNote(ev.actorContractNote);
+  const sharedNote = ev.actorShared
+    ? `<div class="note">طرف مقابل مشترك يتعامل مع عدة مدققين (ليس مدققًا بحد ذاته)${noteEn ? ' / ' + noteEn : ''}</div>` : '';
+  // v0.4.2: depth>=2 related cards state WHY the wallet is tracked.
+  const EV_LABEL = {bidirectional: 'حركة أموال في كلا الاتجاهين','funded-delegation': 'مموّل من جانب المدقق ومفوّض عودة إلى ذلك المدقق','concentrated-repeat': 'تفاعل متكرر مركّز على جانب المدقق','one-way-repeat': 'تحويلات متكررة باتجاه واحد من جانب المدقق',delegation: 'تفويض إلى ذلك المدقق',synchronized: 'حركات متزامنة مع المدقق'};
+  const evNote = ev.actorEvidence
+    ? `<div class="note">علاقة من العمق 2+، تُعرض لأنه يوجد دليل على أنها محفظة المدقق نفسه (الدليل: ${[...new Set(Object.values(ev.actorEvidence).flat())].map((c) => EV_LABEL[c] ?? c).join('، ')})</div>` : '';
+  const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
+  return line + sharedNote + evNote;
+}
+// v0.4.1: depth segment of a bridge-out event (0 = validator itself,
+// 1 = depth-1 related, 2 = depth-2-or-deeper related). actorDepth is set by
+// the collector; the fallback mirrors its derivation for stale feeds.
+function bridgeSeg(ev){
+  const d = typeof ev.actorDepth === 'number' ? ev.actorDepth : (ev.actorTier === 'validator' ? 0 : 1);
+  return d <= 0 ? 0 : d === 1 ? 1 : 2;
+}
+// v0.4.2: the chart is pre-aggregated by the collector over the FULL
+// history (feed.stats.bridge) with per-validator attribution: one bar
+// per validator (all 23, zero bars included); a shared wallet counts
+// into EACH connected validator's bar, so bars do not sum to the
+// deduplicated grand total shown on top.
+function renderBridgeChart(){
+  const B = FEED.stats && FEED.stats.bridge;
+  const el = document.getElementById('bridgeChart');
+  if (!B || !Array.isArray(B.perValidator)) { el.innerHTML = '<p class="empty">لا توجد عمليات سحب عبر الجسر مسجلة بعد.</p>'; return; }
+  const fmt = (v) => v.toLocaleString('ar-u-nu-latn', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const SEG_LABEL = ['المدقق نفسه', 'ذو الصلة من العمق 1', 'ذو الصلة من العمق 2+'];
+  const segLine = (seg) => seg.map((v, i) => v > 0 ? `${SEG_LABEL[i]} ${fmt(v)} USDT` : null).filter(Boolean).join(' / ');
+  const rows = B.perValidator;
+  const max = rows.length ? Math.max(...rows.map((g) => g.total)) : 0;
+  el.innerHTML = `<div class="bchart-total">الإجمالي (من دون تكرار) ${fmt(B.total)} USDT ‏(${B.count} عملية سحب)</div>`
+    + `<div class="bchart-segtotal">التفصيل العام (من دون تكرار): ${segLine(B.segTotals)}</div>`
+    + `<div class="bchart-legend"><span class="sw seg0"></span>المدقق نفسه<span class="sw seg1"></span>ذو الصلة من العمق 1<span class="sw seg2"></span>ذو الصلة من العمق 2+</div>`
+    + rows.map((g) => {
+      const parts = g.seg.map((v, i) => v > 0 ? `<div class="bchart-seg seg${i}" style="width:${max ? v / max * 100 : 0}%"></div>` : '').join('');
+      return `<div class="bchart-row"><div class="bchart-name">${valName(g.moniker)}</div><div class="bchart-barwrap">${parts}</div><div class="bchart-amt">${fmt(g.total)} USDT <span class="bchart-cnt">×${g.count}</span></div><div class="bchart-break">${segLine(g.seg)}</div></div>`;
+    }).join('');
+}
+function bigName(ev){
+  if (ev.actorTier === 'validator' && ev.actorLabel) return {main: valName(ev.actorLabel), sub: 'المدقق نفسه', cls: ' self'};
+  const rel = ev.actorValidators || [];
+  if (ev.actorTier === 'estimated') return {main: rel.length ? valName(rel[0]) : shortAddr(ev.actor), sub: rel.length > 1 ? ` — محفظة ذات صلة تقديرية (ذات صلة تقديرية أيضًا بـ ${rel.length - 1} آخرين)` : ' — محفظة ذات صلة تقديرية', cls: ''};
+  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? ` — محفظة ذات صلة (ذات صلة أيضًا بـ ${rel.length - 1} آخرين)` : ' — محفظة ذات صلة') + ((ev.actorDepth ?? 1) >= 2 ? ' (العمق 2+، دليل على أنها محفظة المدقق نفسه)' : ''), cls: ''};
+  if (ev.actorIsCore && ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: 'أساسي', cls: ''};
+  if (ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: '', cls: ''};
+  return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? 'محفظة ذات صلة' : '', cls: ''};
+}
+function renderEvent(ev){
+  const cpLabel = enLabel(ev.counterpartyLabel);
+  const cp = ev.counterparty ? ` / الطرف المقابل: ${addrLink(ev.counterparty, cpLabel ? cpLabel + ' ' + shortAddr(ev.counterparty) : null)}${ev.counterpartyIsCore ? ' <span class="badge core">أساسي</span>' : ''}` : '';
+  const wl = ev.whitelisted === false ? ' <span class="badge">يتضمن رمزًا غير مدرج</span>' : '';
+  const reasons = (ev.notableReasons || []).filter((r) => r !== 'bridge-out');
+  const mapped = reasons.map((r) => REASON_EN[r]).filter(Boolean);
+  const notable = reasons.length ? `<span class="badge notable">⭐ جدير بالملاحظة${mapped.length ? ': ' + mapped.join(' · ') : ''}</span>` : '';
+  const isBridgeOut = ev.type === 'bridge-out' || (ev.notableReasons || []).includes('bridge-out');
+  const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "سحب USDT عبر الجسر من المدقق نفسه" : ev.actorTier === 'related' ? "سحب USDT عبر الجسر من محفظة ذات صلة" : 'سحب USDT عبر الجسر'}</span>` : '';
+  const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
+  const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 قنص (${ageEn(ev.pairAgeSecs)})</span>` : '';
+  const insider = ev.isInsider ? ` <span class="badge insider">⚠ مطّلع (${valName('X')})</span>` : '';
+  const dormant = ev.isDormantReturn ? ` <span class="badge dormant">😴 أول حركة منذ ${ev.dormantDays} يومًا</span>` : '';
+  const newface = ev.isNewCounterparty ? ` <span class="badge newface">👤 طرف مقابل جديد</span>` : '';
+  const added = ev.watchlistAdded ? ` <span class="badge added">أُضيف إلى قائمة المراقبة</span>` : '';
+  const pairWl = ev.type === 'pair-created' && ev.nonWhitelistedSide ? ' <span class="badge">رمز غير مدرج</span>' : '';
+  const lpCls = ev.type === 'lp-add' ? ' lpadd' : ev.type === 'lp-remove' ? ' lpremove' : '';
+  const bn = bigName(ev);
+  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
+    <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
+    <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${insider}${dormant}${newface}${added}</div>
+    <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
+    ${relationLine(ev)}
+    <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
+}
+function renderStaking(){
+  const st = FEED.stats && FEED.stats.staking;
+  if (!st) return;
+  const t = st.totals;
+  const r = st.range || {};
+  document.getElementById('stakingRange').textContent = `النطاق: يجمع المجمع سجل هذا الموقع الكامل (الكتل ${r.fromBlock ?? '—'} إلى ${r.toBlock ?? '—'}) في كل تشغيل.`;
+  document.getElementById('stakingTotals').innerHTML =
+    `<div class="staking-totals">التفويضات <b>${t.delegate.count} ‏(${t.delegate.amount42} [42])</b> / إلغاءات التفويض <b>${t.undelegate.count} ‏(${t.undelegate.amount42} [42])</b> / إعادة التفويض <b>${t.redelegate.count}</b> / مطالبات مكافآت التفويض <b>${t.reward.count} ‏(${t.reward.amount42} [42])</b> / مطالبات عمولة المدققين <b>${t.commission.count} ‏(${t.commission.amount42} [42])</b></div>`;
+  document.getElementById('stakingTable').innerHTML = st.perValidator.length
+    ? `<table class="staking"><tr><th>المدقق</th><th>مكافآت التشغيل التي تلقاها بنفسه (العمولة)</th><th>المفوّض إلى هذا المدقق</th><th>الملغى تفويضه من هذا المدقق</th></tr>` + st.perValidator.map((v) =>
+      `<tr><td><b>${valName(v.moniker)}</b></td><td>${v.commission42} [42] ‏(${v.commissionCount} مطالبة)</td><td>${v.delegateIn42} [42] ‏(${v.delegateInCount})</td><td>${v.undelegateOut42} [42] ‏(${v.undelegateOutCount})</td></tr>`).join('') + '</table>'
+    : '<p class="empty">لا توجد إجماليات لكل مدقق بعد.</p>';
+  const u = st.unattributed || {};
+  document.getElementById('stakingNote').textContent = `ملاحظة: «مكافآت التشغيل التي تلقاها بنفسه» تحسب فقط العمولة المطالب بها من عنوان ذلك المدقق نفسه. تُنسَب التفويضات وإلغاءات التفويض لكل مدقق فقط عندما يكون المدقق الطرف المقابل مؤكدًا (الغامضة — العمولة ${u.commission ?? 0}، التفويضات ${u.delegate ?? 0}، إلغاءات التفويض ${u.undelegate ?? 0} — تُضمّن في الإجماليات العامة فقط).`;
+}
+function applyFilters(){
+  if (!FEED) return;
+  const v = document.getElementById('fValidator').value;
+  const t = document.getElementById('fType').value;
+  const tk = document.getElementById('fToken').value;
+  const showEst = document.getElementById('fEstimated').checked;
+  const match = (ev) => (!v || (ev.validatorNames||[]).includes(v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk)) && (showEst || ev.actorTier !== 'estimated');
+  const list = FEED.events.filter(match);
+  document.getElementById('feed').innerHTML = list.length ? list.map(renderEvent).join('') : '<p class="empty">لا توجد حركات تطابق المرشحات المحددة بعد.</p>';
+  // Special sections are CONFIRMED-ONLY (v0.3.0): estimated actors excluded.
+  const isBO = (ev) => ev.type === 'bridge-out' || (ev.notableReasons||[]).includes('bridge-out');
+  const alerts = FEED.events.filter((ev) => ev.actorTier !== 'estimated' && !isBO(ev) && (ev.notableReasons||[]).filter((r) => r !== 'bridge-out').length);
+  document.getElementById('alerts').innerHTML = alerts.length ? alerts.slice(0,20).map(renderEvent).join('') : '<p class="empty">لا توجد حركات جديرة بالملاحظة الآن.</p>';
+  const bridgeouts = FEED.events.filter((ev) => isBO(ev) && ev.actorTier !== 'estimated');
+  document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">لا توجد عمليات سحب عبر الجسر حديثة.</p>';
+  const snipes = FEED.events.filter((ev) => ev.isSnipe && ev.actorTier !== 'estimated');
+  document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">لم يُكتشف أي قنص في الخلاصة الحديثة.</p>';
+  // 🆕 New pairs (v0.4.0): display only pairs with at least one whitelisted side.
+  const newpairs = FEED.events.filter((ev) => ev.type === 'pair-created' && (ev.pairWhitelist || []).some(Boolean));
+  document.getElementById('newpairs').innerHTML = newpairs.length ? newpairs.slice(0,100).map(renderEvent).join('') : '<p class="empty">لا توجد أزواج جديدة قابلة للعرض بعد.</p>';
+  // 💧 Liquidity moves (v0.4.0): confirmed-only, like the other sections.
+  const lps = FEED.events.filter((ev) => (ev.type === 'lp-add' || ev.type === 'lp-remove') && ev.actorTier !== 'estimated');
+  document.getElementById('lpmoves').innerHTML = lps.length
+    ? `<p class="sub">عرض ${lps.length} حركة (${lps.filter((e) => e.type === 'lp-add').length} إضافة، ${lps.filter((e) => e.type === 'lp-remove').length} إزالة)</p>` + lps.map(renderEvent).join('')
+    : '<p class="empty">لا توجد حركات سيولة بعد.</p>';
+  // 😴 Dormant returns (v0.4.0): 60+ days of silence, then a move.
+  const dormant = FEED.events.filter((ev) => ev.isDormantReturn && ev.actorTier !== 'estimated');
+  document.getElementById('dormant').innerHTML = dormant.length ? dormant.slice(0,100).map(renderEvent).join('') : '<p class="empty">لم يتحرك أي عنوان بعد بعد 60+ يومًا من الصمت.</p>';
+  // 👤 New faces (v0.4.0): first-appearance counterparties in the whole record.
+  const newfaces = FEED.events.filter((ev) => ev.isNewCounterparty && ev.actorTier !== 'estimated');
+  document.getElementById('newfaces').innerHTML = newfaces.length ? newfaces.slice(0,100).map(renderEvent).join('') : '<p class="empty">لا توجد وجوه جديدة بعد.</p>';
+  // ⚠ Insider section (v0.2.5, user-narrowed): ONLY buys by X / X-related
+  // before 14:00 JST on listing day 2026-06-30 (window epochs below).
+  // Display capped at 100 with the total shown (records are never dropped).
+  const insiders = FEED.events.filter((ev) => ev.isInsider && ev.actorTier !== 'estimated' && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
+    .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
+  document.getElementById('insiderRule').textContent = 'مراقبة المطلعين: فقط عمليات شراء [42] وDONT ‏(PANIC) التي قام بها المدقق X ‏(Rioshi) نفسه والعناوين ذات الصلة المباشرة بـ X ‏(Rioshi) قبل الساعة 14:00 JST في يوم الإدراج (30 يونيو 2026). كل الحركات الأخرى في السجل العادي.' + (insiders.length ? ` ‏(${insiders.length} عملية شراء مطابقة)` : '');
+  document.getElementById('insiders').innerHTML = insiders.length
+    ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">عرض أحدث 100 من ${insiders.length} حركة (كلها محفوظة في السجل)</p>` : '')
+    : '<p class="empty">لا توجد عمليات شراء مطابقة قبل الإدراج.</p>';
+}
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.alerts, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
+  const h = sec.querySelector('h2');
+  if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
+}
+async function load(){
+  try {
+    FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
+    const s = FEED.status;
+    document.getElementById('status').innerHTML =
+      `آخر كتلة معالجة: <b>${s.lastProcessedBlock ?? '—'}</b> ‏(طرف السلسلة ${s.latestBlockSeen ?? '—'}) / آخر معالجة Cosmos: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / حُدّث: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / الحركات المسجلة: ${s.totalEvents} / المراقبة: ${s.watchSummary.validators} مدققًا + ${s.watchSummary.directRelated} عنوانًا ذا صلة مباشرة + ${s.watchSummary.estimated ?? 0} تقديريًا${s.validatorsAdded ? ` / المدققون المضافون تلقائيًا في هذا التشغيل: ${s.validatorsAdded.map(valNameText).join('، ')}` : ''}`;
+    document.getElementById('alertRule').textContent = 'قاعدة الجدير بالملاحظة: (1) عمليات الشراء والبيع الخاصة بالمدقق نفسه، (2) حركات بقيمة 1,000 [42] أو أكثر. تُعرض عمليات سحب USDT عبر الجسر بشكل منفصل في القسم الأخضر أعلاه. تُدرج هنا فقط الحركات المطابقة لهذه القواعد (تُعرض على هذا الموقع فقط؛ لا يُنشر أي شيء خارجيًا).';
+    document.getElementById('bridgeOutRule').textContent = 'السحب عبر الجسر = مدقق نفسه، أو محفظة ذات صلة مباشرة، يرسل USDT خارج 42 Chain إلى سلسلة خارجية عبر جسر. تتوهج هذه الحركات باللون الأخضر في هذا القسم المخصص (لا توضع في جدير بالملاحظة). تُسجّل عمليات الإرسال عبر الجسر للرموز غير USDT كحركات عادية ولا تُعرض هنا. تُعامل الإيصالات الواردة (الاستلام على جانب 42 Chain) كتحويلات عادية.';
+    document.getElementById('snipeRule').textContent = 'القنص = مدقق نفسه، أو محفظة ذات صلة مباشرة، يشتري على زوج خلال 3 ساعات من إنشاء ذلك الزوج (الشراء فقط — إضافات السيولة لا تُحسب قنصًا). تُدرج الحركات المطابقة هنا، بشكل بارز.';
+    document.getElementById('dormantRule').textContent = 'عودة الخامل: عنوان خاضع للمراقبة (مدقق نفسه، أو عنوان ذو صلة، أو EOA موسوم كأساسي — تُستبعد الأزواج والعقود الأخرى والعناوين التقديرية) يتحرك مجددًا بعد 60 يومًا أو أكثر من دون حركة في سجل هذا الموقع. تُوسم حركة العودة بـ«أول حركة منذ N يومًا».';
+    if (s.price) {
+      const pb = document.getElementById('pricebar');
+      const chg = s.price.change24hPct;
+      const chgHtml = chg == null ? 'مقارنة بما قبل 24 ساعة —' : `مقارنة بما قبل 24 ساعة <span class="${chg >= 0 ? 'chg-up' : 'chg-dn'}">${chg >= 0 ? '+' : ''}${chg}%</span>`;
+      pb.innerHTML = `سعر [42]: <b>حوالي ${s.price.usdt} USDT</b> ‏(${chgHtml})<br><span class="note">محسوب من احتياطيات مجمع التداول. المجمع صغير، لذا للرقم هامش خطأ.</span>`;
+      pb.style.display = '';
+    }
+    const vsel = document.getElementById('fValidator');
+    if (vsel.options.length <= 1) for (const v of FEED.validators) { const o = document.createElement('option'); o.value = v.moniker; o.textContent = valNameText(v.moniker); vsel.appendChild(o); }
+    const tsel = document.getElementById('fToken');
+    if (tsel.options.length <= 1) {
+      const toks = [...new Set(FEED.events.flatMap((e) => e.tokens || []))].sort();
+      for (const tk of toks) { const o = document.createElement('option'); o.value = tk; o.textContent = tk; tsel.appendChild(o); }
+    }
+    document.querySelector('#sec-validators h2').textContent = `المدققون (${FEED.validators.length})`;
+    document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
+      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">بنية تحتية أساسية أيضًا</span>' : ''}${v.inactive ? ' <span class="badge">غير نشط حاليًا</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} عنوانًا ذا صلة (بما في ذلك ${v.autoAddedCount ?? 0} مضافًا تلقائيًا) / ${v.estimatedCount ?? 0} تقديريًا</span></div>`).join('');
+    applyFilters();
+    renderBridgeChart();
+    renderStaking();
+    if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
+    { const d = document.getElementById('estimated-def'); if (d && location.hash === '#estimated-def') { d.open = true; setTimeout(() => d.scrollIntoView({behavior:'smooth'}), 80); } }
+  } catch (e) {
+    document.getElementById('status').textContent = 'تعذّر تحميل feed.json (قد لا يكون المجمع قد شُغّل بعد).';
+  }
+}
+for (const id of ['fValidator','fType','fToken','fEstimated']) document.getElementById(id).addEventListener('change', applyFilters);
+{ if (typeof location !== 'undefined' && location.hash && document.querySelectorAll) for (const a of document.querySelectorAll('.langsw a')) a.href = a.getAttribute('href') + location.hash; }
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>
