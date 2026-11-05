@@ -36,6 +36,7 @@
   .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
   .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
   .langsw b{color:var(--txt)}
+  .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
   .alias{font-size:.6em;color:var(--sub);font-weight:600}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   a{color:var(--acc)}
@@ -43,7 +44,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <b>English</b></div></div>
+  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <b>English</b> <span class="verbadge">v0.4.3</span></div></div>
   <p class="sub">This site automatically collects the moves of the validators themselves and of the addresses confirmed to transact with them directly. Pick a section to jump to it.</p>
   <div class="status" id="status">Loading…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -117,7 +118,7 @@
 </main>
 <footer>
   Data source: the 42 Chain blocks themselves (via RPC). Coverage is limited to transactions on the 42 Chain only (EVM chain ID 421018 and its Cosmos side, infinite_421018-1). Transactions on QL1 or any other chain are not included. Moves by estimated addresses appear in Latest Activity only, clearly marked as estimated; the special sections stay confirmed-only. Alerts are shown on this site only.
-  <br>Version: <b>v0.4.2</b> (top page)
+  <br>Version: <b>v0.4.3</b> (top page)
 </footer>
 <script>
 (async () => {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42チェーン バリデーター リアルタイム追跡 v0.4.2</title>
+<title>42チェーン バリデーター リアルタイム追跡 v0.4.3</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -33,6 +33,7 @@
   .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
   .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
   .langsw b{color:var(--txt)}
+  .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
   .est-toggle{align-self:center;font-size:.92rem;cursor:pointer}
   .estdef{border:1.5px dashed #b5893c;border-radius:10px;padding:8px 14px 10px;margin:12px 0 4px;background:rgba(232,196,118,.07)}
   .estdef>summary{cursor:pointer;font-weight:700;font-size:.98rem}
@@ -124,8 +125,8 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="en.html" id="langOther">English</a></div></div>
-  <p class="sub">バリデーター本人と、その関連アドレス（本人とやり取りした相手、さらにその相手まで含む）の動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.4.2）。プログラム（コントラクト）のアドレスは、人の関連としては数えず、経由もしません。共有の財布というだけでは仕組み系にしません。プログラム（コントラクト）かどうかだけで判定します。2段目以降は、バリデーター本人の財布らしい証拠（双方向の資金移動など）があるものだけを数えます。証拠のない一般のアドレスは数えません。つながりが推定にとどまるアドレスの動きは「最新の動き」にだけ、推定と明記して表示します（特別欄は確定情報のみ）。</p>
+  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="en.html" id="langOther">English</a> <span class="verbadge">v0.4.3</span></div></div>
+  <p class="sub">バリデーター本人と、その関連アドレス（本人とやり取りした相手、さらにその相手まで含む）の動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.4.3）。プログラム（コントラクト）のアドレスは、人の関連としては数えず、経由もしません。共有の財布というだけでは仕組み系にしません。プログラム（コントラクト）かどうかだけで判定します。2段目以降は、バリデーター本人の財布らしい証拠（双方向の資金移動など）があるものだけを数えます。証拠のない一般のアドレスは数えません。つながりが推定にとどまるアドレスの動きは「最新の動き」にだけ、推定と明記して表示します（特別欄は確定情報のみ）。</p>
   <nav class="topnav"><a href="home.html">🏠 トップページ</a><a href="#sec-insider">⚠ インサイダー</a><a href="#sec-snipes">🎯 スナイプ</a><a href="#sec-bridge">🌉 ブリッジ出金</a><a href="#sec-bridgechart">📊 出金総額</a><a href="#sec-alerts">⭐ 注目</a><a href="#sec-lp">💧 流動性</a><a href="#sec-dormant">😴 休眠復帰</a><a href="#sec-newfaces">👤 新しい顔ぶれ</a><a href="#sec-newpairs">🆕 新規ペア</a><a href="#sec-feed">最新の動き</a><a href="#sec-staking">🏦 委任・報酬</a><a href="#sec-validators">バリデーター一覧</a></nav>
   <div class="status" id="status">読み込み中…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
@@ -270,7 +271,7 @@
   現在の範囲：EVM側＋Cosmos側（送金・委任・報酬請求）／操作の種類は判別できた範囲で具体名表示（Fluke参加・NFTミント・報酬請求・ブリッジ送信など、判別できないものは「未分類の操作（メソッド／宛先）」）／ブリッジ出金欄は USDT を外部へ送った動きだけが対象（USDT以外のブリッジ送信は通常の動きとして記録し、専用の緑色の欄には入れない／入金は通常の受取）／推定アドレス（Phase 3）：直接の送金が確認できないつながりを、①プール経由（プールの反対側の売買と金額差10%以内・24時間以内で一致）②2ホップ経由（バリデーター→そのアドレス→バリデーターの両レッグとも確認済み）③共通の相手先（2名以上のバリデーターと直接取引した第三者）の3方法で推定したアドレスも監視します。推定の動きは「最新の動き」にだけ、点線の枠と推定バッジ、根拠の説明つきで表示し、インサイダー／スナイプ／注目／ブリッジ出金／総額グラフの特別欄には一切入れません（特別欄は確定情報のみ）／バリデーター名簿は実行のたびにチェーンから自動で取り直し、新しく参加したバリデーターは自動で追加されます（離脱したバリデーターも履歴として監視を続けます）／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
   関連アドレスの範囲（v0.4.0）：バリデーターと送受信した全アドレスに加え、その相手の相手も無制限にたどる「全履歴の展開」を過去分を含む全記録に適用済みです（仕組み系・ペア・トークンのコントラクトと、推定アドレス経由だけの接点は除きます）。新しい相手が現れたときも、その場で自動的に関連アドレスへ追加されます。／新規ペア速報は Don't Panic のファクトリーで作られたペアが対象で、17銘柄のうち少なくとも1つを含むペアだけを表示します。／[42] の価格は 42/USDT プールの残高からの計算値で、プールが小さいため誤差があります。
   Cosmos側の取引リンクは自作の Cosmos スキャナー（42 Cosmos Scan）に飛びます。見出しの名前は「動いた本人」だけを表示し、関係するバリデーターは別の行に分けて書きます（複数のバリデーターと取引する共通の相手先には「共有の相手先」の印が付きます）。バリデーター X は別名 Rioshi としても知られており、名前の横に小さく (Rioshi) と併記しています。
-  <br>バージョン：<b>v0.4.2</b>（v0.4.2：仕組み系（コントラクト）のアドレスを人の関連から全て排除し、つながりは個人の財布だけで数え直し（コントラクト経由のつながりも無し）。あわせてブリッジ出金総額の棒グラフを、全バリデーター別の集計（段数無制限・共有ウォレットはつながっている各バリデーターに計上）に変更。v0.4.1：ブリッジ出金総額の棒グラフを、バリデーターからの距離＝段数（本人／1段目の関連／2段目以降の関連）で色分け。前身の v0.4.0 は新規ペア速報・流動性の動き・委任と報酬の集計・休眠復帰・新しい顔ぶれ（関連アドレスの全履歴展開＋自動追加）・[42] 価格表示の6項目を追加、v0.3.2 は Xenia を中核（仕組み系）から通常のバリデーター扱いに変更（分類の訂正）、v0.3.1 は推定関連の定義を「最新の動き」の欄に掲載、v0.3.0 は Phase 3 完了＝推定アドレスの監視＋バリデーター名簿の自動更新、X の別名 (Rioshi) 併記、右上の言語切替「日本語 | English」の追加）
+  <br>バージョン：<b>v0.4.3</b>（v0.4.3：全ページのヘッダー右上、言語切替の横にバージョンバッジを追加。v0.4.2：仕組み系（コントラクト）のアドレスを人の関連から全て排除し、つながりは個人の財布だけで数え直し（コントラクト経由のつながりも無し）。あわせてブリッジ出金総額の棒グラフを、全バリデーター別の集計（段数無制限・共有ウォレットはつながっている各バリデーターに計上）に変更。v0.4.1：ブリッジ出金総額の棒グラフを、バリデーターからの距離＝段数（本人／1段目の関連／2段目以降の関連）で色分け。前身の v0.4.0 は新規ペア速報・流動性の動き・委任と報酬の集計・休眠復帰・新しい顔ぶれ（関連アドレスの全履歴展開＋自動追加）・[42] 価格表示の6項目を追加、v0.3.2 は Xenia を中核（仕組み系）から通常のバリデーター扱いに変更（分類の訂正）、v0.3.1 は推定関連の定義を「最新の動き」の欄に掲載、v0.3.0 は Phase 3 完了＝推定アドレスの監視＋バリデーター名簿の自動更新、X の別名 (Rioshi) 併記、右上の言語切替「日本語 | English」の追加）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
