@@ -23,6 +23,29 @@
 //    own validator relations (actorValidators — validatorNames stays the
 //    union used for filtering), a shared-counterparty flag (>=3 relations),
 //    and a research-backed contract note for the one known shared contract.
+//  - WS4 concrete action classification: method calls that used to fall
+//    into a bare "other-contract" bucket are classified by an explicit
+//    (destination contract, selector) table built ONLY from verified ABIs
+//    (GuppyWallet zaphod.ts / protocol.ts / research abi-*.json, standard
+//    ERC-20/721 + Uniswap V2 signatures, and the 2026-11-01 FISH-reward
+//    research). Unknown calls stay honest as "unclassified" with the
+//    method selector + destination shown — names are never invented.
+//    ERC-721 Transfer logs (4 topics) are decoded separately (they were
+//    never misread as ERC-20: the ERC-20 branch requires exactly 3 topics),
+//    and a mint (from 0x0) becomes an "nft-mint" event with tokenId.
+//  - WS4b reward claims: Cosmos MsgWithdrawDelegatorReward is labelled
+//    報酬請求（委任報酬）, MsgWithdrawValidatorCommission is
+//    バリデーター報酬請求（コミッション）; on the EVM side the distribution
+//    precompile (0x0801) claimRewards selector, the FISH reward contract
+//    (0x4a1b11e7…, identified in the 2026-11-01 X liquidity-rewards
+//    research) and Starlight claim() get reward-claim types. No address is
+//    hard-coded as a reward contract without a research source.
+//  - WS5 bridge-out (user-corrected direction): a watched wallet sending
+//    funds OUT of 42 Chain via a known bridge contract (transfer to a
+//    BridgeRouter / Hyperlane warp router, or a transferRemote / dispatch
+//    call) is type "bridge-out" with notableReasons marker 'bridge-out'
+//    and glows green in the 注目 section. INBOUND receipts are NOT
+//    special-cased: they stay plain transfers.
 //
 // Standing rules honoured here:
 //  - NO minimum-amount filtering anywhere: a watched transfer of any size,
@@ -89,6 +112,252 @@ export const SNIPE_RULE = 'スナイプの定義：ペアが作られてから3�
 export const KNOWN_CONTRACTS = {
   '0x71b138382598fbc4b890d2d20a14f9dedb1430e0': 'コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）',
 };
+
+// ---------------- WS4/WS4b/WS5: known contracts & action table ----------------
+// Every address below is copied from a verified source (file:symbol noted).
+// Nothing here is guessed from an address's appearance.
+export const GUIDE_ADDR = '0xf349e469c474048ded6f9b914309e76880ed1bbd'; // chains.ts INFINITE_NFTS.theGuide (also watchlist 'Guide/Fluke')
+export const ZG13_ADDR = '0x8f0c0b0da44f945f5c32f358292616da3a07fc9d'; // chains.ts INFINITE_NFTS.zg13
+export const STARLIGHT_ADDR = '0xebc32e52a1aa52d8a0cd71402c4ffdf316f0db07'; // chains.ts INFINITE_CONTRACTS.starlightLedger
+export const ST42_LIVE_ADDR = '0x78f40e828a92af9e137ff7660e52ac8b0f1d121e'; // protocol.ts ST42_ADDRESS (live vault+token)
+export const ST42_VAULT_ADDR = '0x0f93a9b0dbf2d1829928fe40cbc155e0b5b2d35e'; // chains.ts INFINITE_CONTRACTS.st42Vault (dormant, same ABI)
+export const ST42_BOOK_ADDR = '0x458f6b41d093bed5abbc1527dabdf5499a85294f'; // chains.ts INFINITE_CONTRACTS.st42Book
+export const STAKING_PRECOMPILE = '0x0000000000000000000000000000000000000800'; // protocol.ts STAKING_PRECOMPILE
+export const DISTRIBUTION_PRECOMPILE = '0x0000000000000000000000000000000000000801'; // protocol.ts DISTRIBUTION_PRECOMPILE
+export const MAILBOX_ADDR = '0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e'; // chains.ts INFINITE_CONTRACTS.hyperlaneMailbox
+export const W42_ADDR = '0x8980eb04bab4f5dfe9cc0768b5d6a8c0448a8f77'; // ZAPHOD_FRONTEND.md §3: wrapped native "Wrapped 42"/W42
+export const FISH_REWARD_ADDR = '0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e'; // 42-flowmap/x-liquidity-rewards.html: FISH報酬コントラクト
+export const FISH_DISTRIBUTOR = '0xbfc5dd3a9434bed286853f03b353eacde6d84f29'; // same research: FISH報酬ディストリビューター（運営ウォレット）
+export const FISH_TOKEN_ADDR = '0x2c32120a12b754272d9e85c57f64b50ca2c43513'; // registries.tokens FISH
+export const NFT_MARKETPLACE_ADDR = '0x77e924e8c75083a723606b5634497d416ad16cb0'; // ZAPHOD_FRONTEND.md §3 (Infinite marketplace)
+
+// Bridge contracts on the 42 Chain (Infinite) side, from chains.ts:
+// INFINITE_CONTRACTS.bridgeRouter{Qom,Usdt,Usdc,Wbtc} (the Zaphod
+// BridgeRouter wrappers) + every BRIDGE-table row's infiniteBridgeRouter
+// and infiniteRouter (Hyperlane warp routers). The mailbox is bridge
+// infrastructure too but holds no tokens, so it is NOT a transfer target.
+export const BRIDGE_SEND_TARGETS = new Set([
+  '0x049a78fe311cf1c23f09cdd4f12420ffc917c8db', // BridgeRouter QOM (+ BRIDGE row QOM wrapper)
+  '0x8667682b62caceda9e87b3caa21d5b09d9ae13c3', // BridgeRouter USDT
+  '0xcdbf8da81f0a24f25bcd23c6232704bbfa410bd4', // BridgeRouter USDC
+  '0xb436c84a634cceecc13d29dc3f933625522c5e6f', // BridgeRouter WBTC
+  '0x4aba9dbe8a990c19501c1c4c3e677f775006d2e2', // BRIDGE row BABY wrapper
+  '0x82ba5d61a70677f7f53a9894c63dfb61fd8bcb65', // BRIDGE row CAW wrapper
+  '0x056c116c09acb788d038e7ddc167249c26493d6e', // BRIDGE row FATHER wrapper
+  '0x0d198200dc673e96217ddea9560d26ae0d092074', // BRIDGE row HAWK wrapper
+  '0x3bc94e9f417561ca37559e07dfc65496fce94557', // BRIDGE row KET wrapper
+  '0xcb893a7e5f2932531f6e04c0fc3b17ac4884475f', // BRIDGE row O wrapper
+  '0xa2093426c03ba6f0f6049532b6f13f1e36566358', // BRIDGE row OSAK wrapper
+  '0xf4440822c681ce4cb80b5a3a508876ee23b40f1b', // warp router QOM
+  '0x49b525d647068e17892a66e08d197e7faa036d3e', // warp router BABY
+  '0xa8493dbb1be229fbbc9127d6d2e387dbea2ae214', // warp router CAW
+  '0xae3fb59a4c950447386e7d2ca54ab05c857b817e', // warp router FATHER
+  '0xbd0c6e7da96f71cfd2e6651d697b048baf5c91cd', // warp router HAWK
+  '0xb1b313b3767c73398935e5bcdd7914340e73f3dd', // warp router KET
+  '0xe62ba8a1df1ed3628f2c22a245f7a47a76573cb5', // warp router O
+  '0xb477ab5a53d8361b735bd812095325a35fc29b1b', // warp router OSAK
+]);
+// Destination labels for addresses that may not be in the watchlist.
+export const DEST_LABELS = {
+  [GUIDE_ADDR]: 'Guide/Fluke',
+  [ZG13_ADDR]: 'Zaphod Girls The Thirteen（NFT）',
+  [STARLIGHT_ADDR]: 'Starlight',
+  [FISH_REWARD_ADDR]: 'FISH報酬コントラクト',
+  [DISTRIBUTION_PRECOMPILE]: '報酬配布プリコンパイル（0x0801）',
+  [STAKING_PRECOMPILE]: 'ステーキングプリコンパイル（0x0800）',
+  [MAILBOX_ADDR]: 'Hyperlaneメールボックス',
+  [NFT_MARKETPLACE_ADDR]: 'NFTマーケット',
+  [W42_ADDR]: 'W42（Wrapped 42）',
+  [ST42_LIVE_ADDR]: 'st42バルト',
+  [ST42_BOOK_ADDR]: 'st42注文板（St42Book）',
+};
+export const NFT_COLLECTIONS = {
+  [GUIDE_ADDR]: { name: 'Guide', symbol: 'GUIDE' },
+  [ZG13_ADDR]: { name: 'Zaphod Girls The Thirteen', symbol: 'ZG13' },
+};
+// WS5 definition (printed on the site): bridge-out = a validator-self or
+// direct-related wallet sending funds OUT of 42 Chain to an external chain
+// through a bridge. Inbound receipts are plain transfers, never glowing.
+export const BRIDGE_OUT_RULE = 'ブリッジで外部へ送信の定義：バリデーター本人または直接関連ウォレットが、ブリッジ経由で42チェーンから外部チェーンへ資金を送り出した動き（ブリッジ系コントラクト宛の送金、またはブリッジ送信メソッドの呼び出し）。注目欄では緑色に光って表示されます。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
+
+// Method-call event types that keep the v0.1.0 repetition suppression
+// (same actor + destination + method within ~360 blocks). Transfers, swaps,
+// LP and NFT events are NEVER suppressed.
+export const METHOD_EVENT_TYPES = new Set([
+  'approve', 'fluke-commit', 'fluke-reveal', 'fluke-boost', 'fluke-settle', 'fluke-seed',
+  'guide-write', 'guide-append', 'starlight-register', 'reward-claim-starlight',
+  'st42-deposit', 'st42-redeem-request', 'st42-claim', 'st42-instant-exit', 'st42-order',
+  'reward-claim-fish', 'reward-distribution-fish', 'token-burn', 'reward-claim-staking',
+  'bridge-out', 'bridge-delivery', 'dex-swap', 'wrap', 'unwrap', 'nft-approve-all',
+  'delegate', 'undelegate', 'redelegate', 'unclassified', 'other-contract',
+]);
+
+// --- selector table (all selectors verified with ethers.id() against the
+// --- signature strings; sources: wallet zaphod.ts / protocol.ts human ABIs,
+// --- research/abi-fluke.json (Guide core + Starlight ledger verbatim),
+// --- research/abi-st42vault.json / abi-st42book.json, ERC-20/721 standards,
+// --- Uniswap V2 router/pair standards, Hyperlane mailbox/bridge ABIs) ---
+const S = {
+  approve: '0x095ea7b3', // approve(address,uint256)
+  transfer: '0xa9059cbb', // transfer(address,uint256)
+  transferFrom: '0x23b872dd', // transferFrom(address,address,uint256)
+  safeTransferFrom3: '0x42842e0e', // safeTransferFrom(address,address,uint256)
+  safeTransferFrom4: '0xb88d4fde', // safeTransferFrom(address,address,uint256,bytes)
+  safeTransferFrom1155: '0xf242432a', // safeTransferFrom(address,address,uint256,uint256,bytes)
+  setApprovalForAll: '0xa22cb465', // setApprovalForAll(address,bool)
+  flukeCommit: '0xf4f98ad5', // commit(uint256)
+  flukeReveal: '0x9348cef7', // reveal(uint256,uint256)
+  flukeBoost: '0x40be7bec', // boost(uint256,uint256)
+  flukeSettle: '0x39c2ebb9', // settle(uint256,bytes)
+  flukeSeed: '0x166a00e4', // seed(uint256,uint256)
+  guideWrite: '0x216a3382', // write(uint256,string)
+  guideAppend: '0xe2a89b71', // append(uint256,string,uint256)
+  starlightRegister: '0x7a34289d', // register(uint256[])
+  starlightClaim: '0x6ba4c138', // claim(uint256[])
+  starlightClaimToken: '0x7d76838e', // claimToken(uint256[],address)
+  st42Deposit: '0xd0e30db0', // deposit()
+  st42DepositTo: '0xb760faf9', // depositTo(address)
+  st42RequestRedeem: '0xaa2f892d', // requestRedeem(uint256)
+  st42Claim: '0x379607f5', // claim(uint256)
+  st42ClaimTo: '0x30e1198b', // claimTo(uint256,address)
+  st42InstantExit: '0xeb8738f5', // instantExit(uint256,uint256)
+  bookPlaceBid: '0x9979ef45', // placeBid(uint256)
+  bookPlaceAsk: '0x75a8b702', // placeAsk(uint256,uint256)
+  bookMarketBuy: '0x69a29ed8', // marketBuy(uint256[],uint256,uint256)
+  bookMarketSell: '0xf5f884dc', // marketSell(uint256[],uint256,uint256,uint256)
+  bookCancel: '0x40e58ee5', // cancel(uint256)
+  stakingDelegate: '0x53266bbb', // delegate(address,string,uint256)
+  stakingUndelegate: '0x3edab33c', // undelegate(address,string,uint256)
+  stakingRedelegate: '0x54b826f5', // redelegate(address,string,string,uint256)
+  distClaimRewards: '0x2efe8a5f', // claimRewards(address,uint32)
+  transferRemote: '0x81b4e8b4', // transferRemote(uint32,bytes32,uint256)
+  mailboxDispatch: '0xfa31de01', // dispatch(uint32,bytes32,bytes)
+  mailboxProcess: '0x7c39d130', // process(bytes,bytes)
+  fishClaim: '0x5c74910f', // FISH reward contract: self-claim (2026-11-01 research, function id as recorded there)
+  fishDistribute: '0x0fb39e45', // FISH reward contract via distributor: batch distribution (same research)
+  fishBurn: '0x87157886', // FISH token: operator burn function (same research; name as recorded there)
+  w42Withdraw: '0x2e1a7d4d', // withdraw(uint256)
+  routerAddLiq: '0xe8e33700', routerAddLiqETH: '0xf305d719',
+  routerRemoveLiq: '0xbaa2abde', routerRemoveLiqETH: '0x02751cec',
+  pairSwap: '0x022c0d9f', // swap(uint256,uint256,address,bytes)
+  pairMint: '0x6a627842', // mint(address)
+  pairBurn: '0x89afcb44', // burn(address)
+  pairSkim: '0xbc25cf77', // skim(address)
+  pairSync: '0xfff6cae9', // sync()
+};
+const ROUTER_SWAP_SELS = new Set([
+  '0x38ed1739', '0x7ff36ab5', '0x18cbafe5', '0x8803dbee', '0x4a25d94a', '0xfb3bdb41',
+  '0x5c11d795', '0xb6f9de95', '0x791ac947', // swapExact*/swapTokens* (+SupportingFeeOnTransferTokens variants)
+]);
+
+function destLabelFor(ctx, addr) {
+  addr = lc(addr);
+  return DEST_LABELS[addr] ?? ctx.entry(addr)?.label ?? null;
+}
+function tokenSymbolFor(ctx, addr) {
+  const info = ctx.tokenInfo(addr);
+  return info && !String(info.symbol).startsWith('…') ? info.symbol : null;
+}
+// Classify one method call by (destination, selector). Returns
+// {type, actionLabel, summary} — for unknown calls the honest
+// {type:'unclassified'} form with method + destination in the summary.
+// mintAmounts: [{symbol, amount}] of tokens minted TO the actor in the same
+// tx (e.g. a FISH reward claim mints the claimed FISH) — live path only.
+export function classifyMethodCall(ctx, to, input, mintAmounts = []) {
+  to = lc(to);
+  const sel = (input ?? '').slice(0, 10).toLowerCase();
+  const destLabel = destLabelFor(ctx, to);
+  const destShort = '…' + to.slice(-4).toUpperCase();
+  const destDisp = destLabel ? `${destLabel}（${destShort}）` : destShort;
+  const mintNote = mintAmounts.length ? `：${mintAmounts.map((m) => `${m.amount} ${m.symbol}`).join(' ＋ ')} を受け取り` : '';
+  const R = (type, actionLabel, summary) => ({ type, actionLabel, summary });
+
+  // --- contract-scoped tables first (selector collisions resolved here) ---
+  if (to === FISH_REWARD_ADDR) {
+    if (sel === S.fishClaim) return R('reward-claim-fish', '報酬請求（FISH配布）', `報酬請求（FISH配布）${mintNote || '：FISH報酬コントラクトへ請求'}`);
+    if (sel === S.fishDistribute) return R('reward-distribution-fish', 'FISH報酬の一括配布', `FISH報酬の一括配布（報酬コントラクト経由）${mintNote}`);
+  }
+  if (to === FISH_TOKEN_ADDR && sel === S.fishBurn) {
+    return R('token-burn', 'FISHバーン（運営）', 'FISHのバーン処理（運営側の定期バーン関数）');
+  }
+  if (to === GUIDE_ADDR) {
+    if (sel === S.flukeCommit) return R('fluke-commit', 'Fluke参加', 'Fluke参加（commit）');
+    if (sel === S.flukeReveal) return R('fluke-reveal', 'Fluke めくる', 'Fluke めくる（reveal）');
+    if (sel === S.flukeBoost) return R('fluke-boost', 'Flukeブースト', 'Flukeブースト（boost）');
+    if (sel === S.flukeSettle) return R('fluke-settle', 'Fluke確定（Guide新規発行）', 'Fluke確定（settle）：Guideが新規発行されます');
+    if (sel === S.flukeSeed) return R('fluke-seed', 'Flukeプール入金', 'Flukeの賞金プールへ入金（seed）');
+    if (sel === S.guideWrite) return R('guide-write', 'Guideテキスト書き込み', 'Guideにテキストを書き込み（write）');
+    if (sel === S.guideAppend) return R('guide-append', 'Guideテキスト追記', 'Guideにテキストを追記（append）');
+  }
+  if (to === STARLIGHT_ADDR) {
+    if (sel === S.starlightRegister) return R('starlight-register', 'Starlight登録', 'StarlightにGuideを登録（register）');
+    if (sel === S.starlightClaim || sel === S.starlightClaimToken) return R('reward-claim-starlight', 'Starlight報酬請求', `Starlight報酬請求（claim）${mintNote}`);
+  }
+  if (to === ST42_LIVE_ADDR || to === ST42_VAULT_ADDR) {
+    if (sel === S.st42Deposit || sel === S.st42DepositTo) return R('st42-deposit', 'st42預け入れ', 'st42に預け入れ（deposit）');
+    if (sel === S.st42RequestRedeem) return R('st42-redeem-request', 'st42引出申請', 'st42の引出を申請（requestRedeem）');
+    if (sel === S.st42Claim || sel === S.st42ClaimTo) return R('st42-claim', 'st42受取', 'st42を受け取り（claim）');
+    if (sel === S.st42InstantExit) return R('st42-instant-exit', 'st42即時出金', 'st42を即時出金（instantExit）');
+  }
+  if (to === ST42_BOOK_ADDR) {
+    if (sel === S.bookPlaceBid) return R('st42-order', 'st42買い注文', 'st42注文板に買い注文（placeBid）');
+    if (sel === S.bookPlaceAsk) return R('st42-order', 'st42売り注文', 'st42注文板に売り注文（placeAsk）');
+    if (sel === S.bookMarketBuy) return R('st42-order', 'st42成行買い', 'st42注文板で成行買い（marketBuy）');
+    if (sel === S.bookMarketSell) return R('st42-order', 'st42成行売り', 'st42注文板で成行売り（marketSell）');
+    if (sel === S.bookCancel) return R('st42-order', 'st42注文キャンセル', 'st42注文をキャンセル（cancel）');
+  }
+  if (to === STAKING_PRECOMPILE) {
+    if (sel === S.stakingDelegate) return R('delegate', '委任', 'ステーキングプリコンパイルで委任（delegate）');
+    if (sel === S.stakingUndelegate) return R('undelegate', '委任解除', 'ステーキングプリコンパイルで委任解除（undelegate）');
+    if (sel === S.stakingRedelegate) return R('redelegate', '委任先変更', 'ステーキングプリコンパイルで委任先変更（redelegate）');
+  }
+  if (to === DISTRIBUTION_PRECOMPILE && sel === S.distClaimRewards) {
+    return R('reward-claim-staking', '報酬請求（ステーキング報酬）', `ステーキング報酬を請求（claimRewards／報酬配布プリコンパイル 0x0801）${mintNote}`);
+  }
+  if (BRIDGE_SEND_TARGETS.has(to) && sel === S.transferRemote) {
+    return R('bridge-out', 'ブリッジ送信（外部へ）', 'ブリッジ送信（外部へ）：ブリッジ経由で外部チェーンへ送金（transferRemote）');
+  }
+  if (to === MAILBOX_ADDR) {
+    if (sel === S.mailboxDispatch) return R('bridge-out', 'ブリッジ送信（外部へ）', 'ブリッジ送信（外部へ）：メールボックス経由でメッセージ送信（dispatch）');
+    if (sel === S.mailboxProcess) return R('bridge-delivery', 'ブリッジ配送処理', 'ブリッジ配送の処理（Hyperlaneメールボックスの process）');
+  }
+  if (to === W42_ADDR) {
+    if (sel === S.st42Deposit) return R('wrap', 'W42化（ラップ）', '[42]をW42に変換（deposit）');
+    if (sel === S.w42Withdraw) return R('unwrap', 'W42解除', 'W42を[42]に戻す（withdraw）');
+  }
+  if (to === ROUTER) {
+    if (ROUTER_SWAP_SELS.has(sel)) return R('dex-swap', 'DEXスワップ', 'DEXルーターでスワップ（詳細はログで判別できなかった呼び出し）');
+    if (sel === S.routerAddLiq || sel === S.routerAddLiqETH) return R('lp-add', 'LP追加', 'DEXルーターで流動性提供の呼び出し');
+    if (sel === S.routerRemoveLiq || sel === S.routerRemoveLiqETH) return R('lp-remove', 'LP解除', 'DEXルーターで流動性解除の呼び出し');
+  }
+  if (ctx.pairs[to]) {
+    if (sel === S.pairSwap) return R('dex-swap', 'DEXスワップ', 'ペアでスワップ（swap）');
+    if (sel === S.pairMint) return R('lp-add', 'LP追加', 'ペアに流動性提供（mint）');
+    if (sel === S.pairBurn) return R('lp-remove', 'LP解除', 'ペアから流動性解除（burn）');
+    if (sel === S.pairSkim) return R('dex-swap', 'ペア余剰回収', 'ペアの余剰分を回収（skim）');
+    if (sel === S.pairSync) return R('dex-swap', 'ペア同期', 'ペアの準備金を同期（sync）');
+  }
+  // --- generic token / NFT standards (any destination) ---
+  if (sel === S.approve) {
+    const sym = tokenSymbolFor(ctx, to) ?? destDisp;
+    let spender = null, amtNote = '';
+    const data = (input ?? '').slice(10);
+    if (data.length >= 128) {
+      const spenderAddr = '0x' + data.slice(24, 64).toLowerCase();
+      spender = destLabelFor(ctx, spenderAddr) ?? ('…' + spenderAddr.slice(-4).toUpperCase());
+      const amt = BigInt('0x' + data.slice(64, 128));
+      amtNote = amt === (2n ** 256n - 1n) ? '（無制限）' : '';
+    }
+    return R('approve', '使用許可（approve）', `${sym}の使用許可（approve）${spender ? `：${spender} に利用を許可` : ''}${amtNote}`);
+  }
+  if (sel === S.setApprovalForAll) return R('nft-approve-all', 'NFT一括使用許可', `NFTの一括使用許可（setApprovalForAll／宛先 ${destDisp}）`);
+  if (sel === S.safeTransferFrom3 || sel === S.safeTransferFrom4 || sel === S.safeTransferFrom1155) {
+    return R('nft-transfer', 'NFT送金', `NFTを送金（宛先 ${destDisp}）`);
+  }
+  if (sel === S.transfer || sel === S.transferFrom) return R('transfer', '送金・受取', `トークン送金の呼び出し（宛先 ${destDisp}）`);
+  // --- honest fallback: never a bare "その他の操作" ---
+  return R('unclassified', null, `未分類の操作（メソッド ${sel || '—'}／宛先 ${destDisp}）`);
+}
 
 // ---------------- bech32 (BIP-173) encode/decode, no deps ----------------
 const BECH32_ALPHABET = 'qpzry9x8gf2tvdw0s3jn54khce6mua7l';
@@ -197,13 +466,19 @@ export const fmtNum = (rawStr, decimals = 18) => {
 
 // ---------------- log decoding (adapted from 42-flowmap/index-flows.mjs) ----------------
 export function decodeReceiptLogs(receipt) {
-  const out = { transfers: [], swaps: [], mints: [], burns: [] };
+  const out = { transfers: [], swaps: [], mints: [], burns: [], nftTransfers: [] };
   for (const log of receipt?.logs ?? []) {
     const t0 = log.topics?.[0];
     const emitter = lc(log.address);
     const li = typeof log.logIndex === 'string' ? parseInt(log.logIndex, 16) : (log.logIndex ?? 0);
     if (t0 === TOPIC.transfer && log.topics.length === 3) {
       out.transfers.push({ token: emitter, from: topicAddr(log.topics[1]), to: topicAddr(log.topics[2]), amountRaw: u256(log.data).toString(), logIndex: li });
+    } else if (t0 === TOPIC.transfer && log.topics.length === 4) {
+      // ERC-721 Transfer (tokenId in topic 3). Kept strictly separate from
+      // the ERC-20 branch above (exactly-3-topics), so a Guide settle mint
+      // was never misread as a fungible transfer — it simply fell through
+      // to the generic method bucket before WS4.
+      out.nftTransfers.push({ token: emitter, from: topicAddr(log.topics[1]), to: topicAddr(log.topics[2]), tokenId: u256(log.topics[3]).toString(), logIndex: li });
     } else if (t0 === TOPIC.swap) {
       const d = log.data.slice(2);
       out.swaps.push({
@@ -308,6 +583,39 @@ export function enrichEvent(ev, ctx, creations = {}) {
   set('actorValidators', rel);
   set('actorShared', ev.actorTier !== 'validator' && rel.length >= 3);
   set('actorContractNote', KNOWN_CONTRACTS[lc(ev.actor)] ?? null);
+  // WS4 migration: reclassify stored method-call events (the old bare
+  // 'other-contract' bucket, and any already-classified method type) from
+  // their stored (counterparty, method) pair. Amount enrichment from mint
+  // logs is not available for stored events (receipts are not stored), so
+  // their summaries carry no claimed amount — the live path adds it.
+  if (ev.chain !== 'cosmos' && ev.method && ev.counterparty && METHOD_EVENT_TYPES.has(ev.type) && (ev.type === 'other-contract' || !('actionLabel' in ev))) {
+    const cls = classifyMethodCall(ctx, ev.counterparty, ev.method);
+    set('type', cls.type);
+    set('actionLabel', cls.actionLabel);
+    set('destLabel', destLabelFor(ctx, ev.counterparty));
+    set('summary', cls.summary);
+    if (cls.type === 'bridge-out' && !(ev.notableReasons ?? []).includes('bridge-out')) {
+      set('notableReasons', [...(ev.notableReasons ?? []), 'bridge-out']);
+    }
+  }
+  // WS5 migration: a stored plain transfer OUT to a known bridge contract
+  // is a bridge-out. (Inbound receipts stay plain transfers.)
+  if (ev.chain !== 'cosmos' && ev.type === 'transfer' && ev.direction === 'out' && ev.to && BRIDGE_SEND_TARGETS.has(lc(ev.to))) {
+    set('type', 'bridge-out');
+    set('summary', `ブリッジで外部へ送信：${ev.amount?.amount ?? ''} ${ev.amount?.symbol ?? ''} をブリッジ経由で外部チェーンへ`);
+    if (!(ev.notableReasons ?? []).includes('bridge-out')) set('notableReasons', [...(ev.notableReasons ?? []), 'bridge-out']);
+  }
+  // WS4b migration: Cosmos reward/commission summaries get the fixed
+  // reward-claim labels (amounts already stored on the events).
+  if (ev.chain === 'cosmos' && ev.type === 'reward') {
+    set('actionLabel', '報酬請求（委任報酬）');
+    const vName = ev.counterparty ? (ctx.entry(ev.counterparty)?.label ?? `バリデーター …${ev.counterparty.slice(-4).toUpperCase()}`) : '';
+    set('summary', `報酬請求（委任報酬）：${vName} 分${ev.amount ? ` ${ev.amount.amount} [42]` : ''}`);
+  }
+  if (ev.chain === 'cosmos' && ev.type === 'commission') {
+    set('actionLabel', 'バリデーター報酬請求（コミッション）');
+    set('summary', `バリデーター報酬請求（コミッション）${ev.amount ? `：${ev.amount.amount} [42]` : ''}`);
+  }
   if ((ev.type === 'swap-buy' || ev.type === 'lp-add') && ev.pair) {
     const c = creations[lc(ev.pair)];
     if (c?.createdTs) {
@@ -406,6 +714,36 @@ export function classifyTx(ctx, tx, receipt, blockTs, blockNumber) {
   }
   if (events.length) return events;
 
+  // ---- NFT (ERC-721) transfers & mints ----
+  // A mint (from 0x0) becomes an nft-mint event with collection + tokenId
+  // (e.g. a Fluke settle minting a new Guide). Ordinary ERC-721 transfers
+  // become nft-transfer. If a watched actor is involved these are the
+  // informative events of the tx, so they take precedence over the generic
+  // method bucket; fungible legs of the same tx are not double-recorded.
+  for (const t of dec.nftTransfers) {
+    const isMint = t.from === ZERO, isBurn = t.to === ZERO;
+    const actor = isMint ? (ctx.isActor(t.to) ? lc(t.to) : null)
+      : isBurn ? (ctx.isActor(t.from) ? lc(t.from) : null)
+      : transferActor(t.from, t.to);
+    if (!actor) continue;
+    const coll = NFT_COLLECTIONS[t.token];
+    const collName = coll?.name ?? ctx.entry(t.token)?.label ?? tokenSymbolFor(ctx, t.token) ?? ('NFT …' + t.token.slice(-4).toUpperCase());
+    const outgoing = actor === t.from;
+    const type = isMint ? 'nft-mint' : 'nft-transfer';
+    const ev = baseEvent(ctx, txN, blockTs, actor, isMint ? t.token : (outgoing ? t.to : t.from), type, t.logIndex);
+    ev.direction = isMint ? 'in' : (outgoing ? 'out' : 'in');
+    ev.nft = { collection: t.token, collectionName: collName, tokenId: t.tokenId };
+    ev.from = t.from; ev.to = t.to;
+    ev.tokens = [coll?.symbol ?? collName];
+    ev.whitelisted = true;
+    ev.summary = isMint ? `NFTミント：${collName} #${t.tokenId} を新規発行で受取`
+      : isBurn ? `NFTバーン：${collName} #${t.tokenId}`
+      : outgoing ? `NFT送金：${collName} #${t.tokenId} を送金` : `NFT受取：${collName} #${t.tokenId} を受取`;
+    ev.notableReasons = notableReasons(ev);
+    events.push(ev);
+  }
+  if (events.length) return events;
+
   // ---- plain transfers (ERC-20 logs + native value), no amount floor ----
   if (dec.swaps.length === 0 && dec.mints.length === 0 && dec.burns.length === 0) {
     for (const t of dec.transfers) {
@@ -413,14 +751,20 @@ export function classifyTx(ctx, tx, receipt, blockTs, blockNumber) {
       const actor = transferActor(t.from, t.to);
       if (!actor) continue;
       const outgoing = actor === t.from;
-      const ev = baseEvent(ctx, txN, blockTs, actor, outgoing ? t.to : t.from, 'transfer', t.logIndex);
+      // WS5 (corrected): sending TO a known bridge contract = bridge-out.
+      // Receiving FROM one stays a plain inbound transfer (no special case).
+      const bridgeOut = outgoing && BRIDGE_SEND_TARGETS.has(t.to);
+      const ev = baseEvent(ctx, txN, blockTs, actor, outgoing ? t.to : t.from, bridgeOut ? 'bridge-out' : 'transfer', t.logIndex);
       ev.direction = outgoing ? 'out' : 'in';
       ev.amount = amountObj(ctx, t.token, t.amountRaw);
       ev.from = t.from; ev.to = t.to;
       ev.tokens = [ev.amount.symbol];
       ev.whitelisted = ev.amount.whitelisted;
-      ev.summary = outgoing ? `${ev.amount.amount} ${ev.amount.symbol} を送金` : `${ev.amount.amount} ${ev.amount.symbol} を受取`;
+      ev.summary = bridgeOut
+        ? `ブリッジで外部へ送信：${ev.amount.amount} ${ev.amount.symbol} をブリッジ経由で外部チェーンへ`
+        : outgoing ? `${ev.amount.amount} ${ev.amount.symbol} を送金` : `${ev.amount.amount} ${ev.amount.symbol} を受取`;
       ev.notableReasons = notableReasons(ev);
+      if (bridgeOut && !ev.notableReasons.includes('bridge-out')) ev.notableReasons.push('bridge-out');
       events.push(ev);
     }
     const value = BigInt(tx.value ?? '0x0');
@@ -428,28 +772,44 @@ export function classifyTx(ctx, tx, receipt, blockTs, blockNumber) {
       const actor = transferActor(from, to);
       if (actor) {
         const outgoing = actor === from;
-        const ev = baseEvent(ctx, txN, blockTs, actor, outgoing ? to : from, 'transfer', null);
+        const bridgeOut = outgoing && !!to && BRIDGE_SEND_TARGETS.has(to);
+        const ev = baseEvent(ctx, txN, blockTs, actor, outgoing ? to : from, bridgeOut ? 'bridge-out' : 'transfer', null);
         ev.direction = outgoing ? 'out' : 'in';
         ev.amount = amountObj(ctx, W42, value.toString());
         ev.from = from; ev.to = to;
         ev.tokens = ['42'];
         ev.whitelisted = true;
-        ev.summary = outgoing ? `${ev.amount.amount} [42] を送金` : `${ev.amount.amount} [42] を受取`;
+        ev.summary = bridgeOut
+          ? `ブリッジで外部へ送信：${ev.amount.amount} [42] をブリッジ経由で外部チェーンへ`
+          : outgoing ? `${ev.amount.amount} [42] を送金` : `${ev.amount.amount} [42] を受取`;
         ev.notableReasons = notableReasons(ev);
+        if (bridgeOut && !ev.notableReasons.includes('bridge-out')) ev.notableReasons.push('bridge-out');
         events.push(ev);
       }
     }
     if (events.length) return events;
   }
 
-  // ---- other contract interaction by a watched sender ----
+  // ---- method call by a watched sender (WS4 concrete classification) ----
   if (from && ctx.isActor(from) && to && (tx.input ?? '0x') !== '0x') {
-    const ev = baseEvent(ctx, txN, blockTs, from, to, 'other-contract', null);
-    ev.method = (tx.input ?? '').slice(0, 10);
+    // Tokens minted TO the sender in this same tx (e.g. a FISH reward claim
+    // mints the claimed amount) enrich the summary with the real amount.
+    const mintAmounts = [];
+    for (const t of dec.transfers) {
+      if (t.from !== ZERO || t.to !== from) continue;
+      const a = amountObj(ctx, t.token, t.amountRaw);
+      mintAmounts.push({ symbol: a.symbol, amount: a.amount });
+    }
+    const cls = classifyMethodCall(ctx, to, tx.input, mintAmounts);
+    const ev = baseEvent(ctx, txN, blockTs, from, to, cls.type, null);
+    ev.method = (tx.input ?? '').slice(0, 10).toLowerCase();
+    ev.actionLabel = cls.actionLabel;
+    ev.destLabel = destLabelFor(ctx, to);
     ev.tokens = [];
     ev.whitelisted = true;
-    ev.summary = `その他の操作（宛先 …${to.slice(-4)}）`;
+    ev.summary = cls.summary;
     ev.notableReasons = [];
+    if (cls.type === 'bridge-out') ev.notableReasons.push('bridge-out');
     events.push(ev);
   }
   return events;
@@ -607,7 +967,8 @@ export function classifyCosmosTx(ctx, txItem, blockTs) {
         ev.amount = amtCoin ? cosmosAmount(amtCoin) : null;
         ev.tokens = ev.amount ? [ev.amount.symbol] : [];
         ev.whitelisted = ev.amount ? ev.amount.whitelisted : true;
-        ev.summary = `ステーキング報酬を受け取り${ev.amount ? `（${ev.amount.amount} [42]）` : ''}：${ctx.entry(validator)?.label ?? `バリデーター …${validator.slice(-4).toUpperCase()}`} 分`;
+        ev.actionLabel = '報酬請求（委任報酬）';
+        ev.summary = `報酬請求（委任報酬）：${ctx.entry(validator)?.label ?? `バリデーター …${validator.slice(-4).toUpperCase()}`} 分${ev.amount ? ` ${ev.amount.amount} [42]` : ''}`;
         ev.notableReasons = ev.amount ? notableReasons(ev) : [];
         events.push(ev);
       } else if (m.typeUrl === COSMOS_ACTIONS.commission) {
@@ -618,7 +979,8 @@ export function classifyCosmosTx(ctx, txItem, blockTs) {
         ev.amount = amtCoin ? cosmosAmount(amtCoin) : null;
         ev.tokens = ev.amount ? [ev.amount.symbol] : [];
         ev.whitelisted = ev.amount ? ev.amount.whitelisted : true;
-        ev.summary = `バリデーター手数料報酬を受け取り${ev.amount ? `（${ev.amount.amount} [42]）` : ''}`;
+        ev.actionLabel = 'バリデーター報酬請求（コミッション）';
+        ev.summary = `バリデーター報酬請求（コミッション）${ev.amount ? `：${ev.amount.amount} [42]` : ''}`;
         ev.notableReasons = ev.amount ? notableReasons(ev) : [];
         events.push(ev);
       }
@@ -763,7 +1125,7 @@ async function main() {
   }
   const OTHER_REPEAT_WINDOW_BLOCKS = 360; // ~30 min at 5.4s/block
   const lastOtherByKey = new Map();
-  for (const e of allEvents) if (e.type === 'other-contract') lastOtherByKey.set(`${e.actor}|${e.counterparty}|${e.method}`, Math.max(e.block ?? 0, lastOtherByKey.get(`${e.actor}|${e.counterparty}|${e.method}`) ?? 0));
+  for (const e of allEvents) if (METHOD_EVENT_TYPES.has(e.type) && e.method) lastOtherByKey.set(`${e.actor}|${e.counterparty}|${e.method}`, Math.max(e.block ?? 0, lastOtherByKey.get(`${e.actor}|${e.counterparty}|${e.method}`) ?? 0));
 
   const saveState = () => { state.updatedAt = new Date().toISOString(); writeFileSync(statePath, JSON.stringify(state, null, 1)); };
   function writeFeed(latestBlock) {
@@ -779,8 +1141,10 @@ async function main() {
         lastProcessedCosmosBlock: state.lastProcessedCosmosBlock ?? null,
         lastProcessedAt: state.updatedAt, totalEvents: allEvents.length,
         watchSummary: watchlist.summary,
-        notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動`,
+        notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動 ③ブリッジで外部へ送信（緑色表示）`,
         snipeRule: SNIPE_RULE,
+        bridgeOutRule: BRIDGE_OUT_RULE,
+        actionRule: '操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。',
       },
       validators,
       events: sorted.slice(0, 500),
@@ -824,12 +1188,15 @@ async function main() {
             }
             enrichEvent(ev, ctx, creations);
             if (seen.has(ev.id)) continue;
-            // Repetition suppression for "other-contract" ONLY: a keeper-like
-            // related address (0xbfc5…4f29, 43k+ txs in the flowmap snapshot)
-            // repeats the same call every few blocks and would flood the feed.
-            // Transfers / swaps / LP events are NEVER suppressed (standing
-            // rule: watched transfers are tracked no matter how small/frequent).
-            if (ev.type === 'other-contract') {
+            // Repetition suppression for METHOD-CALL events ONLY (the WS4
+            // successors of "other-contract", counted/reported under their
+            // detailed classification names): a keeper-like related address
+            // (0xbfc5…4f29, 43k+ txs in the flowmap snapshot) repeats the
+            // same call every few blocks and would flood the feed.
+            // Transfers / swaps / LP / NFT events are NEVER suppressed
+            // (standing rule: watched transfers are tracked no matter how
+            // small/frequent).
+            if (METHOD_EVENT_TYPES.has(ev.type)) {
               const key = `${ev.actor}|${ev.counterparty}|${ev.method}`;
               const last = lastOtherByKey.get(key);
               if (last != null && meta.block - last < OTHER_REPEAT_WINDOW_BLOCKS) continue;

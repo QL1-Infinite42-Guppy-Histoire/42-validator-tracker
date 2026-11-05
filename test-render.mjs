@@ -49,4 +49,28 @@ check('no full name join anywhere', !relHtml.includes('Metal Raptor・PhoenixRin
 console.log('panda42 headline:', whoLabel(evPanda));
 check('validator-self headline is own name', whoLabel(evPanda) === 'panda42');
 check('validator-self has NO relation list', !renderEvent(evPanda).includes('関係バリデーター'));
+
+// ---- WS4/WS5 fixture rendering (stored data has 0 real bridge-out events,
+// ---- so the green-glow path is verified with fixture events here) ----
+const base = { ts: 1762000000, block: 4272000, chain: 'evm', txHash: '0x' + 'cd'.repeat(32), logIndex: 0, counterparty: '0x8667682b62caceda9e87b3caa21d5b09d9ae13c3', counterpartyLabel: 'ブリッジルーター', counterpartyIsCore: false, validatorNames: ['panda42'], actorValidators: [], actorShared: false, whitelisted: true, tokens: ['USDT'] };
+const fxSelf = { ...base, id: 'fx1', type: 'bridge-out', actor: evPanda.actor, actorLabel: 'panda42', actorTier: 'validator', actorIsCore: false, summary: 'ブリッジで外部へ送信：10 USDT をブリッジ経由で外部チェーンへ', notableReasons: ['bridge-out'] };
+const fxSelfHtml = renderEvent(fxSelf);
+check('WS5 validator bridge-out glows (class)', fxSelfHtml.includes('ev bridgeout') || fxSelfHtml.includes('bridgeout'));
+check('WS5 validator bridge-out badge wording', fxSelfHtml.includes('バリデーター本人のブリッジで外部へ送信'));
+check('WS5 marker not shown as raw reason text', !fxSelfHtml.includes('⭐注目：bridge-out'));
+const fxRel = { ...base, id: 'fx2', type: 'bridge-out', actor: '0x71b138382598fbc4b890d2d20a14f9dedb1430e0', actorLabel: null, actorTier: 'related', actorIsCore: false, actorValidators: ['farmer', 'Xenia'], actorShared: true, summary: 'ブリッジで外部へ送信：5 USDT をブリッジ経由で外部チェーンへ', notableReasons: ['bridge-out'] };
+const fxRelHtml = renderEvent(fxRel);
+check('WS5 related bridge-out badge wording', fxRelHtml.includes('関連ウォレットのブリッジで外部へ送信'));
+check('WS5 related bridge-out headline is actor only', whoLabel(fxRel) === '関連 0x…30E0');
+const fxIn = { ...base, id: 'fx3', type: 'transfer', actor: evPanda.actor, actorLabel: 'panda42', actorTier: 'validator', actorIsCore: false, direction: 'in', summary: '10 USDT を受取', notableReasons: [] };
+check('WS5 inbound receipt does NOT glow', !renderEvent(fxIn).includes('bridgeout'));
+const fxApprove = events.find((e) => e.type === 'approve');
+check('WS4 stored approve event exists after migration', !!fxApprove);
+if (fxApprove) check('WS4 approve renders concrete label', renderEvent(fxApprove).includes('使用許可（approve）'));
+const fxUnc = events.find((e) => e.type === 'unclassified');
+check('WS4 stored unclassified event exists (honest remainder)', !!fxUnc);
+if (fxUnc) check('WS4 unclassified renders method + destination', renderEvent(fxUnc).includes('未分類の操作') && renderEvent(fxUnc).includes('0x98869d1f'));
+const fxFish = events.find((e) => e.type === 'reward-claim-fish');
+check('WS4b stored FISH reward claim exists', !!fxFish);
+if (fxFish) check('WS4b FISH claim renders its label', renderEvent(fxFish).includes('報酬請求（FISH配布）'));
 process.exit(fails ? 1 : 0);
