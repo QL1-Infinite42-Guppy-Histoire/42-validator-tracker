@@ -96,8 +96,7 @@ check('feed parity: feed per-name groups match', RF.groups.size === R.groups.siz
 const mr = R.groups.get('Metal Raptor');
 check('spot: no count-once group for Metal Raptor (shared wallets attribute to earlier first names)', !mr, mr ? `unexpected ${fmt(mr.sum)}` : 'absent');
 const ds = R.groups.get('DRIVESTATS');
-check('spot: DRIVESTATS depth-1 segment is 613.05 USDT', !!ds && near(ds.seg[1], 613.05), ds ? `d1 ${fmt(ds.seg[1])}` : 'missing');
-check('spot: DRIVESTATS depth-2+ segment is 0 after the v0.4.2 evidence gate (no evidence-backed DRIVESTATS depth-2+ bridge-outs remain)', !!ds && near(ds.seg[2], 0), ds ? `d2+ ${fmt(ds.seg[2])}` : 'missing');
+check('spot: DRIVESTATS has no bridge-out group after v0.5.2 (its only depth-1 bridge-out wallet, the 613.05 USDT one, was a one-off contact — demoted to candidate and its events purged)', !ds, ds ? `unexpected ${fmt(ds.sum)}` : 'absent');
 const l8 = R.groups.get('light888');
 check('spot: light888 merges self + depth-1 into one group', !!l8 && l8.seg[0] > 0 && l8.seg[1] > 0 && near(l8.seg[2], 0), l8 ? `self ${fmt(l8.seg[0])} / d1 ${fmt(l8.seg[1])}` : 'missing');
 
@@ -237,8 +236,8 @@ check('pair-created events of removed/moved creators carry no tier attribution',
   events.filter((e) => e.type === 'pair-created' && (removedSet.has(e.actor) || movedSet.has(e.actor))).every((e) => e.actorTier == null));
 check('EOA repair record: watchlist shrank 413 -> 363 with tiers 23/183/153/4 at that stage', eoaRep.before.watchlistTotal === 413 && eoaRep.after.watchlistTotal === 363 && eoaRep.after.tiers.related === 183 && eoaRep.after.tiers.core === 153 && eoaRep.after.tiers.estimated === 4);
 check('v0.4.2 chart before/after (deduplicated): 16,074.08 -> 14,104.47, delta entirely in depth>=2', near(eoaRep.before.bridge.total, 16074.08) && near(eoaRep.after.bridge.total, 14104.47) && near(eoaRep.before.bridge.segTotals[0], eoaRep.after.bridge.segTotals[0]) && near(eoaRep.before.bridge.segTotals[1], eoaRep.after.bridge.segTotals[1]) && eoaRep.after.bridge.segTotals[2] < eoaRep.before.bridge.segTotals[2], `${eoaRep.before.bridge.total} -> ${eoaRep.after.bridge.total}`);
-const evRep = JSON.parse(read('evidence-repair-report.json'));
-check('current recomputation total equals the FINAL v0.4.2 total (after the evidence gate; no new bridge-outs since)', near(R.total, evRep.after.bridge.total), `${fmt(R.total)} vs ${fmt(evRep.after.bridge.total)}`);
+const tightRep = JSON.parse(read('tightening-report.json'));
+check('current recomputation total equals the v0.5.2 tightening total (one-off candidates purged; no new bridge-outs since)', near(R.total, tightRep.bridgeAfter.total), `${fmt(R.total)} vs ${fmt(tightRep.bridgeAfter.total)}`);
 
 // ---------- (6) section order (user reorder, shipped in v0.4.1) ----------
 // Coloured special sections on top (insider, snipes, bridge-out, totals

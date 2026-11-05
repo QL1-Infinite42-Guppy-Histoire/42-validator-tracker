@@ -53,7 +53,7 @@ check('EN bridge badge wording (validator)', renderEvent({ ...bo.find((e) => e.a
 
 // v0.2.4 stored-data invariants: buys-only snipes + insider backfill
 const snipes = events.filter((e) => e.isSnipe);
-check('stored snipes are buys only (>= 52)', snipes.length >= 52 && snipes.every((e) => e.type === 'swap-buy'), String(snipes.length));
+check('stored snipes are buys only (>= 51; the 52nd belonged to a one-off candidate purged in v0.5.2)', snipes.length >= 51 && snipes.every((e) => e.type === 'swap-buy'), String(snipes.length));
 check('no LP add carries a snipe flag', events.every((e) => e.type !== 'lp-add' || !e.isSnipe));
 const insider = events.filter((e) => e.isInsider);
 // v0.4.1: 682 — the contract audit cleared exactly one insider flag: an

@@ -44,7 +44,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 链验证者实时追踪</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <b>简体中文</b> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.1</span></div></div>
+  <div class="head-row"><h1>42 链验证者实时追踪</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <b>简体中文</b> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
   <p class="sub">本站自动收集验证者本人以及已确认与他们直接交易的地址的动态。选择一个栏目即可跳转。</p>
   <div class="status" id="status">正在加载…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -55,6 +55,7 @@
       <h2>⚠ 内幕观察 — X<span class="alias"> (Rioshi)</span></h2>
       <p>仅收录验证者 X (Rioshi) 本人及 X (Rioshi) 关联地址在上市日（2026 年 6 月 30 日）14:00 JST 之前对 [42] 和 DONT 的买入。</p>
       <div class="count" id="c-insider">—</div>
+      <div class="segsub" id="c-insider-sub">—</div>
     </a>
     <a class="card snipes" href="zh.html#sec-snipes">
       <h2>🎯 抢购警报</h2>
@@ -118,7 +119,7 @@
 </main>
 <footer>
   数据来源：42 链区块本身（通过 RPC）。覆盖范围仅限 42 链上的交易（EVM 链 ID 421018 及其 Cosmos 侧 infinite_421018-1）。不包括 QL1 或任何其他链上的交易。推定地址的动态只出现在「最新动态」中，并明确标注为推定；特别栏目只收录已确认的信息。提醒只在本网站显示。
-  <br>版本：<b>v0.5.1</b>（首页）
+  <br>版本：<b>v0.5.2</b>（首页）
 </footer>
 <script>
 (async () => {
@@ -129,6 +130,9 @@
       `最后处理的区块：<b>${s.lastProcessedBlock ?? '—'}</b> / Cosmos 侧：<b>${s.lastProcessedCosmosBlock ?? '—'}</b> / 更新：${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('zh-CN',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / 已记录动态：${s.totalEvents}`;
     const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
     document.getElementById('c-insider').textContent = insider;
+    const xAddr = (FEED.validators.find((v) => v.moniker === 'X') || {}).address;
+    const insSelf = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600 && e.actor === xAddr).length;
+    document.getElementById('c-insider-sub').textContent = `本人 ${insSelf} / 关联 ${insider - insSelf}`;
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
     const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');

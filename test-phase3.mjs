@@ -44,8 +44,8 @@ const cnt = (t) => watchlist.entries.filter((e) => e.tier === t).length;
 // remaining depth>=2 entries (84 general addresses deleted).
 const autoAddedEntries = watchlist.entries.filter((e) => e.autoAdded);
 check('validator tier still 23', cnt('validator') === 23, String(cnt('validator')));
-check('original related tier now 87 after the v0.4.2 census (non-autoAdded)', watchlist.entries.filter((e) => e.tier === 'related' && !e.autoAdded).length === 87, String(watchlist.entries.filter((e) => e.tier === 'related' && !e.autoAdded).length));
-check('related tier = 87 + closure/live auto-added', cnt('related') === 87 + autoAddedEntries.length, String(cnt('related')));
+check('original related tier now 50 after the v0.5.2 tightening (non-autoAdded; 37 one-off contacts demoted to candidates)', watchlist.entries.filter((e) => e.tier === 'related' && !e.autoAdded).length === 50, String(watchlist.entries.filter((e) => e.tier === 'related' && !e.autoAdded).length));
+check('related tier = 50 + closure/live auto-added', cnt('related') === 50 + autoAddedEntries.length, String(cnt('related')));
 check('core tier now 153 after the v0.4.2 census (124 + 29)', cnt('core') === 153, String(cnt('core')));
 check('estimated tier present (4)', cnt('estimated') === 4, String(cnt('estimated')));
 check('total entries = 267 + auto-added', watchlist.entries.length === 267 + autoAddedEntries.length, String(watchlist.entries.length));
@@ -65,7 +65,7 @@ check('estimated basisTextEn has no Japanese', est.every((e) => !JA.test(e.basis
 check('estimated entries are watched and not pairs/core', est.every((e) => e.watch === true && !e.isPair && !e.isCore));
 check('no estimated address is a registered pair', est.every((e) => !(e.address in (registries.pairs ?? {}))));
 check('basis mix: pool 4 / shared 0 / 2hop 0 (the shared estimate was a contract, removed in v0.4.2)', est.filter((e) => e.basisType === 'pool').length === 4 && est.filter((e) => e.basisType === 'shared').length === 0 && est.filter((e) => e.basisType === '2hop').length === 0);
-check('watchlist summary counts agree', watchlist.summary.estimated === 4 && watchlist.summary.watchedActors === 114 + autoAddedEntries.length && watchlist.summary.totalEntries === 267 + autoAddedEntries.length && watchlist.summary.related === cnt('related') && watchlist.summary.autoAdded === autoAddedEntries.length);
+check('watchlist summary counts agree', watchlist.summary.estimated === 4 && watchlist.summary.watchedActors === 77 + autoAddedEntries.length && watchlist.summary.totalEntries === 267 + autoAddedEntries.length && watchlist.summary.related === cnt('related') && watchlist.summary.autoAdded === autoAddedEntries.length);
 
 // ---------- enrichEvent guards ----------
 const ctx = makeCtx(watchlist, registries, {});

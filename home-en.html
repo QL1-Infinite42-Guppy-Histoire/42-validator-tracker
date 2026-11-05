@@ -44,7 +44,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <b>English</b> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.1</span></div></div>
+  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <b>English</b> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
   <p class="sub">This site automatically collects the moves of the validators themselves and of the addresses confirmed to transact with them directly. Pick a section to jump to it.</p>
   <div class="status" id="status">Loading…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -55,6 +55,7 @@
       <h2>⚠ Insider Watch — X<span class="alias"> (Rioshi)</span></h2>
       <p>Only the buys of [42] and DONT made by validator X (Rioshi) itself and X (Rioshi)-related addresses before 14:00 JST on listing day (June 30, 2026).</p>
       <div class="count" id="c-insider">—</div>
+      <div class="segsub" id="c-insider-sub">—</div>
     </a>
     <a class="card snipes" href="en.html#sec-snipes">
       <h2>🎯 Snipe Alerts</h2>
@@ -118,7 +119,7 @@
 </main>
 <footer>
   Data source: the 42 Chain blocks themselves (via RPC). Coverage is limited to transactions on the 42 Chain only (EVM chain ID 421018 and its Cosmos side, infinite_421018-1). Transactions on QL1 or any other chain are not included. Moves by estimated addresses appear in Latest Activity only, clearly marked as estimated; the special sections stay confirmed-only. Alerts are shown on this site only.
-  <br>Version: <b>v0.5.1</b> (top page)
+  <br>Version: <b>v0.5.2</b> (top page)
 </footer>
 <script>
 (async () => {
@@ -129,6 +130,9 @@
       `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> / Cosmos side: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('en-US',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / Recorded moves: ${s.totalEvents}`;
     const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
     document.getElementById('c-insider').textContent = insider;
+    const xAddr = (FEED.validators.find((v) => v.moniker === 'X') || {}).address;
+    const insSelf = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600 && e.actor === xAddr).length;
+    document.getElementById('c-insider-sub').textContent = `Self ${insSelf} / Related ${insider - insSelf}`;
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
     const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');

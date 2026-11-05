@@ -44,7 +44,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>Rastreador en tiempo real de validadores de 42 Chain</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <b>Español</b> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.1</span></div></div>
+  <div class="head-row"><h1>Rastreador en tiempo real de validadores de 42 Chain</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <b>Español</b> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
   <p class="sub">Este sitio recopila automáticamente los movimientos de los propios validadores y de las direcciones confirmadas que transaccionan directamente con ellos. Elige una sección para saltar a ella.</p>
   <div class="status" id="status">Cargando…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -55,6 +55,7 @@
       <h2>⚠ Vigilancia Insider — X<span class="alias"> (Rioshi)</span></h2>
       <p>Solo las compras de [42] y DONT hechas por el propio validador X (Rioshi) y las direcciones relacionadas con X (Rioshi) antes de las 14:00 JST del día de listado (30 de junio de 2026).</p>
       <div class="count" id="c-insider">—</div>
+      <div class="segsub" id="c-insider-sub">—</div>
     </a>
     <a class="card snipes" href="es.html#sec-snipes">
       <h2>🎯 Alertas de snipe</h2>
@@ -118,7 +119,7 @@
 </main>
 <footer>
   Fuente de datos: los propios bloques de 42 Chain (vía RPC). La cobertura se limita únicamente a las transacciones de 42 Chain (EVM chain ID 421018 y su lado Cosmos, infinite_421018-1). No se incluyen transacciones de QL1 ni de ninguna otra cadena. Los movimientos de direcciones estimadas aparecen solo en Actividad reciente, claramente marcados como estimados; las secciones especiales solo incluyen información confirmada. Las alertas se muestran solo en este sitio.
-  <br>Versión: <b>v0.5.1</b> (página principal)
+  <br>Versión: <b>v0.5.2</b> (página principal)
 </footer>
 <script>
 (async () => {
@@ -129,6 +130,9 @@
       `Último bloque procesado: <b>${s.lastProcessedBlock ?? '—'}</b> / Lado Cosmos: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Actualizado: ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('es',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / Movimientos registrados: ${s.totalEvents}`;
     const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
     document.getElementById('c-insider').textContent = insider;
+    const xAddr = (FEED.validators.find((v) => v.moniker === 'X') || {}).address;
+    const insSelf = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600 && e.actor === xAddr).length;
+    document.getElementById('c-insider-sub').textContent = `Propias ${insSelf} / Relacionadas ${insider - insSelf}`;
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
     const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');

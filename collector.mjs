@@ -628,6 +628,43 @@ export function assessEvidenceFromEvents(addr, names, ctx, events) {
   }
   return adopted;
 }
+// ---- One-off candidates (v0.5.2, user-approved tightening) ----
+// A depth-1 "related" (confirmed) relation now requires DIRECT dealings
+// with the validator itself: at least 2 direct value transfers, or a
+// two-way exchange (1+ each way — which also totals 2). A first, one-off
+// one-way contact does NOT make an address related: it becomes a
+// CANDIDATE (tier 'candidate', watch:false — never displayed, its own
+// events are never recorded). Every later direct transfer between the
+// validator and the candidate is observed here; the moment the count
+// against that validator reaches 2, the candidate is promoted to
+// related and recording starts. The unit is one transfer leg, matching
+// the flow-index aggregates (flows.jsonl tt/cs legs + native sends).
+const CANDIDATE_TRANSFER_TYPES = new Set(['transfer', 'bridge-send-other', 'nft-transfer']);
+export function directPairOf(ev, ctx) {
+  if (!ev || !CANDIDATE_TRANSFER_TYPES.has(ev.type) || !ev.from || !ev.to) return null;
+  const f = lc(ev.from), t = lc(ev.to);
+  if (f === t) return null;
+  const fe = ctx.entry(f), te = ctx.entry(t);
+  if (fe?.tier === 'validator' && te?.tier !== 'validator') return { validator: fe, other: t, dir: 'out' };
+  if (te?.tier === 'validator' && fe?.tier !== 'validator') return { validator: te, other: f, dir: 'in' };
+  return null;
+}
+export function observeCandidateInteraction(watchlist, ctx, ev) {
+  const pair = directPairOf(ev, ctx);
+  if (!pair) return null;
+  const ce = ctx.entry(pair.other);
+  if (!ce || ce.tier !== 'candidate') return null;
+  const name = pair.validator.label;
+  const st = ((ce.directStats ??= {})[name] ??= { out: 0, in: 0 });
+  st[pair.dir] += 1;
+  if (st.out + st.in < 2) return { observed: ce };
+  const names = Object.entries(ce.directStats).filter(([, s]) => s.out + s.in >= 2).map(([n]) => n);
+  ce.tier = 'related'; ce.watch = true;
+  ce.relatedValidators = names.sort();
+  ce.promotedAt = ev.ts ?? null;
+  ce.addedVia = 'live';
+  return { promoted: ce };
+}
 // Live variant used by the collection loops: plans the add, checks the
 // counterparty's bytecode, and either applies the related add (returns
 // the new related entry) or registers a core contract (returns
@@ -636,13 +673,35 @@ export function assessEvidenceFromEvents(addr, names, ctx, events) {
 // core registry), and a depth>=2 newcomer enters ONLY with wallet
 // evidence (assessed from the recorded events against the inherited
 // validator names); unlimited automatic expansion is stopped.
+// v0.5.2 gate: a depth-1 newcomer (first direct contact with a
+// validator) enters as a one-off CANDIDATE, not as related — see
+// observeCandidateInteraction above. Candidate interactions with a
+// validator are observed (and may promote) before anything else.
 export async function maybeAutoAddLive(watchlist, ctx, ev, excluded, opts = {}) {
   const isContractFn = opts.isContractFn ?? isContractAddress;
+  const obs = observeCandidateInteraction(watchlist, ctx, ev);
+  if (obs) return obs;
   const plan = planAutoAdd(watchlist, ctx, ev, excluded);
   if (!plan) return null;
   if (await isContractFn(plan.cp)) {
     const label = DEST_LABELS[plan.cp] ?? KNOWN_CONTRACTS[plan.cp] ?? null;
     return { contract: registerCoreContract(watchlist, ctx, plan.cp, label) };
+  }
+  if (plan.depth <= 1) {
+    const entry = {
+      address: plan.cp, tier: 'candidate', label: null, isCore: false, isPair: false, watch: false,
+      validators: [], relatedValidators: [],
+      autoAdded: true, addedVia: 'live-candidate', addedAt: plan.ts, firstSeenTx: plan.txHash,
+      via: { address: plan.actor, validators: plan.names }, directStats: {},
+    };
+    watchlist.entries.push(entry);
+    ctx.watch.set(plan.cp, entry);
+    const pair = directPairOf(ev, ctx);
+    if (pair && pair.other === plan.cp) {
+      const st = (entry.directStats[pair.validator.label] ??= { out: 0, in: 0 });
+      st[pair.dir] += 1;
+    }
+    return { candidate: entry };
   }
   if (plan.depth >= 2) {
     const adopted = opts.events ? assessEvidenceFromEvents(plan.cp, plan.names, ctx, opts.events) : {};
@@ -660,6 +719,7 @@ export function recomputeWatchlistSummary(watchlist) {
   const s = (watchlist.summary ??= {});
   const cnt = (t) => watchlist.entries.filter((e) => e.tier === t).length;
   s.validators = cnt('validator'); s.related = cnt('related'); s.core = cnt('core'); s.estimated = cnt('estimated');
+  s.candidates = cnt('candidate');
   s.directRelated = s.related;
   s.coreLabelOnly = s.core;
   s.coreFlaggedTotal = watchlist.entries.filter((e) => e.isCore).length;
@@ -1922,6 +1982,13 @@ async function main() {
     const validators = watchlist.entries.filter((e) => e.tier === 'validator').map((v) => ({
       moniker: v.label, address: v.address, bech32: hexToBech32(v.address), isCore: v.isCore,
       relatedCount: watchlist.entries.filter((e) => e.tier === 'related' && e.relatedValidators.includes(v.label)).length,
+      selfActivity: allEvents.filter((e) => e.actor === v.address).length,
+      // v0.5.2: "related activity" = activity BY the validator's related
+      // addresses only (the actor's own relations). The old validatorNames
+      // union also swept in fellow validators' events (validator<->validator
+      // links, e.g. Xenia's 2-[42] seeds) and counterparty-side mentions;
+      // those are not the related addresses' activity and no longer count.
+      relatedActivity: allEvents.filter((e) => e.actor !== v.address && (e.actorValidators ?? []).includes(v.label)).length,
       autoAddedCount: watchlist.entries.filter((e) => e.autoAdded && e.relatedValidators.includes(v.label)).length,
       estimatedCount: watchlist.entries.filter((e) => e.tier === 'estimated' && e.relatedValidators.includes(v.label)).length,
       ...(v.inactive ? { inactive: true } : {}),
@@ -2093,6 +2160,14 @@ async function main() {
             if (addRes?.contract) {
               watchlistDirty = true;
               console.log(`[collector] counterparty is a contract — registered as core, not related: ${addRes.contract.address}`);
+            } else if (addRes?.candidate) {
+              watchlistDirty = true;
+              console.log(`[collector] first direct contact with a validator — held as one-off candidate (not related): ${addRes.candidate.address}`);
+            } else if (addRes?.promoted) {
+              watchlistDirty = true;
+              console.log(`[collector] candidate promoted to related ${addRes.promoted.address} (direct dealings reached 2: ${addRes.promoted.relatedValidators.join(', ')})`);
+            } else if (addRes?.observed) {
+              watchlistDirty = true;
             } else if (addRes) {
               ev.watchlistAdded = true;
               watchlistDirty = true;
@@ -2145,6 +2220,14 @@ async function main() {
         if (addRes?.contract) {
           watchlistDirty = true;
           console.log(`[collector] counterparty is a contract — registered as core, not related (cosmos): ${addRes.contract.address}`);
+        } else if (addRes?.candidate) {
+          watchlistDirty = true;
+          console.log(`[collector] first direct contact with a validator — held as one-off candidate (not related, cosmos): ${addRes.candidate.address}`);
+        } else if (addRes?.promoted) {
+          watchlistDirty = true;
+          console.log(`[collector] candidate promoted to related (cosmos) ${addRes.promoted.address} (direct dealings reached 2: ${addRes.promoted.relatedValidators.join(', ')})`);
+        } else if (addRes?.observed) {
+          watchlistDirty = true;
         } else if (addRes) {
           ev.watchlistAdded = true;
           watchlistDirty = true;

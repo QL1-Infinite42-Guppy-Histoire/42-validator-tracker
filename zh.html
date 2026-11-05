@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 链验证者实时追踪 v0.5.1</title>
+<title>42 链验证者实时追踪 v0.5.2</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -59,6 +59,7 @@
   a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
   .vals{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
   .val{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.92rem}
+  h3.vgroup{font-size:1.02rem;margin:16px 0 8px;padding:6px 10px;background:#16283f;border-radius:6px}
   .empty{color:var(--sub);padding:18px 0}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
@@ -125,8 +126,8 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 链验证者实时追踪</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <b>简体中文</b> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.1</span></div></div>
-  <p class="sub">本页面从新区块中自动收集验证者本人及其关联地址（与他们交易过的所有人，以及这些人的交易对手）的动态（EVM 侧 + Cosmos 侧，v0.5.1）。程序（合约）地址不计为某个人的关联，关联也不会经由它们追溯。一个地址不会仅仅因为是共享钱包就被当作基础设施；唯一的判断标准是它是否为程序（合约）。第 2 层及更深的钱包，只有在有证据表明它是验证者本人的钱包时（例如双向资金流动）才计入。没有证据的普通地址不计入。关联仅属推定的地址，其动态只会出现在「最新动态」中，并明确标注为推定（特别栏目只收录已确认的信息）。</p>
+  <div class="head-row"><h1>42 链验证者实时追踪</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <b>简体中文</b> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
+  <p class="sub">本页面从新区块中自动收集验证者本人及其关联地址（与他们交易过的所有人，以及这些人的交易对手）的动态（EVM 侧 + Cosmos 侧，v0.5.2）。程序（合约）地址不计为某个人的关联，关联也不会经由它们追溯。一个地址不会仅仅因为是共享钱包就被当作基础设施；唯一的判断标准是它是否为程序（合约）。第 2 层及更深的钱包，只有在有证据表明它是验证者本人的钱包时（例如双向资金流动）才计入。没有证据的普通地址不计入。关联仅属推定的地址，其动态只会出现在「最新动态」中，并明确标注为推定（特别栏目只收录已确认的信息）。关联地址是过去与该验证者有过交易的「其他人的地址」，未必是验证者本人的钱包。其动态与验证者本人的动态分开显示。「关联地址」仅指与验证者有过至少两次直接交易，或有过双向往来的地址。只有一次的单向交易不计为关联。</p>
   <nav class="topnav"><a href="home-zh.html">🏠 首页</a><a href="#sec-insider">⚠ 内幕</a><a href="#sec-snipes">🎯 抢购</a><a href="#sec-bridge">🌉 跨链转出</a><a href="#sec-bridgechart">📊 总额</a><a href="#sec-alerts">⭐ 值得关注</a><a href="#sec-lp">💧 流动性</a><a href="#sec-dormant">😴 久违动态</a><a href="#sec-newfaces">👤 新面孔</a><a href="#sec-newpairs">🆕 新交易对</a><a href="#sec-feed">最新动态</a><a href="#sec-staking">🏦 质押</a><a href="#sec-validators">验证者</a></nav>
   <div class="status" id="status">正在加载…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
@@ -152,7 +153,7 @@
 
   <section class="bridgechart" id="sec-bridgechart">
     <h2>📊 USDT 跨链转出总额</h2>
-    <p class="rule">本图表的统计方式：对每一位验证者（共 23 位），汇总验证者本人、其第 1 层关联钱包、以及带有证据的第 2 层及更深关联钱包的跨链转出（USDT）。第 2 层及更深的钱包，只有在有证据表明它是验证者本人的钱包时（例如双向资金流动）才计入。没有证据的普通地址不计入。只有个人钱包计为发送方——基础设施（程序＝合约）地址永不计入，推定地址也不计入。每根柱子分为：验证者本人 / 与该验证者直接交易的关联钱包（第 1 层）/ 经由其他钱包连接的关联钱包（第 2 层及更深，仅限有证据者）。共享钱包的转出会计入它所连接的每一位验证者的柱子，因此各柱之和不等于总计；去重后的总计显示在上方。</p>
+    <p class="rule">本图表的统计方式：对每一位验证者（共 23 位），汇总验证者本人、其第 1 层关联钱包、以及带有证据的第 2 层及更深关联钱包的跨链转出（USDT）。第 2 层及更深的钱包，只有在有证据表明它是验证者本人的钱包时（例如双向资金流动）才计入。没有证据的普通地址不计入。只有个人钱包计为发送方——基础设施（程序＝合约）地址永不计入，推定地址也不计入。每根柱子分为：验证者本人 / 与该验证者直接交易的关联钱包（第 1 层）/ 经由其他钱包连接的关联钱包（第 2 层及更深，仅限有证据者）。共享钱包的转出会计入它所连接的每一位验证者的柱子，因此各柱之和不等于总计；去重后的总计显示在上方。也就是说，每条柱的大部分并非验证者本人的出金，而是按关联关系归属的关联钱包的出金；验证者本人的出金只有每条柱中「验证者本人」的部分。</p>
     <div id="bridgeChart"><p class="empty">正在加载…</p></div>
   </section>
 
@@ -271,7 +272,7 @@
   范围：EVM 侧 + Cosmos 侧（转账、委托、奖励领取）。只要目标合约和方法能识别，操作类型就以具体名称显示（Fluke 参与、NFT 铸造、奖励领取、跨链发送等）；无法识别的会如实显示为「未分类操作（方法 / 目标）」。跨链转出栏目只涵盖把 USDT 转出到外部链的动态（其他代币的跨链发送作为普通动态记录，不在绿色栏目中显示；入链收款为普通收款）。推定地址（第 3 阶段）：无法通过直接转账确认关联的地址也会被监控，用三种方式推定——经池、两跳和共享交易对手。它们的动态只出现在「最新动态」中，带虚线边框、「推定」徽章并显示依据；永不计入内幕 / 抢购 / 值得关注 / 跨链转出 / 总额栏目（那些栏目只收录已确认信息）。验证者列表在每次运行时从链上刷新：新加入的验证者会被自动添加，离开验证者集合的验证者仍作为历史保留监控（标注为不活跃）。本站不会向外部发布任何内容（没有 X 机器人）——提醒只在本网站内。
   关联地址的范围（v0.4.0）：除与验证者有过发送或接收的每个地址外，还对全部记录（包括过去）应用了全历史展开（交易对手的交易对手，不设上限）（系统 / 交易对 / 代币合约，以及只能经由推定地址到达的联系人除外）。新交易对手出现时，也会被当场自动作为关联地址加入。/ 新交易对栏目涵盖由 Don't Panic 工厂创建的交易对，只显示至少包含 17 个上线代币之一的交易对。/ [42] 价格由 42/USDT 池子的储备计算；池子较小，因此该数字存在误差范围。
   Cosmos 侧的交易链接打开我们自己的 Cosmos 浏览器（42 Cosmos Scan）。标题只显示实际发生动态的地址本身；关联验证者在单独一行列出并设有上限（与多位验证者交易的地址带有「共享交易对手」标记）。验证者 X 也被称为 Rioshi，名字旁以小字显示为 (Rioshi)。
-  <br>版本：<b>v0.5.1</b>（v0.5.1：修复页眉布局（标题改为整行显示，语言切换在窄屏上自动换行）。v0.5.0：本站现已提供八种语言——日本語、English、简体中文、Español、हिन्दी、العربية、Português 和 Français——每种语言都从同一份 feed.json 渲染，由结构化字段组装，而非使用保存的日语摘要。v0.4.3：在每个页面的页眉右上角、语言切换旁添加了版本徽章。v0.4.2：将所有基础设施（合约）地址从人物关系图中移除——关联只经由个人钱包（EOA）计算，永不经由合约；跨链转出总额图表现按验证者逐一统计（全部 23 位，深度不限，共享钱包计入每位相连验证者的柱子）。v0.4.1：跨链转出总额图表现按深度拆分每根柱子——验证者本人 / 第 1 层关联 / 第 2 层及更深关联。此前，v0.4.0 增加了六个栏目——新交易对、流动性动态、委托与奖励总计、久违回归、新面孔（全历史关联地址展开 + 自动加入）以及 [42] 价格；v0.3.2 将 Xenia 从核心基础设施重新归类为普通验证者——一次分类纠正；v0.3.1 在「最新动态」筛选旁增加了推定关联的定义；v0.3.0 完成了第 3 阶段：推定地址监控 + 验证者列表自动刷新、在 X 旁标注 (Rioshi) 别名，以及右上角的「日本語 | English」语言切换）
+  <br>版本：<b>v0.5.2</b>（v0.5.2：修正了归属显示——按验证者筛选时，本人动态与关联地址动态分成两组显示，验证者列表中的件数也按本人／关联分开统计，他人的交易不再显示为验证者本人的动态；同时收紧了「关联」的定义（仅与验证者有至少两次直接交易、或有双向往来的地址才算关联；只有一次单向往来的地址保留为候选，第二次直接交易时自动恢复为关联）。v0.5.1：修复页眉布局（标题改为整行显示，语言切换在窄屏上自动换行）。v0.5.0：本站现已提供八种语言——日本語、English、简体中文、Español、हिन्दी、العربية、Português 和 Français——每种语言都从同一份 feed.json 渲染，由结构化字段组装，而非使用保存的日语摘要。v0.4.3：在每个页面的页眉右上角、语言切换旁添加了版本徽章。v0.4.2：将所有基础设施（合约）地址从人物关系图中移除——关联只经由个人钱包（EOA）计算，永不经由合约；跨链转出总额图表现按验证者逐一统计（全部 23 位，深度不限，共享钱包计入每位相连验证者的柱子）。v0.4.1：跨链转出总额图表现按深度拆分每根柱子——验证者本人 / 第 1 层关联 / 第 2 层及更深关联。此前，v0.4.0 增加了六个栏目——新交易对、流动性动态、委托与奖励总计、久违回归、新面孔（全历史关联地址展开 + 自动加入）以及 [42] 价格；v0.3.2 将 Xenia 从核心基础设施重新归类为普通验证者——一次分类纠正；v0.3.1 在「最新动态」筛选旁增加了推定关联的定义；v0.3.0 完成了第 3 阶段：推定地址监控 + 验证者列表自动刷新、在 X 旁标注 (Rioshi) 别名，以及右上角的「日本語 | English」语言切换）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -518,15 +519,32 @@ function renderStaking(){
   const u = st.unattributed || {};
   document.getElementById('stakingNote').textContent = `注：「其本人收到的运营奖励」只统计从该验证者本人地址领取的佣金。委托与取消委托只有在对方验证者明确时才按验证者归属（不明确者——佣金 ${u.commission ?? 0}、委托 ${u.delegate ?? 0}、取消委托 ${u.undelegate ?? 0}——只计入整体总计）。`;
 }
+const EMPTY_FILTER = '<p class="empty">尚无符合所选筛选条件的动态。</p>';
+function isSelfEvent(ev, v){
+  const ve = (FEED.validators || []).find((x) => x.moniker === v);
+  return !!ve && ev.actor === ve.address;
+}
+function isRelatedEvent(ev, v){ return (ev.actorValidators || []).includes(v); }
+function renderFeedList(list, v){
+  const feedEl = document.getElementById('feed');
+  if (!v) { feedEl.innerHTML = list.length ? list.map(renderEvent).join('') : EMPTY_FILTER; return; }
+  const self = list.filter((ev) => isSelfEvent(ev, v));
+  const related = list.filter((ev) => !isSelfEvent(ev, v));
+  feedEl.innerHTML =
+    `<h3 class="vgroup">本人动态（${self.length}条）</h3>` +
+    (self.length ? self.map(renderEvent).join('') : `<p class="empty">尚未记录到该验证者本人的动态</p>`) +
+    `<h3 class="vgroup">关联地址动态（${related.length}条）</h3>` +
+    (related.length ? related.map(renderEvent).join('') : `<p class="empty">暂无关联地址的动态。</p>`);
+}
 function applyFilters(){
   if (!FEED) return;
   const v = document.getElementById('fValidator').value;
   const t = document.getElementById('fType').value;
   const tk = document.getElementById('fToken').value;
   const showEst = document.getElementById('fEstimated').checked;
-  const match = (ev) => (!v || (ev.validatorNames||[]).includes(v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk)) && (showEst || ev.actorTier !== 'estimated');
+  const match = (ev) => (!v || isSelfEvent(ev, v) || isRelatedEvent(ev, v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk)) && (showEst || ev.actorTier !== 'estimated');
   const list = FEED.events.filter(match);
-  document.getElementById('feed').innerHTML = list.length ? list.map(renderEvent).join('') : '<p class="empty">尚无符合所选筛选条件的动态。</p>';
+  renderFeedList(list, v);
   // Special sections are CONFIRMED-ONLY (v0.3.0): estimated actors excluded.
   const isBO = (ev) => ev.type === 'bridge-out' || (ev.notableReasons||[]).includes('bridge-out');
   const alerts = FEED.events.filter((ev) => ev.actorTier !== 'estimated' && !isBO(ev) && (ev.notableReasons||[]).filter((r) => r !== 'bridge-out').length);
@@ -589,7 +607,7 @@ async function load(){
     }
     document.querySelector('#sec-validators h2').textContent = `验证者（${FEED.validators.length}）`;
     document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
-      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">兼核心基础设施</span>' : ''}${v.inactive ? ' <span class="badge">当前不活跃</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} 个关联地址（含自动加入 ${v.autoAddedCount ?? 0} 个）/ ${v.estimatedCount ?? 0} 个推定</span></div>`).join('');
+      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">兼核心基础设施</span>' : ''}${v.inactive ? ' <span class="badge">当前不活跃</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} 个关联地址（含自动加入 ${v.autoAddedCount ?? 0} 个）/ ${v.estimatedCount ?? 0} 个推定</span><br><span class="sub">本人动态 ${v.selfActivity ?? 0}条／关联地址动态 ${v.relatedActivity ?? 0}条</span></div>`).join('');
     applyFilters();
     renderBridgeChart();
     renderStaking();

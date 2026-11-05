@@ -9,19 +9,20 @@
  },
  "summary": {
   "validators": 23,
-  "directRelated": 99,
+  "directRelated": 62,
   "coreLabelOnly": 153,
   "coreFlaggedTotal": 154,
-  "watchedActors": 126,
+  "watchedActors": 89,
   "totalEntries": 279,
   "confirmedCounterpartyLinks": 212,
   "uniqueConfirmedCounterparties": 129,
-  "related": 99,
+  "related": 62,
   "core": 153,
   "estimated": 4,
   "autoAdded": 12,
   "autoAddedClosure": 12,
-  "autoAddedLive": 0
+  "autoAddedLive": 0,
+  "candidates": 37
  },
  "entries": [
   {
@@ -359,39 +360,60 @@
   },
   {
    "address": "0x02845d10214dff41642bbcee2438a9cddee90d5c",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "FoxxOne"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "FoxxOne": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x07f0fbde206fd7c062cdeb520b12604efea09e7c",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x0ba9b2fee8d904203586cdcfa854ea37732c2f7e",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x0e1e3eeeaf7bdd4306c68392d0a8571fcbd415c6",
@@ -403,7 +425,14 @@
    "validators": [],
    "relatedValidators": [
     "Woman-In-Red-42"
-   ]
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x0e4005e7dd0d4a165edeebec3166f483e28bfe1a",
@@ -415,31 +444,52 @@
    "validators": [],
    "relatedValidators": [
     "the_rider"
-   ]
+   ],
+   "directStats": {
+    "the_rider": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x10007d008d8e577132fed69aa792a07a1eadf611",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Woman-In-Red-42"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x114b0267342df640139915d295e106e3bba87f40",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
@@ -451,7 +501,14 @@
    "validators": [],
    "relatedValidators": [
     "dudenode"
-   ]
+   ],
+   "directStats": {
+    "dudenode": {
+     "out": 3,
+     "in": 0,
+     "total": 3
+    }
+   }
   },
   {
    "address": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
@@ -463,7 +520,14 @@
    "validators": [],
    "relatedValidators": [
     "DRIVESTATS"
-   ]
+   ],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x1fab3f8ca0294ebbdeed3214a57a15e550f84329",
@@ -475,7 +539,14 @@
    "validators": [],
    "relatedValidators": [
     "farmer"
-   ]
+   ],
+   "directStats": {
+    "farmer": {
+     "out": 6,
+     "in": 2,
+     "total": 8
+    }
+   }
   },
   {
    "address": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
@@ -498,19 +569,33 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 3,
+     "in": 3,
+     "total": 6
+    }
+   }
   },
   {
    "address": "0x2cceba1e224d073e5b901a5f3cc1ee3332c4058d",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "PhoenixRing"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "PhoenixRing": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x2e287f6789c57d4c9ad02d79eaede77158df0e12",
@@ -522,7 +607,14 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 2,
+     "in": 2,
+     "total": 4
+    }
+   }
   },
   {
    "address": "0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf",
@@ -533,10 +625,26 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Metal Raptor",
     "DRIVESTATS",
     "Zap"
-   ]
+   ],
+   "directStats": {
+    "Metal Raptor": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    },
+    "DRIVESTATS": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    },
+    "Zap": {
+     "out": 1,
+     "in": 2,
+     "total": 3
+    }
+   }
   },
   {
    "address": "0x317cf3ac75cd684e1d0f9427738616fd6cb383c3",
@@ -548,7 +656,14 @@
    "validators": [],
    "relatedValidators": [
     "Popo"
-   ]
+   ],
+   "directStats": {
+    "Popo": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x388f7d825f745c673c71d695c125ce9a51f18b35",
@@ -571,19 +686,33 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 2,
+     "in": 2,
+     "total": 4
+    }
+   }
   },
   {
    "address": "0x3d37d8f3ec1c9f58708070cf80ad600d1084401d",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Woman-In-Red-42"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x42eb01b85b8c7df4ace961682d69f357b6efcc40",
@@ -595,7 +724,14 @@
    "validators": [],
    "relatedValidators": [
     "vethawk"
-   ]
+   ],
+   "directStats": {
+    "vethawk": {
+     "out": 3,
+     "in": 0,
+     "total": 3
+    }
+   }
   },
   {
    "address": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
@@ -618,7 +754,14 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 1,
+     "in": 1,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x51ff1db71a8c0efe1bf1f13758f72de3cdb063dc",
@@ -630,7 +773,14 @@
    "validators": [],
    "relatedValidators": [
     "Woman-In-Red-42"
-   ]
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 2,
+     "in": 1,
+     "total": 3
+    }
+   }
   },
   {
    "address": "0x53df50e949eb821ea1ad563b3db8d13abca5b07d",
@@ -664,7 +814,14 @@
    "validators": [],
    "relatedValidators": [
     "ayc"
-   ]
+   ],
+   "directStats": {
+    "ayc": {
+     "out": 6,
+     "in": 1,
+     "total": 7
+    }
+   }
   },
   {
    "address": "0x5af775f3bec809b893de59e2f06ef995d280111a",
@@ -676,7 +833,14 @@
    "validators": [],
    "relatedValidators": [
     "X"
-   ]
+   ],
+   "directStats": {
+    "X": {
+     "out": 5,
+     "in": 0,
+     "total": 5
+    }
+   }
   },
   {
    "address": "0x5cfcb6e5999f06bdfaee2bd6adcc4d17afead3f5",
@@ -699,31 +863,52 @@
    "validators": [],
    "relatedValidators": [
     "light888"
-   ]
+   ],
+   "directStats": {
+    "light888": {
+     "out": 5,
+     "in": 1,
+     "total": 6
+    }
+   }
   },
   {
    "address": "0x5ffe583db325c351ef80f92337d3a207601f562c",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x6039672428efea0ed045c8ada438d783e2f7d50e",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x67a347a2f7f8986066d7be9330da041128c1ca0b",
@@ -735,7 +920,14 @@
    "validators": [],
    "relatedValidators": [
     "DRIVESTATS"
-   ]
+   ],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
@@ -747,7 +939,14 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 3,
+     "in": 1,
+     "total": 4
+    }
+   }
   },
   {
    "address": "0x680de4c960b670cb08e19eac73ac352af3b6eb38",
@@ -758,9 +957,21 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "farmer",
-    "Xenia"
-   ]
+    "Xenia",
+    "farmer"
+   ],
+   "directStats": {
+    "farmer": {
+     "out": 0,
+     "in": 2,
+     "total": 2
+    },
+    "Xenia": {
+     "out": 2,
+     "in": 1,
+     "total": 3
+    }
+   }
   },
   {
    "address": "0x685e4bc7db3f65c8adf28c84d592edafa4c92c15",
@@ -772,19 +983,33 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 3,
+     "in": 1,
+     "total": 4
+    }
+   }
   },
   {
    "address": "0x6e07f37383fed959d7542be20ceab4eb68bd8bf6",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "panda42"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "panda42": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x6f7f258c6124661c452af8526087e1162815eb62",
@@ -796,7 +1021,14 @@
    "validators": [],
    "relatedValidators": [
     "farmer"
-   ]
+   ],
+   "directStats": {
+    "farmer": {
+     "out": 1,
+     "in": 1,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
@@ -818,13 +1050,40 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "Woman-In-Red-42",
-    "Metal Raptor",
-    "vethawk",
-    "panda42",
-    "kimnmike",
-    "DON'T PANIC - DEX"
-   ]
+    "Woman-In-Red-42"
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 1,
+     "in": 1,
+     "total": 2
+    },
+    "Metal Raptor": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    },
+    "vethawk": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    },
+    "panda42": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    },
+    "kimnmike": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    },
+    "DON'T PANIC - DEX": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   }
   },
   {
    "address": "0x7a6f6d4e0ce3abbba5ab6685c37a9599f6250a25",
@@ -835,14 +1094,43 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "PhoenixRing",
     "HeraMoon",
-    "ayc",
-    "dudenode",
-    "panda42",
-    "Xenia"
+    "Xenia",
+    "panda42"
    ],
-   "coreNote": "配布型・中核として表示（人物ウォレット扱いしない）"
+   "coreNote": "配布型・中核として表示（人物ウォレット扱いしない）",
+   "directStats": {
+    "PhoenixRing": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    },
+    "HeraMoon": {
+     "out": 3,
+     "in": 0,
+     "total": 3
+    },
+    "ayc": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    },
+    "dudenode": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    },
+    "panda42": {
+     "out": 3,
+     "in": 0,
+     "total": 3
+    },
+    "Xenia": {
+     "out": 4,
+     "in": 0,
+     "total": 4
+    }
+   }
   },
   {
    "address": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
@@ -854,7 +1142,14 @@
    "validators": [],
    "relatedValidators": [
     "FoxxOne"
-   ]
+   ],
+   "directStats": {
+    "FoxxOne": {
+     "out": 0,
+     "in": 2,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
@@ -866,7 +1161,14 @@
    "validators": [],
    "relatedValidators": [
     "Woman-In-Red-42"
-   ]
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x7f290996aaee6c188c64ce2cf0133baf54d66ab8",
@@ -878,19 +1180,33 @@
    "validators": [],
    "relatedValidators": [
     "Woman-In-Red-42"
-   ]
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 1,
+     "in": 1,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x7fbbad54901a8e309fa8c6a43a51a3ab1980e816",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x80bacfb358a3c7d7d1b549c2028001e2ba3acdac",
@@ -913,19 +1229,33 @@
    "validators": [],
    "relatedValidators": [
     "kimnmike"
-   ]
+   ],
+   "directStats": {
+    "kimnmike": {
+     "out": 5,
+     "in": 0,
+     "total": 5
+    }
+   }
   },
   {
    "address": "0x8364754d63255ce6e383aac7952b64160fd5b32b",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x85996a6b22ea606af88dabd184681b5776e86f0d",
@@ -937,7 +1267,14 @@
    "validators": [],
    "relatedValidators": [
     "Luke"
-   ]
+   ],
+   "directStats": {
+    "Luke": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0x86091f5ac846b9c89d3f33cae7a2723bc85fd8cd",
@@ -949,7 +1286,14 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 4,
+     "in": 2,
+     "total": 6
+    }
+   }
   },
   {
    "address": "0x8667682b62caceda9e87b3caa21d5b09d9ae13c3",
@@ -964,39 +1308,60 @@
   },
   {
    "address": "0x8aa74b7d5962b8374f995b6004c3c72f0969858d",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Xenia"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "Xenia": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x8d6f41d53d724ce975958752e9a7a0d89e4d3178",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "FoxxOne"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "FoxxOne": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x8dea5b618c1ccd57cacc213003a6b7395f6c331e",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "light888"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "light888": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x95feabdecca6cbc808d231895b80703905be3b83",
@@ -1022,15 +1387,22 @@
   },
   {
    "address": "0x980a0fed01332f88cc8bc0db428460e6454dda13",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "XenIt"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "XenIt": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x985f6ecb68f308ea4c3b5fc9c5b187f4ee1dfa23",
@@ -1064,19 +1436,33 @@
    "validators": [],
    "relatedValidators": [
     "CCUK"
-   ]
+   ],
+   "directStats": {
+    "CCUK": {
+     "out": 0,
+     "in": 2,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xa01024c74cae7a1c2b79733e523b80d872654fcb",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "farmer"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "farmer": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xa13b816adaecbaf505f870f11d7a74ccbec68807",
@@ -1088,7 +1474,14 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 4,
+     "in": 0,
+     "total": 4
+    }
+   }
   },
   {
    "address": "0xa2cc7262cd94b1d7ca417395d76c4edda4e4441f",
@@ -1100,19 +1493,33 @@
    "validators": [],
    "relatedValidators": [
     "XenIt"
-   ]
+   ],
+   "directStats": {
+    "XenIt": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xa2e32eeae6b5d37da8e221ab51e4977a23f529cf",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xa7550206e84cd6018bb7bc27cc35c66f14dd8cd3",
@@ -1127,27 +1534,41 @@
   },
   {
    "address": "0xa773550da5c6dff9d6ab5d6252e1a2cea2f26d50",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xa7ce9761840cb59602b06c6c350beb50a61f695e",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xa8d5d10095d0d94b758e2d74c00107cfca311fd3",
@@ -1159,7 +1580,14 @@
    "validators": [],
    "relatedValidators": [
     "X"
-   ]
+   ],
+   "directStats": {
+    "X": {
+     "out": 4,
+     "in": 5,
+     "total": 9
+    }
+   }
   },
   {
    "address": "0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
@@ -1171,7 +1599,14 @@
    "validators": [],
    "relatedValidators": [
     "CCUK"
-   ]
+   ],
+   "directStats": {
+    "CCUK": {
+     "out": 9,
+     "in": 0,
+     "total": 9
+    }
+   }
   },
   {
    "address": "0xaa602aa1747f1f889f8bea2559090c97647a0133",
@@ -1183,7 +1618,14 @@
    "validators": [],
    "relatedValidators": [
     "FoxxOne"
-   ]
+   ],
+   "directStats": {
+    "FoxxOne": {
+     "out": 12,
+     "in": 0,
+     "total": 12
+    }
+   }
   },
   {
    "address": "0xaabcc9186b6b3090b6b06d754b27970ae529af00",
@@ -1198,16 +1640,27 @@
   },
   {
    "address": "0xadbe4ec4cbf1ad59a4a057d9b427bff91742fc14",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS",
-    "Xenia"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    },
+    "Xenia": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
@@ -1219,7 +1672,14 @@
    "validators": [],
    "relatedValidators": [
     "X"
-   ]
+   ],
+   "directStats": {
+    "X": {
+     "out": 7,
+     "in": 0,
+     "total": 7
+    }
+   }
   },
   {
    "address": "0xb647ce2aa7d436cce95dc961d066ef610ca451b7",
@@ -1234,15 +1694,22 @@
   },
   {
    "address": "0xb68c8646ceb8666fb2977d2e5dc89c915d3ae850",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xb7fdd96575fc1e838697a21216ad9f6b1d7204f9",
@@ -1254,43 +1721,71 @@
    "validators": [],
    "relatedValidators": [
     "Xenia"
-   ]
+   ],
+   "directStats": {
+    "Xenia": {
+     "out": 6,
+     "in": 0,
+     "total": 6
+    }
+   }
   },
   {
    "address": "0xba97ec22cc54bfb61d67bef000c2fc103879fe37",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DON'T PANIC - DEX"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DON'T PANIC - DEX": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xbc4ff1b638cdf80654ae201bddeb2d48c91a768d",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "dudenode"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "dudenode": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xbcfbc43df19b308db6e0e94b0bb7ef9b822a0dc1",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "XenIt"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "XenIt": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xbf07dfe35746894bae373f63f4bf2379f9bafec0",
@@ -1313,19 +1808,33 @@
    "validators": [],
    "relatedValidators": [
     "Woman-In-Red-42"
-   ]
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xc45477388d6b81051c21e3351bc83f52cc9c3b58",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xc46b052a170ca8d108ee740cbe1d2058eef0d8aa",
@@ -1340,15 +1849,22 @@
   },
   {
    "address": "0xc5d55f09f144d648dbdbdd13aaa7ef17b95db750",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xc747c1a4a57955478701a0adf8a8716a0ccfed96",
@@ -1371,7 +1887,14 @@
    "validators": [],
    "relatedValidators": [
     "XenIt"
-   ]
+   ],
+   "directStats": {
+    "XenIt": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
@@ -1393,9 +1916,21 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "X",
-    "CCUK"
-   ]
+    "X"
+   ],
+   "directStats": {
+    "X": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    },
+    "CCUK": {
+     "out": 0,
+     "in": 1,
+     "total": 1
+    }
+   },
+   "protected": "insider-x"
   },
   {
    "address": "0xc90b2eafde65c18e5d9d8aaf64846c0f6445ee9a",
@@ -1406,9 +1941,20 @@
    "watch": true,
    "validators": [],
    "relatedValidators": [
-    "dudenode",
-    "Xenia"
-   ]
+    "dudenode"
+   ],
+   "directStats": {
+    "dudenode": {
+     "out": 0,
+     "in": 2,
+     "total": 2
+    },
+    "Xenia": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   }
   },
   {
    "address": "0xce9e6e78933de90e1ddcec453b88cbb0a1765b5a",
@@ -1420,19 +1966,33 @@
    "validators": [],
    "relatedValidators": [
     "farmer"
-   ]
+   ],
+   "directStats": {
+    "farmer": {
+     "out": 4,
+     "in": 1,
+     "total": 5
+    }
+   }
   },
   {
    "address": "0xd0262da4d5f9e608fc1ff1e70c72e92b1a4ffe8d",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xd0f48123638bd243c3a0ee49d0d7beb7404f9de4",
@@ -1455,31 +2015,52 @@
    "validators": [],
    "relatedValidators": [
     "Woman-In-Red-42"
-   ]
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 1,
+     "in": 1,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xd8272f7f61b3f6e1cfcd9f5bb98fcadb1c807bfa",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Luke"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "Luke": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xd8369f322f00ab9b9af56aea40f2dd884a8f0e9c",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Woman-In-Red-42"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xda932a8e5b492a011fbd66e09e2824a9b1893ff3",
@@ -1491,7 +2072,14 @@
    "validators": [],
    "relatedValidators": [
     "Woman-In-Red-42"
-   ]
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 1,
+     "in": 1,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xdac5fcc3b9c0f965888b346cf27faad5f90da274",
@@ -1503,7 +2091,14 @@
    "validators": [],
    "relatedValidators": [
     "HeraMoon"
-   ]
+   ],
+   "directStats": {
+    "HeraMoon": {
+     "out": 5,
+     "in": 0,
+     "total": 5
+    }
+   }
   },
   {
    "address": "0xdf766292d7dfdf6d671a73573a748f17a97afd4e",
@@ -1515,55 +2110,90 @@
    "validators": [],
    "relatedValidators": [
     "light888"
-   ]
+   ],
+   "directStats": {
+    "light888": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xe15c7747a2b978f46d73794c1eefd575f93c0b7d",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xe3decc2d979cc604c3213683006757136dbc1bde",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xe5a3b887d09f5477025b0044849cfcce5c076fd1",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "HeraMoon": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xea1adb4def61ed581d77d7f380cafa5d757881b2",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "kimnmike"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "kimnmike": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xeac58d50ebb3cf70d73a2cc07920d2ae59f90d06",
@@ -1575,7 +2205,14 @@
    "validators": [],
    "relatedValidators": [
     "Luke"
-   ]
+   ],
+   "directStats": {
+    "Luke": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xeb59b392a5558931354e574d3b3beaff44f9df81",
@@ -1587,19 +2224,33 @@
    "validators": [],
    "relatedValidators": [
     "Woman-In-Red-42"
-   ]
+   ],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 2,
+     "in": 0,
+     "total": 2
+    }
+   }
   },
   {
    "address": "0xede1d8507ca3561fb8e127733b3878b319c5660c",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "Woman-In-Red-42"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "Woman-In-Red-42": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xf2ecb173b63699c49ace3faae80af5ce677af015",
@@ -1622,7 +2273,14 @@
    "validators": [],
    "relatedValidators": [
     "X"
-   ]
+   ],
+   "directStats": {
+    "X": {
+     "out": 3,
+     "in": 0,
+     "total": 3
+    }
+   }
   },
   {
    "address": "0xf75b159860f3de7f229e22d08eab844fd97baade",
@@ -1634,19 +2292,34 @@
    "validators": [],
    "relatedValidators": [
     "X"
-   ]
+   ],
+   "directStats": {
+    "X": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "protected": "insider-x"
   },
   {
    "address": "0xfa1243bac322255cab763ae0bcfb6af0f85f95fb",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0xfac6a97837fd3ef5876e18457eea52415296c613",
@@ -1661,15 +2334,22 @@
   },
   {
    "address": "0xfb8f7ae5fa2a975e672905fe2bb14a82a94f5b8d",
-   "tier": "related",
+   "tier": "candidate",
    "label": null,
    "isCore": false,
    "isPair": false,
-   "watch": true,
+   "watch": false,
    "validators": [],
-   "relatedValidators": [
-    "DRIVESTATS"
-   ]
+   "relatedValidators": [],
+   "directStats": {
+    "DRIVESTATS": {
+     "out": 1,
+     "in": 0,
+     "total": 1
+    }
+   },
+   "demotedAt": "v0.5.2",
+   "demoteNote": "直接のやり取りが1回だけの一方通行のため関連から候補へ（v0.5.2 関連定義の締め付け）。2回目の直接取引で自動的に関連へ復帰"
   },
   {
    "address": "0x0000000000000000000000000000000000000800",

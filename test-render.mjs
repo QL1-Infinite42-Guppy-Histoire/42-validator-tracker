@@ -6,9 +6,14 @@
 // render with an actor-only headline, a capped relation line
 // (first name + count), and the 共有の相手先 badge + note; a
 // validator-self event renders its own name with NO relation list.
-// Fixture since v0.4.2: an event of 0x2fcfc230...ecaf, a depth-1 EOA
-// shared by 3 validators (the old contract fixture's actor events were
-// purged when contracts left the person tiers).
+// Fixture since v0.4.2: an event of a depth-1 EOA shared by 3
+// validators (the old contract fixture's actor events were purged when
+// contracts left the person tiers). Fixture since v0.5.2: the #1 holder
+// 0x7a6f6d4e...0a25 — after the related-definition tightening it is the
+// remaining depth-1 wallet shared by exactly 3 validators (HeraMoon /
+// Xenia / panda42); the previous fixture (0x2fcfc230...ecaf) dropped to
+// 2 relations (Metal Raptor was a one-off contact) and is no longer
+// "shared" under the >=3 rule.
 // Run: node test-render.mjs  (exit 1 on failure)
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -21,7 +26,7 @@ const watchlist = JSON.parse(readFileSync(join(__dir, 'watchlist.json'), 'utf8')
 const registries = JSON.parse(readFileSync(join(__dir, 'registries.json'), 'utf8'));
 const ctx = makeCtx(watchlist, registries, {});
 const events = readFileSync(join(__dir, 'events.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
-const evRelated = events.find((e) => e.actor === '0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf' && e.actorTier === 'related' && e.actorShared);
+const evRelated = events.find((e) => e.actor === '0x7a6f6d4e0ce3abbba5ab6685c37a9599f6250a25' && e.actorTier === 'related' && e.actorShared);
 const evPanda = events.find((e) => e.block === 4272345 && e.actorLabel === 'panda42' && e.type === 'transfer');
 if (!evRelated || !evPanda) { console.error('FAIL: fixture events not found in events.jsonl'); process.exit(1); }
 for (const ev of [evRelated, evPanda]) enrichEvent(ev, ctx, {});
@@ -39,7 +44,7 @@ let fails = 0;
 const check = (name, cond) => { console.log((cond ? 'PASS' : 'FAIL') + ' ' + name); if (!cond) fails++; };
 
 console.log('new headline:', whoLabel(evRelated));
-check('related headline is actor-only', whoLabel(evRelated) === '関連 0x…ECAF');
+check('related headline is actor-only', whoLabel(evRelated) === '残高1位アドレス');
 const relHtml = renderEvent(evRelated);
 const relNames = evRelated.actorValidators || [];
 check('relation line capped (first + count)', relNames.length >= 3 && relHtml.includes(`関係バリデーター：<b class="rel-name">${relNames[0]}</b> ほか${relNames.length - 1}名`), relNames.join(','));
@@ -58,7 +63,7 @@ const fxSelfHtml = renderEvent(fxSelf);
 check('WS5 validator bridge-out glows (class)', fxSelfHtml.includes('ev bridgeout') || fxSelfHtml.includes('bridgeout'));
 check('WS5 validator bridge-out badge wording', fxSelfHtml.includes('バリデーター本人のブリッジで外部へ送信'));
 check('WS5 marker not shown as raw reason text', !fxSelfHtml.includes('⭐注目：bridge-out'));
-const fxRel = { ...base, id: 'fx2', type: 'bridge-out', actor: '0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf', actorLabel: null, actorTier: 'related', actorIsCore: false, actorValidators: ['Metal Raptor', 'DRIVESTATS'], actorShared: true, summary: 'ブリッジで外部へ送信：5 USDT をブリッジ経由で外部チェーンへ', notableReasons: ['bridge-out'] };
+const fxRel = { ...base, id: 'fx2', type: 'bridge-out', actor: '0x2fcfc23071e355aa75a6373d779bf5e220b8ecaf', actorLabel: null, actorTier: 'related', actorIsCore: false, actorValidators: ['DRIVESTATS', 'Zap'], actorShared: true, summary: 'ブリッジで外部へ送信：5 USDT をブリッジ経由で外部チェーンへ', notableReasons: ['bridge-out'] };
 const fxRelHtml = renderEvent(fxRel);
 check('WS5 related bridge-out badge wording', fxRelHtml.includes('関連ウォレットのブリッジで外部へ送信'));
 check('WS5 related bridge-out headline is actor only', whoLabel(fxRel) === '関連 0x…ECAF');

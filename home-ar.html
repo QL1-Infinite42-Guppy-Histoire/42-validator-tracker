@@ -60,7 +60,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <b>العربية</b> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.1</span></div></div>
+  <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <b>العربية</b> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
   <p class="sub">يجمع هذا الموقع تلقائيًا حركات المدققين أنفسهم والعناوين المؤكد تعاملها المباشر معهم. اختر قسمًا للانتقال إليه.</p>
   <div class="status" id="status">جارٍ التحميل…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -71,6 +71,7 @@
       <h2>⚠ مراقبة المطلعين — X<span class="alias"> (Rioshi)</span></h2>
       <p>فقط عمليات شراء [42] وDONT التي قام بها المدقق X ‏(Rioshi) نفسه والعناوين ذات الصلة بـ X ‏(Rioshi) قبل الساعة 14:00 JST في يوم الإدراج (30 يونيو 2026).</p>
       <div class="count" id="c-insider">—</div>
+      <div class="segsub" id="c-insider-sub">—</div>
     </a>
     <a class="card snipes" href="ar.html#sec-snipes">
       <h2>🎯 تنبيهات القنص</h2>
@@ -134,7 +135,7 @@
 </main>
 <footer>
   مصدر البيانات: كتل 42 Chain نفسها (عبر RPC). تقتصر التغطية على معاملات 42 Chain فقط (معرّف سلسلة EVM 421018 وجانبها Cosmos، infinite_421018-1). لا تُضمّن معاملات QL1 أو أي سلسلة أخرى. تظهر حركات العناوين التقديرية فقط في أحدث نشاط، موسومة بوضوح بأنها تقديرية؛ الأقسام الخاصة تحتوي على المعلومات المؤكدة فقط. تُعرض التنبيهات على هذا الموقع فقط.
-  <br>الإصدار: <b>v0.5.1</b> (الصفحة الرئيسية)
+  <br>الإصدار: <b>v0.5.2</b> (الصفحة الرئيسية)
 </footer>
 <script>
 (async () => {
@@ -145,6 +146,9 @@
       `آخر كتلة معالجة: <b>${s.lastProcessedBlock ?? '—'}</b> / جانب Cosmos: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / حُدّث: ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('ar-u-nu-latn',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / الحركات المسجلة: ${s.totalEvents}`;
     const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
     document.getElementById('c-insider').textContent = insider;
+    const xAddr = (FEED.validators.find((v) => v.moniker === 'X') || {}).address;
+    const insSelf = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600 && e.actor === xAddr).length;
+    document.getElementById('c-insider-sub').textContent = `الذاتية ${insSelf} / ذات الصلة ${insider - insSelf}`;
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
     const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');

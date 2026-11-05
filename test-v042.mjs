@@ -105,9 +105,16 @@ const FRESH1 = '0x' + 'a1'.repeat(20), FRESH2 = '0x' + 'a2'.repeat(20), FRESH3 =
   check('live gate: a contract counterparty is routed to core, never to related', !!r?.contract && ctx.entry(FRESH1)?.tier === 'core');
 }
 {
+  // v0.5.2 supersedes the v0.4.2 "added freely" rule: a validator's
+  // first direct contact becomes a one-off CANDIDATE (not related);
+  // the second direct dealing promotes it to related automatically.
   const wl = clone(); const ctx = makeCtx(wl, registries);
-  const r = await maybeAutoAddLive(wl, ctx, { actor: val.address, counterparty: FRESH2, ts: 1, txHash: '0x0' }, new Set(), { isContractFn: noContract, events: [] });
-  check('live gate: a depth-1 counterparty of a validator is added freely', !!r && r.tier === 'related' && r.depth === 1);
+  const ev1 = { type: 'transfer', actor: val.address, counterparty: FRESH2, from: val.address, to: FRESH2, ts: 1, txHash: '0x1' };
+  const r = await maybeAutoAddLive(wl, ctx, ev1, new Set(), { isContractFn: noContract, events: [] });
+  check('live gate (v0.5.2): a first depth-1 contact becomes a candidate, not related', !!r?.candidate && ctx.entry(FRESH2)?.tier === 'candidate' && ctx.entry(FRESH2)?.watch === false, JSON.stringify(r));
+  const ev2 = { type: 'transfer', actor: val.address, counterparty: FRESH2, from: FRESH2, to: val.address, ts: 2, txHash: '0x2' };
+  const r2 = await maybeAutoAddLive(wl, ctx, ev2, new Set(), { isContractFn: noContract, events: [] });
+  check('live gate (v0.5.2): the second direct dealing promotes the candidate to related', !!r2?.promoted && ctx.entry(FRESH2)?.tier === 'related' && ctx.entry(FRESH2)?.watch === true && (ctx.entry(FRESH2)?.relatedValidators ?? []).includes(val.label), JSON.stringify(r2?.promoted?.relatedValidators ?? null));
 }
 {
   const wl = clone(); const ctx = makeCtx(wl, registries);
