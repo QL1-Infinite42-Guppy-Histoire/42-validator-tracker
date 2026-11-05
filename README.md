@@ -1,6 +1,6 @@
-# 42チェーン バリデーター リアルタイム追跡ツール v0.2.2（Phase 2）
+# 42チェーン バリデーター リアルタイム追跡ツール v0.2.3（Phase 2）
 
-**現在のバージョン：v0.2.2**（2026-11-05、v0.2.1 の内容＋過去のスナイプ・ブリッジ出金の掘り起こし追加）— バージョン対応：v0.1.0 = Phase 1（EVM側）、v0.2.0 = Phase 2（Cosmos側）、v0.3.0 = Phase 3（推定リンク・名簿自動更新）、v1.0.0 = 全フェーズ完了＋運用安定時点
+**現在のバージョン：v0.2.3**（2026-11-05、v0.2.2 の内容＋ブリッジ出金欄を USDT のみに限定＋完全英語版 en.html を追加）— バージョン対応：v0.1.0 = Phase 1（EVM側）、v0.2.0 = Phase 2（Cosmos側）、v0.3.0 = Phase 3（推定リンク・名簿自動更新）、v1.0.0 = 全フェーズ完了＋運用安定時点
 
 42 Chain（EVM chainId 421018 / Cosmos chainId infinite_421018-1）のバリデーター23名と、その本人と**直接**やり取りした関連アドレスの動きを、新しいブロックから自動で拾い、時系列フィードで公開するためのツールです。EVM側と Cosmos側の両方を見ます（Cosmos のアカウントと EVM アドレスは同じ20バイトなので、同一人物として統合されます）。
 
@@ -12,7 +12,8 @@
 ## 何が表示されるか
 
 - ライブフィード：時刻（JST）／区分バッジ（本人・関連・中核）／アドレス（末尾4文字表示、タップで公式エクスプローラー）／分類（送金・受取／買い／売り／LP追加／LP解除／委任・委任解除・委任先変更／報酬請求（委任報酬）・バリデーター報酬請求（コミッション）・報酬請求（FISH配布）ほか／NFTミント／Fluke参加・確定／使用許可（approve）など、判別できた範囲の具体名。判別できないものは「未分類の操作（メソッド／宛先）」と表示）／銘柄と金額／相手／Txリンク。Cosmos側の動きには「Cosmos側」バッジが付き、Txリンクは自作の Cosmos スキャナー（https://ql1-infinite42-guppy-histoire.github.io/42-cosmos-scan/ の Tx ビュー）に飛びます（公式の Blockscout は Cosmos Tx を表示しないため）
-- **ブリッジで外部へ送信**（バリデーター本人・直接関連がブリッジ経由で42チェーンから外部チェーンへ送り出した動き）は必ず「注目」に入り、緑色に光って表示されます。入金（受取）は通常の送金・受取で、特別表示はしません
+- **ブリッジ出金（USDT・外部へ）**（バリデーター本人・直接関連が **USDT** をブリッジ経由で42チェーンから外部チェーンへ送り出した動き）は、専用の緑色の欄で光って表示されます（「注目」には入れません）。**v0.2.3 で対象を USDT のみに限定**しました：USDT以外の銘柄のブリッジ送信は「ブリッジ送信（USDT以外）」として通常の動きに記録され、緑色の欄には入りません。入金（受取）は通常の送金・受取で、特別表示はしません
+- **完全英語版**：同じ feed.json を使う英語ページ `en.html` を併設（見出し・定義文・イベント文すべて英語。イベント文は保存済みの日本語要約を使わず、構造化フィールドから英語で組み立てます）。各ページの冒頭に相互リンク（English version／日本語版）があります
 - **見出しは「動いた本人」だけ**を表示します（v0.2.0で修正）。関係するバリデーターは別の行に「関係バリデーター：○○ ほか△名」と上限付きで分け、3名以上のバリデーターと取引するアドレスには「共有の相手先」バッジ＋説明を付けます（複数のバリデーター名を見出しに並べて、共同で動いたように見える表示はしません）
 - 絞り込み：バリデーター別・種類別・銘柄別
 - バリデーター一覧（23名、それぞれの直接関連アドレス数つき。Cosmos側の bech32 アドレス `infinite1…` も feed.json に併記）
@@ -84,11 +85,12 @@ node collector.mjs                # 常駐モード（約10秒間隔、POLL_MS �
 node server.mjs                   # http://localhost:8787/ でサイト表示
 node test-decoder.mjs             # 既知の過去フロー2件（スワップ／送金）で復号を照合
 node test-render.mjs              # v0.2.0 見出し表示の回帰テスト（共有の相手先の誤認防止）＋WS4/WS5表示確認
+node test-en.mjs                  # v0.2.3 英語版の回帰テスト（全イベント種別の英語レンダリング＋日本語が混ざらないこと＋ブリッジ出金=USDTのみ確認）
 node test-ws4.mjs                 # WS4/WS4b/WS5 分類テスト（実在のGuide settle TxフィクスチャでNFTミント検出を照合）
 node test-cosmos.mjs              # Cosmos復号の照合（bech32往復／MsgSendと msg_index レッグの一致）
 ```
 
-ファイル構成：`collector.mjs`（収集・分類、EVM＋Cosmos）／`build-watchlist.mjs`（監視リスト生成）／`watchlist.json`・`registries.json`（生成物）／`events.jsonl`（全イベント追記、`chain` フィールド付き）／`feed.json`（最新500件）／`state.json`（EVM／Cosmos チェックポイント）／`pairs-cache.json`（新規ペアの token0/token1 キャッシュ）／`pairs-creation.json`（ペア作成ブロック・時刻のキャッシュ）／`index.html`（サイト本体、外部CDNなし）／`server.mjs`（ローカル確認用）／`test-decoder.mjs`・`test-render.mjs`・`test-cosmos.mjs`（検証）
+ファイル構成：`collector.mjs`（収集・分類、EVM＋Cosmos）／`build-watchlist.mjs`（監視リスト生成）／`watchlist.json`・`registries.json`（生成物）／`events.jsonl`（全イベント追記、`chain` フィールド付き）／`feed.json`（最新500件）／`state.json`（EVM／Cosmos チェックポイント）／`pairs-cache.json`（新規ペアの token0/token1 キャッシュ）／`pairs-creation.json`（ペア作成ブロック・時刻のキャッシュ）／`index.html`（サイト本体、外部CDNなし）／`en.html`（完全英語版、同じ feed.json を使用）／`server.mjs`（ローカル確認用）／`test-decoder.mjs`・`test-render.mjs`・`test-cosmos.mjs`・`test-ws4.mjs`・`test-en.mjs`（検証）
 
 RPCの注意：42 Chain の RPC はブラウザ風 User-Agent を付けないと接続を切ることがあります（実測済み）。`collector.mjs` は最初から付けており、ホスト2系統（infinitepanda → mschihuahua）の切替＋リトライも入っています。ブロック間隔は実測で約5.4秒と安定しています。
 
@@ -134,3 +136,9 @@ RPCの注意：42 Chain の RPC はブラウザ風 User-Agent を付けないと
 - 未知のペアで Swap が起きた場合、その場で token0/token1 を問い合わせてキャッシュします。取得できなかった Swap は記録されません（次回以降の課題）
 - 価格はプールのスワップ量からの計算値です。流動性の薄いプールでは実勢とずれることがあります
 - 公開済みです：リポジトリ https://github.com/QL1-Infinite42-Guppy-Histoire/42-validator-tracker ／ サイト https://ql1-infinite42-guppy-histoire.github.io/42-validator-tracker/ （GitHub Actions が5分間隔で収集し、GitHub Pages で配信）
+
+## v0.2.3 の変更（ブリッジ出金＝USDTのみ＋英語版）
+
+- ブリッジ出金の判定を「動いた銘柄が USDT のときだけ」に変更しました（ユーザー指示）。判定箇所は collector の全経路です：① transferRemote は USDT BridgeRouter 宛だけを出金とし、他銘柄ルーター宛は「ブリッジ送信（USDT以外）」、メールボックスの dispatch 単体も「ブリッジ送信（USDT以外）」② 通常送金経路は「出金先がブリッジ系コントラクト **かつ** 動いたトークンが USDT」のときだけ出金（ネイティブ [42] は常に対象外）
+- 保存済みイベントも移行しました：出金26件 → **USDT 15件が「ブリッジ出金」のまま残り、11件（[42]×5・QOM×3・USDC×1・BABY×1・FATHER×1）が「ブリッジ送信（USDT以外）」に降格**（注目マーカーも除去。イベント自体は消しません）
+- 英語版 `en.html` を追加：UI・定義文・イベント文のすべてが英語で、イベント文は構造化フィールド（種別／金額／相手／ペア年齢など）から組み立てます。日本語の保存要約は英語版では一切使いません

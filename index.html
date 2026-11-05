@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42チェーン バリデーター リアルタイム追跡 v0.2.2</title>
+<title>42チェーン バリデーター リアルタイム追跡 v0.2.3</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -50,7 +50,8 @@
 <body>
 <header>
   <h1>42チェーン バリデーター リアルタイム追跡</h1>
-  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.2）。推定のつながりは含みません。</p>
+  <p class="sub"><a href="en.html">English version</a></p>
+  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.3）。推定のつながりは含みません。</p>
   <div class="status" id="status">読み込み中…</div>
 </header>
 <main>
@@ -61,7 +62,7 @@
   </section>
 
   <section class="bridge">
-    <h2>🌉 ブリッジ出金（外部へ）</h2>
+    <h2>🌉 ブリッジ出金（USDT・外部へ）</h2>
     <p class="rule" id="bridgeOutRule"></p>
     <div id="bridgeouts"><p class="empty">読み込み中…</p></div>
   </section>
@@ -91,7 +92,8 @@
       <option value="reward-claim-staking">報酬請求（ステーキング報酬）</option>
       <option value="reward-claim-starlight">Starlight報酬請求</option>
       <option value="reward-distribution-fish">FISH報酬の一括配布</option>
-      <option value="bridge-out">ブリッジ送信（外部へ）</option>
+      <option value="bridge-out">ブリッジ送信（USDT・外部へ）</option>
+      <option value="bridge-send-other">ブリッジ送信（USDT以外）</option>
       <option value="bridge-delivery">ブリッジ配送処理</option>
       <option value="nft-mint">NFTミント</option>
       <option value="nft-transfer">NFT送金・受取</option>
@@ -127,9 +129,9 @@
 <footer>
   データの出どころ：42チェーンのブロックそのもの（RPC経由）。取引・アドレスをタップすると公式エクスプローラー scan.infinitedrive.xyz が開きます。
   表示している銘柄は Don't Panic 掲載の17銘柄が中心です（それ以外は「対象外銘柄」と表示）。金額の大小で記録を落とすことはしていません（小さな送金も全て記録）。
-  v0.2.0 の範囲：EVM側＋Cosmos側（送金・委任・報酬請求）／操作の種類は判別できた範囲で具体名表示（Fluke参加・NFTミント・報酬請求・ブリッジ送信など、判別できないものは「未分類の操作（メソッド／宛先）」）／ブリッジで外部へ送信は専用の緑色の欄で表示（注目欄には入れない／入金は通常の受取）／推定リンクは Phase 3／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
+  v0.2.0 の範囲：EVM側＋Cosmos側（送金・委任・報酬請求）／操作の種類は判別できた範囲で具体名表示（Fluke参加・NFTミント・報酬請求・ブリッジ送信など、判別できないものは「未分類の操作（メソッド／宛先）」）／ブリッジ出金欄は USDT を外部へ送った動きだけが対象（USDT以外のブリッジ送信は通常の動きとして記録し、専用の緑色の欄には入れない／入金は通常の受取）／推定リンクは Phase 3／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
   Cosmos側の取引リンクは自作の Cosmos スキャナー（42 Cosmos Scan）に飛びます。見出しの名前は「動いた本人」だけを表示し、関係するバリデーターは別の行に分けて書きます（複数のバリデーターと取引する共通の相手先には「共有の相手先」の印が付きます）。
-  <br>バージョン：<b>v0.2.2</b>（v0.2.1＋過去のスナイプ・ブリッジ出金の掘り起こし追加：全履歴の索引から復元した過去分もスナイプ速報・ブリッジ出金欄に表示）
+  <br>バージョン：<b>v0.2.3</b>（v0.2.2＋ブリッジ出金欄を USDT のみに限定＋英語版 en.html を追加）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -139,7 +141,7 @@ const addrLink = (a, label) => a ? `<a href="${SCAN}/address/${a}" target="_blan
 const txLink = (ev) => ev.chain === 'cosmos'
   ? `<a href="${COSMOS_SCAN}#/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()}（Cosmos）</a>`
   : `<a href="${SCAN}/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()}</a>`;
-const TYPE_JA = {'transfer':'送金・受取','swap-buy':'買い','swap-sell':'売り','lp-add':'LP追加','lp-remove':'LP解除','delegate':'委任','undelegate':'委任解除','redelegate':'委任先変更','reward':'報酬請求（委任報酬）','commission':'バリデーター報酬請求（コミッション）','reward-claim-fish':'報酬請求（FISH配布）','reward-claim-staking':'報酬請求（ステーキング報酬）','reward-claim-starlight':'Starlight報酬請求','reward-distribution-fish':'FISH報酬の一括配布','bridge-out':'ブリッジ送信（外部へ）','bridge-delivery':'ブリッジ配送処理','nft-mint':'NFTミント','nft-transfer':'NFT送金・受取','fluke-commit':'Fluke参加','fluke-reveal':'Fluke めくる','fluke-boost':'Flukeブースト','fluke-settle':'Fluke確定（Guide新規発行）','fluke-seed':'Flukeプール入金','guide-write':'Guideテキスト書き込み','guide-append':'Guideテキスト追記','starlight-register':'Starlight登録','st42-deposit':'st42預け入れ','st42-redeem-request':'st42引出申請','st42-claim':'st42受取','st42-instant-exit':'st42即時出金','st42-order':'st42注文','approve':'使用許可（approve）','token-burn':'トークンのバーン','dex-swap':'DEXスワップ','wrap':'W42化（ラップ）','unwrap':'W42解除','nft-approve-all':'NFT一括使用許可','unclassified':'未分類の操作','other-contract':'未分類の操作'};
+const TYPE_JA = {'transfer':'送金・受取','swap-buy':'買い','swap-sell':'売り','lp-add':'LP追加','lp-remove':'LP解除','delegate':'委任','undelegate':'委任解除','redelegate':'委任先変更','reward':'報酬請求（委任報酬）','commission':'バリデーター報酬請求（コミッション）','reward-claim-fish':'報酬請求（FISH配布）','reward-claim-staking':'報酬請求（ステーキング報酬）','reward-claim-starlight':'Starlight報酬請求','reward-distribution-fish':'FISH報酬の一括配布','bridge-out':'ブリッジ送信（USDT・外部へ）','bridge-send-other':'ブリッジ送信（USDT以外）','bridge-delivery':'ブリッジ配送処理','nft-mint':'NFTミント','nft-transfer':'NFT送金・受取','fluke-commit':'Fluke参加','fluke-reveal':'Fluke めくる','fluke-boost':'Flukeブースト','fluke-settle':'Fluke確定（Guide新規発行）','fluke-seed':'Flukeプール入金','guide-write':'Guideテキスト書き込み','guide-append':'Guideテキスト追記','starlight-register':'Starlight登録','st42-deposit':'st42預け入れ','st42-redeem-request':'st42引出申請','st42-claim':'st42受取','st42-instant-exit':'st42即時出金','st42-order':'st42注文','approve':'使用許可（approve）','token-burn':'トークンのバーン','dex-swap':'DEXスワップ','wrap':'W42化（ラップ）','unwrap':'W42解除','nft-approve-all':'NFT一括使用許可','unclassified':'未分類の操作','other-contract':'未分類の操作'};
 const ageJp = (secs) => { if (secs == null) return ''; const m = Math.round(secs/60); if (m < 60) return `作成後${m}分`; const h = Math.floor(m/60); return `作成後${h}時間${m%60 ? (m%60)+'分' : ''}`; };
 const jst = (ts) => new Date(ts*1000).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
 

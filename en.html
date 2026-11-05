@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>42 Chain Validator Real-Time Tracker v0.2.3</title>
+<style>
+  :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
+  header,main{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:1.35rem;margin:8px 0 4px} h2{font-size:1.1rem;margin:22px 0 8px}
+  .sub{color:var(--sub);font-size:.9rem}
+  .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem}
+  .status b{color:var(--ok)}
+  section.alerts{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.snipes{background:#33121a;border:2px solid #ff5964;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  .ev.bridgeout{border:2px solid #2f9e44;background:#0e2416;box-shadow:0 0 18px rgba(47,158,68,.65)}
+  .badge.bridgeout{color:#fff;background:#2f9e44;border-color:#69db7c;font-weight:700;box-shadow:0 0 10px rgba(105,219,124,.8)}
+  section.bridge{background:#0e2416;border:2px solid #2f9e44;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(47,158,68,.35)}
+  section.bridge h2{color:#69db7c}
+  section.bridge .rule{color:#8ce99a}
+  section.snipes h2{color:#ff8fa3;font-size:1.25rem}
+  .rule{font-size:.82rem;color:var(--warn)}
+  section.snipes .rule{color:#ffb3ba}
+  .badge.shared{color:#081018;background:#ffa94d;border-color:#ffa94d;font-weight:700}
+  .badge.cosmos{color:#081018;background:#63e6be;border-color:#63e6be;font-weight:700}
+  .badge.snipe{color:#fff;background:#ff5964;border-color:#ff5964;font-weight:700}
+  .note{color:var(--warn);font-size:.82rem;margin-top:2px}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  select{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:.95rem}
+  .ev{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
+  .ev.notable{border-color:#6b5518;background:#241e10}
+  .ev .top{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+  .time{color:var(--sub);font-size:.85rem}
+  .badge{font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--line);color:var(--sub)}
+  .badge.self{color:#081018;background:var(--acc);border-color:var(--acc);font-weight:700}
+  .badge.related{color:var(--acc);border-color:var(--acc)}
+  .badge.core{color:var(--core);border-color:var(--core)}
+  .badge.type{color:var(--txt);background:var(--card2)}
+  .badge.notable{color:#081018;background:var(--warn);border-color:var(--warn);font-weight:700}
+  .summary{font-size:1rem;margin-top:2px}
+  .meta{color:var(--sub);font-size:.85rem}
+  a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
+  .vals{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+  .val{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.92rem}
+  .empty{color:var(--sub);padding:18px 0}
+  footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+</style>
+</head>
+<body>
+<header>
+  <h1>42 Chain Validator Real-Time Tracker</h1>
+  <p class="sub"><a href="index.html">日本語版</a></p>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.3). Estimated links are not included.</p>
+  <div class="status" id="status">Loading…</div>
+</header>
+<main>
+  <section class="snipes">
+    <h2>🎯 Snipe Alerts</h2>
+    <p class="rule" id="snipeRule"></p>
+    <div id="snipes"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="bridge">
+    <h2>🌉 Bridge Withdrawals (USDT, outbound)</h2>
+    <p class="rule" id="bridgeOutRule"></p>
+    <div id="bridgeouts"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="alerts">
+    <h2>⭐ Notable</h2>
+    <p class="rule" id="alertRule"></p>
+    <div id="alerts"><p class="empty">Loading…</p></div>
+  </section>
+
+  <h2>Latest activity</h2>
+  <div class="filters">
+    <select id="fValidator"><option value="">Validator: All</option></select>
+    <select id="fType">
+      <option value="">Type: All</option>
+      <option value="transfer">Transfer</option>
+      <option value="swap-buy">Buy</option>
+      <option value="swap-sell">Sell</option>
+      <option value="lp-add">Add liquidity</option>
+      <option value="lp-remove">Remove liquidity</option>
+      <option value="delegate">Delegate</option>
+      <option value="undelegate">Undelegate</option>
+      <option value="redelegate">Redelegate</option>
+      <option value="reward">Reward claim (delegation rewards)</option>
+      <option value="commission">Validator reward claim (commission)</option>
+      <option value="reward-claim-fish">Reward claim (FISH distribution)</option>
+      <option value="reward-claim-staking">Reward claim (staking rewards)</option>
+      <option value="reward-claim-starlight">Starlight reward claim</option>
+      <option value="reward-distribution-fish">FISH reward batch distribution</option>
+      <option value="bridge-out">Bridge send (USDT, outbound)</option>
+      <option value="bridge-send-other">Bridge send (non-USDT)</option>
+      <option value="bridge-delivery">Bridge delivery processing</option>
+      <option value="nft-mint">NFT mint</option>
+      <option value="nft-transfer">NFT transfer</option>
+      <option value="fluke-commit">Fluke entry (commit)</option>
+      <option value="fluke-reveal">Fluke reveal</option>
+      <option value="fluke-boost">Fluke boost</option>
+      <option value="fluke-settle">Fluke settle (new Guide issued)</option>
+      <option value="fluke-seed">Fluke pool funding</option>
+      <option value="guide-write">Guide text write</option>
+      <option value="guide-append">Guide text append</option>
+      <option value="starlight-register">Starlight registration</option>
+      <option value="st42-deposit">st42 deposit</option>
+      <option value="st42-redeem-request">st42 redemption request</option>
+      <option value="st42-claim">st42 claim</option>
+      <option value="st42-instant-exit">st42 instant exit</option>
+      <option value="st42-order">st42 order</option>
+      <option value="approve">Approve</option>
+      <option value="token-burn">Token burn</option>
+      <option value="dex-swap">DEX swap</option>
+      <option value="wrap">Wrap to W42</option>
+      <option value="unwrap">Unwrap W42</option>
+      <option value="nft-approve-all">NFT approve-all</option>
+      <option value="unclassified">Unclassified action</option>
+    </select>
+    <select id="fToken"><option value="">Token: All</option></select>
+  </div>
+  <div id="feed"><p class="empty">Loading…</p></div>
+
+  <h2>Validators (23)</h2>
+  <p class="sub">"Related addresses" is the number of addresses confirmed to have transacted directly with that validator.</p>
+  <div class="vals" id="validators"></div>
+</main>
+<footer>
+  Data source: the 42 Chain blocks themselves (via RPC). Tapping a transaction or address opens the official explorer, scan.infinitedrive.xyz.
+  Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
+  Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated links are Phase 3. Nothing is posted externally (no X bot) — alerts live on this site only.
+  Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark).
+  <br>Version: <b>v0.2.3</b> (v0.2.2 + Bridge Withdrawals section narrowed to USDT only + this full English version)
+</footer>
+<script>
+const SCAN = 'https://scan.infinitedrive.xyz';
+const COSMOS_SCAN = 'https://ql1-infinite42-guppy-histoire.github.io/42-cosmos-scan/';
+const shortAddr = (a) => a ? '0x…' + a.slice(-4).toUpperCase() : '—';
+const addrLink = (a, label) => a ? `<a href="${SCAN}/address/${a}" target="_blank" rel="noopener" title="${a}">${label ?? shortAddr(a)}</a>` : '—';
+const txLink = (ev) => ev.chain === 'cosmos'
+  ? `<a href="${COSMOS_SCAN}#/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()} (Cosmos)</a>`
+  : `<a href="${SCAN}/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()}</a>`;
+const TYPE_EN = {'transfer':'Transfer','swap-buy':'Buy','swap-sell':'Sell','lp-add':'Add liquidity','lp-remove':'Remove liquidity','delegate':'Delegate','undelegate':'Undelegate','redelegate':'Redelegate','reward':'Reward claim (delegation rewards)','commission':'Validator reward claim (commission)','reward-claim-fish':'Reward claim (FISH distribution)','reward-claim-staking':'Reward claim (staking rewards)','reward-claim-starlight':'Starlight reward claim','reward-distribution-fish':'FISH reward batch distribution','bridge-out':'Bridge send (USDT, outbound)','bridge-send-other':'Bridge send (non-USDT)','bridge-delivery':'Bridge delivery processing','nft-mint':'NFT mint','nft-transfer':'NFT transfer','fluke-commit':'Fluke entry (commit)','fluke-reveal':'Fluke reveal','fluke-boost':'Fluke boost','fluke-settle':'Fluke settle (new Guide issued)','fluke-seed':'Fluke pool funding','guide-write':'Guide text write','guide-append':'Guide text append','starlight-register':'Starlight registration','st42-deposit':'st42 deposit','st42-redeem-request':'st42 redemption request','st42-claim':'st42 claim','st42-instant-exit':'st42 instant exit','st42-order':'st42 order','approve':'Approve','token-burn':'Token burn','dex-swap':'DEX swap','wrap':'Wrap to W42','unwrap':'Unwrap W42','nft-approve-all':'NFT approve-all','unclassified':'Unclassified action','other-contract':'Unclassified action'};
+// Stored counterparty / destination labels come from the collector and a
+// few are Japanese; translate the known ones, turn "X/Y ペア" into
+// "X/Y pair", and fall back to the short address for anything else that
+// still contains Japanese (the English page never shows Japanese text).
+const LABEL_EN = {'ブリッジルーター':'Bridge router','FISH報酬コントラクト':'FISH reward contract','Hyperlaneメールボックス':'Hyperlane mailbox','残高1位アドレス':'Top-balance address','DEXルーター':'DEX router','ステーキングプリコンパイル（0x0800）':'Staking precompile (0x0800)','報酬配布プリコンパイル（0x0801）':'Distribution precompile (0x0801)','NFTマーケット':'NFT marketplace','st42バルト':'st42 vault','st42注文板（St42Book）':'st42 order book (St42Book)','W42（Wrapped 42）':'W42 (Wrapped 42)','Zaphod Girls The Thirteen（NFT）':'Zaphod Girls The Thirteen (NFT)'};
+const NOTE_EN = {'コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）':'a contract (a shared contract holding LP shares of several FISH pairs)'};
+const hasJa = (s) => /[぀-ヿ一-鿿]/.test(s || '');
+function enLabel(s){
+  if (!s) return null;
+  if (LABEL_EN[s]) return LABEL_EN[s];
+  const t = s.replace(/ ペア$/, ' pair');
+  return hasJa(t) ? null : t;
+}
+const enNote = (s) => !s ? null : (NOTE_EN[s] || (hasJa(s) ? null : s));
+const REASON_EN = {'バリデーター本人の売買':"Validator's own trade",'大きな[42]の移動（1,000 [42]以上）':'Large [42] move (≥ 1,000 [42])'};
+const ageEn = (secs) => { if (secs == null) return ''; const m = Math.round(secs/60); if (m < 60) return `${m} min after pair creation`; const h = Math.floor(m/60); return `${h} h${m%60 ? ' ' + (m%60) + ' min' : ''} after pair creation`; };
+const jstEn = (ts) => new Date(ts*1000).toLocaleString('en-US',{timeZone:'Asia/Tokyo',month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}) + ' JST';
+const sym = (s) => s === '42' ? '[42]' : s;
+const amtStr = (a) => a ? `${a.amount} ${sym(a.symbol)}` : '';
+
+let FEED = null;
+
+function tierBadge(ev){
+  if (ev.actorIsCore) return '<span class="badge core">Core (infrastructure)</span>';
+  if (ev.actorTier === 'validator') return '<span class="badge self">Validator</span>';
+  if (ev.actorTier === 'related') return '<span class="badge related">Related address</span>';
+  return '';
+}
+// Headline = the ACTOR only (same rule as the Japanese page).
+function whoLabel(ev){
+  if (ev.actorTier === 'validator' && ev.actorLabel && !hasJa(ev.actorLabel)) return ev.actorLabel;
+  if (ev.actorIsCore) return enLabel(ev.actorLabel) || shortAddr(ev.actor);
+  if (ev.actorTier === 'related') return 'Related ' + shortAddr(ev.actor);
+  return enLabel(ev.actorLabel) || shortAddr(ev.actor);
+}
+function cpName(ev){
+  if (!ev.counterparty) return '';
+  return enLabel(ev.counterpartyLabel) || shortAddr(ev.counterparty);
+}
+// English summary composed from the structured fields only — the stored
+// Japanese ev.summary is never reused on this page.
+function summaryEn(ev){
+  const amt = amtStr(ev.amount);
+  const cp = cpName(ev);
+  const dest = enLabel(ev.destLabel);
+  switch (ev.type) {
+    case 'transfer':
+      if (!amt) return 'Transfer';
+      return ev.direction === 'out' ? `Sent ${amt}${cp ? ' to ' + cp : ''}` : `Received ${amt}${cp ? ' from ' + cp : ''}`;
+    case 'swap-buy': {
+      const b = ev.bought ? `${ev.bought.amount} ${sym(ev.bought.symbol)}` : (ev.subjectSymbol || '');
+      const s = ev.sold ? ` (paid ${ev.sold.amount} ${sym(ev.sold.symbol)}${ev.price ? ` · price ≈ ${ev.price} ${ev.priceUnit || ''}`.trimEnd() : ''})` : '';
+      return `Bought ${b}${s}`;
+    }
+    case 'swap-sell': {
+      const s = ev.sold ? `${ev.sold.amount} ${sym(ev.sold.symbol)}` : (ev.subjectSymbol || '');
+      const b = ev.bought ? ` (received ${ev.bought.amount} ${sym(ev.bought.symbol)}${ev.price ? ` · price ≈ ${ev.price} ${ev.priceUnit || ''}`.trimEnd() : ''})` : '';
+      return `Sold ${s}${b}`;
+    }
+    case 'lp-add':
+      return `Added liquidity: ${(ev.amounts || []).map((a) => `${a.amount} ${sym(a.symbol)}`).join(' + ')}${ev.pairLabel ? ` (${enLabel(ev.pairLabel) || 'pair'})` : ''}`;
+    case 'lp-remove':
+      return `Removed liquidity: ${(ev.amounts || []).map((a) => `${a.amount} ${sym(a.symbol)}`).join(' + ')}${ev.pairLabel ? ` (${enLabel(ev.pairLabel) || 'pair'})` : ''}`;
+    case 'delegate':
+      return `Delegated ${amt}${cp ? ' to ' + cp : ''}`;
+    case 'undelegate':
+      return `Undelegated${cp ? ' from ' + cp : ''}${amt ? ` (${amt})` : ''}`;
+    case 'redelegate':
+      return `Redelegated ${amt}${cp ? ' to ' + cp : ''}`;
+    case 'reward':
+      return `Claimed delegation rewards${cp ? ' from ' + cp : ''}${amt ? `: ${amt}` : ''}`;
+    case 'commission':
+      return `Claimed validator commission${amt ? `: ${amt}` : ''}`;
+    case 'reward-claim-fish':
+      return `Claimed FISH distribution rewards${dest ? ` (${dest})` : ''}`;
+    case 'reward-distribution-fish':
+      return 'Batch-distributed FISH rewards (via the reward contract)';
+    case 'reward-claim-staking':
+      return `Claimed staking rewards${amt ? `: ${amt}` : ''}`;
+    case 'reward-claim-starlight':
+      return 'Claimed Starlight rewards';
+    case 'bridge-out':
+      return `Bridged USDT out to an external chain${amt ? `: ${amt}` : ''}`;
+    case 'bridge-send-other':
+      return `Bridge send (non-USDT) to an external chain${amt ? `: ${amt}` : ''}`;
+    case 'bridge-delivery':
+      return 'Processed a bridge delivery (Hyperlane mailbox process)';
+    case 'nft-mint':
+      return ev.nft ? `NFT mint: received ${ev.nft.collectionName} #${ev.nft.tokenId} (newly issued)` : 'NFT mint';
+    case 'nft-transfer':
+      if (!ev.nft) return 'NFT transfer';
+      return ev.direction === 'out' ? `Sent NFT ${ev.nft.collectionName} #${ev.nft.tokenId}` : `Received NFT ${ev.nft.collectionName} #${ev.nft.tokenId}`;
+    case 'fluke-commit': return 'Entered Fluke (commit)';
+    case 'fluke-reveal': return 'Revealed a Fluke entry';
+    case 'fluke-boost': return 'Boosted a Fluke entry';
+    case 'fluke-settle': return 'Settled Fluke (a new Guide was issued)';
+    case 'fluke-seed': return 'Funded the Fluke prize pool';
+    case 'guide-write': return 'Wrote text to a Guide';
+    case 'guide-append': return 'Appended text to a Guide';
+    case 'starlight-register': return 'Registered a Guide with Starlight';
+    case 'st42-deposit': return 'Deposited into st42';
+    case 'st42-redeem-request': return 'Requested an st42 redemption';
+    case 'st42-claim': return 'Claimed st42';
+    case 'st42-instant-exit': return 'Instant-exited st42';
+    case 'st42-order': return `Placed an st42 order${dest ? ` (${dest})` : ''}`;
+    case 'approve':
+      return `Approved a token${dest ? ` for use by ${dest}` : (cp ? ` (token: ${cp})` : '')}`;
+    case 'token-burn':
+      return `Token burn${cp ? ` (token contract: ${cp})` : ''}`;
+    case 'dex-swap': return 'Swapped on the DEX';
+    case 'wrap': return 'Wrapped [42] into W42';
+    case 'unwrap': return 'Unwrapped W42 back to [42]';
+    case 'nft-approve-all': return 'Approved all NFTs of a collection (setApprovalForAll)';
+    case 'unclassified':
+      return `Unclassified action (method ${ev.method || '—'} / destination ${shortAddr(ev.counterparty)})`;
+    default:
+      return `${TYPE_EN[ev.type] || 'Move'}${amt ? `: ${amt}` : ''}${cp ? ` — counterparty ${cp}` : ''}${dest ? ` (${dest})` : ''}`;
+  }
+}
+function relationLine(ev){
+  if (ev.actorTier === 'validator') return '';
+  const rel = ev.actorValidators || [];
+  let s = '';
+  if (rel.length === 1) s = `Related validators: ${rel[0]}`;
+  else if (rel.length >= 2) s = `Related validators: ${rel[0]} + ${rel.length - 1} more`;
+  const badge = ev.actorShared ? ' <span class="badge shared">Shared counterparty</span>' : '';
+  const noteEn = enNote(ev.actorContractNote);
+  const note = ev.actorShared
+    ? `<div class="note">A shared counterparty that transacts with multiple validators (not a validator itself)${noteEn ? ' / ' + noteEn : ''}</div>` : '';
+  const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
+  return line + note;
+}
+function renderEvent(ev){
+  const cpLabel = enLabel(ev.counterpartyLabel);
+  const cp = ev.counterparty ? ` / Counterparty: ${addrLink(ev.counterparty, cpLabel ? cpLabel + ' ' + shortAddr(ev.counterparty) : null)}${ev.counterpartyIsCore ? ' <span class="badge core">Core</span>' : ''}` : '';
+  const wl = ev.whitelisted === false ? ' <span class="badge">Includes a non-listed token</span>' : '';
+  const reasons = (ev.notableReasons || []).filter((r) => r !== 'bridge-out');
+  const mapped = reasons.map((r) => REASON_EN[r]).filter(Boolean);
+  const notable = reasons.length ? `<span class="badge notable">⭐ Notable${mapped.length ? ': ' + mapped.join(' · ') : ''}</span>` : '';
+  const isBridgeOut = ev.type === 'bridge-out' || (ev.notableReasons || []).includes('bridge-out');
+  const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "Validator's own USDT bridge-out" : ev.actorTier === 'related' ? "Related wallet's USDT bridge-out" : 'USDT bridge-out'}</span>` : '';
+  const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
+  const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 Snipe (${ageEn(ev.pairAgeSecs)})</span>` : '';
+  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}">
+    <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${cosmos}${snipe}</div>
+    <div class="summary"><b>${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
+    ${relationLine(ev)}
+    <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
+}
+function applyFilters(){
+  if (!FEED) return;
+  const v = document.getElementById('fValidator').value;
+  const t = document.getElementById('fType').value;
+  const tk = document.getElementById('fToken').value;
+  const match = (ev) => (!v || (ev.validatorNames||[]).includes(v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk));
+  const list = FEED.events.filter(match);
+  document.getElementById('feed').innerHTML = list.length ? list.map(renderEvent).join('') : '<p class="empty">No moves match the selected filters yet.</p>';
+  const isBO = (ev) => ev.type === 'bridge-out' || (ev.notableReasons||[]).includes('bridge-out');
+  const alerts = FEED.events.filter((ev) => !isBO(ev) && (ev.notableReasons||[]).filter((r) => r !== 'bridge-out').length);
+  document.getElementById('alerts').innerHTML = alerts.length ? alerts.slice(0,20).map(renderEvent).join('') : '<p class="empty">No notable moves right now.</p>';
+  const bridgeouts = FEED.events.filter(isBO);
+  document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">No recent bridge withdrawals.</p>';
+  const snipes = FEED.events.filter((ev) => ev.isSnipe);
+  document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">No snipes detected in the recent feed.</p>';
+}
+async function load(){
+  try {
+    FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
+    const s = FEED.status;
+    document.getElementById('status').innerHTML =
+      `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> (chain tip ${s.latestBlockSeen ?? '—'}) / Cosmos last processed: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / Recorded moves: ${s.totalEvents} / Watching: ${s.watchSummary.validators} validators + ${s.watchSummary.directRelated} directly related addresses`;
+    document.getElementById('alertRule').textContent = 'Notable rule: (1) a validator\u2019s own buys and sells, (2) moves of 1,000 [42] or more. USDT bridge withdrawals are shown separately in the green section above. Only moves matching these rules are listed here (shown on this site only; nothing is posted externally).';
+    document.getElementById('bridgeOutRule').textContent = 'Bridge withdrawal = a validator itself, or a directly related wallet, sending USDT out of the 42 Chain to an external chain through a bridge. These moves glow green in this dedicated section (they are not put in Notable). Bridge sends of tokens other than USDT are recorded as regular moves and are not shown here. Inbound receipts (receiving on the 42 Chain side) are treated as ordinary transfers.';
+    document.getElementById('snipeRule').textContent = 'Snipe = a validator itself, or a directly related wallet, buying or adding liquidity on a pair within 3 hours of that pair\u2019s creation. Matching moves are listed here, prominently.';
+    const vsel = document.getElementById('fValidator');
+    if (vsel.options.length <= 1) for (const v of FEED.validators) { const o = document.createElement('option'); o.value = v.moniker; o.textContent = v.moniker; vsel.appendChild(o); }
+    const tsel = document.getElementById('fToken');
+    if (tsel.options.length <= 1) {
+      const toks = [...new Set(FEED.events.flatMap((e) => e.tokens || []))].sort();
+      for (const tk of toks) { const o = document.createElement('option'); o.value = tk; o.textContent = tk; tsel.appendChild(o); }
+    }
+    document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
+      `<div class="val"><b>${v.moniker}</b>${v.isCore ? ' <span class="badge core">also core infra</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} related addresses</span></div>`).join('');
+    applyFilters();
+  } catch (e) {
+    document.getElementById('status').textContent = 'Could not load feed.json (the collector may not have run yet).';
+  }
+}
+for (const id of ['fValidator','fType','fToken']) document.getElementById(id).addEventListener('change', applyFilters);
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>

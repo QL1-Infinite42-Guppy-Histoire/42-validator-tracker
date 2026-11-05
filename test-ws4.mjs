@@ -80,7 +80,15 @@ ev = one(PANDA, '0x0000000000000000000000000000000000000801', '0x2efe8a5f' + '00
 check('0x0801 claimRewards -> reward-claim-staking', ev?.type === 'reward-claim-staking', ev?.summary);
 
 ev = one(PANDA, '0x8667682b62caceda9e87b3caa21d5b09d9ae13c3', '0x81b4e8b4' + '00'.repeat(96))[0];
-check('BridgeRouter transferRemote -> bridge-out + marker', ev?.type === 'bridge-out' && (ev.notableReasons ?? []).includes('bridge-out'), ev?.summary);
+check('USDT BridgeRouter transferRemote -> bridge-out + marker', ev?.type === 'bridge-out' && (ev.notableReasons ?? []).includes('bridge-out'), ev?.summary);
+
+// v0.2.3: bridge-out is USDT-only — other token routers and bare mailbox
+// dispatches are plain bridge-send-other records with NO marker.
+ev = one(PANDA, '0x049a78fe311cf1c23f09cdd4f12420ffc917c8db', '0x81b4e8b4' + '00'.repeat(96))[0];
+check('QOM BridgeRouter transferRemote -> bridge-send-other, no marker', ev?.type === 'bridge-send-other' && !(ev.notableReasons ?? []).includes('bridge-out'), ev?.summary);
+
+ev = one(PANDA, '0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e', '0xfa31de01' + '00'.repeat(96))[0];
+check('mailbox dispatch -> bridge-send-other, no marker', ev?.type === 'bridge-send-other' && !(ev.notableReasons ?? []).includes('bridge-out'), ev?.summary);
 
 // ---- 3) WS5 transfer-direction bridge detection ----
 const TRANSFER_TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
@@ -89,9 +97,19 @@ const ROUTER_BRIDGE = '0x8667682b62caceda9e87b3caa21d5b09d9ae13c3';
 const USDT = '0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753';
 const transferReceipt = (from, to) => ({ status: '0x1', logs: [{ address: USDT, topics: [TRANSFER_TOPIC, topicAddr(from), topicAddr(to)], data: '0x' + (1000n * 10n ** 18n).toString(16).padStart(64, '0'), logIndex: '0x0' }] });
 let evs2 = classifyTx(ctx, mkTx(PANDA, USDT, '0xa9059cbb'), transferReceipt(PANDA, ROUTER_BRIDGE), 1762000000, 4272000);
-check('transfer OUT to bridge router -> bridge-out', evs2.length === 1 && evs2[0].type === 'bridge-out' && evs2[0].notableReasons.includes('bridge-out'), JSON.stringify(evs2.map((e) => e.type)));
+check('USDT transfer OUT to bridge router -> bridge-out', evs2.length === 1 && evs2[0].type === 'bridge-out' && evs2[0].notableReasons.includes('bridge-out'), JSON.stringify(evs2.map((e) => e.type)));
 evs2 = classifyTx(ctx, mkTx(ROUTER_BRIDGE, USDT, '0xa9059cbb'), transferReceipt(ROUTER_BRIDGE, PANDA), 1762000000, 4272000);
 check('transfer IN from bridge router -> plain transfer, no marker', evs2.length === 1 && evs2[0].type === 'transfer' && !(evs2[0].notableReasons ?? []).includes('bridge-out'), JSON.stringify(evs2.map((e) => e.type)));
+
+// v0.2.3 transfer path: non-USDT token to a bridge target is
+// bridge-send-other; USDT to ANY bridge target is still bridge-out.
+const FISH = '0x2c32120a12b754272d9e85c57f64b50ca2c43513';
+const QOM_ROUTER = '0x049a78fe311cf1c23f09cdd4f12420ffc917c8db';
+const tokenReceipt = (token, from, to) => ({ status: '0x1', logs: [{ address: token, topics: [TRANSFER_TOPIC, topicAddr(from), topicAddr(to)], data: '0x' + (1000n * 10n ** 18n).toString(16).padStart(64, '0'), logIndex: '0x0' }] });
+evs2 = classifyTx(ctx, mkTx(PANDA, FISH, '0xa9059cbb'), tokenReceipt(FISH, PANDA, ROUTER_BRIDGE), 1762000000, 4272000);
+check('FISH transfer OUT to bridge router -> bridge-send-other, no marker', evs2.length === 1 && evs2[0].type === 'bridge-send-other' && !(evs2[0].notableReasons ?? []).includes('bridge-out'), JSON.stringify(evs2.map((e) => e.type)));
+evs2 = classifyTx(ctx, mkTx(PANDA, USDT, '0xa9059cbb'), tokenReceipt(USDT, PANDA, QOM_ROUTER), 1762000000, 4272000);
+check('USDT transfer OUT to QOM bridge router -> bridge-out (token decides)', evs2.length === 1 && evs2[0].type === 'bridge-out' && evs2[0].notableReasons.includes('bridge-out'), JSON.stringify(evs2.map((e) => e.type)));
 
 console.log(fails === 0 ? 'ALL PASS' : `${fails} FAILED`);
 process.exit(fails ? 1 : 0);

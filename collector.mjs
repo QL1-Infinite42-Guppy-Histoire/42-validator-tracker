@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// 42 Validator Tracker — collector (v0.2.0: EVM side + Cosmos side).
+// 42 Validator Tracker — collector (v0.2.3: EVM side + Cosmos side,
+// USDT-only bridge-out section).
 //
 // Polls the 42 Chain EVM RPC for new blocks, decodes receipts with NO external
 // dependencies (topic hashes are the standard ERC-20 / Uniswap V2 ones,
@@ -42,11 +43,14 @@
 //    research) and Starlight claim() get reward-claim types. No address is
 //    hard-coded as a reward contract without a research source.
 //  - WS5 bridge-out (user-corrected direction): a watched wallet sending
-//    funds OUT of 42 Chain via a known bridge contract (transfer to a
-//    BridgeRouter / Hyperlane warp router, or a transferRemote / dispatch
-//    call) is type "bridge-out" with notableReasons marker 'bridge-out'
-//    and glows green in the 注目 section. INBOUND receipts are NOT
-//    special-cased: they stay plain transfers.
+//    funds OUT of 42 Chain via a known bridge contract is type "bridge-out"
+//    with notableReasons marker 'bridge-out' and glows green in its own
+//    section. INBOUND receipts are NOT special-cased: they stay plain
+//    transfers.
+//  - v0.2.3: bridge-out is USDT-ONLY (user rule). Only a movement of the
+//    USDT token (transfer of USDT to a bridge target, or transferRemote on
+//    the USDT BridgeRouter) is "bridge-out"; bridge sends of any other
+//    token are recorded as plain "bridge-send-other" moves.
 //
 // Standing rules honoured here:
 //  - NO minimum-amount filtering anywhere: a watched transfer of any size,
@@ -137,6 +141,11 @@ export const NFT_MARKETPLACE_ADDR = '0x77e924e8c75083a723606b5634497d416ad16cb0'
 // BridgeRouter wrappers) + every BRIDGE-table row's infiniteBridgeRouter
 // and infiniteRouter (Hyperlane warp routers). The mailbox is bridge
 // infrastructure too but holds no tokens, so it is NOT a transfer target.
+export const BRIDGE_ROUTER_USDT = '0x8667682b62caceda9e87b3caa21d5b09d9ae13c3'; // BridgeRouter USDT (chains.ts)
+// v0.2.3 (user rule): the green ブリッジ出金 section is USDT-ONLY. Only a
+// movement of this exact token out through a bridge counts as 'bridge-out';
+// bridge sends of any other token are plain 'bridge-send-other' records.
+export const USDT_TOKEN = '0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753'; // 42 Chain USDT (18 decimals, bridged)
 export const BRIDGE_SEND_TARGETS = new Set([
   '0x049a78fe311cf1c23f09cdd4f12420ffc917c8db', // BridgeRouter QOM (+ BRIDGE row QOM wrapper)
   '0x8667682b62caceda9e87b3caa21d5b09d9ae13c3', // BridgeRouter USDT
@@ -176,10 +185,13 @@ export const NFT_COLLECTIONS = {
   [GUIDE_ADDR]: { name: 'Guide', symbol: 'GUIDE' },
   [ZG13_ADDR]: { name: 'Zaphod Girls The Thirteen', symbol: 'ZG13' },
 };
-// WS5 definition (printed on the site): bridge-out = a validator-self or
-// direct-related wallet sending funds OUT of 42 Chain to an external chain
-// through a bridge. Inbound receipts are plain transfers, never glowing.
-export const BRIDGE_OUT_RULE = 'ブリッジで外部へ送信の定義：バリデーター本人または直接関連ウォレットが、ブリッジ経由で42チェーンから外部チェーンへ資金を送り出した動き（ブリッジ系コントラクト宛の送金、またはブリッジ送信メソッドの呼び出し）。専用の「ブリッジ出金（外部へ）」欄で緑色に光って表示されます（注目欄には入れません）。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
+// WS5 definition (printed on the site), narrowed to USDT only in v0.2.3
+// (user: 「ブリッジはusdtを外部にブリッジだけに絞って」): bridge-out =
+// a validator-self or direct-related wallet sending USDT OUT of 42 Chain
+// to an external chain through a bridge. Bridge sends of other tokens are
+// recorded as plain moves and never enter this section; inbound receipts
+// are plain transfers, never glowing.
+export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター本人または直接関連ウォレットが、USDTをブリッジ経由で42チェーンから外部チェーンへ送り出した動き。専用の「ブリッジ出金（USDT・外部へ）」欄で緑色に光って表示されます（注目欄には入れません）。USDT以外の銘柄のブリッジ送信は通常の動きとして記録し、この欄には入れません。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
 
 // Method-call event types that keep the v0.1.0 repetition suppression
 // (same actor + destination + method within ~360 blocks). Transfers, swaps,
@@ -189,7 +201,7 @@ export const METHOD_EVENT_TYPES = new Set([
   'guide-write', 'guide-append', 'starlight-register', 'reward-claim-starlight',
   'st42-deposit', 'st42-redeem-request', 'st42-claim', 'st42-instant-exit', 'st42-order',
   'reward-claim-fish', 'reward-distribution-fish', 'token-burn', 'reward-claim-staking',
-  'bridge-out', 'bridge-delivery', 'dex-swap', 'wrap', 'unwrap', 'nft-approve-all',
+  'bridge-out', 'bridge-send-other', 'bridge-delivery', 'dex-swap', 'wrap', 'unwrap', 'nft-approve-all',
   'delegate', 'undelegate', 'redelegate', 'unclassified', 'other-contract',
 ]);
 
@@ -316,10 +328,15 @@ export function classifyMethodCall(ctx, to, input, mintAmounts = []) {
     return R('reward-claim-staking', '報酬請求（ステーキング報酬）', `ステーキング報酬を請求（claimRewards／報酬配布プリコンパイル 0x0801）${mintNote}`);
   }
   if (BRIDGE_SEND_TARGETS.has(to) && sel === S.transferRemote) {
-    return R('bridge-out', 'ブリッジ送信（外部へ）', 'ブリッジ送信（外部へ）：ブリッジ経由で外部チェーンへ送金（transferRemote）');
+    // v0.2.3: bridge-out is USDT-only — only the USDT BridgeRouter's
+    // transferRemote moves USDT; every other token router is a plain
+    // bridge send of a non-USDT token.
+    if (to === BRIDGE_ROUTER_USDT) return R('bridge-out', 'ブリッジ送信（USDT・外部へ）', 'ブリッジ送信（USDT・外部へ）：USDTをブリッジ経由で外部チェーンへ送金（transferRemote）');
+    return R('bridge-send-other', 'ブリッジ送信（USDT以外）', 'ブリッジ送信（USDT以外）：USDT以外の銘柄をブリッジ経由で外部チェーンへ送金（transferRemote）');
   }
   if (to === MAILBOX_ADDR) {
-    if (sel === S.mailboxDispatch) return R('bridge-out', 'ブリッジ送信（外部へ）', 'ブリッジ送信（外部へ）：メールボックス経由でメッセージ送信（dispatch）');
+    // A bare mailbox dispatch does not prove a USDT movement -> never bridge-out.
+    if (sel === S.mailboxDispatch) return R('bridge-send-other', 'ブリッジ送信（USDT以外）', 'ブリッジ送信（USDT以外）：メールボックス経由でメッセージ送信（dispatch）');
     if (sel === S.mailboxProcess) return R('bridge-delivery', 'ブリッジ配送処理', 'ブリッジ配送の処理（Hyperlaneメールボックスの process）');
   }
   if (to === W42_ADDR) {
@@ -599,12 +616,29 @@ export function enrichEvent(ev, ctx, creations = {}) {
       set('notableReasons', [...(ev.notableReasons ?? []), 'bridge-out']);
     }
   }
-  // WS5 migration: a stored plain transfer OUT to a known bridge contract
-  // is a bridge-out. (Inbound receipts stay plain transfers.)
-  if (ev.chain !== 'cosmos' && ev.type === 'transfer' && ev.direction === 'out' && ev.to && BRIDGE_SEND_TARGETS.has(lc(ev.to))) {
+  // WS5 migration (v0.2.3: USDT-only): a stored plain transfer OUT of USDT
+  // to a known bridge contract is a bridge-out. (Inbound receipts stay
+  // plain transfers; non-USDT sends are handled by the demotion below.)
+  if (ev.chain !== 'cosmos' && ev.type === 'transfer' && ev.direction === 'out' && ev.to && BRIDGE_SEND_TARGETS.has(lc(ev.to)) && ev.amount?.symbol === 'USDT') {
     set('type', 'bridge-out');
     set('summary', `ブリッジで外部へ送信：${ev.amount?.amount ?? ''} ${ev.amount?.symbol ?? ''} をブリッジ経由で外部チェーンへ`);
     if (!(ev.notableReasons ?? []).includes('bridge-out')) set('notableReasons', [...(ev.notableReasons ?? []), 'bridge-out']);
+  }
+  // v0.2.3 demotion: any stored 'bridge-out' that is NOT a USDT movement
+  // becomes a plain 'bridge-send-other' record (no green section, no
+  // 'bridge-out' notable marker). USDT-ness is decided by the moved
+  // token's symbol; amount-less method-call events keep bridge-out only
+  // when they are a transferRemote call to the USDT BridgeRouter itself.
+  if (ev.chain !== 'cosmos' && ev.type === 'bridge-out') {
+    let isUsdt;
+    if (ev.amount?.symbol) isUsdt = ev.amount.symbol === 'USDT';
+    else if (ev.method && ev.counterparty) isUsdt = lc(ev.counterparty) === BRIDGE_ROUTER_USDT && ev.method === S.transferRemote;
+    else isUsdt = false;
+    if (!isUsdt) {
+      set('type', 'bridge-send-other');
+      set('summary', `ブリッジ送信（USDT以外）：${ev.amount?.amount ?? ''} ${ev.amount?.symbol ?? ''} をブリッジ経由で外部チェーンへ`);
+      set('notableReasons', (ev.notableReasons ?? []).filter((r) => r !== 'bridge-out'));
+    }
   }
   // WS4b migration: Cosmos reward/commission summaries get the fixed
   // reward-claim labels (amounts already stored on the events).
@@ -752,10 +786,14 @@ export function classifyTx(ctx, tx, receipt, blockTs, blockNumber) {
       const actor = transferActor(t.from, t.to);
       if (!actor) continue;
       const outgoing = actor === t.from;
-      // WS5 (corrected): sending TO a known bridge contract = bridge-out.
-      // Receiving FROM one stays a plain inbound transfer (no special case).
-      const bridgeOut = outgoing && BRIDGE_SEND_TARGETS.has(t.to);
-      const ev = baseEvent(ctx, txN, blockTs, actor, outgoing ? t.to : t.from, bridgeOut ? 'bridge-out' : 'transfer', t.logIndex);
+      // WS5 (corrected) + v0.2.3: sending TO a known bridge contract is a
+      // bridge send, but only a USDT movement is a 'bridge-out' (green
+      // section); other tokens are plain 'bridge-send-other' records.
+      // Receiving FROM a bridge contract stays a plain inbound transfer.
+      const bridgeTarget = outgoing && BRIDGE_SEND_TARGETS.has(t.to);
+      const bridgeOut = bridgeTarget && lc(t.token) === USDT_TOKEN;
+      const evType = bridgeOut ? 'bridge-out' : bridgeTarget ? 'bridge-send-other' : 'transfer';
+      const ev = baseEvent(ctx, txN, blockTs, actor, outgoing ? t.to : t.from, evType, t.logIndex);
       ev.direction = outgoing ? 'out' : 'in';
       ev.amount = amountObj(ctx, t.token, t.amountRaw);
       ev.from = t.from; ev.to = t.to;
@@ -763,7 +801,9 @@ export function classifyTx(ctx, tx, receipt, blockTs, blockNumber) {
       ev.whitelisted = ev.amount.whitelisted;
       ev.summary = bridgeOut
         ? `ブリッジで外部へ送信：${ev.amount.amount} ${ev.amount.symbol} をブリッジ経由で外部チェーンへ`
-        : outgoing ? `${ev.amount.amount} ${ev.amount.symbol} を送金` : `${ev.amount.amount} ${ev.amount.symbol} を受取`;
+        : bridgeTarget
+          ? `ブリッジ送信（USDT以外）：${ev.amount.amount} ${ev.amount.symbol} をブリッジ経由で外部チェーンへ`
+          : outgoing ? `${ev.amount.amount} ${ev.amount.symbol} を送金` : `${ev.amount.amount} ${ev.amount.symbol} を受取`;
       ev.notableReasons = notableReasons(ev);
       if (bridgeOut && !ev.notableReasons.includes('bridge-out')) ev.notableReasons.push('bridge-out');
       events.push(ev);
@@ -773,15 +813,18 @@ export function classifyTx(ctx, tx, receipt, blockTs, blockNumber) {
       const actor = transferActor(from, to);
       if (actor) {
         const outgoing = actor === from;
-        const bridgeOut = outgoing && !!to && BRIDGE_SEND_TARGETS.has(to);
-        const ev = baseEvent(ctx, txN, blockTs, actor, outgoing ? to : from, bridgeOut ? 'bridge-out' : 'transfer', null);
+        // Native value is always [42], never USDT -> never bridge-out
+        // (v0.2.3); a native send to a bridge contract is bridge-send-other.
+        const bridgeTarget = outgoing && !!to && BRIDGE_SEND_TARGETS.has(to);
+        const bridgeOut = false;
+        const ev = baseEvent(ctx, txN, blockTs, actor, outgoing ? to : from, bridgeTarget ? 'bridge-send-other' : 'transfer', null);
         ev.direction = outgoing ? 'out' : 'in';
         ev.amount = amountObj(ctx, W42, value.toString());
         ev.from = from; ev.to = to;
         ev.tokens = ['42'];
         ev.whitelisted = true;
-        ev.summary = bridgeOut
-          ? `ブリッジで外部へ送信：${ev.amount.amount} [42] をブリッジ経由で外部チェーンへ`
+        ev.summary = bridgeTarget
+          ? `ブリッジ送信（USDT以外）：${ev.amount.amount} [42] をブリッジ経由で外部チェーンへ`
           : outgoing ? `${ev.amount.amount} [42] を送金` : `${ev.amount.amount} [42] を受取`;
         ev.notableReasons = notableReasons(ev);
         if (bridgeOut && !ev.notableReasons.includes('bridge-out')) ev.notableReasons.push('bridge-out');

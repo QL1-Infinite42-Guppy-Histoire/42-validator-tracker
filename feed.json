@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T01:24:06.711Z",
+ "generatedAt": "2026-11-05T01:41:09.753Z",
  "status": {
-  "lastProcessedBlock": 4273099,
-  "latestBlockSeen": 4273099,
-  "lastProcessedCosmosBlock": 4273099,
-  "lastProcessedAt": "2026-11-05T01:24:06.709Z",
-  "totalEvents": 1314,
+  "lastProcessedBlock": 4273288,
+  "latestBlockSeen": 4273288,
+  "lastProcessedCosmosBlock": 4273288,
+  "lastProcessedAt": "2026-11-05T01:41:09.751Z",
+  "totalEvents": 1316,
   "watchSummary": {
    "validators": 23,
    "directRelated": 110,
@@ -18,7 +18,7 @@
   },
   "notableRule": "注目ルール：①バリデーター本人の売買 ②1,000 [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）",
   "snipeRule": "スナイプの定義：ペアが作られてから3時間以内に、バリデーター本人または直接関連ウォレットが、そのペアで買う（買い）またはLP追加した動き",
-  "bridgeOutRule": "ブリッジで外部へ送信の定義：バリデーター本人または直接関連ウォレットが、ブリッジ経由で42チェーンから外部チェーンへ資金を送り出した動き（ブリッジ系コントラクト宛の送金、またはブリッジ送信メソッドの呼び出し）。専用の「ブリッジ出金（外部へ）」欄で緑色に光って表示されます（注目欄には入れません）。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません",
+  "bridgeOutRule": "ブリッジ出金の定義：バリデーター本人または直接関連ウォレットが、USDTをブリッジ経由で42チェーンから外部チェーンへ送り出した動き。専用の「ブリッジ出金（USDT・外部へ）」欄で緑色に光って表示されます（注目欄には入れません）。USDT以外の銘柄のブリッジ送信は通常の動きとして記録し、この欄には入れません。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません",
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。"
  },
  "validators": [
@@ -185,6 +185,125 @@
   }
  ],
  "events": [
+  {
+   "id": "0x2149103854f3a6d3286b1f4592953b79bf512ed4a5cf936b5e36b4476a9a8678:3:swap-sell:0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "ts": 1793842621,
+   "block": 4273244,
+   "txHash": "0x2149103854f3a6d3286b1f4592953b79bf512ed4a5cf936b5e36b4476a9a8678",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "actorLabel": "Xenia",
+   "actorTier": "validator",
+   "actorIsCore": true,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Xenia",
+    "Luke",
+    "Woman-In-Red-42",
+    "Metal Raptor",
+    "vethawk",
+    "X",
+    "PhoenixRing",
+    "HeraMoon",
+    "ayc",
+    "XenIt",
+    "Popo",
+    "panda42",
+    "FoxxOne",
+    "Sirius Cybernetics",
+    "light888",
+    "the_rider",
+    "CCUK",
+    "kimnmike",
+    "DON'T PANIC - DEX",
+    "farmer",
+    "DRIVESTATS",
+    "Zap",
+    "dudenode"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "892717035823384623",
+    "amount": "0.892717",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "1692904053221433742",
+    "amount": "1.692904",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.89635011,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 1.692904 42／価格 約1.89635011 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
+  {
+   "id": "0xedfe6f72e29baba929393396d1cd38f2f5e53cc378cf6c0b77ee110e63cfc6ff:tx:approve:0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "ts": 1793842589,
+   "block": 4273238,
+   "txHash": "0xedfe6f72e29baba929393396d1cd38f2f5e53cc378cf6c0b77ee110e63cfc6ff",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "actorLabel": "Xenia",
+   "actorTier": "validator",
+   "actorIsCore": true,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Xenia",
+    "Luke",
+    "Woman-In-Red-42",
+    "Metal Raptor",
+    "vethawk",
+    "X",
+    "PhoenixRing",
+    "HeraMoon",
+    "ayc",
+    "XenIt",
+    "Popo",
+    "panda42",
+    "FoxxOne",
+    "Sirius Cybernetics",
+    "light888",
+    "the_rider",
+    "CCUK",
+    "kimnmike",
+    "DON'T PANIC - DEX"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x1fabf92f10ba8e610b813bd6b58965165f33f108403115e3013755fc7794ef87:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1793840737,
@@ -6179,7 +6298,7 @@
    "block": 3778981,
    "txHash": "0x148d6f3711f7238f7edced974a048a3292e3ab9f5b263d36a9f4320c7f3f27ea",
    "logIndex": 2,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "actorLabel": null,
    "actorTier": "related",
@@ -6204,10 +6323,8 @@
     "QOM"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：142,280,259.408700 QOM をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：142,280,259.408700 QOM をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "X"
@@ -6222,7 +6339,7 @@
    "block": 3778981,
    "txHash": "0x148d6f3711f7238f7edced974a048a3292e3ab9f5b263d36a9f4320c7f3f27ea",
    "logIndex": null,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "actorLabel": null,
    "actorTier": "related",
@@ -6247,10 +6364,8 @@
     "42"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：1.74 [42] をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：1.74 42 をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "X"
@@ -6265,7 +6380,7 @@
    "block": 3778955,
    "txHash": "0xa5fbcfba0a082000a069b75b86e8ff7a8fc33bea7fdbdf2d479f500bef4589fc",
    "logIndex": 2,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "actorLabel": null,
    "actorTier": "related",
@@ -6290,10 +6405,8 @@
     "QOM"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：142,280,259.408700 QOM をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：142,280,259.408700 QOM をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "X"
@@ -6308,7 +6421,7 @@
    "block": 3778955,
    "txHash": "0xa5fbcfba0a082000a069b75b86e8ff7a8fc33bea7fdbdf2d479f500bef4589fc",
    "logIndex": null,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "actorLabel": null,
    "actorTier": "related",
@@ -6333,10 +6446,8 @@
     "42"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：1.74 [42] をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：1.74 42 をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "X"
@@ -6351,7 +6462,7 @@
    "block": 3778946,
    "txHash": "0x7f4b108cc6b731e4bc671f43cb14031ff67647cf7772c5e41d57686dfcfaff8e",
    "logIndex": 2,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "actorLabel": null,
    "actorTier": "related",
@@ -6376,10 +6487,8 @@
     "FATHER"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：1,532,879.070838 FATHER をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：1,532,879.070838 FATHER をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "X"
@@ -6394,7 +6503,7 @@
    "block": 3778946,
    "txHash": "0x7f4b108cc6b731e4bc671f43cb14031ff67647cf7772c5e41d57686dfcfaff8e",
    "logIndex": null,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "actorLabel": null,
    "actorTier": "related",
@@ -6419,10 +6528,8 @@
     "42"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：1.74 [42] をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：1.74 42 をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "X"
@@ -6437,7 +6544,7 @@
    "block": 3778938,
    "txHash": "0x25d2e195be467c8f96309b5290f101c4dc31b29a5c809d6941e8f000d16e8fb2",
    "logIndex": 4,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "actorLabel": null,
    "actorTier": "related",
@@ -6462,10 +6569,8 @@
     "BABY"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：56,575.768087 BABY をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：56,575.768087 BABY をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "X"
@@ -6480,7 +6585,7 @@
    "block": 3778938,
    "txHash": "0x25d2e195be467c8f96309b5290f101c4dc31b29a5c809d6941e8f000d16e8fb2",
    "logIndex": null,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "actorLabel": null,
    "actorTier": "related",
@@ -6505,10 +6610,8 @@
     "42"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：1.74 [42] をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：1.74 42 をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "X"
@@ -8787,7 +8890,7 @@
    "block": 3595652,
    "txHash": "0x9df2662cf4f5463a9a93a7530679180cbdcf8243e08c4161bc174abfa334ff41",
    "logIndex": 3,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xdac5fcc3b9c0f965888b346cf27faad5f90da274",
    "actorLabel": null,
    "actorTier": "related",
@@ -8812,10 +8915,8 @@
     "QOM"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：50,000,000,000 QOM をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：50,000,000,000 QOM をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "HeraMoon"
@@ -8830,7 +8931,7 @@
    "block": 3595652,
    "txHash": "0x9df2662cf4f5463a9a93a7530679180cbdcf8243e08c4161bc174abfa334ff41",
    "logIndex": null,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xdac5fcc3b9c0f965888b346cf27faad5f90da274",
    "actorLabel": null,
    "actorTier": "related",
@@ -8855,10 +8956,8 @@
     "42"
    ],
    "whitelisted": true,
-   "summary": "ブリッジで外部へ送信：1.63 [42] をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：1.63 42 をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "HeraMoon"
@@ -12825,7 +12924,7 @@
    "block": 3394826,
    "txHash": "0xc871ac1efb39242c1c47c9c4ebb8a84c72cf3eef926d9d0280c742e0b5554cb2",
    "logIndex": 0,
-   "type": "bridge-out",
+   "type": "bridge-send-other",
    "actor": "0xe15c7747a2b978f46d73794c1eefd575f93c0b7d",
    "actorLabel": null,
    "actorTier": "related",
@@ -12850,10 +12949,8 @@
     "USDC"
    ],
    "whitelisted": false,
-   "summary": "ブリッジで外部へ送信：1 USDC をブリッジ経由で外部チェーンへ",
-   "notableReasons": [
-    "bridge-out"
-   ],
+   "summary": "ブリッジ送信（USDT以外）：1 USDC をブリッジ経由で外部チェーンへ",
+   "notableReasons": [],
    "chain": "evm",
    "actorValidators": [
     "DRIVESTATS"
@@ -20784,81 +20881,6 @@
    ],
    "whitelisted": true,
    "summary": "報酬請求（委任報酬）：farmer 分 66.069974 [42]",
-   "notableReasons": [],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "報酬請求（委任報酬）"
-  },
-  {
-   "id": "cosmos:8C304729CC32735B0D741B15E8419698D8EF0E00FD8963D6896363AB39AA840C:1:commission:0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41",
-   "chain": "cosmos",
-   "ts": 1786546316,
-   "block": 2941345,
-   "txHash": "8C304729CC32735B0D741B15E8419698D8EF0E00FD8963D6896363AB39AA840C",
-   "logIndex": null,
-   "type": "commission",
-   "actor": "0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41",
-   "actorLabel": "farmer",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": null,
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "farmer"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "7341108248187049858",
-    "amount": "7.341108",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "バリデーター報酬請求（コミッション）：7.341108 [42]",
-   "notableReasons": [],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "バリデーター報酬請求（コミッション）"
-  },
-  {
-   "id": "cosmos:8201D7F5D8CB714D77AF196FB3A5C4EB8AA753EFF6BE649F0AD11D43EB5484F9:0:reward:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
-   "chain": "cosmos",
-   "ts": 1786504072,
-   "block": 2933571,
-   "txHash": "8201D7F5D8CB714D77AF196FB3A5C4EB8AA753EFF6BE649F0AD11D43EB5484F9",
-   "logIndex": null,
-   "type": "reward",
-   "actor": "0xdb34ff92995c74d170755a563a1a2c35a3db4738",
-   "actorLabel": "X",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0xdb34ff92995c74d170755a563a1a2c35a3db4738",
-   "counterpartyLabel": "X",
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "80576486135136000",
-    "amount": "0.080576",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "報酬請求（委任報酬）：X 分 0.080576 [42]",
    "notableReasons": [],
    "actorValidators": [],
    "actorShared": false,
