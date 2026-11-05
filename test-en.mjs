@@ -45,7 +45,7 @@ check(`full sweep (${events.length} events) has no Japanese`, !JA.test(all), (al
 // section membership after v0.2.3 demotion
 const bo = events.filter((e) => e.type === 'bridge-out');
 const bso = events.filter((e) => e.type === 'bridge-send-other');
-check('stored bridge-out >= 15 (v0.2.3 migration baseline)', bo.length >= 15, String(bo.length));
+check('stored bridge-out >= 12 (v0.2.3 migration baseline; v0.5.3 scope cut removed the evidence-tier senders)', bo.length >= 12, String(bo.length));
 check('stored bridge-out are all USDT', bo.every((e) => e.amount?.symbol === 'USDT'));
 check('stored bridge-send-other >= 11 (v0.2.3 demotions; backfills may add more)', bso.length >= 11, String(bso.length));
 check('bridge-send-other kept no marker', bso.every((e) => !(e.notableReasons || []).includes('bridge-out')));

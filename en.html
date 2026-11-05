@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.5.2</title>
+<title>42 Chain Validator Real-Time Tracker v0.5.3</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -27,15 +27,12 @@
   .rule{font-size:.82rem;color:var(--warn)}
   section.snipes .rule{color:#ffb3ba}
   .badge.shared{color:#081018;background:#ffa94d;border-color:#ffa94d;font-weight:700}
-  .badge.estimated{color:#081018;background:#e8c476;border-color:#e8c476;font-weight:700}
-  .ev.estimated{border-style:dashed;border-color:#b5893c}
+  
   .alias{font-size:.6em;color:var(--sub);font-weight:600}
   .head-row{display:flex;flex-direction:column;gap:2px}
   .langsw{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;font-size:.92rem;color:var(--sub);padding-top:2px;line-height:1.9;max-width:100%}
   .langsw b{color:var(--txt)}
   .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
-  .est-toggle{align-self:center;font-size:.92rem;cursor:pointer}
-  .estdef{border:1.5px dashed #b5893c;border-radius:10px;padding:8px 14px 10px;margin:12px 0 4px;background:rgba(232,196,118,.07)}
   .estdef>summary{cursor:pointer;font-weight:700;font-size:.98rem}
   .estdef p,.estdef li{font-size:.92rem;line-height:1.6}
   .estdef ul{margin:6px 0 6px 18px;padding:0}
@@ -126,8 +123,8 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (everyone who transacted with them, and the counterparties of those counterparties) (EVM side + Cosmos side, v0.5.2). Program (contract) addresses are not counted as a person's relations, and connections are never traced through them. An address is never treated as infrastructure just for being a shared wallet; the only test is whether it is a program (contract). Depth-2+ wallets are counted only when there is evidence they are the validator's own wallet (such as fund movements in both directions). General addresses without evidence are not counted. Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only). Related addresses are OTHER people's addresses that have transacted with that validator in the past; they are not necessarily the validator's own wallets. Their activity is shown separately from the validator's own activity. A "related address" means only an address that has dealt directly with the validator at least twice, or in both directions. A single one-way transaction does not count as a relation.</p>
+  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (only the addresses that transacted directly with them) (EVM side + Cosmos side, v0.5.3). Program (contract) addresses are not counted as a person's relations, and connections are never traced through them. An address is never treated as infrastructure just for being a shared wallet; the only test is whether it is a program (contract). This site tracks only the validators themselves and the related addresses linked to them by direct transactions. Addresses beyond that (depth 2+) and addresses whose link is only estimated are not tracked. Related addresses are OTHER people's addresses that have transacted with that validator in the past; they are not necessarily the validator's own wallets. Their activity is shown separately from the validator's own activity. A "related address" means only an address that has dealt directly with the validator at least twice, or in both directions. A single one-way transaction does not count as a relation.</p>
   <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-lp">💧 Liquidity</a><a href="#sec-dormant">😴 Dormant</a><a href="#sec-newfaces">👤 New faces</a><a href="#sec-newpairs">🆕 New pairs</a><a href="#sec-feed">Latest</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
@@ -153,7 +150,7 @@
 
   <section class="bridgechart" id="sec-bridgechart">
     <h2>📊 Total USDT Bridged Out</h2>
-    <p class="rule">How this chart is aggregated: for every validator (all 23), it sums the bridge-outs (USDT) of the validator itself, its depth-1 related wallets, and its depth-2+ related wallets that carry evidence. Depth-2+ wallets are counted only when there is evidence they are the validator's own wallet (such as fund movements in both directions). General addresses without evidence are not counted. Only personal wallets count as senders — infrastructure (program = contract) addresses are never counted, and neither are estimated addresses. Each bar is split into: the validator itself / related wallets that transacted directly with that validator (depth 1) / related wallets connected through other wallets (depth 2+, evidence only). A shared wallet's outflows are counted in the bar of EACH validator it is connected to, so the bars do not add up to the grand total; the deduplicated grand total is shown above. In other words, most of each bar is not the validator's own outflow, but outflows by related wallets attributed through their connection; the validator's own outflow is only the “the validator itself” segment of each bar.</p>
+    <p class="rule">How this chart is aggregated: for every validator (all 23), it sums the bridge-outs (USDT) of the validator itself and its depth-1 related wallets. Depth-2+ wallets are not counted (this site stops at depth 1). Only personal wallets count as senders — infrastructure (program = contract) addresses are never counted. Each bar is split into: the validator itself / related wallets that transacted directly with that validator (depth 1). A shared wallet's outflows are counted in the bar of EACH validator it is connected to, so the bars do not add up to the grand total; the deduplicated grand total is shown above. In other words, most of each bar is not the validator's own outflow, but outflows by related wallets attributed through their connection; the validator's own outflow is only the “the validator itself” segment of each bar.</p>
     <div id="bridgeChart"><p class="empty">Loading…</p></div>
   </section>
 
@@ -165,7 +162,7 @@
 
   <section class="lp" id="sec-lp">
     <h2>💧 Liquidity Moves</h2>
-    <p class="rule">Adding liquidity = putting money into a pool to support trading; removing liquidity = withdrawing what was deposited. A large removal can be a sign of withdrawal from the market, so it is worth watching. Adds have a teal line, removals an orange line. Estimated addresses are not included (confirmed information only).</p>
+    <p class="rule">Adding liquidity = putting money into a pool to support trading; removing liquidity = withdrawing what was deposited. A large removal can be a sign of withdrawal from the market, so it is worth watching. Adds have a teal line, removals an orange line.</p>
     <div id="lpmoves"><p class="empty">Loading…</p></div>
   </section>
 
@@ -177,7 +174,7 @@
 
   <section class="newfaces" id="sec-newfaces">
     <h2>👤 New Faces</h2>
-    <p class="rule">Counterparties that a watched address (validator itself, related, or core) transacted with for the first time in this site's entire record. Related addresses have been expanded over the full history, past included (counterparties of counterparties, without limit), and a newly appearing counterparty is automatically added to the watchlist as a related address (v0.4.0, in operation since November 2026). Cards marked "Added to the watchlist" are the ones added automatically. System, pair and token contracts are never added.</p>
+    <p class="rule">Counterparties that a watched address (validator itself, related, or core) transacted with for the first time in this site's entire record. Related addresses are depth 1 only: wallets that transacted directly with a validator itself. A newly appearing counterparty is first recorded as a candidate and is promoted to a related address once a second direct dealing with the validator itself (or a bidirectional exchange) is confirmed; candidates are not shown on the site. Cards marked "Added to the watchlist" are the ones added automatically. System, pair and token contracts are never added.</p>
     <div id="newfaces"><p class="empty">Loading…</p></div>
   </section>
 
@@ -188,7 +185,7 @@
   </section>
 
   <section class="fold open" id="sec-feed"><h2>Latest activity</h2><div class="fold-body">
-  <p class="sub">About estimated addresses (v0.3.0 / Phase 3): addresses whose link to a validator could not be confirmed by a direct transfer, estimated in three ways — (1) through-pool (a trade on the other side of the same pool matching within 10% in amount and 24 hours in time), (2) 2-hop (validator → this address → validator, both legs confirmed transfers), (3) shared counterparty (a third party transacting directly with 2 or more validators that is not already confirmed-related). Estimated moves appear only in Latest activity, with an Estimated badge and the basis shown. The special sections (Insider / Snipes / Notable / Bridge Withdrawals / Totals) use confirmed links only and never include estimates.</p>
+  
   <div class="filters">
     <select id="fValidator"><option value="">Validator: All</option></select>
     <select id="fType">
@@ -235,21 +232,10 @@
       <option value="unclassified">Unclassified action</option>
     </select>
     <select id="fToken"><option value="">Token: All</option></select>
-    <label class="est-toggle"><input type="checkbox" id="fEstimated" checked> Show estimated</label>
+    
   </div>
-  <p class="sub">Moves marked "Estimated" come from addresses whose direct transfers with a validator could not be confirmed. Full definition: <a href="#estimated-def" onclick="document.getElementById('estimated-def').open=true">What are estimated relations?</a></p>
-  <details class="estdef" id="estimated-def">
-    <summary>Definition: what "estimated relations" means</summary>
-    <p><b>An estimated relation</b> is an address we watch because it <i>may</i> be connected to a validator, even though no direct transfer between that address and the validator has been confirmed — so it cannot be stated to be a related party. Estimated relations are kept strictly separate from the confirmed related addresses (those with a confirmed direct transfer). An estimate is only a possibility, never a conclusion.</p>
-    <p>There are three kinds of basis, and the basis for each address is always written out on that address's cards:</p>
-    <ul>
-      <li><b>(1) Through-pool:</b> the amount a validator received from a pool (a shared place for buying and selling) closely matches an amount that this address had sold into the same pool shortly before — within 24 hours and within 10% in amount. It is unlikely for both the amount and the timing to line up by chance, so the two may effectively be connected through the pool. The basis text shows the amount difference, the time gap, and a score (how close the match is; closer to 1 means more likely).</li>
-      <li><b>(2) Shared counterparty:</b> a third party that transacts directly with 2 or more validators. It is worth watching because it deals with several validators, but it cannot be concluded to be a "related party" of each of those validators, so it is treated as estimated.</li>
-      <li><b>(3) 2-hop:</b> an indirect link of the form validator → another address → validator, where both transfers are confirmed. (Currently, no address has been newly registered under this type.)</li>
-    </ul>
-    <p><b>How estimates are handled:</b> moves by estimated addresses appear only in Latest activity, with a dashed border and an "Estimated" badge, and can be hidden by unchecking "Show estimated" above. They are never included in the Snipe Alerts, Notable, Insider Watch, or Bridge Withdrawals sections, nor in the bridge-out totals chart — all amounts there are totals of confirmed activity only.</p>
-    <p><b>Currently registered:</b> 4 estimated addresses (4 through-pool, 0 shared counterparties), as of v0.4.2, 5 November 2026.</p>
-  </details>
+  
+  
   <div id="feed"><p class="empty">Loading…</p></div>
   </div></section>
 
@@ -262,7 +248,7 @@
   </section>
 
   <section class="fold" id="sec-validators"><h2>Validators (23)</h2><div class="fold-body">
-  <p class="sub">"N related addresses" is the number of addresses confirmed to have transacted with that validator (direct counterparties and, beyond them, their counterparties as well; "incl. auto-added" counts the ones added automatically from the record); "M estimated" counts addresses linked only by one of the three estimation methods (no confirmed direct transfer).</p>
+  <p class="sub">"N related addresses" is the number of addresses confirmed to have transacted directly with that validator (direct counterparties only; "incl. auto-added" counts the ones added automatically from the record).</p>
   <div class="vals" id="validators"></div>
   </div></section>
 </main>
@@ -272,7 +258,7 @@
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated addresses (Phase 3): addresses whose link cannot be confirmed by a direct transfer are also watched, estimated in three ways — through-pool, 2-hop, and shared counterparty. Their moves appear only in Latest activity, with a dashed border, an Estimated badge and the basis shown; they are never included in the Insider / Snipes / Notable / Bridge Withdrawals / Totals sections (those stay confirmed-only). The validator list is refreshed from the chain on every run: newly bonded validators are added automatically, and validators that leave the bonded set stay watched as history (marked inactive). Nothing is posted externally (no X bot) — alerts live on this site only.
   Scope of related addresses (v0.4.0): in addition to every address that sent to or received from a validator, the full-history expansion (counterparties of counterparties, without limit) has been applied to the whole record, past included (system / pair / token contracts, and contacts reachable only through an estimated address, are excluded). When a new counterparty appears, it is also added automatically as a related address on the spot. / New Pairs covers pairs created by the Don't Panic factory and displays only pairs containing at least one of the 17 listed tokens. / The [42] price is calculated from the 42/USDT pool's reserves; the pool is small, so the figure has a margin of error.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). Validator X is also known as Rioshi, shown in small text as (Rioshi) next to the name.
-  <br>Version: <b>v0.5.2</b> (v0.5.2: fixed the attribution display — when filtering by a validator, its own activity and related addresses' activity are now shown as two separate groups, and the validator list splits its activity counts the same way, so other people's transactions are never presented as the validator's own; also tightened the definition of "related" (only addresses with at least two direct dealings with the validator, or dealings in both directions, count as related; an address with a single one-way contact is held as a candidate and promoted automatically at its second direct dealing). v0.5.1: fixed the header layout (the title now spans the full width and the language switcher wraps on narrow screens). v0.5.0: the site is now available in eight languages — 日本語, English, 简体中文, Español, हिन्दी, العربية, Português and Français — every language rendering from the same feed.json, composed from the structured fields rather than the stored Japanese summaries. v0.4.3: a version badge now sits at the top right of the header, next to the language switcher, on every page. v0.4.2: all infrastructure (contract) addresses removed from the person graph — relations are counted through personal wallets (EOAs) only, never through a contract; the bridge-out totals chart is now aggregated per validator (all 23, unlimited depth, shared wallets counted in each connected validator's bar). v0.4.1: the bridge-out totals chart now splits each bar by depth — the validator itself / depth-1 related / depth-2+ related. Previously, v0.4.0 added six sections — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price; v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
+  <br>Version: <b>v0.5.3</b> (v0.5.3: scope limited to depth 1 (depth-2+ evidence-kept and estimated addresses removed, together with their records) and the missing history backfilled in full (except Guide/Starlight reward flows). v0.5.2: fixed the attribution display — when filtering by a validator, its own activity and related addresses' activity are now shown as two separate groups, and the validator list splits its activity counts the same way, so other people's transactions are never presented as the validator's own; also tightened the definition of "related" (only addresses with at least two direct dealings with the validator, or dealings in both directions, count as related; an address with a single one-way contact is held as a candidate and promoted automatically at its second direct dealing). v0.5.1: fixed the header layout (the title now spans the full width and the language switcher wraps on narrow screens). v0.5.0: the site is now available in eight languages — 日本語, English, 简体中文, Español, हिन्दी, العربية, Português and Français — every language rendering from the same feed.json, composed from the structured fields rather than the stored Japanese summaries. v0.4.3: a version badge now sits at the top right of the header, next to the language switcher, on every page. v0.4.2: all infrastructure (contract) addresses removed from the person graph — relations are counted through personal wallets (EOAs) only, never through a contract; the bridge-out totals chart is now aggregated per validator (all 23, unlimited depth, shared wallets counted in each connected validator's bar). v0.4.1: the bridge-out totals chart now splits each bar by depth — the validator itself / depth-1 related / depth-2+ related. Previously, v0.4.0 added six sections — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price; v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -315,7 +301,7 @@ function tierBadge(ev){
   if (ev.actorIsCore) return '<span class="badge core">Core (infrastructure)</span>';
   if (ev.actorTier === 'validator') return '<span class="badge self">Validator</span>';
   if (ev.actorTier === 'related') return '<span class="badge related">Related address</span>';
-  if (ev.actorTier === 'estimated') return '<span class="badge estimated">Estimated</span>';
+  
   return '';
 }
 // Headline = the ACTOR only (same rule as the Japanese page).
@@ -323,7 +309,7 @@ function whoLabel(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel && !hasJa(ev.actorLabel)) return valName(ev.actorLabel);
   if (ev.actorIsCore) return enLabel(ev.actorLabel) || shortAddr(ev.actor);
   if (ev.actorTier === 'related') return 'Related ' + shortAddr(ev.actor);
-  if (ev.actorTier === 'estimated') return 'Estimated ' + shortAddr(ev.actor);
+  
   return enLabel(ev.actorLabel) || shortAddr(ev.actor);
 }
 function cpName(ev){
@@ -418,14 +404,7 @@ function summaryEn(ev){
 function relationLine(ev){
   if (ev.actorTier === 'validator') return '';
   const rel = ev.actorValidators || [];
-  if (ev.actorTier === 'estimated') {
-    let s = '';
-    if (rel.length === 1) s = `Related validators (estimated): <b class="rel-name">${valName(rel[0])}</b>`;
-    else if (rel.length >= 2) s = `Related validators (estimated): <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} more`;
-    const basisEn = ev.estimateBasis && ev.estimateBasis.textEn && !hasJa(ev.estimateBasis.textEn) ? ev.estimateBasis.textEn : '';
-    const note = basisEn ? `<div class="note">Basis for the estimate: ${basisEn}</div>` : '';
-    return (s ? `<div class="meta">${s}</div>` : '') + note;
-  }
+  
   let s = '';
   if (rel.length === 1) s = `Related validators: <b class="rel-name">${valName(rel[0])}</b>`;
   else if (rel.length >= 2) s = `Related validators: <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} more`;
@@ -435,8 +414,7 @@ function relationLine(ev){
     ? `<div class="note">A shared counterparty that transacts with multiple validators (not a validator itself)${noteEn ? ' / ' + noteEn : ''}</div>` : '';
   // v0.4.2: depth>=2 related cards state WHY the wallet is tracked.
   const EV_LABEL = {bidirectional: 'fund movements in both directions', 'funded-delegation': 'funded by the validator side and delegated back to that validator', 'concentrated-repeat': 'repeated interaction concentrated on the validator side', 'one-way-repeat': 'repeated one-way transfers from the validator side', delegation: 'a delegation to that validator', synchronized: 'moves synchronized with the validator'};
-  const evNote = ev.actorEvidence
-    ? `<div class="note">A depth-2+ relation, shown because there is evidence it is the validator's own wallet (evidence: ${[...new Set(Object.values(ev.actorEvidence).flat())].map((c) => EV_LABEL[c] ?? c).join(', ')})</div>` : '';
+  const evNote = '';
   const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
   return line + sharedNote + evNote;
 }
@@ -463,7 +441,7 @@ function renderBridgeChart(){
   const max = rows.length ? Math.max(...rows.map((g) => g.total)) : 0;
   el.innerHTML = `<div class="bchart-total">Total (deduplicated) ${fmt(B.total)} USDT (${B.count} withdrawals)</div>`
     + `<div class="bchart-segtotal">Overall breakdown (deduplicated): ${segLine(B.segTotals)}</div>`
-    + `<div class="bchart-legend"><span class="sw seg0"></span>the validator itself<span class="sw seg1"></span>depth-1 related<span class="sw seg2"></span>depth-2+ related</div>`
+    + `<div class="bchart-legend"><span class="sw seg0"></span>the validator itself<span class="sw seg1"></span>depth-1 related</div>`
     + rows.map((g) => {
       const parts = g.seg.map((v, i) => v > 0 ? `<div class="bchart-seg seg${i}" style="width:${max ? v / max * 100 : 0}%"></div>` : '').join('');
       return `<div class="bchart-row"><div class="bchart-name">${valName(g.moniker)}</div><div class="bchart-barwrap">${parts}</div><div class="bchart-amt">${fmt(g.total)} USDT <span class="bchart-cnt">×${g.count}</span></div><div class="bchart-break">${segLine(g.seg)}</div></div>`;
@@ -473,7 +451,7 @@ function bigName(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel) return {main: valName(ev.actorLabel), sub: 'the validator itself', cls: ' self'};
   const rel = ev.actorValidators || [];
   if (ev.actorTier === 'estimated') return {main: rel.length ? valName(rel[0]) : shortAddr(ev.actor), sub: rel.length > 1 ? ` — estimated related wallet (also estimated-related to ${rel.length - 1} more)` : ' — estimated related wallet', cls: ''};
-  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? ` — related wallet (also related to ${rel.length - 1} more)` : ' — related wallet') + ((ev.actorDepth ?? 1) >= 2 ? ' (depth 2+, evidence of being the validator\u2019s own wallet)' : ''), cls: ''};
+  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? ` — related wallet (also related to ${rel.length - 1} more)` : ' — related wallet'), cls: ''};
   if (ev.actorIsCore && ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: 'core', cls: ''};
   if (ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: '', cls: ''};
   return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? 'related wallet' : '', cls: ''};
@@ -541,8 +519,7 @@ function applyFilters(){
   const v = document.getElementById('fValidator').value;
   const t = document.getElementById('fType').value;
   const tk = document.getElementById('fToken').value;
-  const showEst = document.getElementById('fEstimated').checked;
-  const match = (ev) => (!v || isSelfEvent(ev, v) || isRelatedEvent(ev, v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk)) && (showEst || ev.actorTier !== 'estimated');
+  const match = (ev) => (!v || isSelfEvent(ev, v) || isRelatedEvent(ev, v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk));
   const list = FEED.events.filter(match);
   renderFeedList(list, v);
   // Special sections are CONFIRMED-ONLY (v0.3.0): estimated actors excluded.
@@ -586,7 +563,7 @@ async function load(){
     FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
     const s = FEED.status;
     document.getElementById('status').innerHTML =
-      `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> (chain tip ${s.latestBlockSeen ?? '—'}) / Cosmos last processed: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / Recorded moves: ${s.totalEvents} / Watching: ${s.watchSummary.validators} validators + ${s.watchSummary.directRelated} directly related addresses + ${s.watchSummary.estimated ?? 0} estimated${s.validatorsAdded ? ` / Validators auto-added this run: ${s.validatorsAdded.map(valNameText).join(', ')}` : ''}`;
+      `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> (chain tip ${s.latestBlockSeen ?? '—'}) / Cosmos last processed: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / Recorded moves: ${s.totalEvents} / Watching: ${s.watchSummary.validators} validators + ${s.watchSummary.directRelated} directly related addresses${s.validatorsAdded ? ` / Validators auto-added this run: ${s.validatorsAdded.map(valNameText).join(', ')}` : ''}`;
     document.getElementById('alertRule').textContent = 'Notable rule: (1) a validator\u2019s own buys and sells, (2) moves of 1,000 [42] or more. USDT bridge withdrawals are shown separately in the green section above. Only moves matching these rules are listed here (shown on this site only; nothing is posted externally).';
     document.getElementById('bridgeOutRule').textContent = 'Bridge withdrawal = a validator itself, or a directly related wallet, sending USDT out of the 42 Chain to an external chain through a bridge. These moves glow green in this dedicated section (they are not put in Notable). Bridge sends of tokens other than USDT are recorded as regular moves and are not shown here. Inbound receipts (receiving on the 42 Chain side) are treated as ordinary transfers.';
     document.getElementById('snipeRule').textContent = 'Snipe = a validator itself, or a directly related wallet, buying on a pair within 3 hours of that pair\u2019s creation (buys only \u2014 LP adds are not counted as snipes). Matching moves are listed here, prominently.';
@@ -607,17 +584,16 @@ async function load(){
     }
     document.querySelector('#sec-validators h2').textContent = `Validators (${FEED.validators.length})`;
     document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
-      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">also core infra</span>' : ''}${v.inactive ? ' <span class="badge">currently inactive</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} related addresses (incl. ${v.autoAddedCount ?? 0} auto-added) / ${v.estimatedCount ?? 0} estimated</span><br><span class="sub">Own activity ${v.selfActivity ?? 0} / Related addresses' activity ${v.relatedActivity ?? 0}</span></div>`).join('');
+      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">also core infra</span>' : ''}${v.inactive ? ' <span class="badge">currently inactive</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} related addresses (incl. ${v.autoAddedCount ?? 0} auto-added)</span><br><span class="sub">Own activity ${v.selfActivity ?? 0} / Related addresses' activity ${v.relatedActivity ?? 0}</span></div>`).join('');
     applyFilters();
     renderBridgeChart();
     renderStaking();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
-    { const d = document.getElementById('estimated-def'); if (d && location.hash === '#estimated-def') { d.open = true; setTimeout(() => d.scrollIntoView({behavior:'smooth'}), 80); } }
   } catch (e) {
     document.getElementById('status').textContent = 'Could not load feed.json (the collector may not have run yet).';
   }
 }
-for (const id of ['fValidator','fType','fToken','fEstimated']) document.getElementById(id).addEventListener('change', applyFilters);
+for (const id of ['fValidator','fType','fToken']) document.getElementById(id).addEventListener('change', applyFilters);
 { if (typeof location !== 'undefined' && location.hash && document.querySelectorAll) for (const a of document.querySelectorAll('.langsw a')) a.href = a.getAttribute('href') + location.hash; }
 load();
 setInterval(load, 30000);

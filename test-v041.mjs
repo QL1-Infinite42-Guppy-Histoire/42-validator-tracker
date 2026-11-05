@@ -136,19 +136,19 @@ const S = feed.stats.bridge;
 const statByName = new Map(S.perValidator.map((g) => [g.moniker, g]));
 const maxStat = Math.max(...S.perValidator.map((g) => g.total));
 for (const [file, labels, otherLabels] of [
-  ['index.html', ['本人', '1段目の関連', '2段目以降の関連'], ['the validator itself', 'depth-1 related', 'depth-2+ related']],
-  ['en.html', ['the validator itself', 'depth-1 related', 'depth-2+ related'], ['本人', '1段目の関連', '2段目以降の関連']],
+  ['index.html', ['本人', '1段目の関連'], ['the validator itself', 'depth-1 related', 'depth-2+ related', '2段目以降の関連']],
+  ['en.html', ['the validator itself', 'depth-1 related'], ['本人', '1段目の関連', '2段目以降の関連', 'depth-2+ related']],
 ]) {
   const { html, chart } = await renderChart(file);
   const tag = file === 'index.html' ? 'JP' : 'EN';
-  check(`${tag}: legend lists all three depth segments`, chart.includes('bchart-legend') && labels.every((l) => chart.includes(l)));
+  check(`${tag}: legend lists the two depth segments (v0.5.3: depth-2+ segment retired)`, chart.includes('bchart-legend') && labels.every((l) => chart.includes(l)));
   check(`${tag}: no foreign-language segment labels in the chart`, !otherLabels.some((l) => chart.includes(l)));
   if (tag === 'EN') check('EN: chart fragment has no Japanese', !JA.test(chart), (chart.match(/.{0,30}[぀-ヿ一-鿿]+.{0,30}/)?.[0] ?? ''));
   const headTotal = parseFloat(chart.match(/<div class="bchart-total">[^<]*?([\d,]+\.\d{2}) USDT/)[1].replace(/,/g, ''));
   check(`${tag}: header deduplicated total matches the independent recomputation`, near(headTotal, R.total) && near(headTotal, S.total), `${fmt(headTotal)} vs ${fmt(R.total)}`);
   const segHead = stripTags(chart.match(/<div class="bchart-segtotal">([\s\S]*?)<\/div>/)[1]);
   const segHeadAmts = [...segHead.matchAll(/([\d,]+\.\d{2}) USDT/g)].map((m) => parseFloat(m[1].replace(/,/g, '')));
-  check(`${tag}: header segment totals match recomputation`, segHeadAmts.length === 3 && segHeadAmts.every((v, i) => near(v, R.segTot[i])), segHead);
+  check(`${tag}: header segment totals match recomputation (non-zero segments only)`, segHeadAmts.length === R.segTot.filter((v) => v > 0).length && segHeadAmts.every((v, i) => near(v, R.segTot.filter((x) => x > 0)[i])), segHead);
   const rows = parseRows(chart);
   check(`${tag}: one bar per validator (all 23, zero bars included)`, rows.length === S.perValidator.length && rows.length === 23, `${rows.length} rows`);
   let rowsOk = true, widthsOk = true;
@@ -237,7 +237,7 @@ check('pair-created events of removed/moved creators carry no tier attribution',
 check('EOA repair record: watchlist shrank 413 -> 363 with tiers 23/183/153/4 at that stage', eoaRep.before.watchlistTotal === 413 && eoaRep.after.watchlistTotal === 363 && eoaRep.after.tiers.related === 183 && eoaRep.after.tiers.core === 153 && eoaRep.after.tiers.estimated === 4);
 check('v0.4.2 chart before/after (deduplicated): 16,074.08 -> 14,104.47, delta entirely in depth>=2', near(eoaRep.before.bridge.total, 16074.08) && near(eoaRep.after.bridge.total, 14104.47) && near(eoaRep.before.bridge.segTotals[0], eoaRep.after.bridge.segTotals[0]) && near(eoaRep.before.bridge.segTotals[1], eoaRep.after.bridge.segTotals[1]) && eoaRep.after.bridge.segTotals[2] < eoaRep.before.bridge.segTotals[2], `${eoaRep.before.bridge.total} -> ${eoaRep.after.bridge.total}`);
 const tightRep = JSON.parse(read('tightening-report.json'));
-check('current recomputation total equals the v0.5.2 tightening total (one-off candidates purged; no new bridge-outs since)', near(R.total, tightRep.bridgeAfter.total), `${fmt(R.total)} vs ${fmt(tightRep.bridgeAfter.total)}`);
+check('current recomputation total equals the v0.5.3 total (evidence-tier senders removed; no new bridge-outs since)', near(R.total, 6419.27), `${fmt(R.total)} vs 6,419.27`);
 
 // ---------- (6) section order (user reorder, shipped in v0.4.1) ----------
 // Coloured special sections on top (insider, snipes, bridge-out, totals

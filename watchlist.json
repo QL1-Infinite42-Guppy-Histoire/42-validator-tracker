@@ -9,18 +9,18 @@
  },
  "summary": {
   "validators": 23,
-  "directRelated": 62,
+  "directRelated": 50,
   "coreLabelOnly": 153,
   "coreFlaggedTotal": 154,
-  "watchedActors": 89,
-  "totalEntries": 279,
+  "watchedActors": 73,
+  "totalEntries": 263,
   "confirmedCounterpartyLinks": 212,
   "uniqueConfirmedCounterparties": 129,
-  "related": 62,
+  "related": 50,
   "core": 153,
-  "estimated": 4,
-  "autoAdded": 12,
-  "autoAddedClosure": 12,
+  "estimated": 0,
+  "autoAdded": 0,
+  "autoAddedClosure": 0,
   "autoAddedLive": 0,
   "candidates": 37
  },
@@ -3252,60 +3252,6 @@
    "relatedValidators": []
   },
   {
-   "address": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
-   "tier": "estimated",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "PhoenixRing"
-   ],
-   "basisType": "pool",
-   "basisText": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-   "basisTextEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer",
-   "estimateLinks": {
-    "pool": [
-     {
-      "validator": "PhoenixRing",
-      "asset": "USDT",
-      "gapPct": 2.707,
-      "dtSeconds": 74713,
-      "score": 0.722,
-      "side": "to"
-     }
-    ]
-   }
-  },
-  {
-   "address": "0x5a368c3128cf40581a22fb6209b6cdb883881b65",
-   "tier": "estimated",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "kimnmike"
-   ],
-   "basisType": "pool",
-   "basisText": "プール経由の推定：kimnmike がプールから受け取った 42 と、このアドレスが先に同じプールへ売った分が、金額差 5.518%・時間差 約19.7時間で一致（スコア 0.715）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-   "basisTextEn": "Through-pool estimate: kimnmike received 42 from a pool, and this address had sold into the same pool shortly before — amount gap 5.518%, time gap about 19.7h (score 0.715). It may simply be a different person using the same pool; this is not a confirmed transfer",
-   "estimateLinks": {
-    "pool": [
-     {
-      "validator": "kimnmike",
-      "asset": "42",
-      "gapPct": 5.518,
-      "dtSeconds": 71006,
-      "score": 0.715,
-      "side": "to"
-     }
-    ]
-   }
-  },
-  {
    "address": "0x98fd9e32eaf45e0adf7f5c8bd7714f24a5dc0e88",
    "tier": "core",
    "label": "コントラクト（未分類）",
@@ -3333,60 +3279,6 @@
     }
    },
    "coreNote": "v0.4.2: バイトコード監査でコントラクトと判明したため仕組み系へ（人の関連からは除外）"
-  },
-  {
-   "address": "0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "tier": "estimated",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "XenIt"
-   ],
-   "basisType": "pool",
-   "basisText": "プール経由の推定：XenIt がプールへ売った FISH と、このアドレスが後に同じプールから買った分が、金額差 8.213%・時間差 約24.0時間で一致（スコア 0.643）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-   "basisTextEn": "Through-pool estimate: XenIt sold FISH into a pool, and this address bought from the same pool shortly after — amount gap 8.213%, time gap about 24.0h (score 0.643). It may simply be a different person using the same pool; this is not a confirmed transfer",
-   "estimateLinks": {
-    "pool": [
-     {
-      "validator": "XenIt",
-      "asset": "FISH",
-      "gapPct": 8.213,
-      "dtSeconds": 86324,
-      "score": 0.643,
-      "side": "from"
-     }
-    ]
-   }
-  },
-  {
-   "address": "0xf35267269cb68d2a130338ffce4200a5f9f609dd",
-   "tier": "estimated",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "Luke"
-   ],
-   "basisType": "pool",
-   "basisText": "プール経由の推定：Luke がプールから受け取った 42 と、このアドレスが先に同じプールへ売った分が、金額差 3.557%・時間差 約23.4時間で一致（スコア 0.683）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-   "basisTextEn": "Through-pool estimate: Luke received 42 from a pool, and this address had sold into the same pool shortly before — amount gap 3.557%, time gap about 23.4h (score 0.683). It may simply be a different person using the same pool; this is not a confirmed transfer",
-   "estimateLinks": {
-    "pool": [
-     {
-      "validator": "Luke",
-      "asset": "42",
-      "gapPct": 3.557,
-      "dtSeconds": 84244,
-      "score": 0.683,
-      "side": "to"
-     }
-    ]
-   }
   },
   {
    "address": "0xfcebe4797ed94bac6d09503f04fa13d997675553",
@@ -3424,35 +3316,6 @@
    "validators": [],
    "relatedValidators": [],
    "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
-  },
-  {
-   "address": "0xaeca0c02baee386e45c273a1bf2d7ddfda48ed30",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "FoxxOne"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1781869974,
-   "firstSeenTx": "424a50d70b4f632f166915299bba621503dc5c2d29dbb396232dc758f4ec67ad",
-   "via": {
-    "address": "0xaa602aa1747f1f889f8bea2559090c97647a0133",
-    "validators": [
-     "FoxxOne"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "FoxxOne": [
-     "bidirectional",
-     "concentrated-repeat"
-    ]
-   }
   },
   {
    "address": "0xe5c35f94dd36a96e955da58fe4048b1e073e5221",
@@ -3508,36 +3371,6 @@
    "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
-   "address": "0xe1794313faaaed9c5e038df778224b3d8eda96ed",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "X"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788518553,
-   "firstSeenTx": "0xbef783fedf47d111fd0be4400327d89f0f11f1e6c2cc957408811219ff72c09b",
-   "via": {
-    "address": "0xc8de941efb92925bfd359a7a380399e47bc2b242",
-    "validators": [
-     "CCUK",
-     "X"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "X": [
-     "delegation",
-     "synchronized"
-    ]
-   }
-  },
-  {
    "address": "0x24d0abb2a08037fef3da0da85d23ed35c1b1b980",
    "tier": "core",
    "label": "LiquidityLocker（流動性ロッカー）",
@@ -3549,202 +3382,6 @@
    "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
   },
   {
-   "address": "0xddf09ec67832c6ab5d839cfc5f434b5bbcc8bf4c",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788462755,
-   "firstSeenTx": "0x7ae39a589c9cd5fa006d2eea23dd1a4394c27fac2abbe0b3b25df751bfcbfd24",
-   "via": {
-    "address": "0xdac5fcc3b9c0f965888b346cf27faad5f90da274",
-    "validators": [
-     "HeraMoon"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "address": "0x11e94dba0f6b2b0f862d55cdb6cb38aad906bbba",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788366962,
-   "firstSeenTx": "0x8be1f77b5bf46fd98a6cb928a05ce8ababaeb0785041351c100f36c6c2c4a6b0",
-   "via": {
-    "address": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-    "validators": [
-     "HeraMoon"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "address": "0xc9fd7cab65b2f4efa30c4d10c0c68681b442860b",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788367108,
-   "firstSeenTx": "0x34f683254e3871937ce2e831dab25e4060de66157b38811cd233b24ba6e3a63b",
-   "via": {
-    "address": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-    "validators": [
-     "HeraMoon"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "address": "0x38cee5316c482bf3cfdcace3b0cab1bf36ee42bc",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788367037,
-   "firstSeenTx": "0xd03e90141263d96e52521230198b6e31fce7c3916f5512f24ef7c5e9f67e97a3",
-   "via": {
-    "address": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-    "validators": [
-     "HeraMoon"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "address": "0x480155a3d5c98ddc1c022998a6a3be11126b2781",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788367247,
-   "firstSeenTx": "0x1ca357d2f1092cedfd5dbfd455fceeb6d58e9c75c2e5abca891877560bb1f3be",
-   "via": {
-    "address": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-    "validators": [
-     "HeraMoon"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "address": "0x1987763eed8bd7e0fe8872f03dfa002ca9435985",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788367188,
-   "firstSeenTx": "0x3dd54120e4f591ddcb8e804a587a9ae88448c4e29da0beeaf176986d814cd367",
-   "via": {
-    "address": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-    "validators": [
-     "HeraMoon"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "address": "0x077afd3d3dc404daf67468fc9b2e64ca0aa54719",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "HeraMoon"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788367350,
-   "firstSeenTx": "0xcb93cc3f425cdad35e2750fe1bc3bc99f89cb6538cc0ab4a9a5be617edc198ec",
-   "via": {
-    "address": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-    "validators": [
-     "HeraMoon"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
    "address": "0x01d814a76a11a3c2ebb701de90e5c9a4317929be",
    "tier": "core",
    "label": "GoldenFoxCrown（NFT）",
@@ -3754,91 +3391,6 @@
    "validators": [],
    "relatedValidators": [],
    "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
-  },
-  {
-   "address": "0x16c6c90fb351faf23bf225785e2e08686bdcc2c3",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "FoxxOne"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788684964,
-   "firstSeenTx": "0x767df023bd6f349264a382837ad4a6db56715f53b6bec236eb61d3a119edfde2",
-   "via": {
-    "address": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-    "validators": [
-     "FoxxOne"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "FoxxOne": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "address": "0x69fd216d34f14852c93fa1309df7012262c7b53f",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "FoxxOne"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1788684937,
-   "firstSeenTx": "0x4328aa99fa4e0cfe30d916b2c56ef61de818231ab480c88d5bef53ea25440e9b",
-   "via": {
-    "address": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-    "validators": [
-     "FoxxOne"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "FoxxOne": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "address": "0x85769973d85c2d3cdea764a70fba24c4293f2664",
-   "tier": "related",
-   "label": null,
-   "isCore": false,
-   "isPair": false,
-   "watch": true,
-   "validators": [],
-   "relatedValidators": [
-    "FoxxOne"
-   ],
-   "autoAdded": true,
-   "addedVia": "closure-v0.4.0",
-   "addedAt": 1784452043,
-   "firstSeenTx": "0x5e4f66814d60cfbaffc6f8e364e980893a1c3f5084a94ba8b9c56b476d570f3e",
-   "via": {
-    "address": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-    "validators": [
-     "FoxxOne"
-    ]
-   },
-   "depth": 2,
-   "evidence": {
-    "FoxxOne": [
-     "bidirectional",
-     "concentrated-repeat"
-    ]
-   }
   },
   {
    "address": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",

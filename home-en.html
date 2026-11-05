@@ -44,7 +44,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <b>English</b> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
+  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <b>English</b> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
   <p class="sub">This site automatically collects the moves of the validators themselves and of the addresses confirmed to transact with them directly. Pick a section to jump to it.</p>
   <div class="status" id="status">Loading…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -69,7 +69,7 @@
     </a>
     <a class="card bridge" href="en.html#sec-bridgechart">
       <h2>📊 Total USDT Bridged Out</h2>
-      <p>The total amount of USDT bridged out to external chains, with a per-name bar chart split by depth (the validator itself / depth-1 related / depth-2+ related).</p>
+      <p>The total amount of USDT bridged out to external chains, with a per-name bar chart (the validator itself / depth-1 related).</p>
       <div class="count" id="c-bridgetotal">—</div>
       <div class="segsub" id="c-bridgeseg">—</div>
     </a>
@@ -100,7 +100,7 @@
     </a>
     <a class="card" href="en.html#sec-feed">
       <h2>📜 Latest Activity (full record)</h2>
-      <p>Every recorded move on the EVM and Cosmos sides, filterable by validator, type and token. Moves by estimated addresses are included here, clearly marked as estimated (the special sections stay confirmed-only).</p>
+      <p>Every recorded move on the EVM and Cosmos sides, filterable by validator, type and token.</p>
       <div class="count" id="c-total">—</div>
     </a>
     <a class="card" href="en.html#sec-staking">
@@ -114,12 +114,12 @@
       <div class="count" id="c-validators">—</div>
     </a>
   </div>
-  <p style="font-size:.95rem">❓ <a href="en.html#estimated-def">What are estimated relations? (read the definition)</a> — addresses watched on a possible connection, without a confirmed direct transfer.</p>
+  
   <p class="lang">🌐 日本語版： <a href="home.html">トップページ</a> ／ <a href="index.html">追跡ページ</a></p>
 </main>
 <footer>
-  Data source: the 42 Chain blocks themselves (via RPC). Coverage is limited to transactions on the 42 Chain only (EVM chain ID 421018 and its Cosmos side, infinite_421018-1). Transactions on QL1 or any other chain are not included. Moves by estimated addresses appear in Latest Activity only, clearly marked as estimated; the special sections stay confirmed-only. Alerts are shown on this site only.
-  <br>Version: <b>v0.5.2</b> (top page)
+  Data source: the 42 Chain blocks themselves (via RPC). Coverage is limited to transactions on the 42 Chain only (EVM chain ID 421018 and its Cosmos side, infinite_421018-1). Transactions on QL1 or any other chain are not included. Alerts are shown on this site only.
+  <br>Version: <b>v0.5.3</b> (top page)
 </footer>
 <script>
 (async () => {

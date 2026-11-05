@@ -52,7 +52,7 @@ check('no contract address exists in the related/estimated tiers', personContrac
 check('every related/estimated entry was census-checked as EOA', watchlist.entries.filter((e) => e.tier === 'related' || e.tier === 'estimated').every((e) => audit.results[e.address]?.decision === 'eoa'));
 check('0x71b1...30E0 (LP-holder contract) is core tier now — no exceptions', ent.get('0x71b138382598fbc4b890d2d20a14f9dedb1430e0')?.tier === 'core');
 check('0x98fd...0e88 (estimated shared counterparty, a contract) is core tier now', ent.get('0x98fd9e32eaf45e0adf7f5c8bd7714f24a5dc0e88')?.tier === 'core');
-check('estimated tier is EOA-only, 4 entries (through-pool only)', watchlist.entries.filter((e) => e.tier === 'estimated').length === 4);
+check('estimated tier retired in v0.5.3 (0 entries)', watchlist.entries.filter((e) => e.tier === 'estimated').length === 0);
 const f015 = ent.get('0xf2ecb173b63699c49ace3faae80af5ce677af015');
 check('0xf2ec...f015 stays core with the bridge-contract label', f015?.tier === 'core' && f015?.label === 'ブリッジ系コントラクト');
 const badVia = watchlist.entries.filter((e) => e.autoAdded && e.via?.address && (() => { const v = ent.get(e.via.address); return !v || v.tier === 'core' || v.tier === 'estimated' || audit.results[e.via.address]?.decision === 'core'; })());
@@ -61,9 +61,9 @@ check('via-chain integrity: no auto-added entry routes via a contract/core/estim
 // ---------- (2) evidence gate ----------
 const CODES = new Set(['bidirectional', 'funded-delegation', 'concentrated-repeat', 'one-way-repeat', 'delegation', 'synchronized']);
 const d2 = watchlist.entries.filter((e) => e.tier === 'related' && (e.depth ?? 1) >= 2);
-check('every depth>=2 related entry carries wallet evidence', d2.length > 0 && d2.every((e) => e.evidence && Object.keys(e.evidence).length >= 1), `${d2.length} entries`);
+check('v0.5.3: no depth>=2 related entries remain (depth-1 only scope)', d2.length === 0, `${d2.length} entries`);
 check('evidence codes are all from the defined set and name only attributed validators', d2.every((e) => Object.entries(e.evidence).every(([n, codes]) => (e.relatedValidators ?? []).includes(n) && codes.length >= 1 && codes.every((c) => CODES.has(c)))));
-check('adopted set matches evidence-repair-report (12 entries)', evRep.adoptedCount === 12 && evRep.adopted.every((a) => ent.has(a.address) && JSON.stringify(ent.get(a.address).evidence) === JSON.stringify(a.evidence)));
+check('the 12 evidence-adopted entries of v0.4.2 were removed again in v0.5.3 (none in the watchlist)', evRep.adoptedCount === 12 && evRep.adopted.every((a) => !ent.has(a.address)));
 const deletedSet = new Set(evRep.deleted.map((d) => d.address));
 check('evidence-deleted set matches the report (84 entries), none in the watchlist', evRep.deletedCount === 84 && [...deletedSet].every((a) => !ent.has(a)));
 check('no stored event keeps an evidence-deleted actor (except pair-created chain news)', events.every((e) => !deletedSet.has(e.actor) || e.type === 'pair-created'), events.find((e) => deletedSet.has(e.actor) && e.type !== 'pair-created')?.id);
@@ -129,7 +129,7 @@ const FRESH1 = '0x' + 'a1'.repeat(20), FRESH2 = '0x' + 'a2'.repeat(20), FRESH3 =
     { type: 'transfer', actor: FRESH4, counterparty: orig.address, ts: 11, amount: null },
   ];
   const r = await maybeAutoAddLive(wl, ctx, { actor: orig.address, counterparty: FRESH4, ts: 20, txHash: '0x0' }, new Set(), { isContractFn: noContract, events: evs });
-  check('live gate: a depth-2 candidate with bidirectional transfers IS added, with evidence recorded', !!r && r.tier === 'related' && r.depth === 2 && !!r.evidence && Object.values(r.evidence).some((codes) => codes.includes('bidirectional')), JSON.stringify(r?.evidence ?? null));
+  check('live gate (v0.5.3): depth-2 adoption retired — even a bidirectional depth-2 candidate is NOT added', r === null && !ctx.entry(FRESH4), JSON.stringify(r));
 }
 
 // ---------- (5) permanent exclusion mechanism ----------
@@ -164,10 +164,10 @@ if (process.env.EXCLUDED_ACTORS) {
 const idx = read('index.html'); const en = read('en.html');
 check('JP scope note: contracts are never counted or transited', idx.includes('プログラム（コントラクト）のアドレスは、人の関連としては数えず、経由もしません'));
 check('JP scope note: shared alone is not infrastructure (bytecode only)', idx.includes('共有の財布というだけでは仕組み系にしません。プログラム（コントラクト）かどうかだけで判定します'));
-check('JP scope/chart rule: depth-2+ counted only with own-wallet evidence', idx.includes('2段目以降は、バリデーター本人の財布らしい証拠（双方向の資金移動など）があるものだけを数えます。証拠のない一般のアドレスは数えません'));
+check('JP scope/chart rule (v0.5.3): breakdown is the validator itself + depth-1 related only', idx.includes('内訳は、そのバリデーター本人／そのバリデーターと直接やり取りがある関連（1段目）です'));
 check('EN scope note: contracts are never counted or transited', en.includes('Program (contract) addresses are not counted as a person\u2019s relations, and connections are never traced through them') || en.includes("Program (contract) addresses are not counted as a person's relations, and connections are never traced through them"));
 check('EN scope note: shared alone is not infrastructure', en.includes('never treated as infrastructure just for being a shared wallet'));
-check('EN chart rule: depth-2+ counted only with evidence', en.includes('Depth-2+ wallets are counted only when there is evidence they are the validator\u2019s own wallet') || en.includes("Depth-2+ wallets are counted only when there is evidence they are the validator's own wallet"));
+check('EN chart rule (v0.5.3): depth-2+ wallets are not counted (the site stops at depth 1)', en.includes('Depth-2+ wallets are not counted (this site stops at depth 1)'));
 check('versions bumped to v0.4.2 on all four pages', idx.includes('v0.4.2') && en.includes('v0.4.2') && read('home.html').includes('v0.4.2') && read('home-en.html').includes('v0.4.2'));
 
 console.log(fails === 0 ? 'ALL PASS' : `${fails} FAILED`);

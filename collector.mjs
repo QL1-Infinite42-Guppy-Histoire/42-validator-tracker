@@ -483,11 +483,13 @@ export function computeHistoryFlags(events, ctx) {
   }
   return { changed, dormantCount, newfaceCount, longestDays };
 }
-// Live auto-add (v0.4.0, user rule): when a CONFIRMED watched wallet
-// (validator / related incl. auto-added — recursive, no depth limit)
-// transacts with an address that is not watched yet, that address joins
-// the watchlist as a confirmed related address, inheriting the actor's
-// validator attribution. Estimated actors never trigger an add (an
+// Live auto-add (v0.4.0, user rule; scope narrowed in v0.5.3): when a
+// CONFIRMED watched wallet (validator / depth-1 related) transacts with
+// an address that is not watched yet, that address can join the watchlist
+// under the depth-1 rules only (see maybeAutoAddLive: a first direct
+// contact with a validator becomes a CANDIDATE; deeper counterparties are
+// never adopted — v0.5.3 retired depth>=2 adoption and the evidence gate
+// entirely). Estimated actors never trigger an add (an
 // estimate is never promoted by proxy), pairs and known system/token
 // contracts never get added (they live on the core side), and an address
 // reachable only through an estimated wallet is not added either (it can
@@ -549,11 +551,16 @@ export function registerCoreContract(watchlist, ctx, addr, label) {
   ctx.watch.set(addr, entry);
   return entry;
 }
-// ---- Wallet-evidence rules (v0.4.2 final scope, user-approved) ----
-// Depth>=2 related addresses are tracked ONLY with evidence that they
-// are the validator's own wallet. evidenceCodesFor is the single
-// threshold implementation: repair-evidence.mjs feeds it flow-index
-// statistics; the live auto-add feeds it recorded-event statistics.
+// ---- Wallet-evidence rules (v0.4.2; RETIRED in v0.5.3) ----
+// v0.5.3 (user decision 「1段目までにする」): the tracker covers depth-1
+// only. The evidence gate below is no longer used by the live auto-add —
+// depth>=2 newcomers are never adopted. evidenceCodesFor /
+// assessEvidenceFromEvents are kept solely because the historical repair
+// scripts (repair-evidence.mjs) and their tests reference them.
+// (v0.4.2 rule, for the record: depth>=2 related addresses were tracked
+// ONLY with evidence that they are the validator's own wallet.
+// evidenceCodesFor is the single threshold implementation:
+// repair-evidence.mjs feeds it flow-index statistics.)
 //   STRONG (one is enough):
 //     bidirectional       — fund movements in BOTH directions with the
 //                           validator itself or its depth-1 wallets
@@ -670,13 +677,15 @@ export function observeCandidateInteraction(watchlist, ctx, ev) {
 // the new related entry) or registers a core contract (returns
 // { contract }). Returns null when nothing was added.
 // v0.4.2 gates: contracts never enter the person tiers (routed to the
-// core registry), and a depth>=2 newcomer enters ONLY with wallet
-// evidence (assessed from the recorded events against the inherited
-// validator names); unlimited automatic expansion is stopped.
+// core registry); unlimited automatic expansion is stopped.
 // v0.5.2 gate: a depth-1 newcomer (first direct contact with a
 // validator) enters as a one-off CANDIDATE, not as related — see
 // observeCandidateInteraction above. Candidate interactions with a
 // validator are observed (and may promote) before anything else.
+// v0.5.3: depth>=2 adoption is RETIRED (user decision: depth-1 only).
+// A counterparty of a related wallet is never adopted, with or without
+// evidence; it can still join later through its own direct dealings
+// with a validator (the candidate path above).
 export async function maybeAutoAddLive(watchlist, ctx, ev, excluded, opts = {}) {
   const isContractFn = opts.isContractFn ?? isContractAddress;
   const obs = observeCandidateInteraction(watchlist, ctx, ev);
@@ -704,11 +713,11 @@ export async function maybeAutoAddLive(watchlist, ctx, ev, excluded, opts = {}) 
     return { candidate: entry };
   }
   if (plan.depth >= 2) {
-    const adopted = opts.events ? assessEvidenceFromEvents(plan.cp, plan.names, ctx, opts.events) : {};
-    const passNames = plan.names.filter((n) => adopted[n]);
-    if (!passNames.length) return null;
-    plan.names = passNames;
-    plan.evidence = adopted;
+    // v0.5.3: depth>=2 adoption retired — never adopted (the v0.4.2
+    // evidence gate that used to run here is gone). The address may
+    // still become a depth-1 candidate through its own direct dealings
+    // with a validator.
+    return null;
   }
   return applyAutoAdd(watchlist, ctx, plan);
 }

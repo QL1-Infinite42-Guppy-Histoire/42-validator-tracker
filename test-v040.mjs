@@ -105,7 +105,7 @@ check('feed LP section is populated', feedLp.length > 0, String(feedLp.length));
 // ---------- (4) dormant threshold ----------
 {
   const rel = watchlist.entries.find((e) => e.tier === 'related' && !e.isPair && !e.isCore);
-  const est = watchlist.entries.find((e) => e.tier === 'estimated');
+  const est = watchlist.entries.find((e) => e.tier === 'candidate'); // v0.5.3: the estimated tier is retired; a non-watched candidate plays its role here
   const D = 86400, T0 = 1700000000;
   const mkEv = (actor, ts, id) => ({ id, chain: 'evm', ts, block: 1000 + id, logIndex: 0, type: 'transfer', actor, counterparty: watchlist.entries[0].address });
   const evs = [
@@ -119,10 +119,10 @@ check('feed LP section is populated', feedLp.length > 0, String(feedLp.length));
   check('dormant: 59-day gap is NOT flagged', !evs[1].isDormantReturn);
   check('dormant: 61-day gap IS flagged with dormantDays', evs[2].isDormantReturn === true && evs[2].dormantDays === 61, String(evs[2].dormantDays));
   check('dormant: first event of an actor is never flagged', !evs[0].isDormantReturn);
-  check('dormant: estimated actor never flagged', !evs[4].isDormantReturn);
+  check('dormant: non-validator/related actor never flagged', !evs[4].isDormantReturn);
   const storedDormant = events.filter((e) => e.isDormantReturn);
   check('stored dormant flags all satisfy >= 60 days', storedDormant.every((e) => e.dormantDays >= 60), String(storedDormant.length));
-  check('stored dormant events: no estimated actors', storedDormant.every((e) => e.actorTier !== 'estimated'));
+  check('stored dormant events: only validator/related actors', storedDormant.every((e) => e.actorTier === 'validator' || e.actorTier === 'related'));
 }
 
 // ---------- (5) price ----------
@@ -152,7 +152,7 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
   // maybeAutoAdd behaviour on a cloned watchlist
   const rel = wl.entries.find((e) => e.tier === 'related' && !e.isPair && !e.isCore && (e.relatedValidators ?? []).length);
   const val = wl.entries.find((e) => e.tier === 'validator');
-  const est = wl.entries.find((e) => e.tier === 'estimated');
+  const est = wl.entries.find((e) => e.tier === 'candidate'); // v0.5.3: estimated tier retired; a candidate (unwatched) actor plays its role here
   const addEv = (actor, counterparty) => ({ ...base, actor, counterparty });
   const before = wl.entries.length;
   const a1 = maybeAutoAdd(wl, ctx2, addEv(val.address, fresh2), ex2);
@@ -161,7 +161,7 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
   check('autoAdd: related counterparty inherits names, depth = actor+1', !!a2 && a2.relatedValidators.join() === (rel.relatedValidators ?? []).join() && a2.depth === (rel.depth ?? 1) + 1);
   const a3 = maybeAutoAdd(wl, ctx2, addEv(fresh2, '0x' + 'f4'.repeat(20)), ex2);
   check('autoAdd: recursive — an auto-added wallet adds its own counterparty', !!a3 && a3.depth === 2 && a3.via.address === fresh2);
-  check('autoAdd: estimated actor adds nothing', maybeAutoAdd(wl, ctx2, addEv(est.address, '0x' + 'f5'.repeat(20)), ex2) === null);
+  check('autoAdd: unwatched (candidate) actor adds nothing', maybeAutoAdd(wl, ctx2, addEv(est.address, '0x' + 'f5'.repeat(20)), ex2) === null);
   check('autoAdd: pair counterparty not added', maybeAutoAdd(wl, ctx2, addEv(val.address, '0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3'), ex2) === null);
   check('autoAdd: router (system contract) not added', maybeAutoAdd(wl, ctx2, addEv(val.address, '0xbf07dfe35746894bae373f63f4bf2379f9bafec0'), ex2) === null);
   check('autoAdd: token contract not added', maybeAutoAdd(wl, ctx2, addEv(val.address, '0x2c32120a12b754272d9e85c57f64b50ca2c43513'), ex2) === null);
@@ -175,7 +175,7 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
 // ---------- (6b) closure fixpoint over the real graph ----------
 {
   const closure = watchlist.entries.filter((e) => e.autoAdded && e.addedVia === 'closure-v0.4.0');
-  check('closure entries exist and match summary count', closure.length > 0 && closure.length === watchlist.summary.autoAddedClosure, String(closure.length));
+  check('closure entries fully retired by the v0.4.2/v0.5.3 scope cuts (0 remain, matching summary)', closure.length === 0 && closure.length === watchlist.summary.autoAddedClosure, String(closure.length));
   check('closure entries all related tier, watched, with depth>=1/via/firstSeen', closure.every((e) => e.tier === 'related' && e.watch === true && e.depth >= 1 && e.via?.address && (e.firstSeenTx || e.addedAt)));
   const byDepth = {};
   for (const e of closure) byDepth[e.depth] = (byDepth[e.depth] ?? 0) + 1;
@@ -228,6 +228,7 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
     ['closure-repair-report.json', (r) => (r.removedEntries ?? []).map((x) => x.address)],
     ['eoa-repair-report.json', (r) => [...(r.closureRemoved ?? []).map((x) => x.address), ...(r.contractsMovedToCore ?? []).map((x) => x.address)]],
     ['evidence-repair-report.json', (r) => (r.deleted ?? []).map((x) => x.address)],
+    ['v053-scope-report.json', (r) => [...(r.removedEvidence ?? []), ...(r.removedEstimated ?? [])].map((x) => x.address)],
   ]) { try { for (const a of pick(JSON.parse(read(f)))) removedByRule.add(a); } catch {} }
   // Permanently excluded addresses (env-held, never named in the repo)
   // are reachable in the raw graph but intentionally unwatched; their
@@ -235,7 +236,7 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
   // survive only as counterparty mentions in other people's records.
   const actorAddrs = new Set(events.map((e) => e.actor));
   const missing = [...reached].filter((a) => !watched.has(a) && !excluded.has(a) && !estAddrs.has(a) && !removedByRule.has(a) && actorAddrs.has(a));
-  check('fixpoint: every reachable node is watched, estimated, excluded, removed-by-rule, or permanently excluded (v0.4.2)', missing.length === 0, missing.slice(0, 5).join(','));
+  check('fixpoint: every reachable node is watched, estimated, excluded, removed-by-rule (incl. the v0.5.3 scope cut), or permanently excluded', missing.length === 0, missing.slice(0, 5).join(','));
   check('fixpoint: all closure entries are inside the reached set', closure.every((e) => reached.has(e.address)));
 }
 

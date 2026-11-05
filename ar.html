@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>متتبع المدققين على 42 Chain في الوقت الفعلي v0.5.2</title>
+<title>متتبع المدققين على 42 Chain في الوقت الفعلي v0.5.3</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -27,15 +27,12 @@
   .rule{font-size:.82rem;color:var(--warn)}
   section.snipes .rule{color:#ffb3ba}
   .badge.shared{color:#081018;background:#ffa94d;border-color:#ffa94d;font-weight:700}
-  .badge.estimated{color:#081018;background:#e8c476;border-color:#e8c476;font-weight:700}
-  .ev.estimated{border-style:dashed;border-color:#b5893c}
+  
   .alias{font-size:.6em;color:var(--sub);font-weight:600}
   .head-row{display:flex;flex-direction:column;gap:2px}
   .langsw{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;font-size:.92rem;color:var(--sub);padding-top:2px;line-height:1.9;max-width:100%}
   .langsw b{color:var(--txt)}
   .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
-  .est-toggle{align-self:center;font-size:.92rem;cursor:pointer}
-  .estdef{border:1.5px dashed #b5893c;border-radius:10px;padding:8px 14px 10px;margin:12px 0 4px;background:rgba(232,196,118,.07)}
   .estdef>summary{cursor:pointer;font-weight:700;font-size:.98rem}
   .estdef p,.estdef li{font-size:.92rem;line-height:1.6}
   .estdef ul{margin:6px 0 6px 18px;padding:0}
@@ -148,8 +145,8 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <b>العربية</b> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
-  <p class="sub">تجمع هذه الصفحة تلقائيًا، من الكتل الجديدة، حركات المدققين أنفسهم وعناوينهم ذات الصلة (كل من تعامل معهم، والأطراف المقابلة لأولئك الأطراف) (جانب EVM + جانب Cosmos، v0.5.2). لا تُحسب عناوين البرامج (العقود) كعلاقات لأي شخص، ولا تُتتبّع الروابط عبرها أبدًا. لا يُعامل أي عنوان كبنية تحتية لمجرد كونه محفظة مشتركة؛ فالمعيار الوحيد هو ما إذا كان برنامجًا (عقدًا). لا تُحسب محافظ العمق 2+ إلا عندما يوجد دليل على أنها محفظة المدقق نفسه (مثل حركة الأموال في كلا الاتجاهين). لا تُحسب العناوين العامة التي لا دليل عليها. تظهر حركات العناوين التي يكون ارتباطها تقديريًا فقط في أحدث نشاط، موسومة بوضوح بأنها تقديرية (الأقسام الخاصة لا تحتوي إلا على المعلومات المؤكدة). العناوين ذات الصلة هي عناوين لأشخاص آخرين أجروا معاملات مع ذلك المدقق في الماضي؛ وليست بالضرورة محافظ المدقق نفسه. تُعرض أنشطتها منفصلة عن نشاط المدقق نفسه. يعني «العنوان ذو الصلة» فقط العنوان الذي تعامل مباشرة مع المدقق مرتين على الأقل، أو في كلا الاتجاهين. المعاملة الواحدة في اتجاه واحد لا تُعدّ صلة.</p>
+  <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <b>العربية</b> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
+  <p class="sub">تجمع هذه الصفحة تلقائيًا، من الكتل الجديدة، حركات المدققين أنفسهم وعناوينهم ذات الصلة (فقط من تعامل معهم مباشرة) (جانب EVM + جانب Cosmos، v0.5.3). لا تُحسب عناوين البرامج (العقود) كعلاقات لأي شخص، ولا تُتتبّع الروابط عبرها أبدًا. لا يُعامل أي عنوان كبنية تحتية لمجرد كونه محفظة مشتركة؛ فالمعيار الوحيد هو ما إذا كان برنامجًا (عقدًا). يتتبع هذا الموقع المدققين أنفسهم فقط والعناوين ذات الصلة المرتبطة بهم عبر معاملات مباشرة. لا تُتتبّع العناوين الأبعد من ذلك (العمق 2+) ولا العناوين التي يكون ارتباطها تقديريًا فقط. العناوين ذات الصلة هي عناوين لأشخاص آخرين أجروا معاملات مع ذلك المدقق في الماضي؛ وليست بالضرورة محافظ المدقق نفسه. تُعرض أنشطتها منفصلة عن نشاط المدقق نفسه. يعني «العنوان ذو الصلة» فقط العنوان الذي تعامل مباشرة مع المدقق مرتين على الأقل، أو في كلا الاتجاهين. المعاملة الواحدة في اتجاه واحد لا تُعدّ صلة.</p>
   <nav class="topnav"><a href="home-ar.html">🏠 الصفحة الرئيسية</a><a href="#sec-insider">⚠ المطلعون</a><a href="#sec-snipes">🎯 القنص</a><a href="#sec-bridge">🌉 السحب عبر الجسر</a><a href="#sec-bridgechart">📊 الإجماليات</a><a href="#sec-alerts">⭐ جدير بالملاحظة</a><a href="#sec-lp">💧 السيولة</a><a href="#sec-dormant">😴 الخاملون</a><a href="#sec-newfaces">👤 وجوه جديدة</a><a href="#sec-newpairs">🆕 أزواج جديدة</a><a href="#sec-feed">أحدث نشاط</a><a href="#sec-staking">🏦 التخزين</a><a href="#sec-validators">المدققون</a></nav>
   <div class="status" id="status">جارٍ التحميل…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
@@ -175,7 +172,7 @@
 
   <section class="bridgechart" id="sec-bridgechart">
     <h2>📊 إجمالي USDT المسحوب عبر الجسر</h2>
-    <p class="rule">كيف يُجمّع هذا الرسم البياني: لكل مدقق (الكل 23)، يجمع عمليات السحب عبر الجسر (USDT) الخاصة بالمدقق نفسه، ومحافظه ذات الصلة من العمق 1، ومحافظه ذات الصلة من العمق 2+ التي تحمل دليلًا. لا تُحسب محافظ العمق 2+ إلا عندما يوجد دليل على أنها محفظة المدقق نفسه (مثل حركة الأموال في كلا الاتجاهين). لا تُحسب العناوين العامة التي لا دليل عليها. تُحسب المحافظ الشخصية فقط كمرسِلين — لا تُحسب عناوين البنية التحتية (برنامج = عقد) أبدًا، ولا العناوين التقديرية. ينقسم كل عمود إلى: المدقق نفسه / المحافظ ذات الصلة التي تعاملت مباشرة مع ذلك المدقق (العمق 1) / المحافظ ذات الصلة المتصلة عبر محافظ أخرى (العمق 2+، بالدليل فقط). تُحسب تدفقات المحفظة المشتركة الخارجة في عمود كل مدقق متصلة به، لذا لا تجمع الأعمدة إلى الإجمالي العام؛ يظهر الإجمالي العام من دون تكرار في الأعلى. بعبارة أخرى، معظم كل عمود ليس تدفقًا خارجيًا للمدقق نفسه، بل تدفقات خارجية لمحافظ ذات صلة منسوبة إليه عبر ارتباطها؛ والتدفق الخارجي للمدقق نفسه هو فقط جزء «المدقق نفسه» من كل عمود.</p>
+    <p class="rule">كيف يُجمّع هذا الرسم البياني: لكل مدقق (الكل 23)، يجمع عمليات السحب عبر الجسر (USDT) الخاصة بالمدقق نفسه ومحافظه ذات الصلة من العمق 1. لا تُحسب محافظ العمق 2+ (هذا الموقع يقف عند العمق 1). تُحسب المحافظ الشخصية فقط كمرسِلين — لا تُحسب عناوين البنية التحتية (برنامج = عقد) أبدًا، ولا العناوين التقديرية. ينقسم كل عمود إلى: المدقق نفسه / المحافظ ذات الصلة التي تعاملت مباشرة مع ذلك المدقق (العمق 1). تُحسب تدفقات المحفظة المشتركة الخارجة في عمود كل مدقق متصلة به، لذا لا تجمع الأعمدة إلى الإجمالي العام؛ يظهر الإجمالي العام من دون تكرار في الأعلى. بعبارة أخرى، معظم كل عمود ليس تدفقًا خارجيًا للمدقق نفسه، بل تدفقات خارجية لمحافظ ذات صلة منسوبة إليه عبر ارتباطها؛ والتدفق الخارجي للمدقق نفسه هو فقط جزء «المدقق نفسه» من كل عمود.</p>
     <div id="bridgeChart"><p class="empty">جارٍ التحميل…</p></div>
   </section>
 
@@ -187,7 +184,7 @@
 
   <section class="lp" id="sec-lp">
     <h2>💧 حركات السيولة</h2>
-    <p class="rule">إضافة السيولة = وضع الأموال في مجمع لدعم التداول؛ إزالة السيولة = سحب ما أُودع. قد تكون الإزالة الكبيرة علامة على الانسحاب من السوق، لذا تستحق المراقبة. الإضافات بخط أخضر مزرقّ، والإزالات بخط برتقالي. لا تُضمّن العناوين التقديرية (المعلومات المؤكدة فقط).</p>
+    <p class="rule">إضافة السيولة = وضع الأموال في مجمع لدعم التداول؛ إزالة السيولة = سحب ما أُودع. قد تكون الإزالة الكبيرة علامة على الانسحاب من السوق، لذا تستحق المراقبة. الإضافات بخط أخضر مزرقّ، والإزالات بخط برتقالي.</p>
     <div id="lpmoves"><p class="empty">جارٍ التحميل…</p></div>
   </section>
 
@@ -199,7 +196,7 @@
 
   <section class="newfaces" id="sec-newfaces">
     <h2>👤 وجوه جديدة</h2>
-    <p class="rule">الأطراف المقابلة التي تعامل معها عنوان خاضع للمراقبة (المدقق نفسه، أو ذو صلة، أو أساسي) لأول مرة في سجل هذا الموقع بالكامل. جرى توسيع العناوين ذات الصلة عبر السجل الكامل، بما في ذلك الماضي (الأطراف المقابلة للأطراف المقابلة، من دون حد)، ويُضاف الطرف المقابل الجديد الظهور تلقائيًا إلى قائمة المراقبة كعنوان ذي صلة (v0.4.0، قيد التشغيل منذ نوفمبر 2026). البطاقات الموسومة بـ«أُضيف إلى قائمة المراقبة» هي التي أُضيفت تلقائيًا. لا تُضاف أبدًا عقود النظام والأزواج والرموز.</p>
+    <p class="rule">الأطراف المقابلة التي تعامل معها عنوان خاضع للمراقبة (المدقق نفسه، أو ذو صلة، أو أساسي) لأول مرة في سجل هذا الموقع بالكامل. العناوين ذات الصلة هي من المستوى الأول فقط: المحافظ التي تعاملت مباشرة مع المدقق نفسه. يُسجَّل الطرف المقابل الجديد الظهور أولًا كمرشح، ويُرقّى إلى عنوان ذي صلة عند تأكيد تعامل مباشر ثانٍ مع المدقق نفسه (أو تبادل ثنائي الاتجاه)؛ ولا تُعرض العناوين المرشحة على الموقع. البطاقات الموسومة بـ«أُضيف إلى قائمة المراقبة» هي التي أُضيفت تلقائيًا. لا تُضاف أبدًا عقود النظام والأزواج والرموز.</p>
     <div id="newfaces"><p class="empty">جارٍ التحميل…</p></div>
   </section>
 
@@ -210,7 +207,7 @@
   </section>
 
   <section class="fold open" id="sec-feed"><h2>أحدث نشاط</h2><div class="fold-body">
-  <p class="sub">حول العناوين التقديرية (v0.3.0 / المرحلة 3): العناوين التي لم يمكن تأكيد ارتباطها بمدقق عبر تحويل مباشر، والمقدّرة بثلاث طرق — (1) عبر المجمع (صفقة على الجانب الآخر من المجمع نفسه تطابق ضمن 10٪ في المبلغ و24 ساعة في الوقت)، (2) قفزتان (مدقق ← هذا العنوان ← مدقق، وكلتا الساقين تحويلات مؤكدة)، (3) طرف مقابل مشترك (طرف ثالث يتعامل مباشرة مع مدققين اثنين أو أكثر ولم يُؤكَّد ارتباطه بعد). تظهر الحركات التقديرية فقط في أحدث نشاط، مع شارة «تقديري» والأساس المعروض. تستخدم الأقسام الخاصة (المطلعون / القنص / جدير بالملاحظة / السحب عبر الجسر / الإجماليات) الروابط المؤكدة فقط ولا تتضمن التقديرات أبدًا.</p>
+  
   <div class="filters">
     <select id="fValidator"><option value="">المدقق: الكل</option></select>
     <select id="fType">
@@ -257,21 +254,10 @@
       <option value="unclassified">إجراء غير مصنّف</option>
     </select>
     <select id="fToken"><option value="">الرمز: الكل</option></select>
-    <label class="est-toggle"><input type="checkbox" id="fEstimated" checked> إظهار التقديري</label>
+    
   </div>
-  <p class="sub">الحركات الموسومة بـ«تقديري» تأتي من عناوين لم يمكن تأكيد تحويلاتها المباشرة مع مدقق. التعريف الكامل: <a href="#estimated-def" onclick="document.getElementById('estimated-def').open=true">ما هي العلاقات التقديرية؟</a></p>
-  <details class="estdef" id="estimated-def">
-    <summary>التعريف: ماذا تعني «العلاقات التقديرية»</summary>
-    <p><b>العلاقة التقديرية</b> هي عنوان نراقبه لأنه <i>قد</i> يكون متصلًا بمدقق، رغم أنه لم يُؤكَّد أي تحويل مباشر بين ذلك العنوان والمدقق — لذا لا يمكن الجزم بأنه طرف ذو صلة. تُبقى العلاقات التقديرية منفصلة تمامًا عن العناوين ذات الصلة المؤكدة (تلك التي لها تحويل مباشر مؤكد). التقدير مجرد احتمال، وليس استنتاجًا أبدًا.</p>
-    <p>هناك ثلاثة أنواع من الأساس، وأساس كل عنوان مكتوب دائمًا على بطاقات ذلك العنوان:</p>
-    <ul>
-      <li><b>(1) عبر المجمع:</b> المبلغ الذي تلقاه مدقق من مجمع (مكان مشترك للشراء والبيع) يطابق عن كثب مبلغًا كانت هذه العنوان قد باعته في المجمع نفسه قبل ذلك بقليل — ضمن 24 ساعة وضمن 10٪ في المبلغ. من غير المرجح أن يصطف كل من المبلغ والتوقيت بالصدفة، لذا قد يكون الطرفان متصلين فعليًا عبر المجمع. يعرض نص الأساس فرق المبلغ والفجوة الزمنية ودرجة (مدى قرب التطابق؛ الأقرب إلى 1 يعني الأكثر احتمالًا).</li>
-      <li><b>(2) طرف مقابل مشترك:</b> طرف ثالث يتعامل مباشرة مع مدققين اثنين أو أكثر. يستحق المراقبة لأنه يتعامل مع عدة مدققين، لكن لا يمكن استنتاج أنه «طرف ذو صلة» لكل من أولئك المدققين، لذا يُعامل كتقديري.</li>
-      <li><b>(3) قفزتان:</b> رابط غير مباشر على شكل مدقق ← عنوان آخر ← مدقق، حيث كلا التحويلين مؤكد. (حاليًا، لم يُسجَّل أي عنوان حديثًا تحت هذا النوع.)</li>
-    </ul>
-    <p><b>كيف تُعامل التقديرات:</b> تظهر حركات العناوين التقديرية فقط في أحدث نشاط، بحد متقطع وشارة «تقديري»، ويمكن إخفاؤها بإلغاء تحديد «إظهار التقديري» أعلاه. لا تُضمّن أبدًا في أقسام تنبيهات القنص أو جدير بالملاحظة أو مراقبة المطلعين أو السحب عبر الجسر، ولا في رسم إجماليات السحب عبر الجسر — كل المبالغ هناك هي إجماليات للنشاط المؤكد فقط.</p>
-    <p><b>المسجّل حاليًا:</b> 4 عناوين تقديرية (4 عبر المجمع، 0 طرف مقابل مشترك)، اعتبارًا من v0.4.2، 5 نوفمبر 2026.</p>
-  </details>
+  
+  
   <div id="feed"><p class="empty">جارٍ التحميل…</p></div>
   </div></section>
 
@@ -284,7 +270,7 @@
   </section>
 
   <section class="fold" id="sec-validators"><h2>المدققون (23)</h2><div class="fold-body">
-  <p class="sub">«N عنوانًا ذا صلة» هو عدد العناوين المؤكد تعاملها مع ذلك المدقق (الأطراف المقابلة المباشرة، وما وراءها أطرافهم المقابلة أيضًا؛ «بما في ذلك المضاف تلقائيًا» يحسب تلك المضافة تلقائيًا من السجل)؛ «M تقديري» يحسب العناوين المرتبطة فقط بإحدى طرق التقدير الثلاث (لا تحويل مباشر مؤكد).</p>
+  <p class="sub">«N عنوانًا ذا صلة» هو عدد العناوين المؤكد تعاملها مباشرة مع ذلك المدقق (الأطراف المقابلة المباشرة فقط؛ «بما في ذلك المضاف تلقائيًا» يحسب تلك المضافة تلقائيًا من السجل).</p>
   <div class="vals" id="validators"></div>
   </div></section>
 </main>
@@ -294,7 +280,7 @@
   النطاق: جانب EVM + جانب Cosmos (التحويلات، التفويضات، مطالبات المكافآت). تُعرض أنواع الإجراءات بأسماء ملموسة حيثما يحددها عقد الوجهة والطريقة (مشاركة Fluke، سكّ NFT، مطالبة بالمكافأة، إرسال عبر الجسر، وهكذا)؛ أي شيء لا يمكن تحديده يُعرض بصدق على أنه «إجراء غير مصنّف (الطريقة / الوجهة)». يغطي قسم السحب عبر الجسر فقط الحركات التي ترسل USDT إلى سلسلة خارجية (تُسجّل عمليات الإرسال عبر الجسر للرموز الأخرى كحركات عادية ولا تُعرض في القسم الأخضر؛ الإيصالات الواردة إيصالات عادية). العناوين التقديرية (المرحلة 3): تُراقب أيضًا العناوين التي لا يمكن تأكيد ارتباطها بتحويل مباشر، والمقدّرة بثلاث طرق — عبر المجمع، قفزتان، وطرف مقابل مشترك. تظهر حركاتها فقط في أحدث نشاط، بحد متقطع وشارة تقديري والأساس المعروض؛ ولا تُضمّن أبدًا في أقسام المطلعين / القنص / جدير بالملاحظة / السحب عبر الجسر / الإجماليات (تلك تبقى مؤكدة فقط). تُحدّث قائمة المدققين من السلسلة في كل تشغيل: يُضاف المدققون المرتبطون حديثًا تلقائيًا، ويبقى المدققون الذين يغادرون المجموعة المرتبطة خاضعين للمراقبة كسجل (موسومون بأنهم غير نشطين). لا يُنشر أي شيء خارجيًا (لا بوت X) — التنبيهات تعيش على هذا الموقع فقط.
   نطاق العناوين ذات الصلة (v0.4.0): بالإضافة إلى كل عنوان أرسل إلى مدقق أو تلقى منه، طُبّق توسيع السجل الكامل (الأطراف المقابلة للأطراف المقابلة، من دون حد) على السجل بأكمله، بما في ذلك الماضي (تُستبعد عقود النظام / الأزواج / الرموز، وجهات الاتصال التي لا يمكن الوصول إليها إلا عبر عنوان تقديري). عندما يظهر طرف مقابل جديد، يُضاف أيضًا تلقائيًا كعنوان ذي صلة على الفور. / يغطي قسم الأزواج الجديدة الأزواج التي أنشأتها مصنع Don't Panic ويعرض فقط الأزواج التي تحتوي على واحد على الأقل من الرموز الـ17 المدرجة. / يُحسب سعر [42] من احتياطيات مجمع 42/USDT؛ المجمع صغير، لذا للرقم هامش خطأ.
   روابط معاملات جانب Cosmos تفتح ماسِح Cosmos الخاص بنا (42 Cosmos Scan). تُظهر العناوين فقط العنوان الذي تحرك فعليًا؛ تُدرج المدققون ذوو الصلة في سطر منفصل، بحد أقصى (العنوان الذي يتعامل مع العديد من المدققين يحصل على علامة «طرف مقابل مشترك»). المدقق X معروف أيضًا باسم Rioshi، ويظهر بنص صغير كـ (Rioshi) بجانب الاسم.
-  <br>الإصدار: <b>v0.5.2</b> (v0.5.2: تم إصلاح عرض النسبة — عند التصفية حسب مدقق، يُعرض نشاطه الذاتي ونشاط العناوين ذات الصلة الآن في مجموعتين منفصلتين، وتنقسم أعداد النشاط في قائمة المدققين بالطريقة نفسها، حتى لا تُعرض معاملات الآخرين أبدًا على أنها نشاط المدقق نفسه؛ كما تم تشديد تعريف «ذو الصلة» (لا تُعدّ العناوين ذات صلة إلا إذا تعاملت مباشرة مع المدقق مرتين على الأقل، أو في كلا الاتجاهين؛ أما الاتصال الواحد في اتجاه واحد فيُحتفظ به كمرشح ويُرقّى تلقائيًا عند تعامله المباشر الثاني). v0.5.1: إصلاح تخطيط الترويسة (أصبح العنوان بعرض كامل ويلتف مبدّل اللغة على الشاشات الضيقة). v0.5.0: الموقع متاح الآن بثماني لغات — 日本語 وEnglish و简体中文 وEspañol وहिन्दी والعربية وPortuguês وFrançais — كل لغة تُعرَض من نفس feed.json، مركّبة من الحقول المنظمة بدلًا من الملخصات اليابانية المخزّنة. v0.4.3: توجد الآن شارة إصدار في أعلى يمين الترويسة، بجانب مبدّل اللغة، على كل صفحة. v0.4.2: أُزيلت كل عناوين البنية التحتية (العقود) من مخطط الأشخاص — تُحسب العلاقات عبر المحافظ الشخصية (EOA) فقط، ولا عبر عقد أبدًا؛ يُجمّع الآن رسم إجماليات السحب عبر الجسر لكل مدقق (الكل 23، عمق غير محدود، المحافظ المشتركة تُحسب في عمود كل مدقق متصل). v0.4.1: يقسّم الآن رسم إجماليات السحب عبر الجسر كل عمود حسب العمق — المدقق نفسه / ذو الصلة من العمق 1 / ذو الصلة من العمق 2+. في السابق، أضاف v0.4.0 ستة أقسام — أزواج جديدة، حركات سيولة، إجماليات التفويضات والمكافآت، عودات الخاملين، وجوه جديدة (توسيع العناوين ذات الصلة عبر السجل الكامل + الإضافات التلقائية)، وسعر [42]؛ أعاد v0.3.2 تصنيف Xenia من بنية تحتية أساسية إلى مدقق عادي — تصحيح تصنيف؛ أضاف v0.3.1 تعريف العلاقات التقديرية بجانب مرشحات أحدث نشاط؛ وأكمل v0.3.0 المرحلة 3: مراقبة العناوين التقديرية + التحديث التلقائي لقائمة المدققين، والاسم المستعار (Rioshi) بجانب X، ومبدّل لغة «日本語 | English» في أعلى اليمين)
+  <br>الإصدار: <b>v0.5.3</b> (v0.5.3: حُصر النطاق في العمق 1 (أُزيلت العناوين ذات الصلة من العمق 2+ ذات الدليل والعناوين التقديرية مع سجلاتها) واكتُمل السجل التاريخي الناقص بالكامل (باستثناء تدفقات مكافآت Guide/Starlight). v0.5.2: تم إصلاح عرض النسبة — عند التصفية حسب مدقق، يُعرض نشاطه الذاتي ونشاط العناوين ذات الصلة الآن في مجموعتين منفصلتين، وتنقسم أعداد النشاط في قائمة المدققين بالطريقة نفسها، حتى لا تُعرض معاملات الآخرين أبدًا على أنها نشاط المدقق نفسه؛ كما تم تشديد تعريف «ذو الصلة» (لا تُعدّ العناوين ذات صلة إلا إذا تعاملت مباشرة مع المدقق مرتين على الأقل، أو في كلا الاتجاهين؛ أما الاتصال الواحد في اتجاه واحد فيُحتفظ به كمرشح ويُرقّى تلقائيًا عند تعامله المباشر الثاني). v0.5.1: إصلاح تخطيط الترويسة (أصبح العنوان بعرض كامل ويلتف مبدّل اللغة على الشاشات الضيقة). v0.5.0: الموقع متاح الآن بثماني لغات — 日本語 وEnglish و简体中文 وEspañol وहिन्दी والعربية وPortuguês وFrançais — كل لغة تُعرَض من نفس feed.json، مركّبة من الحقول المنظمة بدلًا من الملخصات اليابانية المخزّنة. v0.4.3: توجد الآن شارة إصدار في أعلى يمين الترويسة، بجانب مبدّل اللغة، على كل صفحة. v0.4.2: أُزيلت كل عناوين البنية التحتية (العقود) من مخطط الأشخاص — تُحسب العلاقات عبر المحافظ الشخصية (EOA) فقط، ولا عبر عقد أبدًا؛ يُجمّع الآن رسم إجماليات السحب عبر الجسر لكل مدقق (الكل 23، عمق غير محدود، المحافظ المشتركة تُحسب في عمود كل مدقق متصل). v0.4.1: يقسّم الآن رسم إجماليات السحب عبر الجسر كل عمود حسب العمق — المدقق نفسه / ذو الصلة من العمق 1 / ذو الصلة من العمق 2+. في السابق، أضاف v0.4.0 ستة أقسام — أزواج جديدة، حركات سيولة، إجماليات التفويضات والمكافآت، عودات الخاملين، وجوه جديدة (توسيع العناوين ذات الصلة عبر السجل الكامل + الإضافات التلقائية)، وسعر [42]؛ أعاد v0.3.2 تصنيف Xenia من بنية تحتية أساسية إلى مدقق عادي — تصحيح تصنيف؛ أضاف v0.3.1 تعريف العلاقات التقديرية بجانب مرشحات أحدث نشاط؛ وأكمل v0.3.0 المرحلة 3: مراقبة العناوين التقديرية + التحديث التلقائي لقائمة المدققين، والاسم المستعار (Rioshi) بجانب X، ومبدّل لغة «日本語 | English» في أعلى اليمين)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -337,7 +323,7 @@ function tierBadge(ev){
   if (ev.actorIsCore) return '<span class="badge core">أساسي (بنية تحتية)</span>';
   if (ev.actorTier === 'validator') return '<span class="badge self">مدقق</span>';
   if (ev.actorTier === 'related') return '<span class="badge related">عنوان ذو صلة</span>';
-  if (ev.actorTier === 'estimated') return '<span class="badge estimated">تقديري</span>';
+  
   return '';
 }
 // Headline = the ACTOR only (same rule as the Japanese page).
@@ -345,7 +331,7 @@ function whoLabel(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel && !hasJa(ev.actorLabel)) return valName(ev.actorLabel);
   if (ev.actorIsCore) return enLabel(ev.actorLabel) || shortAddr(ev.actor);
   if (ev.actorTier === 'related') return 'ذو صلة ' + shortAddr(ev.actor);
-  if (ev.actorTier === 'estimated') return 'تقديري ' + shortAddr(ev.actor);
+  
   return enLabel(ev.actorLabel) || shortAddr(ev.actor);
 }
 function cpName(ev){
@@ -440,14 +426,7 @@ function summaryEn(ev){
 function relationLine(ev){
   if (ev.actorTier === 'validator') return '';
   const rel = ev.actorValidators || [];
-  if (ev.actorTier === 'estimated') {
-    let s = '';
-    if (rel.length === 1) s = `المدققون ذوو الصلة (تقديري): <b class="rel-name">${valName(rel[0])}</b>`;
-    else if (rel.length >= 2) s = `المدققون ذوو الصلة (تقديري): <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} آخرون`;
-    const basisEn = ev.estimateBasis && ev.estimateBasis.textEn && !hasJa(ev.estimateBasis.textEn) ? ev.estimateBasis.textEn : '';
-    const note = basisEn ? `<div class="note">أساس التقدير: ${basisEn}</div>` : '';
-    return (s ? `<div class="meta">${s}</div>` : '') + note;
-  }
+  
   let s = '';
   if (rel.length === 1) s = `المدققون ذوو الصلة: <b class="rel-name">${valName(rel[0])}</b>`;
   else if (rel.length >= 2) s = `المدققون ذوو الصلة: <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} آخرون`;
@@ -457,8 +436,7 @@ function relationLine(ev){
     ? `<div class="note">طرف مقابل مشترك يتعامل مع عدة مدققين (ليس مدققًا بحد ذاته)${noteEn ? ' / ' + noteEn : ''}</div>` : '';
   // v0.4.2: depth>=2 related cards state WHY the wallet is tracked.
   const EV_LABEL = {bidirectional: 'حركة أموال في كلا الاتجاهين','funded-delegation': 'مموّل من جانب المدقق ومفوّض عودة إلى ذلك المدقق','concentrated-repeat': 'تفاعل متكرر مركّز على جانب المدقق','one-way-repeat': 'تحويلات متكررة باتجاه واحد من جانب المدقق',delegation: 'تفويض إلى ذلك المدقق',synchronized: 'حركات متزامنة مع المدقق'};
-  const evNote = ev.actorEvidence
-    ? `<div class="note">علاقة من العمق 2+، تُعرض لأنه يوجد دليل على أنها محفظة المدقق نفسه (الدليل: ${[...new Set(Object.values(ev.actorEvidence).flat())].map((c) => EV_LABEL[c] ?? c).join('، ')})</div>` : '';
+  const evNote = '';
   const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
   return line + sharedNote + evNote;
 }
@@ -485,7 +463,7 @@ function renderBridgeChart(){
   const max = rows.length ? Math.max(...rows.map((g) => g.total)) : 0;
   el.innerHTML = `<div class="bchart-total">الإجمالي (من دون تكرار) ${fmt(B.total)} USDT ‏(${B.count} عملية سحب)</div>`
     + `<div class="bchart-segtotal">التفصيل العام (من دون تكرار): ${segLine(B.segTotals)}</div>`
-    + `<div class="bchart-legend"><span class="sw seg0"></span>المدقق نفسه<span class="sw seg1"></span>ذو الصلة من العمق 1<span class="sw seg2"></span>ذو الصلة من العمق 2+</div>`
+    + `<div class="bchart-legend"><span class="sw seg0"></span>المدقق نفسه<span class="sw seg1"></span>ذو الصلة من العمق 1</div>`
     + rows.map((g) => {
       const parts = g.seg.map((v, i) => v > 0 ? `<div class="bchart-seg seg${i}" style="width:${max ? v / max * 100 : 0}%"></div>` : '').join('');
       return `<div class="bchart-row"><div class="bchart-name">${valName(g.moniker)}</div><div class="bchart-barwrap">${parts}</div><div class="bchart-amt">${fmt(g.total)} USDT <span class="bchart-cnt">×${g.count}</span></div><div class="bchart-break">${segLine(g.seg)}</div></div>`;
@@ -495,7 +473,7 @@ function bigName(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel) return {main: valName(ev.actorLabel), sub: 'المدقق نفسه', cls: ' self'};
   const rel = ev.actorValidators || [];
   if (ev.actorTier === 'estimated') return {main: rel.length ? valName(rel[0]) : shortAddr(ev.actor), sub: rel.length > 1 ? ` — محفظة ذات صلة تقديرية (ذات صلة تقديرية أيضًا بـ ${rel.length - 1} آخرين)` : ' — محفظة ذات صلة تقديرية', cls: ''};
-  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? ` — محفظة ذات صلة (ذات صلة أيضًا بـ ${rel.length - 1} آخرين)` : ' — محفظة ذات صلة') + ((ev.actorDepth ?? 1) >= 2 ? ' (العمق 2+، دليل على أنها محفظة المدقق نفسه)' : ''), cls: ''};
+  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? ` — محفظة ذات صلة (ذات صلة أيضًا بـ ${rel.length - 1} آخرين)` : ' — محفظة ذات صلة'), cls: ''};
   if (ev.actorIsCore && ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: 'أساسي', cls: ''};
   if (ev.actorLabel) return {main: enLabel(ev.actorLabel) || shortAddr(ev.actor), sub: '', cls: ''};
   return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? 'محفظة ذات صلة' : '', cls: ''};
@@ -563,8 +541,7 @@ function applyFilters(){
   const v = document.getElementById('fValidator').value;
   const t = document.getElementById('fType').value;
   const tk = document.getElementById('fToken').value;
-  const showEst = document.getElementById('fEstimated').checked;
-  const match = (ev) => (!v || isSelfEvent(ev, v) || isRelatedEvent(ev, v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk)) && (showEst || ev.actorTier !== 'estimated');
+  const match = (ev) => (!v || isSelfEvent(ev, v) || isRelatedEvent(ev, v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk));
   const list = FEED.events.filter(match);
   renderFeedList(list, v);
   // Special sections are CONFIRMED-ONLY (v0.3.0): estimated actors excluded.
@@ -608,7 +585,7 @@ async function load(){
     FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
     const s = FEED.status;
     document.getElementById('status').innerHTML =
-      `آخر كتلة معالجة: <b>${s.lastProcessedBlock ?? '—'}</b> ‏(طرف السلسلة ${s.latestBlockSeen ?? '—'}) / آخر معالجة Cosmos: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / حُدّث: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / الحركات المسجلة: ${s.totalEvents} / المراقبة: ${s.watchSummary.validators} مدققًا + ${s.watchSummary.directRelated} عنوانًا ذا صلة مباشرة + ${s.watchSummary.estimated ?? 0} تقديريًا${s.validatorsAdded ? ` / المدققون المضافون تلقائيًا في هذا التشغيل: ${s.validatorsAdded.map(valNameText).join('، ')}` : ''}`;
+      `آخر كتلة معالجة: <b>${s.lastProcessedBlock ?? '—'}</b> ‏(طرف السلسلة ${s.latestBlockSeen ?? '—'}) / آخر معالجة Cosmos: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / حُدّث: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / الحركات المسجلة: ${s.totalEvents} / المراقبة: ${s.watchSummary.validators} مدققًا + ${s.watchSummary.directRelated} عنوانًا ذا صلة مباشرة${s.validatorsAdded ? ` / المدققون المضافون تلقائيًا في هذا التشغيل: ${s.validatorsAdded.map(valNameText).join('، ')}` : ''}`;
     document.getElementById('alertRule').textContent = 'قاعدة الجدير بالملاحظة: (1) عمليات الشراء والبيع الخاصة بالمدقق نفسه، (2) حركات بقيمة 1,000 [42] أو أكثر. تُعرض عمليات سحب USDT عبر الجسر بشكل منفصل في القسم الأخضر أعلاه. تُدرج هنا فقط الحركات المطابقة لهذه القواعد (تُعرض على هذا الموقع فقط؛ لا يُنشر أي شيء خارجيًا).';
     document.getElementById('bridgeOutRule').textContent = 'السحب عبر الجسر = مدقق نفسه، أو محفظة ذات صلة مباشرة، يرسل USDT خارج 42 Chain إلى سلسلة خارجية عبر جسر. تتوهج هذه الحركات باللون الأخضر في هذا القسم المخصص (لا توضع في جدير بالملاحظة). تُسجّل عمليات الإرسال عبر الجسر للرموز غير USDT كحركات عادية ولا تُعرض هنا. تُعامل الإيصالات الواردة (الاستلام على جانب 42 Chain) كتحويلات عادية.';
     document.getElementById('snipeRule').textContent = 'القنص = مدقق نفسه، أو محفظة ذات صلة مباشرة، يشتري على زوج خلال 3 ساعات من إنشاء ذلك الزوج (الشراء فقط — إضافات السيولة لا تُحسب قنصًا). تُدرج الحركات المطابقة هنا، بشكل بارز.';
@@ -629,17 +606,16 @@ async function load(){
     }
     document.querySelector('#sec-validators h2').textContent = `المدققون (${FEED.validators.length})`;
     document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
-      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">بنية تحتية أساسية أيضًا</span>' : ''}${v.inactive ? ' <span class="badge">غير نشط حاليًا</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} عنوانًا ذا صلة (بما في ذلك ${v.autoAddedCount ?? 0} مضافًا تلقائيًا) / ${v.estimatedCount ?? 0} تقديريًا</span><br><span class="sub">النشاط الذاتي ${v.selfActivity ?? 0} / نشاط العناوين ذات الصلة ${v.relatedActivity ?? 0}</span></div>`).join('');
+      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">بنية تحتية أساسية أيضًا</span>' : ''}${v.inactive ? ' <span class="badge">غير نشط حاليًا</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} عنوانًا ذا صلة (بما في ذلك ${v.autoAddedCount ?? 0} مضافًا تلقائيًا)</span><br><span class="sub">النشاط الذاتي ${v.selfActivity ?? 0} / نشاط العناوين ذات الصلة ${v.relatedActivity ?? 0}</span></div>`).join('');
     applyFilters();
     renderBridgeChart();
     renderStaking();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
-    { const d = document.getElementById('estimated-def'); if (d && location.hash === '#estimated-def') { d.open = true; setTimeout(() => d.scrollIntoView({behavior:'smooth'}), 80); } }
   } catch (e) {
     document.getElementById('status').textContent = 'تعذّر تحميل feed.json (قد لا يكون المجمع قد شُغّل بعد).';
   }
 }
-for (const id of ['fValidator','fType','fToken','fEstimated']) document.getElementById(id).addEventListener('change', applyFilters);
+for (const id of ['fValidator','fType','fToken']) document.getElementById(id).addEventListener('change', applyFilters);
 { if (typeof location !== 'undefined' && location.hash && document.querySelectorAll) for (const a of document.querySelectorAll('.langsw a')) a.href = a.getAttribute('href') + location.hash; }
 load();
 setInterval(load, 30000);

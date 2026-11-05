@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42チェーン バリデーター リアルタイム追跡 v0.5.2</title>
+<title>42チェーン バリデーター リアルタイム追跡 v0.5.3</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -27,15 +27,12 @@
   .rule{font-size:.82rem;color:var(--warn)}
   section.snipes .rule{color:#ffb3ba}
   .badge.shared{color:#081018;background:#ffa94d;border-color:#ffa94d;font-weight:700}
-  .badge.estimated{color:#081018;background:#e8c476;border-color:#e8c476;font-weight:700}
-  .ev.estimated{border-style:dashed;border-color:#b5893c}
+  
   .alias{font-size:.6em;color:var(--sub);font-weight:600}
   .head-row{display:flex;flex-direction:column;gap:2px}
   .langsw{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;font-size:.92rem;color:var(--sub);padding-top:2px;line-height:1.9;max-width:100%}
   .langsw b{color:var(--txt)}
   .verbadge{display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;background:var(--acc);color:#081018;font-size:.8rem;font-weight:700;white-space:nowrap}
-  .est-toggle{align-self:center;font-size:.92rem;cursor:pointer}
-  .estdef{border:1.5px dashed #b5893c;border-radius:10px;padding:8px 14px 10px;margin:12px 0 4px;background:rgba(232,196,118,.07)}
   .estdef>summary{cursor:pointer;font-weight:700;font-size:.98rem}
   .estdef p,.estdef li{font-size:.92rem;line-height:1.6}
   .estdef ul{margin:6px 0 6px 18px;padding:0}
@@ -126,8 +123,8 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="en.html" id="langOther">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
-  <p class="sub">バリデーター本人と、その関連アドレス（本人とやり取りした相手、さらにその相手まで含む）の動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.5.2）。プログラム（コントラクト）のアドレスは、人の関連としては数えず、経由もしません。共有の財布というだけでは仕組み系にしません。プログラム（コントラクト）かどうかだけで判定します。2段目以降は、バリデーター本人の財布らしい証拠（双方向の資金移動など）があるものだけを数えます。証拠のない一般のアドレスは数えません。つながりが推定にとどまるアドレスの動きは「最新の動き」にだけ、推定と明記して表示します（特別欄は確定情報のみ）。関連アドレスは、そのバリデーターと過去に取引したことのある「他の人のアドレス」で、バリデーター自身の財布とは限りません。その動きは本人の動きとは分けて表示します。関連アドレスとは、バリデーターと直接の取引が2回以上、または双方向のやり取りがあるアドレスだけを指します。1回だけの一方通行の取引は関連に数えません。</p>
+  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="en.html" id="langOther">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
+  <p class="sub">バリデーター本人と、その関連アドレス（本人と直接やり取りした相手のみ）の動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.5.3）。プログラム（コントラクト）のアドレスは、人の関連としては数えず、経由もしません。共有の財布というだけでは仕組み系にしません。プログラム（コントラクト）かどうかだけで判定します。このサイトはバリデーター本人と、直接の取引で結ばれた関連アドレスだけを追います。その先のアドレス（2段目以降）や、つながりが推定にとどまるアドレスは追いません。関連アドレスは、そのバリデーターと過去に取引したことのある「他の人のアドレス」で、バリデーター自身の財布とは限りません。その動きは本人の動きとは分けて表示します。関連アドレスとは、バリデーターと直接の取引が2回以上、または双方向のやり取りがあるアドレスだけを指します。1回だけの一方通行の取引は関連に数えません。</p>
   <nav class="topnav"><a href="home.html">🏠 トップページ</a><a href="#sec-insider">⚠ インサイダー</a><a href="#sec-snipes">🎯 スナイプ</a><a href="#sec-bridge">🌉 ブリッジ出金</a><a href="#sec-bridgechart">📊 出金総額</a><a href="#sec-alerts">⭐ 注目</a><a href="#sec-lp">💧 流動性</a><a href="#sec-dormant">😴 休眠復帰</a><a href="#sec-newfaces">👤 新しい顔ぶれ</a><a href="#sec-newpairs">🆕 新規ペア</a><a href="#sec-feed">最新の動き</a><a href="#sec-staking">🏦 委任・報酬</a><a href="#sec-validators">バリデーター一覧</a></nav>
   <div class="status" id="status">読み込み中…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
@@ -153,7 +150,7 @@
 
   <section class="bridgechart" id="sec-bridgechart">
     <h2>📊 ブリッジ出金 総額（USDT）</h2>
-    <p class="rule">集計の定義：全バリデーター（23名）について、そのバリデーター本人と1段目の関連、および証拠のある2段目以降の関連ウォレットのブリッジ出金（USDT）を合計しています。2段目以降は、バリデーター本人の財布らしい証拠（双方向の資金移動など）があるものだけを数えます。証拠のない一般のアドレスは数えません。出金の主体は個人の財布のみで、仕組み系（プログラム＝コントラクト）のアドレスは数えません。推定アドレスの出金も含みません。段数内訳は、そのバリデーター本人／そのバリデーターと直接やり取りがある関連（1段目）／経由してつながる関連（2段目以降・証拠あり）です。共有ウォレットの出金は、つながっている各バリデーターの棒にそれぞれ計上されるため、棒の合計は全体総額と一致しません。全体総額（重複なし）は上に表示しています。つまり、棒の大部分はバリデーター本人の出金ではなく、つながりによって帰属させた関連ウォレットの出金です。本人自身の出金は、各棒の「本人」の部分だけです。</p>
+    <p class="rule">集計の定義：全バリデーター（23名）について、そのバリデーター本人と1段目の関連ウォレットのブリッジ出金（USDT）を合計しています。2段目以降の関連は数えません（このサイトは1段目までです）。出金の主体は個人の財布のみで、仕組み系（プログラム＝コントラクト）のアドレスは数えません。内訳は、そのバリデーター本人／そのバリデーターと直接やり取りがある関連（1段目）です。共有ウォレットの出金は、つながっている各バリデーターの棒にそれぞれ計上されるため、棒の合計は全体総額と一致しません。全体総額（重複なし）は上に表示しています。つまり、棒の大部分はバリデーター本人の出金ではなく、つながりによって帰属させた関連ウォレットの出金です。本人自身の出金は、各棒の「本人」の部分だけです。</p>
     <div id="bridgeChart"><p class="empty">読み込み中…</p></div>
   </section>
 
@@ -165,7 +162,7 @@
 
   <section class="lp" id="sec-lp">
     <h2>💧 流動性の動き</h2>
-    <p class="rule">LP追加＝プールにお金を預けて取引を支えること、LP解除＝預けた分を引き上げることです。大きな解除は撤退の兆候として注目されます。追加は水色、解除はオレンジの線で区別しています。推定アドレスの動きは含みません（確定情報のみ）。</p>
+    <p class="rule">LP追加＝プールにお金を預けて取引を支えること、LP解除＝預けた分を引き上げることです。大きな解除は撤退の兆候として注目されます。追加は水色、解除はオレンジの線で区別しています。</p>
     <div id="lpmoves"><p class="empty">読み込み中…</p></div>
   </section>
 
@@ -177,7 +174,7 @@
 
   <section class="newfaces" id="sec-newfaces">
     <h2>👤 新しい顔ぶれ</h2>
-    <p class="rule">監視アドレス（本人・関連・中核）が、このサイトの全記録の中で初めてやり取りした相手を表示します。関連アドレスは過去分を含む全履歴から展開済み（相手の相手も無制限）で、新しく現れた相手は自動で監視対象（関連アドレス）に追加されます（v0.4.0・2026年11月から運用）。「監視対象に追加しました」と付いたカードが、自動追加されたものです。仕組み系・ペア・トークンのコントラクトは追加されません。</p>
+    <p class="rule">監視アドレス（本人・関連・中核）が、このサイトの全記録の中で初めてやり取りした相手を表示します。関連アドレスはバリデーター本人と直接取引した1段目だけです。新しく現れた相手はまず「候補」として記録され、バリデーター本人との2回目の直接取引（または双方向のやり取り）が確認できた時点で関連アドレスに昇格します（候補の間はサイトに表示されません）。「監視対象に追加しました」と付いたカードが、自動追加されたものです。仕組み系・ペア・トークンのコントラクトは追加されません。</p>
     <div id="newfaces"><p class="empty">読み込み中…</p></div>
   </section>
 
@@ -235,21 +232,10 @@
       <option value="unclassified">未分類の操作</option>
     </select>
     <select id="fToken"><option value="">銘柄：すべて</option></select>
-    <label class="est-toggle"><input type="checkbox" id="fEstimated" checked> 推定も表示</label>
+    
   </div>
-  <p class="sub">「推定」と付いた動きは、バリデーターとの直接の送り合いが確認できていないアドレスのものです。くわしい定義はこちら → <a href="#estimated-def" onclick="document.getElementById('estimated-def').open=true">推定関連とは？</a></p>
-  <details class="estdef" id="estimated-def">
-    <summary>推定関連の定義（「推定」とはどういう意味か）</summary>
-    <p><b>推定関連とは</b>：バリデーター本人と直接お金を送り合った記録が確認できていないため、「関係している可能性がある」と推定して監視しているアドレスのことです。直接の送り合いが確認できた「関連アドレス（確定）」とは別枠で扱います。あくまで可能性の話であり、そのアドレスが関係者だと断定するものではありません。</p>
-    <p>推定の根拠は3種類あり、どの根拠で推定したかは、そのアドレスのカードに必ず文章で表示されます。</p>
-    <ul>
-      <li><b>① プール経由の推定</b>：バリデーターがプール（みんなで売買する場所）から受け取った金額と、そのアドレスが先に同じプールへ売った金額が、24時間以内・金額差10%以内で近かった場合です。金額とタイミングの両方が偶然そろう可能性は低いため、プール越しに実質的につながっている可能性があると考えます。根拠の文章には、金額差・時間差・スコア（近さの度合いを表す数値で、1に近いほど確からしい）が出ます。</li>
-      <li><b>② 共通の相手先</b>：2名以上のバリデーターと直接の送り合いがある第三者です。複数のバリデーターと取引している点で注目に値しますが、その人がそれぞれのバリデーターの「関係者」とまでは断定できないため、推定の扱いにしています。</li>
-      <li><b>③ 2ホップ経由</b>：バリデーター → 別のアドレス → バリデーター、というように、両方の送金が確認できる経路で間接的につながる場合です（現在、この種別で新しく登録されたアドレスはありません）。</li>
-    </ul>
-    <p><b>扱いのルール</b>：推定アドレスの動きは「最新の動き」にだけ、点線の枠と「推定」バッジ付きで表示され、上の「推定も表示」のチェックを外すと隠せます。スナイプ速報・注目・インサイダー・ブリッジ出金とその総額グラフには推定を一切含めません（金額の集計は、確定した分だけです）。</p>
-    <p><b>現在の登録数</b>：推定関連は4件です（プール経由4件・共通の相手先0件／2026年11月5日、v0.4.2 時点）。</p>
-  </details>
+  
+  
   <div id="feed"><p class="empty">読み込み中…</p></div>
   </div></section>
 
@@ -262,7 +248,7 @@
   </section>
 
   <section class="fold" id="sec-validators"><h2>バリデーター一覧（23）</h2><div class="fold-body">
-  <p class="sub">「関連アドレス N件」は、そのバリデーターとやり取りしたことが確認できたアドレスの数（直接の相手に加え、その先の相手まで含みます。うち自動追加は、記録から自動で関連に追加された分）、「推定 M件」は直接の送金は未確認でも3つの推定方法でつながりが推定されるアドレスの数です。</p>
+  <p class="sub">「関連アドレス N件」は、そのバリデーターと直接やり取りしたことが確認できたアドレスの数です（直接の相手のみ。うち自動追加は、記録から自動で関連に追加された分）。</p>
   <div class="vals" id="validators"></div>
   </div></section>
 </main>
@@ -272,7 +258,7 @@
   現在の範囲：EVM側＋Cosmos側（送金・委任・報酬請求）／操作の種類は判別できた範囲で具体名表示（Fluke参加・NFTミント・報酬請求・ブリッジ送信など、判別できないものは「未分類の操作（メソッド／宛先）」）／ブリッジ出金欄は USDT を外部へ送った動きだけが対象（USDT以外のブリッジ送信は通常の動きとして記録し、専用の緑色の欄には入れない／入金は通常の受取）／推定アドレス（Phase 3）：直接の送金が確認できないつながりを、①プール経由（プールの反対側の売買と金額差10%以内・24時間以内で一致）②2ホップ経由（バリデーター→そのアドレス→バリデーターの両レッグとも確認済み）③共通の相手先（2名以上のバリデーターと直接取引した第三者）の3方法で推定したアドレスも監視します。推定の動きは「最新の動き」にだけ、点線の枠と推定バッジ、根拠の説明つきで表示し、インサイダー／スナイプ／注目／ブリッジ出金／総額グラフの特別欄には一切入れません（特別欄は確定情報のみ）／バリデーター名簿は実行のたびにチェーンから自動で取り直し、新しく参加したバリデーターは自動で追加されます（離脱したバリデーターも履歴として監視を続けます）／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
   関連アドレスの範囲（v0.4.0）：バリデーターと送受信した全アドレスに加え、その相手の相手も無制限にたどる「全履歴の展開」を過去分を含む全記録に適用済みです（仕組み系・ペア・トークンのコントラクトと、推定アドレス経由だけの接点は除きます）。新しい相手が現れたときも、その場で自動的に関連アドレスへ追加されます。／新規ペア速報は Don't Panic のファクトリーで作られたペアが対象で、17銘柄のうち少なくとも1つを含むペアだけを表示します。／[42] の価格は 42/USDT プールの残高からの計算値で、プールが小さいため誤差があります。
   Cosmos側の取引リンクは自作の Cosmos スキャナー（42 Cosmos Scan）に飛びます。見出しの名前は「動いた本人」だけを表示し、関係するバリデーターは別の行に分けて書きます（複数のバリデーターと取引する共通の相手先には「共有の相手先」の印が付きます）。バリデーター X は別名 Rioshi としても知られており、名前の横に小さく (Rioshi) と併記しています。
-  <br>バージョン：<b>v0.5.2</b>（v0.5.2：表示の帰属を修正（他人の取引をバリデーター本人の動きとして見せないよう、バリデーターで絞り込むと本人の動きと関連アドレスの動きに分けて表示し、一覧の件数も本人／関連に分割）し、あわせて関連の定義を締め付け（直接の取引が2回以上、または双方向のやり取りがあるアドレスだけを関連とし、1回だけの一方通行の取引しかないアドレスは候補として保持し、2回目の直接取引で自動的に関連へ復帰）。v0.5.1：ヘッダーのレイアウトを修正（タイトルを全幅で表示し、言語切替は狭い画面で折り返すようにした）。v0.5.0：サイトの対応言語を8言語に拡大（日本語・English・简体中文・Español・हिन्दी・العربية・Português・Français）。全言語とも同じ feed.json から、保存済みの日本語要約を使わず構造化フィールドで組み立てて表示します。v0.4.3：全ページのヘッダー右上、言語切替の横にバージョンバッジを追加。v0.4.2：仕組み系（コントラクト）のアドレスを人の関連から全て排除し、つながりは個人の財布だけで数え直し（コントラクト経由のつながりも無し）。あわせてブリッジ出金総額の棒グラフを、全バリデーター別の集計（段数無制限・共有ウォレットはつながっている各バリデーターに計上）に変更。v0.4.1：ブリッジ出金総額の棒グラフを、バリデーターからの距離＝段数（本人／1段目の関連／2段目以降の関連）で色分け。前身の v0.4.0 は新規ペア速報・流動性の動き・委任と報酬の集計・休眠復帰・新しい顔ぶれ（関連アドレスの全履歴展開＋自動追加）・[42] 価格表示の6項目を追加、v0.3.2 は Xenia を中核（仕組み系）から通常のバリデーター扱いに変更（分類の訂正）、v0.3.1 は推定関連の定義を「最新の動き」の欄に掲載、v0.3.0 は Phase 3 完了＝推定アドレスの監視＋バリデーター名簿の自動更新、X の別名 (Rioshi) 併記、右上の言語切替「日本語 | English」の追加）
+  <br>バージョン：<b>v0.5.3</b>（v0.5.3：追跡範囲を1段目までに限定し、過去の記録の欠けを補完。v0.5.2：表示の帰属を修正（他人の取引をバリデーター本人の動きとして見せないよう、バリデーターで絞り込むと本人の動きと関連アドレスの動きに分けて表示し、一覧の件数も本人／関連に分割）し、あわせて関連の定義を締め付け（直接の取引が2回以上、または双方向のやり取りがあるアドレスだけを関連とし、1回だけの一方通行の取引しかないアドレスは候補として保持し、2回目の直接取引で自動的に関連へ復帰）。v0.5.1：ヘッダーのレイアウトを修正（タイトルを全幅で表示し、言語切替は狭い画面で折り返すようにした）。v0.5.0：サイトの対応言語を8言語に拡大（日本語・English・简体中文・Español・हिन्दी・العربية・Português・Français）。全言語とも同じ feed.json から、保存済みの日本語要約を使わず構造化フィールドで組み立てて表示します。v0.4.3：全ページのヘッダー右上、言語切替の横にバージョンバッジを追加。v0.4.2：仕組み系（コントラクト）のアドレスを人の関連から全て排除し、つながりは個人の財布だけで数え直し（コントラクト経由のつながりも無し）。あわせてブリッジ出金総額の棒グラフを、全バリデーター別の集計（段数無制限・共有ウォレットはつながっている各バリデーターに計上）に変更。v0.4.1：ブリッジ出金総額の棒グラフを、バリデーターからの距離＝段数（本人／1段目の関連／2段目以降の関連）で色分け。前身の v0.4.0 は新規ペア速報・流動性の動き・委任と報酬の集計・休眠復帰・新しい顔ぶれ（関連アドレスの全履歴展開＋自動追加）・[42] 価格表示の6項目を追加、v0.3.2 は Xenia を中核（仕組み系）から通常のバリデーター扱いに変更（分類の訂正）、v0.3.1 は推定関連の定義を「最新の動き」の欄に掲載、v0.3.0 は Phase 3 完了＝推定アドレスの監視＋バリデーター名簿の自動更新、X の別名 (Rioshi) 併記、右上の言語切替「日本語 | English」の追加）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -299,7 +285,7 @@ function tierBadge(ev){
   if (ev.actorIsCore) return '<span class="badge core">中核（仕組み系）</span>';
   if (ev.actorTier === 'validator') return '<span class="badge self">バリデーター本人</span>';
   if (ev.actorTier === 'related') return '<span class="badge related">関連アドレス</span>';
-  if (ev.actorTier === 'estimated') return '<span class="badge estimated">推定</span>';
+  
   return '';
 }
 // Headline = the ACTOR only (v0.2.0 fix). Joining every related validator
@@ -309,19 +295,13 @@ function whoLabel(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel) return valName(ev.actorLabel);
   if (ev.actorIsCore) return ev.actorLabel || shortAddr(ev.actor);
   if (ev.actorTier === 'related') return '関連 ' + shortAddr(ev.actor);
-  if (ev.actorTier === 'estimated') return '推定 ' + shortAddr(ev.actor);
+  
   return ev.actorLabel || shortAddr(ev.actor);
 }
 function relationLine(ev){
   if (ev.actorTier === 'validator') return ''; // self events: no relation list (counterparty line shows the other side)
   const rel = ev.actorValidators || [];
-  if (ev.actorTier === 'estimated') {
-    let s = '';
-    if (rel.length === 1) s = `関係バリデーター（推定）：<b class="rel-name">${valName(rel[0])}</b>`;
-    else if (rel.length >= 2) s = `関係バリデーター（推定）：<b class="rel-name">${valName(rel[0])}</b> ほか${rel.length - 1}名`;
-    const note = ev.estimateBasis && ev.estimateBasis.text ? `<div class="note">推定の根拠：${ev.estimateBasis.text}</div>` : '';
-    return (s ? `<div class="meta">${s}</div>` : '') + note;
-  }
+  
   let s = '';
   if (rel.length === 1) s = `関係バリデーター：<b class="rel-name">${valName(rel[0])}</b>`;
   else if (rel.length >= 2) s = `関係バリデーター：<b class="rel-name">${valName(rel[0])}</b> ほか${rel.length - 1}名`;
@@ -331,8 +311,7 @@ function relationLine(ev){
   // v0.4.2: depth>=2 related cards state WHY the wallet is tracked —
   // the own-wallet evidence codes recorded on the watchlist entry.
   const EV_LABEL = {bidirectional: '双方向の資金移動', 'funded-delegation': '本人系から資金を受けて本人へ委任', 'concentrated-repeat': '本人系とのやり取りが複数回・集中', 'one-way-repeat': '本人系からの一方通行の送金が複数回', delegation: '本人への委任実績', synchronized: '本人と同時刻帯の同調した動き'};
-  const evNote = ev.actorEvidence
-    ? `<div class="note">2段目以降の関連ですが、バリデーター本人の財布らしい証拠があるため載せています（証拠：${[...new Set(Object.values(ev.actorEvidence).flat())].map((c) => EV_LABEL[c] ?? c).join('、')}）</div>` : '';
+  const evNote = '';
   const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
   return line + sharedNote + evNote;
 }
@@ -359,7 +338,7 @@ function renderBridgeChart(){
   const max = rows.length ? Math.max(...rows.map((g) => g.total)) : 0;
   el.innerHTML = `<div class="bchart-total">合計（重複なし）${fmt(B.total)} USDT（${B.count}件）</div>`
     + `<div class="bchart-segtotal">全体の内訳（重複なし）：${segLine(B.segTotals)}</div>`
-    + `<div class="bchart-legend"><span class="sw seg0"></span>本人<span class="sw seg1"></span>1段目の関連<span class="sw seg2"></span>2段目以降の関連</div>`
+    + `<div class="bchart-legend"><span class="sw seg0"></span>本人<span class="sw seg1"></span>1段目の関連</div>`
     + rows.map((g) => {
       const parts = g.seg.map((v, i) => v > 0 ? `<div class="bchart-seg seg${i}" style="width:${max ? v / max * 100 : 0}%"></div>` : '').join('');
       return `<div class="bchart-row"><div class="bchart-name">${valName(g.moniker)}</div><div class="bchart-barwrap">${parts}</div><div class="bchart-amt">${fmt(g.total)} USDT <span class="bchart-cnt">${g.count}件</span></div><div class="bchart-break">${segLine(g.seg)}</div></div>`;
@@ -369,7 +348,7 @@ function bigName(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel) return {main: valName(ev.actorLabel), sub: 'バリデーター本人', cls: ' self'};
   const rel = ev.actorValidators || [];
   if (ev.actorTier === 'estimated') return {main: rel.length ? valName(rel[0]) : shortAddr(ev.actor), sub: rel.length > 1 ? `（推定）関連ウォレット（ほか${rel.length - 1}名にも推定関連）` : '（推定）関連ウォレット', cls: ''};
-  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? `の関連ウォレット（ほか${rel.length - 1}名にも関連）` : 'の関連ウォレット') + ((ev.actorDepth ?? 1) >= 2 ? '（2段目以降・本人財布の証拠あり）' : ''), cls: ''};
+  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: (rel.length > 1 ? `の関連ウォレット（ほか${rel.length - 1}名にも関連）` : 'の関連ウォレット'), cls: ''};
   if (ev.actorIsCore && ev.actorLabel) return {main: ev.actorLabel, sub: '中核', cls: ''};
   if (ev.actorLabel) return {main: ev.actorLabel, sub: '', cls: ''};
   return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? '関連ウォレット' : '', cls: ''};
@@ -438,8 +417,7 @@ function applyFilters(){
   const v = document.getElementById('fValidator').value;
   const t = document.getElementById('fType').value;
   const tk = document.getElementById('fToken').value;
-  const showEst = document.getElementById('fEstimated').checked;
-  const match = (ev) => (!v || isSelfEvent(ev, v) || isRelatedEvent(ev, v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk)) && (showEst || ev.actorTier !== 'estimated');
+  const match = (ev) => (!v || isSelfEvent(ev, v) || isRelatedEvent(ev, v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk));
   const list = FEED.events.filter(match);
   renderFeedList(list, v);
   // Special sections are CONFIRMED-ONLY (v0.3.0): estimated-actor events are
@@ -484,7 +462,7 @@ async function load(){
     FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
     const s = FEED.status;
     document.getElementById('status').innerHTML =
-      `最終処理ブロック：<b>${s.lastProcessedBlock ?? '—'}</b>（チェーン最新 ${s.latestBlockSeen ?? '—'}）／Cosmos側 最終処理：<b>${s.lastProcessedCosmosBlock ?? '—'}</b>／更新：${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}) : '—'}／記録した動き：${s.totalEvents}件／監視中：バリデーター${s.watchSummary.validators}名＋直接関連${s.watchSummary.directRelated}件＋推定${s.watchSummary.estimated ?? 0}件${s.validatorsAdded ? `／今回の自動更新でバリデーター追加：${s.validatorsAdded.map(valNameText).join('・')}` : ''}`;
+      `最終処理ブロック：<b>${s.lastProcessedBlock ?? '—'}</b>（チェーン最新 ${s.latestBlockSeen ?? '—'}）／Cosmos側 最終処理：<b>${s.lastProcessedCosmosBlock ?? '—'}</b>／更新：${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}) : '—'}／記録した動き：${s.totalEvents}件／監視中：バリデーター${s.watchSummary.validators}名＋直接関連${s.watchSummary.directRelated}件${s.validatorsAdded ? `／今回の自動更新でバリデーター追加：${s.validatorsAdded.map(valNameText).join('・')}` : ''}`;
     document.getElementById('alertRule').textContent = s.notableRule + '。この条件に当てはまった動きだけをここに並べます（サイト内だけの表示で、外部への投稿はしません）。';
     document.getElementById('bridgeOutRule').textContent = s.bridgeOutRule || '';
     document.getElementById('snipeRule').textContent = (s.snipeRule || '') + '。当てはまった動きをここに目立つ形で並べます。';
@@ -506,17 +484,16 @@ async function load(){
     }
     document.querySelector('#sec-validators h2').textContent = `バリデーター一覧（${FEED.validators.length}）`;
     document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
-      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">中核も兼ねる</span>' : ''}${v.inactive ? ' <span class="badge">現在は非アクティブ</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">関連アドレス ${v.relatedCount}件（うち自動追加 ${v.autoAddedCount ?? 0}件）／推定 ${v.estimatedCount ?? 0}件</span><br><span class="sub">本人の動き ${v.selfActivity ?? 0}件／関連アドレスの動き ${v.relatedActivity ?? 0}件</span></div>`).join('');
+      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">中核も兼ねる</span>' : ''}${v.inactive ? ' <span class="badge">現在は非アクティブ</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">関連アドレス ${v.relatedCount}件（うち自動追加 ${v.autoAddedCount ?? 0}件）</span><br><span class="sub">本人の動き ${v.selfActivity ?? 0}件／関連アドレスの動き ${v.relatedActivity ?? 0}件</span></div>`).join('');
     applyFilters();
     renderBridgeChart();
     renderStaking();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
-    { const d = document.getElementById('estimated-def'); if (d && location.hash === '#estimated-def') { d.open = true; setTimeout(() => d.scrollIntoView({behavior:'smooth'}), 80); } }
   } catch (e) {
     document.getElementById('status').textContent = 'feed.json を読み込めませんでした（コレクターがまだ動いていない可能性があります）。';
   }
 }
-for (const id of ['fValidator','fType','fToken','fEstimated']) document.getElementById(id).addEventListener('change', applyFilters);
+for (const id of ['fValidator','fType','fToken']) document.getElementById(id).addEventListener('change', applyFilters);
 { if (typeof location !== 'undefined' && location.hash && document.querySelectorAll) for (const a of document.querySelectorAll('.langsw a')) a.href = a.getAttribute('href') + location.hash; }
 load();
 setInterval(load, 30000);

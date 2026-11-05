@@ -46,7 +46,7 @@ const wir42 = validators.find((v) => v.label === 'Woman-In-Red-42');
 check('Sirius Cybernetics: self activity = 0', recompute(sirius).self === 0, String(recompute(sirius).self));
 check('Sirius Cybernetics: related activity = 0', recompute(sirius).related === 0, String(recompute(sirius).related));
 check('Woman-In-Red-42: self activity = 32', recompute(wir42).self === 32, String(recompute(wir42).self));
-check('Woman-In-Red-42: related activity = 32', recompute(wir42).related === 32, String(recompute(wir42).related));
+check('Woman-In-Red-42: related activity = 70 (v0.5.3 full-history backfill of her depth-1 related wallets; was 32)', recompute(wir42).related === 70, String(recompute(wir42).related));
 
 // ---- (3) feed split counts ----
 for (const fv of feed.validators) {
@@ -67,7 +67,7 @@ for (const a of ['0xc8de941efb92925bfd359a7a380399e47bc2b242', '0xf75b159860f3de
   const e = watchlist.entries.find((x) => x.address === a);
   check(`insider-protected X wallet stays related: …${a.slice(-4)}`, !!e && e.tier === 'related' && (e.relatedValidators ?? []).includes('X'));
 }
-check('no candidate-actor events remain in the record', events.every((e) => !cands.some((c) => c.address === e.actor)));
+check('no candidate-actor events remain in the record (except pair-created chain news, the standing exception)', events.every((e) => !cands.some((c) => c.address === e.actor) || e.type === 'pair-created'));
 const feedSirius = feed.validators.find((v) => v.moniker === 'Sirius Cybernetics');
 check('Sirius related addresses in feed = 0', feedSirius.relatedCount === 0, String(feedSirius.relatedCount));
 
@@ -97,7 +97,7 @@ for (const [file, noSelfText, selfHeadRe, relHeadRe] of [
   const { els, api, setFeed } = runPage(file);
   setFeed({ status: {}, validators: validators.map((v) => ({ moniker: v.label, address: v.address })), events });
   for (const v of validators) {
-    els.fValidator.value = v.label; els.fType.value = ''; els.fToken.value = ''; els.fEstimated.checked = true;
+    els.fValidator.value = v.label; els.fType.value = ''; els.fToken.value = ''; // v0.5.3: the estimated toggle (fEstimated) was removed with the tier
     api.applyFilters();
     const html = els.feed.innerHTML;
     const r = recompute(v);

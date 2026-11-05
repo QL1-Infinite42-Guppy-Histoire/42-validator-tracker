@@ -44,7 +44,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="home-en.html" id="langOther">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.2</span></div></div>
+  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="home-en.html" id="langOther">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
   <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを自動で拾って表示するサイトです。見たい項目を選んでください。</p>
   <div class="status" id="status">読み込み中…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -69,7 +69,7 @@
     </a>
     <a class="card bridge" href="index.html#sec-bridgechart">
       <h2>📊 ブリッジ出金 総額（USDT）</h2>
-      <p>USDTをブリッジで外部へ送り出した総額と、名前別の内訳を棒グラフで表示します（本人／1段目の関連／2段目以降の関連に色分け）。</p>
+      <p>USDTをブリッジで外部へ送り出した総額と、名前別の内訳を棒グラフで表示します（本人／1段目の関連に色分け）。</p>
       <div class="count" id="c-bridgetotal">—</div>
       <div class="segsub" id="c-bridgeseg">—</div>
     </a>
@@ -100,7 +100,7 @@
     </a>
     <a class="card" href="index.html#sec-feed">
       <h2>📜 最新の動き（全記録）</h2>
-      <p>EVM側＋Cosmos側の全ての記録。バリデーター別・種類別・銘柄別に絞り込めます。推定アドレスの動きも、推定と明記して含みます（特別欄は確定情報のみ）。</p>
+      <p>EVM側＋Cosmos側の全ての記録。バリデーター別・種類別・銘柄別に絞り込めます。</p>
       <div class="count" id="c-total">—</div>
     </a>
     <a class="card" href="index.html#sec-staking">
@@ -114,12 +114,12 @@
       <div class="count" id="c-validators">—</div>
     </a>
   </div>
-  <p style="font-size:.95rem">❓ <a href="index.html#estimated-def">推定関連とは？（定義はこちら）</a> — 直接の送り合いが未確認でも「関係の可能性」で監視しているアドレスの定義です。</p>
+  
   <p class="lang">🌐 English version: <a href="home-en.html">Top page (English)</a> ／ <a href="en.html">Tracker (English)</a></p>
 </main>
 <footer>
-  データの出どころ：42チェーンのブロックそのもの（RPC経由）。対象は 42 Chain（EVM チェーンID 421018 と、その Cosmos 側 infinite_421018-1）の取引のみです。QL1 など他のチェーンの取引は含みません。推定アドレスの動きは「最新の動き」にだけ推定と明記して表示し、特別欄は確定情報のみです。アラートはこのサイト内だけの表示です。
-  <br>バージョン：<b>v0.5.2</b>（トップページ）
+  データの出どころ：42チェーンのブロックそのもの（RPC経由）。対象は 42 Chain（EVM チェーンID 421018 と、その Cosmos 側 infinite_421018-1）の取引のみです。QL1 など他のチェーンの取引は含みません。アラートはこのサイト内だけの表示です。
+  <br>バージョン：<b>v0.5.3</b>（トップページ）
 </footer>
 <script>
 (async () => {
