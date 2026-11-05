@@ -43,7 +43,7 @@ for (const [label, s] of [
   ['handling: dashed + badge, toggle hides', '点線の枠と「推定」バッジ付きで表示され'],
   ['handling: special sections excluded', 'スナイプ速報・注目・インサイダー・ブリッジ出金とその総額グラフには推定を一切含めません'],
   ['counts stated', '推定関連は6件です（プール経由5件・共通の相手先1件'],
-  ['counts dated as v0.3.1 snapshot', 'v0.3.1 時点'],
+  ['counts dated as v0.3.2 snapshot', 'v0.3.2 時点'],
 ]) check(`index.html definition: ${label}`, jp.includes(s));
 
 // --- EN definition block ---
@@ -64,14 +64,14 @@ for (const [label, s] of [
   ['handling: dashed + badge, toggle hides', 'with a dashed border and an "Estimated" badge, and can be hidden'],
   ['handling: special sections excluded', 'never included in the Snipe Alerts, Notable, Insider Watch, or Bridge Withdrawals sections'],
   ['counts stated', '6 estimated addresses (5 through-pool, 1 shared counterparty)'],
-  ['counts dated as v0.3.1 snapshot', 'as of v0.3.1'],
+  ['counts dated as v0.3.2 snapshot', 'as of v0.3.2'],
 ]) check(`en.html definition: ${label}`, en.includes(s));
 
 // --- home pages: one-line link + version ---
 check('home.html: link to definition', home.includes('href="index.html#estimated-def"') && home.includes('推定関連とは？'));
 check('home-en.html: link to definition', homeEn.includes('href="en.html#estimated-def"') && homeEn.includes('What are estimated relations?'));
 for (const [name, html] of [['index.html', jp], ['en.html', en], ['home.html', home], ['home-en.html', homeEn]]) {
-  check(`${name}: version v0.3.1`, html.includes('v0.3.1'));
+  check(`${name}: version v0.3.2`, html.includes('v0.3.2'));
 }
 
 console.log(fails === 0 ? 'ALL PASS' : `${fails} FAILED`);

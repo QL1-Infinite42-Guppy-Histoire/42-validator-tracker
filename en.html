@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.3.1</title>
+<title>42 Chain Validator Real-Time Tracker v0.3.2</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -90,7 +90,7 @@
 <body>
 <header>
   <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b></div></div>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.3.1). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.3.2). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
   <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-feed">Latest</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
 </header>
@@ -185,7 +185,7 @@
       <li><b>(3) 2-hop:</b> an indirect link of the form validator → another address → validator, where both transfers are confirmed. (Currently, no address has been newly registered under this type.)</li>
     </ul>
     <p><b>How estimates are handled:</b> moves by estimated addresses appear only in Latest activity, with a dashed border and an "Estimated" badge, and can be hidden by unchecking "Show estimated" above. They are never included in the Snipe Alerts, Notable, Insider Watch, or Bridge Withdrawals sections, nor in the bridge-out totals chart — all amounts there are totals of confirmed activity only.</p>
-    <p><b>Currently registered:</b> 6 estimated addresses (5 through-pool, 1 shared counterparty), as of v0.3.1, 5 November 2026.</p>
+    <p><b>Currently registered:</b> 6 estimated addresses (5 through-pool, 1 shared counterparty), as of v0.3.2, 5 November 2026.</p>
   </details>
   <div id="feed"><p class="empty">Loading…</p></div>
   </div></section>
@@ -200,7 +200,7 @@
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated addresses (Phase 3): addresses whose link cannot be confirmed by a direct transfer are also watched, estimated in three ways — through-pool, 2-hop, and shared counterparty. Their moves appear only in Latest activity, with a dashed border, an Estimated badge and the basis shown; they are never included in the Insider / Snipes / Notable / Bridge Withdrawals / Totals sections (those stay confirmed-only). The validator list is refreshed from the chain on every run: newly bonded validators are added automatically, and validators that leave the bonded set stay watched as history (marked inactive). Nothing is posted externally (no X bot) — alerts live on this site only.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). Validator X is also known as Rioshi, shown in small text as (Rioshi) next to the name.
-  <br>Version: <b>v0.3.1</b> (v0.3.1: added the definition of estimated relations next to the Latest activity filters. Previously, v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
+  <br>Version: <b>v0.3.2</b> (v0.3.2: Xenia reclassified from core infrastructure to an ordinary validator — a classification correction. Previously, v0.3.1 added the definition of estimated relations next to the Latest activity filters, and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';

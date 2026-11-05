@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// 42 Validator Tracker — collector (v0.3.0: EVM side + Cosmos side,
-// estimated tier + validator-list auto-refresh; v0.2.4: USDT-only
+// 42 Validator Tracker — collector (v0.3.2: Xenia reclassified from core
+// to ordinary validator per user correction; v0.3.0: EVM side + Cosmos
+// side, estimated tier + validator-list auto-refresh; v0.2.4: USDT-only
 // bridge-out section, buys-only snipes, insider flag for X).
 //
 // Polls the 42 Chain EVM RPC for new blocks, decodes receipts with NO external
@@ -70,6 +71,15 @@
 //    the chain on every run (refreshValidatorList): new bonded validators
 //    are added as self-tier entries with their on-chain moniker (never an
 //    invented name), departed ones are marked inactive but stay watched.
+//  - v0.3.2 (user correction): Xenia is NOT core/system infrastructure.
+//    The 2026-10-31 bubble-map ruling had put her in core category B
+//    ("distributor-type") because she sent exactly 2 [42] to 18 validators;
+//    the user overturned it — Xenia is an ordinary validator/person and her
+//    seed distribution is her own activity. Her watchlist entry is now
+//    isCore=false, build-watchlist strips core flags from validator-tier
+//    entries, and enrichEvent re-derives actorIsCore/counterpartyIsCore
+//    from the current watchlist so stored events are repaired too. The #1
+//    holder 0x7a6f...0a25 keeps its core flag (Xenia only was corrected).
 //
 // Standing rules honoured here:
 //  - NO minimum-amount filtering anywhere: a watched transfer of any size,
@@ -577,8 +587,9 @@ export function makeCtx(watchlist, registries, pairsCache = {}) {
     // related/core for labelling — they are not people, and e.g. the DEX
     // router is the Swap event's recipient on native-out swaps, which would
     // otherwise swallow the real actor). Two deliberate exceptions: validators
-    // always count (Xenia is both validator and distributor-type core), and
-    // the #1 holder 0x7a6f...0a25 (distributor-type core, but a real actor).
+    // always count (validators are people, never core — v0.3.2 user
+    // correction for Xenia), and the #1 holder 0x7a6f...0a25
+    // (distributor-type core, but a real actor).
     isActor: (a) => {
       const e = watch.get(lc(a));
       if (!e || !e.watch || e.isPair) return false;
@@ -642,6 +653,13 @@ export function enrichEvent(ev, ctx, creations = {}) {
   const set = (k, v) => { if (JSON.stringify(ev[k]) !== JSON.stringify(v)) { ev[k] = v; changed = true; } };
   if (!ev.chain) set('chain', 'evm');
   const ae = ctx.entry(ev.actor);
+  // v0.3.2 repair: core flags are re-derived from the CURRENT watchlist on
+  // every migration pass, so a reclassification reaches stored events.
+  // (Xenia's stored events carried actorIsCore/counterpartyIsCore=true from
+  // the overturned distributor-type ruling; her entry is isCore=false now.)
+  set('actorIsCore', !!ae?.isCore);
+  const ce0 = ev.counterparty ? ctx.entry(ev.counterparty) : null;
+  set('counterpartyIsCore', !!ce0?.isCore);
   const rel = ae?.tier === 'validator' ? [] : [...(ae?.relatedValidators ?? [])];
   set('actorValidators', rel);
   set('actorShared', ev.actorTier !== 'validator' && rel.length >= 3);

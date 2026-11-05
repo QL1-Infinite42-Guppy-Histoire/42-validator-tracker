@@ -27,10 +27,14 @@
 //     - plus every pair in ~/workspace/42-flowmap/pairs.json (label "X/Y ペア")
 //     Core entries exist so the UI can label infrastructure as infrastructure
 //     instead of presenting it as a person wallet. They are NOT event actors
-//     (watch=false), except where an address is ALSO a validator or a direct
-//     related address (e.g. Xenia is a validator who is also distributor-type
-//     core; the #1 holder 0x7a6f...0a25 is a direct related address flagged
-//     core) — those keep watch=true and carry isCore=true for UI labelling.
+//     (watch=false), except where an address is ALSO a direct related address
+//     (the #1 holder 0x7a6f...0a25 is a direct related address flagged core) —
+//     those keep watch=true and carry isCore=true for UI labelling.
+//     Validators are NEVER core: the flowmap source flags validator Xenia's
+//     node as core (she sent exactly 2 [42] to many validators), but the user
+//     corrected this on 2026-11-05 — Xenia is a validator/person, her seed
+//     distribution is her own activity, not infrastructure. An explicit
+//     override below strips any core flag from validator-tier entries.
 //
 //   Token registry: ~/workspace/42-flowmap/token-whitelist.json (the ONLY 17
 //   tokens displayed; copycat CAT42 x1 / ZAP x2 are not in the list and stay
@@ -148,6 +152,21 @@ const holder = getEntry('0x7a6f6d4e0ce3abbba5ab6685c37a9599f6250a25');
 holder.isCore = true;
 if (!holder.label) holder.label = '残高1位アドレス';
 holder.coreNote = '配布型・中核として表示（人物ウォレット扱いしない）';
+
+// ---------- user correction (2026-11-05): Xenia is NOT core ----------
+// The flowmap source data flags Xenia's node core:true (2026-10-31 bubble-map
+// category-B "distributor-type" ruling). The user overturned that ruling:
+// Xenia is an ordinary validator/person and must never be classified as
+// core/system （中核・仕組み系） anywhere. Strip the core flag + note from
+// every validator-tier entry so a rebuild cannot reintroduce it. (The #1
+// holder 0x7a6f...0a25 is related-tier and keeps its core flag — the user
+// corrected Xenia only.)
+for (const e of entries.values()) {
+  if (e.tier === 'validator' && e.isCore) {
+    e.isCore = false;
+    delete e.coreNote;
+  }
+}
 
 // ---------- registries ----------
 const whitelist = readJSON(join(FLOWMAP, 'token-whitelist.json'));
