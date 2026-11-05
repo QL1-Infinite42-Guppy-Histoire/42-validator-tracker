@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T16:05:42.502Z",
+ "generatedAt": "2026-11-05T16:10:13.644Z",
  "status": {
-  "lastProcessedBlock": 4282895,
-  "latestBlockSeen": 4282895,
-  "lastProcessedCosmosBlock": 4282895,
-  "lastProcessedAt": "2026-11-05T16:05:42.323Z",
-  "totalEvents": 9201,
+  "lastProcessedBlock": 4282946,
+  "latestBlockSeen": 4282946,
+  "lastProcessedCosmosBlock": 4282946,
+  "lastProcessedAt": "2026-11-05T16:10:13.520Z",
+  "totalEvents": 9202,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T16:05:42.519Z"
+   "checkedAt": "2026-11-05T16:10:13.666Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68519849,
-   "updatedAt": "2026-11-05T16:05:42.000Z",
+   "updatedAt": "2026-11-05T16:10:13.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4282841,
+    "toBlock": 4282896,
     "fromTs": 1770178474,
-    "toTs": 1793894438
+    "toTs": 1793894735
    },
    "totals": {
     "delegate": {
@@ -813,7 +813,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 85,
+   "relatedActivity": 86,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x79b83e2eec9811c912a44c087c876506ba6be767a5d0c942b65917472f68c91c:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793894735,
+   "block": 4282896,
+   "txHash": "0x79b83e2eec9811c912a44c087c876506ba6be767a5d0c942b65917472f68c91c",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xd2594e5b49ecca938e6ea7ebcafca744b44dfaba75916d3afd317cc970589c02:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1793894438,
@@ -24385,81 +24419,6 @@
    "actorValidators": [],
    "actorShared": false,
    "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true
-  },
-  {
-   "id": "0xadde23ee4cd861bf05fb7a4638c0f4989bf88890c6fe306e168325448bbf3c4b:3:swap-buy:0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
-   "ts": 1793238711,
-   "block": 4161456,
-   "txHash": "0xadde23ee4cd861bf05fb7a4638c0f4989bf88890c6fe306e168325448bbf3c4b",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
-   "actorLabel": "Xenia",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0xc747c1a4a57955478701a0adf8a8716a0ccfed96",
-   "counterpartyLabel": "FISH/MARVIN ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "Xenia",
-    "Luke",
-    "Woman-In-Red-42",
-    "Metal Raptor",
-    "vethawk",
-    "X",
-    "PhoenixRing",
-    "HeraMoon",
-    "ayc",
-    "XenIt",
-    "Popo",
-    "panda42",
-    "FoxxOne",
-    "Sirius Cybernetics",
-    "light888",
-    "the_rider",
-    "CCUK",
-    "kimnmike",
-    "DON'T PANIC - DEX"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "953880287329151403",
-    "amount": "0.953880",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xa307362f8a756722541dde6255aecf64f35ba337",
-    "symbol": "MARVIN",
-    "amountRaw": "4255314438098902635744",
-    "amount": "4,255.314438",
-    "whitelisted": true
-   },
-   "subjectSymbol": "MARVIN",
-   "price": 0.00022416,
-   "priceUnit": "FISH/MARVIN",
-   "pair": "0xc747c1a4a57955478701a0adf8a8716a0ccfed96",
-   "pairLabel": "FISH/MARVIN ペア",
-   "tokens": [
-    "FISH",
-    "MARVIN"
-   ],
-   "whitelisted": true,
-   "summary": "MARVINを買い（支払い 0.953880 FISH／価格 約0.00022416 FISH/MARVIN）",
-   "notableReasons": [
-    "バリデーター本人の売買"
-   ],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1789590829,
-   "pairAgeSecs": 3647882,
-   "isSnipe": false,
    "isInsider": false,
    "backfill": true
   },
