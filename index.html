@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42チェーン バリデーター リアルタイム追跡 v0.2.6</title>
+<title>42チェーン バリデーター リアルタイム追跡 v0.2.7</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -57,13 +57,17 @@
   section.fold:not(.open)>.fold-body{display:none}
   section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.fold>h2{margin-top:8px}
+  .summary b.who-self{font-size:1.45rem;color:var(--acc)}
+  .summary b.who-rel{font-size:1.2rem}
+  .meta b.rel-name{font-size:1.1rem;color:var(--txt)}
+  .val b{font-size:1.15rem}
 </style>
 </head>
 <body>
 <header>
   <h1>42チェーン バリデーター リアルタイム追跡</h1>
   <p class="sub"><a href="en.html">English version</a></p>
-  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.6）。推定のつながりは含みません。</p>
+  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.7）。推定のつながりは含みません。</p>
   <nav class="topnav"><a href="home.html">🏠 トップページ</a><a href="#sec-insider">⚠ インサイダー</a><a href="#sec-snipes">🎯 スナイプ</a><a href="#sec-bridge">🌉 ブリッジ出金</a><a href="#sec-alerts">⭐ 注目</a><a href="#sec-feed">最新の動き</a><a href="#sec-validators">バリデーター一覧</a></nav>
   <div class="status" id="status">読み込み中…</div>
 </header>
@@ -152,7 +156,7 @@
   表示している銘柄は Don't Panic 掲載の17銘柄が中心です（それ以外は「対象外銘柄」と表示）。金額の大小で記録を落とすことはしていません（小さな送金も全て記録）。
   v0.2.0 の範囲：EVM側＋Cosmos側（送金・委任・報酬請求）／操作の種類は判別できた範囲で具体名表示（Fluke参加・NFTミント・報酬請求・ブリッジ送信など、判別できないものは「未分類の操作（メソッド／宛先）」）／ブリッジ出金欄は USDT を外部へ送った動きだけが対象（USDT以外のブリッジ送信は通常の動きとして記録し、専用の緑色の欄には入れない／入金は通常の受取）／推定リンクは Phase 3／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
   Cosmos側の取引リンクは自作の Cosmos スキャナー（42 Cosmos Scan）に飛びます。見出しの名前は「動いた本人」だけを表示し、関係するバリデーターは別の行に分けて書きます（複数のバリデーターと取引する共通の相手先には「共有の相手先」の印が付きます）。
-  <br>バージョン：<b>v0.2.6</b>（v0.2.5＋トップページ（home.html／英語版 home-en.html）を追加し、各項目へ件数つきカードから飛べるようにした。あわせて追跡ページの各項目をタップで開閉する折りたたみ式にして、ページの広がりを抑えた）
+  <br>バージョン：<b>v0.2.7</b>（v0.2.6＋イベント表示でバリデーター本人の名前を大きく、関係ウォレットの表示名と関係バリデーター名も大きめに変更）を追加し、各項目へ件数つきカードから飛べるようにした。あわせて追跡ページの各項目をタップで開閉する折りたたみ式にして、ページの広がりを抑えた）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -187,8 +191,8 @@ function relationLine(ev){
   if (ev.actorTier === 'validator') return ''; // self events: no relation list (counterparty line shows the other side)
   const rel = ev.actorValidators || [];
   let s = '';
-  if (rel.length === 1) s = `関係バリデーター：${rel[0]}`;
-  else if (rel.length >= 2) s = `関係バリデーター：${rel[0]} ほか${rel.length - 1}名`;
+  if (rel.length === 1) s = `関係バリデーター：<b class="rel-name">${rel[0]}</b>`;
+  else if (rel.length >= 2) s = `関係バリデーター：<b class="rel-name">${rel[0]}</b> ほか${rel.length - 1}名`;
   const badge = ev.actorShared ? ' <span class="badge shared">共有の相手先</span>' : '';
   const note = ev.actorShared
     ? `<div class="note">複数のバリデーターと取引する共通の相手先です（バリデーター本人ではありません）${ev.actorContractNote ? '／' + ev.actorContractNote : ''}</div>` : '';
@@ -211,7 +215,7 @@ function renderEvent(ev){
   return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}">
     <div class="top"><span class="time">${jst(ev.ts)}（ブロック ${ev.block}）</span>
     <span class="badge type">${ev.actionLabel || TYPE_JA[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${cosmos}${snipe}${insider}</div>
-    <div class="summary"><b>${whoLabel(ev)}</b> ${addrLink(ev.actor)}：${ev.summary}</div>
+    <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}：${ev.summary}</div>
     ${relationLine(ev)}
     <div class="meta">${cp} ／ ${txLink(ev)}</div></div>`;
 }
