@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.2.7</title>
+<title>42 Chain Validator Real-Time Tracker v0.2.8</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -61,13 +61,16 @@
   .summary b.who-rel{font-size:1.2rem}
   .meta b.rel-name{font-size:1.1rem;color:var(--txt)}
   .val b{font-size:1.15rem}
+  .bigname{font-size:1.6rem;font-weight:800;line-height:1.15;margin:0 0 2px;color:var(--txt)}
+  .bigname .sub{font-size:.82rem;font-weight:600;color:var(--sub);margin-left:6px}
+  .bigname.self{color:var(--acc)}
 </style>
 </head>
 <body>
 <header>
   <h1>42 Chain Validator Real-Time Tracker</h1>
   <p class="sub"><a href="index.html">日本語版</a></p>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.7). Estimated links are not included.</p>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.8). Estimated links are not included.</p>
   <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-feed">Latest</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
 </header>
@@ -156,7 +159,7 @@
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated links are Phase 3. Nothing is posted externally (no X bot) — alerts live on this site only.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark).
-  <br>Version: <b>v0.2.7</b> (v0.2.6 + larger name display: validator names are shown bigger on event cards, related-wallet labels and related-validator names slightly bigger too) with count badges linking into each section, plus tap-to-open collapsible sections on the tracker pages to keep the page compact)
+  <br>Version: <b>v0.2.8</b> (v0.2.7 + a big name header on every event card in every section: the validator name in large type, and for related wallets their validator name shown large) with count badges linking into each section, plus tap-to-open collapsible sections on the tracker pages to keep the page compact)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -299,6 +302,14 @@ function relationLine(ev){
   const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
   return line + note;
 }
+function bigName(ev){
+  if (ev.actorTier === 'validator' && ev.actorLabel) return {main: ev.actorLabel, sub: 'the validator itself', cls: ' self'};
+  const rel = ev.actorValidators || [];
+  if (ev.actorTier === 'related' && rel.length) return {main: rel[0], sub: rel.length > 1 ? ` — related wallet (also related to ${rel.length - 1} more)` : ' — related wallet', cls: ''};
+  if (ev.actorIsCore && ev.actorLabel) return {main: ev.actorLabel, sub: 'core', cls: ''};
+  if (ev.actorLabel) return {main: ev.actorLabel, sub: '', cls: ''};
+  return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? 'related wallet' : '', cls: ''};
+}
 function renderEvent(ev){
   const cpLabel = enLabel(ev.counterpartyLabel);
   const cp = ev.counterparty ? ` / Counterparty: ${addrLink(ev.counterparty, cpLabel ? cpLabel + ' ' + shortAddr(ev.counterparty) : null)}${ev.counterpartyIsCore ? ' <span class="badge core">Core</span>' : ''}` : '';
@@ -311,7 +322,9 @@ function renderEvent(ev){
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
   const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 Snipe (${ageEn(ev.pairAgeSecs)})</span>` : '';
   const insider = ev.isInsider ? ' <span class="badge insider">⚠ Insider (X)</span>' : '';
+  const bn = bigName(ev);
   return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}">
+    <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
     <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${cosmos}${snipe}${insider}</div>
     <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
