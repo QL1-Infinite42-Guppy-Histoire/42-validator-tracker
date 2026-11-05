@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42チェーン バリデーター リアルタイム追跡 v0.2.5</title>
+<title>42チェーン バリデーター リアルタイム追跡 v0.2.6</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -49,41 +49,50 @@
   .val{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:.92rem}
   .empty{color:var(--sub);padding:18px 0}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+  .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
+  section.insider>h2,section.snipes>h2,section.bridge>h2,section.alerts>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2::after,section.alerts>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.alerts.open>h2::after,section.fold.open>h2::after{content:' ▼'}
+  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.alerts:not(.open)>:not(h2){display:none}
+  section.fold:not(.open)>.fold-body{display:none}
+  section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
+  section.fold>h2{margin-top:8px}
 </style>
 </head>
 <body>
 <header>
   <h1>42チェーン バリデーター リアルタイム追跡</h1>
   <p class="sub"><a href="en.html">English version</a></p>
-  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.5）。推定のつながりは含みません。</p>
+  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.6）。推定のつながりは含みません。</p>
+  <nav class="topnav"><a href="home.html">🏠 トップページ</a><a href="#sec-insider">⚠ インサイダー</a><a href="#sec-snipes">🎯 スナイプ</a><a href="#sec-bridge">🌉 ブリッジ出金</a><a href="#sec-alerts">⭐ 注目</a><a href="#sec-feed">最新の動き</a><a href="#sec-validators">バリデーター一覧</a></nav>
   <div class="status" id="status">読み込み中…</div>
 </header>
 <main>
-  <section class="insider">
+  <section class="insider" id="sec-insider">
     <h2>⚠ インサイダー</h2>
     <p class="rule" id="insiderRule"></p>
     <div id="insiders"><p class="empty">読み込み中…</p></div>
   </section>
 
-  <section class="snipes">
+  <section class="snipes" id="sec-snipes">
     <h2>🎯 スナイプ速報</h2>
     <p class="rule" id="snipeRule"></p>
     <div id="snipes"><p class="empty">読み込み中…</p></div>
   </section>
 
-  <section class="bridge">
+  <section class="bridge" id="sec-bridge">
     <h2>🌉 ブリッジ出金（USDT・外部へ）</h2>
     <p class="rule" id="bridgeOutRule"></p>
     <div id="bridgeouts"><p class="empty">読み込み中…</p></div>
   </section>
 
-  <section class="alerts">
+  <section class="alerts" id="sec-alerts">
     <h2>⭐ 注目</h2>
     <p class="rule" id="alertRule"></p>
     <div id="alerts"><p class="empty">読み込み中…</p></div>
   </section>
 
-  <h2>最新の動き</h2>
+  <section class="fold open" id="sec-feed"><h2>最新の動き</h2><div class="fold-body">
   <div class="filters">
     <select id="fValidator"><option value="">バリデーター：すべて</option></select>
     <select id="fType">
@@ -131,17 +140,19 @@
     <select id="fToken"><option value="">銘柄：すべて</option></select>
   </div>
   <div id="feed"><p class="empty">読み込み中…</p></div>
+  </div></section>
 
-  <h2>バリデーター一覧（23）</h2>
+  <section class="fold" id="sec-validators"><h2>バリデーター一覧（23）</h2><div class="fold-body">
   <p class="sub">「関連アドレス数」は、そのバリデーターと直接やり取りしたことが確認できたアドレスの数です。</p>
   <div class="vals" id="validators"></div>
+  </div></section>
 </main>
 <footer>
   データの出どころ：42チェーンのブロックそのもの（RPC経由）。取引・アドレスをタップすると公式エクスプローラー scan.infinitedrive.xyz が開きます。
   表示している銘柄は Don't Panic 掲載の17銘柄が中心です（それ以外は「対象外銘柄」と表示）。金額の大小で記録を落とすことはしていません（小さな送金も全て記録）。
   v0.2.0 の範囲：EVM側＋Cosmos側（送金・委任・報酬請求）／操作の種類は判別できた範囲で具体名表示（Fluke参加・NFTミント・報酬請求・ブリッジ送信など、判別できないものは「未分類の操作（メソッド／宛先）」）／ブリッジ出金欄は USDT を外部へ送った動きだけが対象（USDT以外のブリッジ送信は通常の動きとして記録し、専用の緑色の欄には入れない／入金は通常の受取）／推定リンクは Phase 3／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
   Cosmos側の取引リンクは自作の Cosmos スキャナー（42 Cosmos Scan）に飛びます。見出しの名前は「動いた本人」だけを表示し、関係するバリデーターは別の行に分けて書きます（複数のバリデーターと取引する共通の相手先には「共有の相手先」の印が付きます）。
-  <br>バージョン：<b>v0.2.5</b>（v0.2.4＋インサイダー欄の表示を「リスティング当日（2026年6月30日）14時00分より前の、X本人とX関連アドレスによる [42] と DONT の買い」だけに絞り込み）
+  <br>バージョン：<b>v0.2.6</b>（v0.2.5＋トップページ（home.html／英語版 home-en.html）を追加し、各項目へ件数つきカードから飛べるようにした。あわせて追跡ページの各項目をタップで開閉する折りたたみ式にして、ページの広がりを抑えた）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -229,6 +240,10 @@ function applyFilters(){
     ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">全${insiders.length}件のうち、新しい順に100件を表示しています（全件が記録に残っています）</p>` : '')
     : '<p class="empty">該当する買い（リスティング当日14時より前）はありません。</p>';
 }
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.alerts, section.fold')) {
+  const h = sec.querySelector('h2');
+  if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
+}
 async function load(){
   try {
     FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
@@ -248,6 +263,7 @@ async function load(){
     document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
       `<div class="val"><b>${v.moniker}</b>${v.isCore ? ' <span class="badge core">中核も兼ねる</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">関連アドレス ${v.relatedCount}件</span></div>`).join('');
     applyFilters();
+    if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
   } catch (e) {
     document.getElementById('status').textContent = 'feed.json を読み込めませんでした（コレクターがまだ動いていない可能性があります）。';
   }

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>42 Chain Validator Tracker — Top Page</title>
+<style>
+  :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--ok:#69db7c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
+  header,main{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:1.4rem;margin:8px 0 4px}
+  .sub{color:var(--sub);font-size:.92rem}
+  .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem;margin-top:10px}
+  .status b{color:var(--ok)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:16px}
+  a.card{display:block;text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  a.card:hover{border-color:var(--acc)}
+  a.card h2{font-size:1.15rem;margin:0 0 6px}
+  a.card p{color:var(--sub);font-size:.9rem;margin:0}
+  a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
+  a.card.insider{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
+  a.card.insider h2{color:#e9d5ff}
+  a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  a.card.snipes h2{color:#ff8fa3}
+  a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
+  a.card.bridge h2{color:#69db7c}
+  a.card.alerts{background:#2a2110;border:1px solid #6b5518}
+  a.card.alerts h2{color:#ffd166}
+  .lang{margin-top:18px}
+  footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+  a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <h1>42 Chain Validator Real-Time Tracker</h1>
+  <p class="sub">This site automatically collects the moves of the validators themselves and of the addresses confirmed to transact with them directly. Pick a section to jump to it.</p>
+  <div class="status" id="status">Loading…</div>
+</header>
+<main>
+  <div class="cards">
+    <a class="card insider" href="en.html#sec-insider">
+      <h2>⚠ Insider Watch — X</h2>
+      <p>Only the buys of [42] and DONT made by validator X itself and X-related addresses before 14:00 JST on listing day (June 30, 2026).</p>
+      <div class="count" id="c-insider">—</div>
+    </a>
+    <a class="card snipes" href="en.html#sec-snipes">
+      <h2>🎯 Snipe Alerts</h2>
+      <p>Buys by a validator itself or a directly related wallet within 3 hours of a pair's creation (LP adds are not counted).</p>
+      <div class="count" id="c-snipes">—</div>
+    </a>
+    <a class="card bridge" href="en.html#sec-bridge">
+      <h2>🌉 Bridge Withdrawals (USDT, outbound)</h2>
+      <p>USDT sent out to external chains via a bridge by a validator itself or a related wallet, in its own green section (inbound is not included).</p>
+      <div class="count" id="c-bridge">—</div>
+    </a>
+    <a class="card alerts" href="en.html#sec-alerts">
+      <h2>⭐ Notable</h2>
+      <p>Validator-self trades and large moves of 1,000 [42] or more.</p>
+      <div class="count" id="c-alerts">—</div>
+    </a>
+    <a class="card" href="en.html#sec-feed">
+      <h2>📜 Latest Activity (full record)</h2>
+      <p>Every recorded move on the EVM and Cosmos sides, filterable by validator, type and token.</p>
+      <div class="count" id="c-total">—</div>
+    </a>
+    <a class="card" href="en.html#sec-validators">
+      <h2>👥 Validators</h2>
+      <p>The 23 validators being watched.</p>
+      <div class="count" id="c-validators">—</div>
+    </a>
+  </div>
+  <p class="lang">🌐 日本語版： <a href="home.html">トップページ</a> ／ <a href="index.html">追跡ページ</a></p>
+</main>
+<footer>
+  Data source: the 42 Chain blocks themselves (via RPC). Estimated links are not included. Alerts are shown on this site only.
+  <br>Version: <b>v0.2.6</b> (top pages added)
+</footer>
+<script>
+(async () => {
+  try {
+    const FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
+    const s = FEED.status, ev = FEED.events;
+    document.getElementById('status').innerHTML =
+      `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> / Cosmos side: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('en-US',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / Recorded moves: ${s.totalEvents}`;
+    const insider = ev.filter((e) => e.isInsider && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
+    document.getElementById('c-insider').textContent = insider;
+    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe).length;
+    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out').length;
+    const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
+    document.getElementById('c-alerts').textContent = ev.filter((e) => !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
+    document.getElementById('c-total').textContent = s.totalEvents;
+    document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23);
+  } catch (e) {
+    document.getElementById('status').textContent = 'Could not load the data.';
+  }
+})();
+</script>
+</body>
+</html>

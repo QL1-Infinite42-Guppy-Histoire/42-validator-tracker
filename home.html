@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>42チェーン バリデーター追跡 トップページ</title>
+<style>
+  :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--ok:#69db7c}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
+  header,main{max-width:980px;margin:0 auto;padding:16px}
+  h1{font-size:1.4rem;margin:8px 0 4px}
+  .sub{color:var(--sub);font-size:.92rem}
+  .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem;margin-top:10px}
+  .status b{color:var(--ok)}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:16px}
+  a.card{display:block;text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+  a.card:hover{border-color:var(--acc)}
+  a.card h2{font-size:1.15rem;margin:0 0 6px}
+  a.card p{color:var(--sub);font-size:.9rem;margin:0}
+  a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
+  a.card.insider{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
+  a.card.insider h2{color:#e9d5ff}
+  a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  a.card.snipes h2{color:#ff8fa3}
+  a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
+  a.card.bridge h2{color:#69db7c}
+  a.card.alerts{background:#2a2110;border:1px solid #6b5518}
+  a.card.alerts h2{color:#ffd166}
+  .lang{margin-top:18px}
+  footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
+  a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <h1>42チェーン バリデーター リアルタイム追跡</h1>
+  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを自動で拾って表示するサイトです。見たい項目を選んでください。</p>
+  <div class="status" id="status">読み込み中…</div>
+</header>
+<main>
+  <div class="cards">
+    <a class="card insider" href="index.html#sec-insider">
+      <h2>⚠ インサイダー</h2>
+      <p>リスティング当日（2026年6月30日）14時00分より前に、バリデーターX本人とX関連アドレスが行った [42] と DONT の買いだけを表示します。</p>
+      <div class="count" id="c-insider">—</div>
+    </a>
+    <a class="card snipes" href="index.html#sec-snipes">
+      <h2>🎯 スナイプ速報</h2>
+      <p>ペアが作られてから3時間以内に、バリデーター本人または直接関連ウォレットが買った動き（LP追加は含みません）。</p>
+      <div class="count" id="c-snipes">—</div>
+    </a>
+    <a class="card bridge" href="index.html#sec-bridge">
+      <h2>🌉 ブリッジ出金（USDT・外部へ）</h2>
+      <p>バリデーター本人・関連ウォレットが、USDTをブリッジ経由で外部チェーンへ送り出した動き。緑色の専用欄です（入金は対象外）。</p>
+      <div class="count" id="c-bridge">—</div>
+    </a>
+    <a class="card alerts" href="index.html#sec-alerts">
+      <h2>⭐ 注目</h2>
+      <p>バリデーター本人の売買と、1,000 [42] 以上の大きな移動を集めた欄です。</p>
+      <div class="count" id="c-alerts">—</div>
+    </a>
+    <a class="card" href="index.html#sec-feed">
+      <h2>📜 最新の動き（全記録）</h2>
+      <p>EVM側＋Cosmos側の全ての記録。バリデーター別・種類別・銘柄別に絞り込めます。</p>
+      <div class="count" id="c-total">—</div>
+    </a>
+    <a class="card" href="index.html#sec-validators">
+      <h2>👥 バリデーター一覧</h2>
+      <p>監視中のバリデーター23名の一覧です。</p>
+      <div class="count" id="c-validators">—</div>
+    </a>
+  </div>
+  <p class="lang">🌐 English version: <a href="home-en.html">Top page (English)</a> ／ <a href="en.html">Tracker (English)</a></p>
+</main>
+<footer>
+  データの出どころ：42チェーンのブロックそのもの（RPC経由）。推定のつながりは含みません。アラートはこのサイト内だけの表示です。
+  <br>バージョン：<b>v0.2.6</b>（トップページ追加）
+</footer>
+<script>
+(async () => {
+  try {
+    const FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
+    const s = FEED.status, ev = FEED.events;
+    document.getElementById('status').innerHTML =
+      `最終処理ブロック：<b>${s.lastProcessedBlock ?? '—'}</b>／Cosmos側 最終処理：<b>${s.lastProcessedCosmosBlock ?? '—'}</b>／更新：${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}) : '—'}／記録した動き：${s.totalEvents}件`;
+    const insider = ev.filter((e) => e.isInsider && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
+    document.getElementById('c-insider').textContent = insider + ' 件';
+    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe).length + ' 件';
+    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out').length + ' 件';
+    const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
+    document.getElementById('c-alerts').textContent = ev.filter((e) => !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length + ' 件';
+    document.getElementById('c-total').textContent = s.totalEvents + ' 件';
+    document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23) + ' 名';
+  } catch (e) {
+    document.getElementById('status').textContent = 'データを読み込めませんでした。';
+  }
+})();
+</script>
+</body>
+</html>
