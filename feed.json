@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T20:05:12.554Z",
+ "generatedAt": "2026-11-05T20:10:13.908Z",
  "status": {
-  "lastProcessedBlock": 4285555,
-  "latestBlockSeen": 4285555,
-  "lastProcessedCosmosBlock": 4285555,
-  "lastProcessedAt": "2026-11-05T20:05:12.404Z",
-  "totalEvents": 9223,
+  "lastProcessedBlock": 4285611,
+  "latestBlockSeen": 4285611,
+  "lastProcessedCosmosBlock": 4285611,
+  "lastProcessedAt": "2026-11-05T20:10:13.644Z",
+  "totalEvents": 9224,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T20:05:12.569Z"
+   "checkedAt": "2026-11-05T20:10:13.924Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68519849,
-   "updatedAt": "2026-11-05T20:05:12.000Z",
+   "updatedAt": "2026-11-05T20:10:13.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4285506,
+    "toBlock": 4285561,
     "fromTs": 1770178474,
-    "toTs": 1793908835
+    "toTs": 1793909133
    },
    "totals": {
     "delegate": {
@@ -813,7 +813,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 93,
+   "relatedActivity": 94,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xe107b800f9f3ac150dce952b10f9659ee6d46fc0bee68414bf68b6d028f21889:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793909133,
+   "block": 4285561,
+   "txHash": "0xe107b800f9f3ac150dce952b10f9659ee6d46fc0bee68414bf68b6d028f21889",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xa5f3972e0e69a9861b3f9ea15e3474bb85d6c1c4ca331ef34e2ecd5609297d3f:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1793908835,
@@ -24074,50 +24108,6 @@
    "isInsider": true,
    "actorDepth": 1,
    "actorEvidence": null
-  },
-  {
-   "id": "0xe45f6d10206e298b885a4aad06dcdbfdab26bfc74cdba957513f800dcd6d0fa7:tx:transfer:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "ts": 1793255978,
-   "block": 4164651,
-   "txHash": "0xe45f6d10206e298b885a4aad06dcdbfdab26bfc74cdba957513f800dcd6d0fa7",
-   "logIndex": null,
-   "type": "transfer",
-   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x85769973d85c2d3cdea764a70fba24c4293f2664",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "FoxxOne"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "13166106254766349595",
-    "amount": "13.166106",
-    "whitelisted": true
-   },
-   "from": "0x85769973d85c2d3cdea764a70fba24c4293f2664",
-   "to": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "13.166106 [42] を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "FoxxOne"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true
   },
   {
    "id": "0xcc711c7e7319238af18ac3b70f09173161cfd93cf45c93bcbb7942250aa19689:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
