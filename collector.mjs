@@ -6,7 +6,8 @@
 // verified against ethers.id() during development), classifies events that
 // involve watched addresses (validators + their CONFIRMED direct related
 // addresses from watchlist.json), appends them to events.jsonl and regenerates
-// feed.json (latest 500 events) for the static frontend.
+// feed.json (latest 500 events + all snipe/bridge-out events, see
+// selectFeedEvents) for the static frontend.
 //
 // v0.2.0 additions:
 //  - Cosmos side (Phase 2): CometBFT tx_search per message action + a minimal
@@ -1084,6 +1085,19 @@ async function ensureCreations(events, creations, creationsPath, cap = 8) {
   }
 }
 
+// Feed selection: the latest 500 events, PLUS every snipe / bridge-out event
+// ever recorded (deduplicated, sort order preserved). The two special site
+// sections (🎯スナイプ速報 / 🌉ブリッジ出金) are fed from these flags, and
+// the v0.2.2 historical backfill (events flagged `backfill:true`, recovered
+// from the full per-tx flow index) must stay visible permanently instead of
+// falling out of the latest-500 window.
+export function selectFeedEvents(sorted) {
+  const head = sorted.slice(0, 500);
+  const seenIds = new Set(head.map((e) => e.id));
+  const pinned = sorted.filter((e) => (e.isSnipe || e.type === 'bridge-out') && !seenIds.has(e.id));
+  return [...head, ...pinned];
+}
+
 // ---------------- main collector ----------------
 async function main() {
   const args = process.argv.slice(2);
@@ -1147,7 +1161,7 @@ async function main() {
         actionRule: '操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。',
       },
       validators,
-      events: sorted.slice(0, 500),
+      events: selectFeedEvents(sorted),
     };
     writeFileSync(join(__dir, 'feed.json'), JSON.stringify(feed, null, 1));
     return feed;

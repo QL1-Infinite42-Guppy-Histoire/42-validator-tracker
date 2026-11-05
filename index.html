@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42チェーン バリデーター リアルタイム追跡 v0.2.1</title>
+<title>42チェーン バリデーター リアルタイム追跡 v0.2.2</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -50,7 +50,7 @@
 <body>
 <header>
   <h1>42チェーン バリデーター リアルタイム追跡</h1>
-  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.1）。推定のつながりは含みません。</p>
+  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.2）。推定のつながりは含みません。</p>
   <div class="status" id="status">読み込み中…</div>
 </header>
 <main>
@@ -129,7 +129,7 @@
   表示している銘柄は Don't Panic 掲載の17銘柄が中心です（それ以外は「対象外銘柄」と表示）。金額の大小で記録を落とすことはしていません（小さな送金も全て記録）。
   v0.2.0 の範囲：EVM側＋Cosmos側（送金・委任・報酬請求）／操作の種類は判別できた範囲で具体名表示（Fluke参加・NFTミント・報酬請求・ブリッジ送信など、判別できないものは「未分類の操作（メソッド／宛先）」）／ブリッジで外部へ送信は専用の緑色の欄で表示（注目欄には入れない／入金は通常の受取）／推定リンクは Phase 3／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
   Cosmos側の取引リンクは自作の Cosmos スキャナー（42 Cosmos Scan）に飛びます。見出しの名前は「動いた本人」だけを表示し、関係するバリデーターは別の行に分けて書きます（複数のバリデーターと取引する共通の相手先には「共有の相手先」の印が付きます）。
-  <br>バージョン：<b>v0.2.1</b>（v0.2.0＋ブリッジ出金を注目欄から専用の緑色の欄へ分離）
+  <br>バージョン：<b>v0.2.2</b>（v0.2.1＋過去のスナイプ・ブリッジ出金の掘り起こし追加：全履歴の索引から復元した過去分もスナイプ速報・ブリッジ出金欄に表示）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
