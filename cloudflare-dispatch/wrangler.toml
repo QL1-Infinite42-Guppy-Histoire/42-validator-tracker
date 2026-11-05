@@ -1,0 +1,17 @@
+name = "validator-tracker-dispatch"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+workers_dev = true
+
+# Fire every 5 minutes. Cloudflare delivers cron triggers reliably, unlike
+# GitHub's schedule trigger, which throttles this repo to ~1 run/hour.
+# The GitHub-side schedule in .github/workflows/collect.yml stays on as a
+# backup; the workflow's concurrency group serializes overlapping runs.
+[triggers]
+crons = ["*/5 * * * *"]
+
+# The GitHub token is NOT a var and must never be written here.
+# It is a Worker secret named GH_PAT, set out-of-band with:
+#   python3 ~/workspace/custom-connectors/custom.cloudflare/bin/cf.py \
+#     put-secret <account_id> validator-tracker-dispatch GH_PAT
+# (the value is read from stdin), or `wrangler secret put GH_PAT`.
