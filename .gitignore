@@ -1,0 +1,10 @@
+node_modules/
+*.log
+.DS_Store
+
+# NOTE: the data files below are INTENTIONALLY committed — do not ignore them.
+# The collect workflow (GitHub Actions) reads state.json / events.jsonl on each
+# run and commits back the updated feed.json / events.jsonl / state.json.
+#   feed.json, state.json, events.jsonl, watchlist.json, registries.json
+# pairs-cache.json (created by collector.mjs when a new pair appears) must also
+# be committed — the workflow already adds it when present.
