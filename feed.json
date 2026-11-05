@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T21:05:14.219Z",
+ "generatedAt": "2026-11-05T21:09:53.465Z",
  "status": {
-  "lastProcessedBlock": 4286222,
-  "latestBlockSeen": 4286222,
-  "lastProcessedCosmosBlock": 4286222,
-  "lastProcessedAt": "2026-11-05T21:05:14.005Z",
-  "totalEvents": 9225,
+  "lastProcessedBlock": 4286274,
+  "latestBlockSeen": 4286274,
+  "lastProcessedCosmosBlock": 4286274,
+  "lastProcessedAt": "2026-11-05T21:09:53.337Z",
+  "totalEvents": 9226,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T21:05:14.269Z"
+   "checkedAt": "2026-11-05T21:09:53.493Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68519849,
-   "updatedAt": "2026-11-05T21:05:14.000Z",
+   "updatedAt": "2026-11-05T21:09:53.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4286173,
+    "toBlock": 4286228,
     "fromTs": 1770178474,
-    "toTs": 1793912439
+    "toTs": 1793912735
    },
    "totals": {
     "delegate": {
@@ -813,7 +813,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 95,
+   "relatedActivity": 96,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x815e6f73b6c91de369cd093e393b5219e1dcac7c447788cd06777ff5ad2d3638:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793912735,
+   "block": 4286228,
+   "txHash": "0x815e6f73b6c91de369cd093e393b5219e1dcac7c447788cd06777ff5ad2d3638",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xe07c00568cbc293ce85854d0160893dd6413b0149266e1c58e872414c0eccf61:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1793912439,
@@ -24028,63 +24062,6 @@
    "isInsider": true,
    "actorDepth": 1,
    "actorEvidence": null
-  },
-  {
-   "id": "0x2d64ae24f4a68f797abe1f012dea26fa91d0ace159ffb7339aede8378d3f595b:3:swap-buy:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "ts": 1793260611,
-   "block": 4165509,
-   "txHash": "0x2d64ae24f4a68f797abe1f012dea26fa91d0ace159ffb7339aede8378d3f595b",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-   "counterpartyLabel": "FISH/QOM ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "53090327263030617975",
-    "amount": "53.090327",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0x53465cbbba5b14f5dc00794330f0f4afb30eaa1d",
-    "symbol": "QOM",
-    "amountRaw": "127545552310796855089818652506",
-    "amount": "127,545,552,310.796855",
-    "whitelisted": true
-   },
-   "subjectSymbol": "QOM",
-   "price": 0,
-   "priceUnit": "FISH/QOM",
-   "pair": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-   "pairLabel": "FISH/QOM ペア",
-   "tokens": [
-    "FISH",
-    "QOM"
-   ],
-   "whitelisted": true,
-   "summary": "QOMを買い（支払い 53.090327 FISH／価格 約0 FISH/QOM）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1789535681,
-   "pairAgeSecs": 3724930,
-   "isSnipe": false,
-   "isInsider": false,
-   "backfill": true
   },
   {
    "id": "0x43c559fd5d6a84e65d24bebf878d2b792f83e7cc0b5853218cd1013b140afbd8:4:swap-buy:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
