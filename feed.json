@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T02:58:38.592Z",
+ "generatedAt": "2026-11-05T03:30:34.999Z",
  "status": {
-  "lastProcessedBlock": 4274150,
-  "latestBlockSeen": 4274150,
-  "lastProcessedCosmosBlock": 4274150,
-  "lastProcessedAt": "2026-11-05T02:58:38.588Z",
-  "totalEvents": 8194,
+  "lastProcessedBlock": 4274505,
+  "latestBlockSeen": 4274505,
+  "lastProcessedCosmosBlock": 4274505,
+  "lastProcessedAt": "2026-11-05T03:30:34.996Z",
+  "totalEvents": 8197,
   "watchSummary": {
    "validators": 23,
    "directRelated": 110,
@@ -27,7 +27,7 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T02:58:38.622Z"
+   "checkedAt": "2026-11-05T03:30:35.026Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。"
  },
@@ -218,6 +218,138 @@
   }
  ],
  "events": [
+  {
+   "id": "0x830228f1f17fd305f5c0cfd8ff79ee056b8a8936e60677ba27ee74b4254f19cf:3:swap-sell:0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "ts": 1793849425,
+   "block": 4274505,
+   "txHash": "0x830228f1f17fd305f5c0cfd8ff79ee056b8a8936e60677ba27ee74b4254f19cf",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "actorLabel": "the_rider",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "the_rider",
+    "Xenia",
+    "Luke",
+    "farmer",
+    "Metal Raptor",
+    "DRIVESTATS",
+    "vethawk",
+    "X",
+    "PhoenixRing",
+    "HeraMoon",
+    "Zap",
+    "ayc",
+    "XenIt",
+    "dudenode",
+    "Popo",
+    "panda42",
+    "light888",
+    "kimnmike"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1628102015201812957",
+    "amount": "1.628102",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3086177873311336585",
+    "amount": "3.086177",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.89556787,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 3.086177 42／価格 約1.89556787 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x1047bd5eb92d037fe559274adbb638581c3624521e2f29ae0489077018a9e217:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793847935,
+   "block": 4274229,
+   "txHash": "0x1047bd5eb92d037fe559274adbb638581c3624521e2f29ae0489077018a9e217",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x1f7bdf9812d625273efcf0276e9d958a8ea254510baabab6cc14fe4e65cea89c:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1793847639,
+   "block": 4274174,
+   "txHash": "0x1f7bdf9812d625273efcf0276e9d958a8ea254510baabab6cc14fe4e65cea89c",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 …B45A）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xd18fd72c435789da1f5ac130f62b4a58a018f4eda5593577febc955a9f9f93ab:3:swap-sell:0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
    "ts": 1793846425,
@@ -27565,192 +27697,6 @@
    "pairCreatedTs": 1788487977,
    "pairAgeSecs": 4449286,
    "isSnipe": false,
-   "isInsider": false,
-   "estimateBasis": {
-    "type": "pool",
-    "validators": [
-     "PhoenixRing"
-    ],
-    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
-   },
-   "backfill": true
-  },
-  {
-   "id": "0x1b2801d0e2a77ee96c2211ffc9088397004bc1f68c112238bdaaa8de02990379:23:swap-buy:0xfcebe4797ed94bac6d09503f04fa13d997675553",
-   "ts": 1792935218,
-   "block": 4105315,
-   "txHash": "0x1b2801d0e2a77ee96c2211ffc9088397004bc1f68c112238bdaaa8de02990379",
-   "logIndex": 23,
-   "type": "swap-buy",
-   "actor": "0xfcebe4797ed94bac6d09503f04fa13d997675553",
-   "actorLabel": null,
-   "actorTier": "estimated",
-   "actorIsCore": false,
-   "counterparty": "0xfaf149ec362384babce95b2140248c1c6a7ae2ae",
-   "counterpartyLabel": "x42/42 ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "DRIVESTATS"
-   ],
-   "sold": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "448651970100785950",
-    "amount": "0.448651",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0x700879539292e2cb46b3c645278e5e272dc27154",
-    "symbol": "x42",
-    "amountRaw": "348159434301792704",
-    "amount": "0.348159",
-    "whitelisted": false
-   },
-   "subjectSymbol": "x42",
-   "price": 1.28863942,
-   "priceUnit": "42/x42",
-   "pair": "0xfaf149ec362384babce95b2140248c1c6a7ae2ae",
-   "pairLabel": "x42/42 ペア",
-   "tokens": [
-    "42",
-    "x42"
-   ],
-   "whitelisted": false,
-   "summary": "x42を買い（支払い 0.448651 42／価格 約1.28863942 42/x42）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "DRIVESTATS"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1792302865,
-   "pairAgeSecs": 632353,
-   "isSnipe": false,
-   "isInsider": false,
-   "estimateBasis": {
-    "type": "pool",
-    "validators": [
-     "DRIVESTATS"
-    ],
-    "text": "プール経由の推定：DRIVESTATS がプールから受け取った 42 と、このアドレスが先に同じプールへ売った分が、金額差 1.86%・時間差 約17.7時間で一致（スコア 0.765）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-    "textEn": "Through-pool estimate: DRIVESTATS received 42 from a pool, and this address had sold into the same pool shortly before — amount gap 1.86%, time gap about 17.7h (score 0.765). It may simply be a different person using the same pool; this is not a confirmed transfer"
-   },
-   "backfill": true
-  },
-  {
-   "id": "0x1b2801d0e2a77ee96c2211ffc9088397004bc1f68c112238bdaaa8de02990379:19:swap-buy:0xfcebe4797ed94bac6d09503f04fa13d997675553",
-   "ts": 1792935218,
-   "block": 4105315,
-   "txHash": "0x1b2801d0e2a77ee96c2211ffc9088397004bc1f68c112238bdaaa8de02990379",
-   "logIndex": 19,
-   "type": "swap-buy",
-   "actor": "0xfcebe4797ed94bac6d09503f04fa13d997675553",
-   "actorLabel": null,
-   "actorTier": "estimated",
-   "actorIsCore": false,
-   "counterparty": "0xfac6a97837fd3ef5876e18457eea52415296c613",
-   "counterpartyLabel": "USDT/42 ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "DRIVESTATS"
-   ],
-   "sold": {
-    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
-    "symbol": "USDT",
-    "amountRaw": "380403112527583368",
-    "amount": "0.380403",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "464154358889902941",
-    "amount": "0.464154",
-    "whitelisted": true
-   },
-   "subjectSymbol": "42",
-   "price": 0.81956165,
-   "priceUnit": "USDT/42",
-   "pair": "0xfac6a97837fd3ef5876e18457eea52415296c613",
-   "pairLabel": "USDT/42 ペア",
-   "tokens": [
-    "USDT",
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "42を買い（支払い 0.380403 USDT／価格 約0.81956165 USDT/42）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "DRIVESTATS"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1782166325,
-   "pairAgeSecs": 10768893,
-   "isSnipe": false,
-   "isInsider": false,
-   "estimateBasis": {
-    "type": "pool",
-    "validators": [
-     "DRIVESTATS"
-    ],
-    "text": "プール経由の推定：DRIVESTATS がプールから受け取った 42 と、このアドレスが先に同じプールへ売った分が、金額差 1.86%・時間差 約17.7時間で一致（スコア 0.765）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-    "textEn": "Through-pool estimate: DRIVESTATS received 42 from a pool, and this address had sold into the same pool shortly before — amount gap 1.86%, time gap about 17.7h (score 0.765). It may simply be a different person using the same pool; this is not a confirmed transfer"
-   },
-   "backfill": true
-  },
-  {
-   "id": "0x1b2801d0e2a77ee96c2211ffc9088397004bc1f68c112238bdaaa8de02990379:16:swap-sell:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
-   "ts": 1792935218,
-   "block": 4105315,
-   "txHash": "0x1b2801d0e2a77ee96c2211ffc9088397004bc1f68c112238bdaaa8de02990379",
-   "logIndex": 16,
-   "type": "swap-sell",
-   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
-   "actorLabel": null,
-   "actorTier": "estimated",
-   "actorIsCore": false,
-   "counterparty": "0x1a1975ece431e473d210199171d579fe0d7f933f",
-   "counterpartyLabel": "x42/USDT ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "PhoenixRing"
-   ],
-   "sold": {
-    "token": "0x700879539292e2cb46b3c645278e5e272dc27154",
-    "symbol": "x42",
-    "amountRaw": "348159434301792704",
-    "amount": "0.348159",
-    "whitelisted": false
-   },
-   "bought": {
-    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
-    "symbol": "USDT",
-    "amountRaw": "380403112527583368",
-    "amount": "0.380403",
-    "whitelisted": true
-   },
-   "subjectSymbol": "x42",
-   "price": 1.09261182,
-   "priceUnit": "USDT/x42",
-   "pair": "0x1a1975ece431e473d210199171d579fe0d7f933f",
-   "pairLabel": "x42/USDT ペア",
-   "tokens": [
-    "x42",
-    "USDT"
-   ],
-   "whitelisted": false,
-   "summary": "x42を売り（受取 0.380403 USDT／価格 約1.09261182 USDT/x42）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "PhoenixRing"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
    "isInsider": false,
    "estimateBasis": {
     "type": "pool",
