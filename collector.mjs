@@ -178,7 +178,7 @@ export const NFT_COLLECTIONS = {
 // WS5 definition (printed on the site): bridge-out = a validator-self or
 // direct-related wallet sending funds OUT of 42 Chain to an external chain
 // through a bridge. Inbound receipts are plain transfers, never glowing.
-export const BRIDGE_OUT_RULE = 'ブリッジで外部へ送信の定義：バリデーター本人または直接関連ウォレットが、ブリッジ経由で42チェーンから外部チェーンへ資金を送り出した動き（ブリッジ系コントラクト宛の送金、またはブリッジ送信メソッドの呼び出し）。注目欄では緑色に光って表示されます。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
+export const BRIDGE_OUT_RULE = 'ブリッジで外部へ送信の定義：バリデーター本人または直接関連ウォレットが、ブリッジ経由で42チェーンから外部チェーンへ資金を送り出した動き（ブリッジ系コントラクト宛の送金、またはブリッジ送信メソッドの呼び出し）。専用の「ブリッジ出金（外部へ）」欄で緑色に光って表示されます（注目欄には入れません）。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
 
 // Method-call event types that keep the v0.1.0 repetition suppression
 // (same actor + destination + method within ~360 blocks). Transfers, swaps,
@@ -1141,7 +1141,7 @@ async function main() {
         lastProcessedCosmosBlock: state.lastProcessedCosmosBlock ?? null,
         lastProcessedAt: state.updatedAt, totalEvents: allEvents.length,
         watchSummary: watchlist.summary,
-        notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動 ③ブリッジで外部へ送信（緑色表示）`,
+        notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）`,
         snipeRule: SNIPE_RULE,
         bridgeOutRule: BRIDGE_OUT_RULE,
         actionRule: '操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。',

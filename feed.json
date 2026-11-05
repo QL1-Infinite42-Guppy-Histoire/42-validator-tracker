@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T00:54:48.773Z",
+ "generatedAt": "2026-11-05T01:13:08.284Z",
  "status": {
-  "lastProcessedBlock": 4272773,
-  "latestBlockSeen": 4272773,
-  "lastProcessedCosmosBlock": 4272773,
-  "lastProcessedAt": "2026-11-05T00:54:48.770Z",
-  "totalEvents": 1201,
+  "lastProcessedBlock": 4272976,
+  "latestBlockSeen": 4272976,
+  "lastProcessedCosmosBlock": 4272976,
+  "lastProcessedAt": "2026-11-05T01:13:08.281Z",
+  "totalEvents": 1203,
   "watchSummary": {
    "validators": 23,
    "directRelated": 110,
@@ -16,9 +16,9 @@
    "confirmedCounterpartyLinks": 212,
    "uniqueConfirmedCounterparties": 129
   },
-  "notableRule": "注目ルール：①バリデーター本人の売買 ②1,000 [42]以上の移動 ③ブリッジで外部へ送信（緑色表示）",
+  "notableRule": "注目ルール：①バリデーター本人の売買 ②1,000 [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）",
   "snipeRule": "スナイプの定義：ペアが作られてから3時間以内に、バリデーター本人または直接関連ウォレットが、そのペアで買う（買い）またはLP追加した動き",
-  "bridgeOutRule": "ブリッジで外部へ送信の定義：バリデーター本人または直接関連ウォレットが、ブリッジ経由で42チェーンから外部チェーンへ資金を送り出した動き（ブリッジ系コントラクト宛の送金、またはブリッジ送信メソッドの呼び出し）。注目欄では緑色に光って表示されます。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません",
+  "bridgeOutRule": "ブリッジで外部へ送信の定義：バリデーター本人または直接関連ウォレットが、ブリッジ経由で42チェーンから外部チェーンへ資金を送り出した動き（ブリッジ系コントラクト宛の送金、またはブリッジ送信メソッドの呼び出し）。専用の「ブリッジ出金（外部へ）」欄で緑色に光って表示されます（注目欄には入れません）。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません",
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。"
  },
  "validators": [
@@ -185,6 +185,68 @@
   }
  ],
  "events": [
+  {
+   "id": "0x1fabf92f10ba8e610b813bd6b58965165f33f108403115e3013755fc7794ef87:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793840737,
+   "block": 4272895,
+   "txHash": "0x1fabf92f10ba8e610b813bd6b58965165f33f108403115e3013755fc7794ef87",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
+  {
+   "id": "0xa85ef7eb121315f36b27e6596199a4ca1665e94ec088bee9a933477175cf76f3:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1793840440,
+   "block": 4272840,
+   "txHash": "0xa85ef7eb121315f36b27e6596199a4ca1665e94ec088bee9a933477175cf76f3",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 …B45A）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xf5807110d8042756e675b15cbd6a9f4740a78928083bb548470b640335367922:3:swap-sell:0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
    "ts": 1793839193,
@@ -19650,82 +19712,6 @@
    "actorValidators": [],
    "actorShared": false,
    "actorContractNote": null
-  },
-  {
-   "id": "cosmos:B209B09497EFC946CDCCC4CF1C587D65901DDB23E5F43433A6DAFE334765A0ED:0:reward:0x855df84e2867899a51d8a517156e1c89c55ce446",
-   "chain": "cosmos",
-   "ts": 1784960639,
-   "block": 2654239,
-   "txHash": "B209B09497EFC946CDCCC4CF1C587D65901DDB23E5F43433A6DAFE334765A0ED",
-   "logIndex": null,
-   "type": "reward",
-   "actor": "0x855df84e2867899a51d8a517156e1c89c55ce446",
-   "actorLabel": "HeraMoon",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x855df84e2867899a51d8a517156e1c89c55ce446",
-   "counterpartyLabel": "HeraMoon",
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "HeraMoon",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "110241335434539678260",
-    "amount": "110.241335",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "報酬請求（委任報酬）：HeraMoon 分 110.241335 [42]",
-   "notableReasons": [],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "報酬請求（委任報酬）"
-  },
-  {
-   "id": "cosmos:B209B09497EFC946CDCCC4CF1C587D65901DDB23E5F43433A6DAFE334765A0ED:1:commission:0x855df84e2867899a51d8a517156e1c89c55ce446",
-   "chain": "cosmos",
-   "ts": 1784960639,
-   "block": 2654239,
-   "txHash": "B209B09497EFC946CDCCC4CF1C587D65901DDB23E5F43433A6DAFE334765A0ED",
-   "logIndex": null,
-   "type": "commission",
-   "actor": "0x855df84e2867899a51d8a517156e1c89c55ce446",
-   "actorLabel": "HeraMoon",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": null,
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "HeraMoon",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "12258316639984238464",
-    "amount": "12.258316",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "バリデーター報酬請求（コミッション）：12.258316 [42]",
-   "notableReasons": [],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "バリデーター報酬請求（コミッション）"
   }
  ]
 }
