@@ -220,5 +220,26 @@ check('Metal Raptor chart group: 3,886.01 before -> NO bar after (846.66 at repa
 check('current recomputation total equals the corrected total (no new bridge-outs since repair)',
   near(R.total, repair.chartAfter.total), `${fmt(R.total)} vs ${fmt(repair.chartAfter.total)}`);
 
+// ---------- (6) section order (user reorder, shipped in v0.4.1) ----------
+// Coloured special sections on top (insider, snipes, bridge-out, totals
+// chart, notable), plain data sections below (LP, dormant, new faces, NEW
+// PAIRS, feed, staking, validators). Anchors unchanged.
+const ORDER = ['sec-insider', 'sec-snipes', 'sec-bridge', 'sec-bridgechart', 'sec-alerts', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-newpairs', 'sec-feed', 'sec-staking', 'sec-validators'];
+const seqOf = (html, re) => [...html.matchAll(re)].map((m) => m[1]);
+for (const file of ['index.html', 'en.html']) {
+  const html = read(file);
+  check(`${file}: section order is coloured-on-top with New Pairs in the plain group`,
+    JSON.stringify(seqOf(html, /<section[^>]* id="(sec-[a-z]+)"/g)) === JSON.stringify(ORDER),
+    seqOf(html, /<section[^>]* id="(sec-[a-z]+)"/g).join(','));
+  check(`${file}: topnav link order matches the section order`,
+    JSON.stringify(seqOf(html, /href="#(sec-[a-z]+)"/g)) === JSON.stringify(ORDER));
+}
+for (const [file, target] of [['home.html', 'index.html'], ['home-en.html', 'en.html']]) {
+  const html = read(file);
+  check(`${file}: portal card order matches the section order`,
+    JSON.stringify(seqOf(html, new RegExp(`href="${target.replace('.', '\\.')}#(sec-[a-z]+)"`, 'g'))) === JSON.stringify(ORDER),
+    seqOf(html, new RegExp(`href="${target.replace('.', '\\.')}#(sec-[a-z]+)"`, 'g')).join(','));
+}
+
 console.log(fails === 0 ? 'ALL PASS' : `${fails} FAILED`);
 process.exit(fails ? 1 : 0);

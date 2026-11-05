@@ -126,7 +126,7 @@
 <header>
   <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b></div></div>
   <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (everyone who transacted with them, and the counterparties of those counterparties) (EVM side + Cosmos side, v0.4.1). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
-  <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-newpairs">🆕 New pairs</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-lp">💧 Liquidity</a><a href="#sec-dormant">😴 Dormant</a><a href="#sec-newfaces">👤 New faces</a><a href="#sec-feed">Latest</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validators</a></nav>
+  <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-lp">💧 Liquidity</a><a href="#sec-dormant">😴 Dormant</a><a href="#sec-newfaces">👤 New faces</a><a href="#sec-newpairs">🆕 New pairs</a><a href="#sec-feed">Latest</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
 </header>
@@ -141,12 +141,6 @@
     <h2>🎯 Snipe Alerts</h2>
     <p class="rule" id="snipeRule"></p>
     <div id="snipes"><p class="empty">Loading…</p></div>
-  </section>
-
-  <section class="newpairs" id="sec-newpairs">
-    <h2>🆕 New Pairs</h2>
-    <p class="rule">Newly created pairs on the Don't Panic DEX. Only pairs containing at least one of the 17 listed tokens are shown (pairs where both sides are non-listed are kept in the record but not displayed here). A pair with one non-listed side carries a "Non-listed token" badge. When the pair's creator is known, their name is shown.</p>
-    <div id="newpairs"><p class="empty">Loading…</p></div>
   </section>
 
   <section class="bridge" id="sec-bridge">
@@ -183,6 +177,12 @@
     <h2>👤 New Faces</h2>
     <p class="rule">Counterparties that a watched address (validator itself, related, or core) transacted with for the first time in this site's entire record. Related addresses have been expanded over the full history, past included (counterparties of counterparties, without limit), and a newly appearing counterparty is automatically added to the watchlist as a related address (v0.4.0, in operation since November 2026). Cards marked "Added to the watchlist" are the ones added automatically. System, pair and token contracts are never added.</p>
     <div id="newfaces"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="newpairs" id="sec-newpairs">
+    <h2>🆕 New Pairs</h2>
+    <p class="rule">Newly created pairs on the Don't Panic DEX. Only pairs containing at least one of the 17 listed tokens are shown (pairs where both sides are non-listed are kept in the record but not displayed here). A pair with one non-listed side carries a "Non-listed token" badge. When the pair's creator is known, their name is shown.</p>
+    <div id="newpairs"><p class="empty">Loading…</p></div>
   </section>
 
   <section class="fold open" id="sec-feed"><h2>Latest activity</h2><div class="fold-body">

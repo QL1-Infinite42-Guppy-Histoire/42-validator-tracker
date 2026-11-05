@@ -126,7 +126,7 @@
 <header>
   <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="en.html" id="langOther">English</a></div></div>
   <p class="sub">バリデーター本人と、その関連アドレス（本人とやり取りした相手、さらにその相手まで含む）の動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.4.1）。つながりが推定にとどまるアドレスの動きは「最新の動き」にだけ、推定と明記して表示します（特別欄は確定情報のみ）。</p>
-  <nav class="topnav"><a href="home.html">🏠 トップページ</a><a href="#sec-insider">⚠ インサイダー</a><a href="#sec-snipes">🎯 スナイプ</a><a href="#sec-newpairs">🆕 新規ペア</a><a href="#sec-bridge">🌉 ブリッジ出金</a><a href="#sec-bridgechart">📊 出金総額</a><a href="#sec-alerts">⭐ 注目</a><a href="#sec-lp">💧 流動性</a><a href="#sec-dormant">😴 休眠復帰</a><a href="#sec-newfaces">👤 新しい顔ぶれ</a><a href="#sec-feed">最新の動き</a><a href="#sec-staking">🏦 委任・報酬</a><a href="#sec-validators">バリデーター一覧</a></nav>
+  <nav class="topnav"><a href="home.html">🏠 トップページ</a><a href="#sec-insider">⚠ インサイダー</a><a href="#sec-snipes">🎯 スナイプ</a><a href="#sec-bridge">🌉 ブリッジ出金</a><a href="#sec-bridgechart">📊 出金総額</a><a href="#sec-alerts">⭐ 注目</a><a href="#sec-lp">💧 流動性</a><a href="#sec-dormant">😴 休眠復帰</a><a href="#sec-newfaces">👤 新しい顔ぶれ</a><a href="#sec-newpairs">🆕 新規ペア</a><a href="#sec-feed">最新の動き</a><a href="#sec-staking">🏦 委任・報酬</a><a href="#sec-validators">バリデーター一覧</a></nav>
   <div class="status" id="status">読み込み中…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
 </header>
@@ -141,12 +141,6 @@
     <h2>🎯 スナイプ速報</h2>
     <p class="rule" id="snipeRule"></p>
     <div id="snipes"><p class="empty">読み込み中…</p></div>
-  </section>
-
-  <section class="newpairs" id="sec-newpairs">
-    <h2>🆕 新規ペア速報</h2>
-    <p class="rule">Don't Panic の取引所（DEX）で新しく作られたペアを表示します。表示するのは、Don't Panic 掲載の17銘柄のうち少なくとも1つを含むペアだけです（両方とも対象外のペアは記録には残しますが、ここには表示しません）。片方だけ対象外のペアには「対象外トークン」の印が付きます。ペアを作った人が分かる場合は、その名前も表示します。</p>
-    <div id="newpairs"><p class="empty">読み込み中…</p></div>
   </section>
 
   <section class="bridge" id="sec-bridge">
@@ -183,6 +177,12 @@
     <h2>👤 新しい顔ぶれ</h2>
     <p class="rule">監視アドレス（本人・関連・中核）が、このサイトの全記録の中で初めてやり取りした相手を表示します。関連アドレスは過去分を含む全履歴から展開済み（相手の相手も無制限）で、新しく現れた相手は自動で監視対象（関連アドレス）に追加されます（v0.4.0・2026年11月から運用）。「監視対象に追加しました」と付いたカードが、自動追加されたものです。仕組み系・ペア・トークンのコントラクトは追加されません。</p>
     <div id="newfaces"><p class="empty">読み込み中…</p></div>
+  </section>
+
+  <section class="newpairs" id="sec-newpairs">
+    <h2>🆕 新規ペア速報</h2>
+    <p class="rule">Don't Panic の取引所（DEX）で新しく作られたペアを表示します。表示するのは、Don't Panic 掲載の17銘柄のうち少なくとも1つを含むペアだけです（両方とも対象外のペアは記録には残しますが、ここには表示しません）。片方だけ対象外のペアには「対象外トークン」の印が付きます。ペアを作った人が分かる場合は、その名前も表示します。</p>
+    <div id="newpairs"><p class="empty">読み込み中…</p></div>
   </section>
 
   <section class="fold open" id="sec-feed"><h2>最新の動き</h2><div class="fold-body">

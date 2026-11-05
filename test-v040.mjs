@@ -228,7 +228,9 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
 // ---------- frontend statics ----------
 {
   const jp = read('index.html'), en = read('en.html'), home = read('home.html'), homeEn = read('home-en.html');
-  const order = ['sec-insider', 'sec-snipes', 'sec-newpairs', 'sec-bridge', 'sec-bridgechart', 'sec-alerts', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-feed', 'sec-staking', 'sec-validators'];
+  // v0.4.1 reorder (user): coloured special sections on top, plain data
+  // sections below; New Pairs moved down into the plain group.
+  const order = ['sec-insider', 'sec-snipes', 'sec-bridge', 'sec-bridgechart', 'sec-alerts', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-newpairs', 'sec-feed', 'sec-staking', 'sec-validators'];
   for (const [name, html] of [['index.html', jp], ['en.html', en]]) {
     const idx = order.map((id) => html.indexOf(`id="${id}"`));
     check(`${name}: all 12 sections present in order`, idx.every((v, i) => v > -1 && (i === 0 || v > idx[i - 1])));
