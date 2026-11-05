@@ -1,8 +1,12 @@
 #!/usr/bin/env node
-// 42 Validator Tracker — collector (v0.3.2: Xenia reclassified from core
-// to ordinary validator per user correction; v0.3.0: EVM side + Cosmos
-// side, estimated tier + validator-list auto-refresh; v0.2.4: USDT-only
-// bridge-out section, buys-only snipes, insider flag for X).
+// 42 Validator Tracker — collector (v0.4.0: six new sections — pair-created
+// events from the Don't Panic factory, LP feed pinning, collector-computed
+// staking stats, dormant-return flags (60d), new-counterparty flags with
+// LIVE auto-add to the watchlist, and a 42/USDT price in feed.status;
+// v0.3.2: Xenia reclassified from core to ordinary validator per user
+// correction; v0.3.0: EVM side + Cosmos side, estimated tier +
+// validator-list auto-refresh; v0.2.4: USDT-only bridge-out section,
+// buys-only snipes, insider flag for X).
 //
 // Polls the 42 Chain EVM RPC for new blocks, decodes receipts with NO external
 // dependencies (topic hashes are the standard ERC-20 / Uniswap V2 ones,
@@ -100,6 +104,7 @@
 //   node collector.mjs --backfill 300  # process the last 300 blocks, exit
 //   node collector.mjs --range A:B     # process blocks A..B inclusive, exit
 //   node collector.mjs --cosmos-backfill N  # Cosmos side only: last N heights
+//   node collector.mjs --pairs-sync    # v0.4.0: pair-created events only
 // Env: POLL_MS (default 10000)
 import { appendFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
@@ -236,11 +241,219 @@ export const X_VALIDATOR_ADDR = '0xdb34ff92995c74d170755a563a1a2c35a3db4738'; //
 export const DONT_TOKEN = '0xfaa842c8871f7f99c183f77871f79ce07dd056cd'; // whitelist PANIC contract == DONT
 export const INSIDER_RULE = 'インサイダー欄：リスティング当日（2026年6月30日）14時00分（日本時間）より前に、バリデーターX（Rioshi）本人とX（Rioshi）の直接関連アドレスが行った [42] と DONT（PANIC）の「買い」だけを表示します。それ以外の動きは通常の記録に含まれます';
 export const ESTIMATED_RULE = '推定アドレスについて（v0.3.0 / Phase 3）：直接の送金が確認できないつながりを、次の3つの方法で推定したアドレスです。①プール経由（プールの反対側の売買と、金額差10%以内・24時間以内で一致）②2ホップ経由（バリデーター→このアドレス→バリデーターの両レッグとも確認済みの送金）③共通の相手先（2名以上のバリデーターと直接取引した第三者で、まだ確定関連に入っていないもの）。推定アドレスの動きは「最新の動き」にだけ、推定バッジと根拠つきで表示します。インサイダー／スナイプ／注目／ブリッジ出金／総額グラフの特別欄は、確定情報（本人＋直接関連）だけを使い、推定は一切含みません';
+
+// ---------------- v0.4.0: pairs / dormant / new faces / price ----------------
+// The 42/USDT pair (Don't Panic factory) whose reserves price [42].
+export const PAIR_42_USDT = '0xfac6a97837fd3ef5876e18457eea52415296c613';
+export const DEAD_ADDR = '0x000000000000000000000000000000000000dead'; // burn sink, not a person
+// Verified system contracts (all already constants above from chains.ts /
+// research): never auto-added as "related wallets", never flagged as new
+// faces, never traversed by the closure. The FISH reward contract is a
+// mechanical distribution contract (2026-11-01 research), so it belongs
+// here; the FISH DISTRIBUTOR (0xbfc5...4f29) is an operator WALLET and is
+// deliberately NOT in this set.
+export const KNOWN_SYSTEM_CONTRACTS = new Set([
+  FACTORY, ROUTER, GUIDE_ADDR, ZG13_ADDR, STARLIGHT_ADDR, ST42_LIVE_ADDR, ST42_VAULT_ADDR, ST42_BOOK_ADDR,
+  STAKING_PRECOMPILE, DISTRIBUTION_PRECOMPILE, MAILBOX_ADDR, W42_ADDR, FISH_REWARD_ADDR, NFT_MARKETPLACE_ADDR,
+  ...BRIDGE_SEND_TARGETS,
+]);
+// Addresses that must never become related-tier entries (auto-add / new
+// faces): core infrastructure from the watchlist (pairs, routers,
+// precompiles — everything isCore except the #1 holder, who is a person
+// wallet and a legitimate seed), pair contracts, token contracts, the
+// factory, the zero/burn addresses, and the verified system contracts.
+const HOLDER_ADDR = '0x7a6f6d4e0ce3abbba5ab6685c37a9599f6250a25';
+export function buildExcludedSet(watchlist, registries) {
+  const s = new Set([ZERO, DEAD_ADDR, FACTORY, ...KNOWN_SYSTEM_CONTRACTS]);
+  for (const e of watchlist.entries) if (e.isCore && e.address !== HOLDER_ADDR) s.add(e.address);
+  for (const a of Object.keys(registries.pairs ?? {})) s.add(lc(a));
+  for (const a of Object.keys(registries.tokens ?? {})) s.add(lc(a));
+  return s;
+}
+// Dormant-return definition (printed on the site): a watched wallet (self /
+// related / core-labelled EOA — pair and known contracts excluded,
+// estimated excluded) that moves again after >= 60 days of silence in the
+// recorded history.
+export const DORMANT_THRESHOLD_SECS = 60 * 86400;
+export const DORMANT_RULE = '休眠復帰の定義：監視アドレス（バリデーター本人・関連・中核ラベルのEOA。ペア等のコントラクトと推定アドレスは除く）が、このサイトの記録の中で60日以上動きがなかった後に動いた場合、その復帰した動きに「○○日ぶりの動き」と表示します';
+// Build one 'pair-created' event from a resolved creation record. The
+// display rule (at least one side whitelisted) is applied render-side via
+// pairWhitelist; nonWhitelistedSide drives the 対象外トークン caution badge.
+export function buildPairCreatedEvent(ctx, pairAddr, creation, firstMint) {
+  pairAddr = lc(pairAddr);
+  const pair = ctx.pairs[pairAddr];
+  if (!pair || !creation?.createdTs) return null;
+  const i0 = ctx.tokenInfo(pair.token0), i1 = ctx.tokenInfo(pair.token1);
+  const creator = creation.creator ? lc(creation.creator) : null;
+  const ce = creator ? ctx.entry(creator) : null;
+  const pairLabel = `${i0.symbol}/${i1.symbol} ペア`;
+  const fm = firstMint ? {
+    block: firstMint.block, ts: firstMint.ts, txHash: firstMint.txHash ?? null,
+    amount0: amountObj(ctx, pair.token0, firstMint.a0), amount1: amountObj(ctx, pair.token1, firstMint.a1),
+  } : null;
+  return {
+    id: `pair-created:${pairAddr}`,
+    chain: 'evm', type: 'pair-created',
+    ts: creation.createdTs, block: creation.createdBlock, txHash: creation.txHash ?? null, logIndex: null,
+    actor: creator ?? pairAddr, actorLabel: ce?.label ?? null, actorTier: ce?.tier ?? null, actorIsCore: !!ce?.isCore,
+    counterparty: pairAddr, counterpartyLabel: pairLabel, counterpartyIsCore: true,
+    pair: pairAddr, pairLabel, tokens: [i0.symbol, i1.symbol], pairSymbols: [i0.symbol, i1.symbol],
+    pairWhitelist: [!!i0.whitelisted, !!i1.whitelisted],
+    nonWhitelistedSide: !(i0.whitelisted && i1.whitelisted),
+    whitelisted: true,
+    firstMint: fm,
+    validatorNames: creator ? validatorNamesFor(ctx, ce, pairAddr) : [],
+    notableReasons: [],
+    summary: `新しいペア ${i0.symbol}/${i1.symbol} が作成されました` + (fm ? `（最初の流動性：${fm.amount0.amount} ${fm.amount0.symbol} ＋ ${fm.amount1.amount} ${fm.amount1.symbol}）` : ''),
+  };
+}
+// Staking aggregates for the 🏦 section, computed by the collector over the
+// FULL stored history (the frontend never recomputes from the 500-window).
+// Attribution is conservative: commission counts per-validator only when
+// the actor IS the validator (an operator-side account shared by several
+// validators is ambiguous -> totals only); delegation in/out counts
+// per-validator only when the counterparty resolves to a validator entry.
+export function computeStakingStats(events, ctx) {
+  const TYPES = ['delegate', 'undelegate', 'redelegate', 'reward', 'commission'];
+  const totals = {}; for (const t of TYPES) totals[t] = { count: 0, raw: 0n };
+  const per = new Map();
+  const perFor = (name) => { if (!per.has(name)) per.set(name, { moniker: name, commissionCount: 0, commissionRaw: 0n, delegateInCount: 0, delegateInRaw: 0n, undelegateOutCount: 0, undelegateOutRaw: 0n }); return per.get(name); };
+  let unattributedCommission = 0, unattributedDelegate = 0, unattributedUndelegate = 0;
+  let minBlock = null, maxBlock = null, minTs = null, maxTs = null;
+  for (const ev of events) {
+    if (ev.block != null) { minBlock = minBlock == null ? ev.block : Math.min(minBlock, ev.block); maxBlock = maxBlock == null ? ev.block : Math.max(maxBlock, ev.block); }
+    if (ev.ts != null) { minTs = minTs == null ? ev.ts : Math.min(minTs, ev.ts); maxTs = maxTs == null ? ev.ts : Math.max(maxTs, ev.ts); }
+    if (!TYPES.includes(ev.type)) continue;
+    totals[ev.type].count++;
+    const raw = ev.amount?.symbol === '42' && ev.amount?.amountRaw ? BigInt(ev.amount.amountRaw) : 0n;
+    totals[ev.type].raw += raw;
+    if (ev.type === 'commission') {
+      const ae = ctx.entry(ev.actor);
+      if (ae?.tier === 'validator' && ae.label) { const p = perFor(ae.label); p.commissionCount++; p.commissionRaw += raw; }
+      else unattributedCommission++;
+    } else if (ev.type === 'delegate' || ev.type === 'undelegate') {
+      const ce = ev.counterparty ? ctx.entry(ev.counterparty) : null;
+      if (ce?.tier === 'validator' && ce.label) {
+        const p = perFor(ce.label);
+        if (ev.type === 'delegate') { p.delegateInCount++; p.delegateInRaw += raw; } else { p.undelegateOutCount++; p.undelegateOutRaw += raw; }
+      } else if (ev.type === 'delegate') unattributedDelegate++; else unattributedUndelegate++;
+    }
+  }
+  const fmt = (raw) => fmtNum(raw.toString(), 18);
+  const totalsOut = {}; for (const t of TYPES) totalsOut[t] = { count: totals[t].count, amount42: fmt(totals[t].raw) };
+  const perValidator = [...per.values()]
+    .map((p) => ({ moniker: p.moniker, commissionCount: p.commissionCount, commission42: fmt(p.commissionRaw), delegateInCount: p.delegateInCount, delegateIn42: fmt(p.delegateInRaw), undelegateOutCount: p.undelegateOutCount, undelegateOut42: fmt(p.undelegateOutRaw), _c: p.commissionRaw, _d: p.delegateInRaw }))
+    .filter((p) => p.commissionCount || p.delegateInCount || p.undelegateOutCount)
+    .sort((a, b) => (b._c > a._c ? 1 : b._c < a._c ? -1 : b._d > a._d ? 1 : b._d < a._d ? -1 : 0))
+    .map(({ _c, _d, ...rest }) => rest);
+  return { range: { fromBlock: minBlock, toBlock: maxBlock, fromTs: minTs, toTs: maxTs }, totals: totalsOut, perValidator, unattributed: { commission: unattributedCommission, delegate: unattributedDelegate, undelegate: unattributedUndelegate } };
+}
+// Deterministic history pass (v0.4.0): derives isDormantReturn /
+// dormantDays and isNewCounterparty from the FULL event history in
+// chronological order. Recomputed from scratch on every run, so Actions
+// merges and backfills always converge to the same flags.
+//  - New counterparty: the first event (chronologically) whose
+//    counterparty was never seen before. The known set starts from every
+//    NON-autoAdded watchlist address (auto-added addresses were unknown
+//    before their first appearance, so their first event still flags),
+//    all pair/token contracts and the verified system contracts.
+//  - Dormant return: per eligible actor (validator / related tier, not a
+//    pair, not core, not a known contract — estimated actors are a
+//    different tier and never eligible), an event whose previous event by
+//    the same actor is >= DORMANT_THRESHOLD_SECS older.
+// ev.watchlistAdded is NOT touched here: it is set only at live-add time.
+export function computeHistoryFlags(events, ctx) {
+  let changed = 0;
+  const set = (ev, k, v) => { if (JSON.stringify(ev[k]) !== JSON.stringify(v)) { ev[k] = v; changed++; } };
+  const clear = (ev, k) => { if (k in ev) { delete ev[k]; changed++; } };
+  const known = new Set([ZERO, DEAD_ADDR, FACTORY, ...KNOWN_SYSTEM_CONTRACTS]);
+  for (const [addr, e] of ctx.watch) if (!e.autoAdded) known.add(addr);
+  for (const a of Object.keys(ctx.pairs)) known.add(lc(a));
+  for (const a of Object.keys(ctx.tokens)) known.add(lc(a));
+  const sorted = [...events].sort((a, b) => (a.ts - b.ts) || ((a.block ?? 0) - (b.block ?? 0)) || ((a.logIndex ?? -1) - (b.logIndex ?? -1)) || String(a.id).localeCompare(String(b.id)));
+  const lastByActor = new Map();
+  let dormantCount = 0, newfaceCount = 0, longestDays = 0;
+  for (const ev of sorted) {
+    // new counterparty (first appearance in the whole recorded history)
+    const cp = ev.counterparty ? lc(ev.counterparty) : null;
+    if (cp && cp !== lc(ev.actor) && !known.has(cp)) { set(ev, 'isNewCounterparty', true); newfaceCount++; }
+    else if (ev.isNewCounterparty) clear(ev, 'isNewCounterparty');
+    if (cp) known.add(cp);
+    // Watched actors are known by definition; an UNWATCHED actor (a pair
+    // creator on a pair-created event) must not silently become "known" —
+    // its first appearance as someone's counterparty still counts.
+    if (ev.actor && ctx.watch.has(lc(ev.actor))) known.add(lc(ev.actor));
+    // dormant return
+    const ae = ctx.entry(ev.actor);
+    const eligible = !!ae && (ae.tier === 'validator' || ae.tier === 'related') && !ae.isPair && !ae.isCore && !KNOWN_CONTRACTS[lc(ev.actor)];
+    const prev = lastByActor.get(lc(ev.actor));
+    if (eligible && prev != null && ev.ts - prev >= DORMANT_THRESHOLD_SECS) {
+      const days = Math.floor((ev.ts - prev) / 86400);
+      set(ev, 'isDormantReturn', true); set(ev, 'dormantDays', days); set(ev, 'dormantSinceTs', prev);
+      dormantCount++; if (days > longestDays) longestDays = days;
+    } else {
+      if (ev.isDormantReturn) clear(ev, 'isDormantReturn');
+      if ('dormantDays' in ev) clear(ev, 'dormantDays');
+      if ('dormantSinceTs' in ev) clear(ev, 'dormantSinceTs');
+    }
+    if (ev.actor) lastByActor.set(lc(ev.actor), ev.ts);
+  }
+  return { changed, dormantCount, newfaceCount, longestDays };
+}
+// Live auto-add (v0.4.0, user rule): when a CONFIRMED watched wallet
+// (validator / related incl. auto-added — recursive, no depth limit)
+// transacts with an address that is not watched yet, that address joins
+// the watchlist as a confirmed related address, inheriting the actor's
+// validator attribution. Estimated actors never trigger an add (an
+// estimate is never promoted by proxy), pairs and known system/token
+// contracts never get added (they live on the core side), and an address
+// reachable only through an estimated wallet is not added either (it can
+// still be added later through a confirmed contact).
+// Returns the new entry, or null when nothing was added.
+export function maybeAutoAdd(watchlist, ctx, ev, excluded) {
+  const cp = ev.counterparty ? lc(ev.counterparty) : null;
+  if (!cp || cp === lc(ev.actor)) return null;
+  const ae = ctx.entry(ev.actor);
+  if (!ae || (ae.tier !== 'validator' && ae.tier !== 'related')) return null;
+  if (ctx.watch.has(cp) || excluded.has(cp) || ctx.pairs[cp]) return null;
+  const names = ae.tier === 'validator' ? (ae.label ? [ae.label] : []) : [...(ae.relatedValidators ?? [])];
+  if (!names.length) return null;
+  const depth = (ae.depth ?? (ae.tier === 'validator' ? 0 : 1)) + 1;
+  const entry = {
+    address: cp, tier: 'related', label: null, isCore: false, isPair: false, watch: true,
+    validators: [], relatedValidators: names,
+    autoAdded: true, addedVia: 'live', addedAt: ev.ts, firstSeenTx: ev.txHash ?? null,
+    via: { address: lc(ev.actor), validators: names }, depth,
+  };
+  watchlist.entries.push(entry);
+  ctx.watch.set(cp, entry);
+  return entry;
+}
+// Recompute the derived watchlist summary counts after any mutation
+// (validator refresh keeps its own fields; the research-derived link
+// counts are left untouched).
+export function recomputeWatchlistSummary(watchlist) {
+  const s = (watchlist.summary ??= {});
+  const cnt = (t) => watchlist.entries.filter((e) => e.tier === t).length;
+  s.validators = cnt('validator'); s.related = cnt('related'); s.core = cnt('core'); s.estimated = cnt('estimated');
+  s.directRelated = s.related;
+  s.coreLabelOnly = s.core;
+  s.coreFlaggedTotal = watchlist.entries.filter((e) => e.isCore).length;
+  s.watchedActors = watchlist.entries.filter((e) => e.watch).length;
+  s.totalEntries = watchlist.entries.length;
+  s.autoAdded = watchlist.entries.filter((e) => e.autoAdded).length;
+  s.autoAddedClosure = watchlist.entries.filter((e) => e.autoAdded && e.addedVia === 'closure-v0.4.0').length;
+  s.autoAddedLive = watchlist.entries.filter((e) => e.autoAdded && e.addedVia === 'live').length;
+  return s;
+}
 export function isInsiderEvent(ev, ctx) {
   const ae = ctx.entry(ev.actor);
   if (!ae) return false;
+  // v0.4.0: the Insider definition says DIRECTLY related — the recursive
+  // closure entries (depth >= 2) are related, but not direct, so they stay
+  // out of this section even when X is among their inherited names.
   const xSide = (ae.tier === 'validator' && ae.label === 'X')
-    || (ae.tier === 'related' && !ae.isPair && !ae.isCore && (ae.relatedValidators ?? []).includes('X'));
+    || (ae.tier === 'related' && !ae.isPair && !ae.isCore && (ae.depth ?? 1) <= 1 && (ae.relatedValidators ?? []).includes('X'));
   if (!xSide) return false;
   const addrs = [ev.amount?.token, ev.sold?.token, ev.bought?.token, ...((ev.amounts ?? []).map((a) => a.token)), ev.counterparty].filter(Boolean).map(lc);
   if (addrs.includes(W42) || addrs.includes(DONT_TOKEN)) return true;
@@ -722,7 +935,10 @@ export function enrichEvent(ev, ctx, creations = {}) {
       set('pairAgeSecs', age);
       // v0.2.4 (Part D, user rule): snipes are BUYS ONLY — an LP add never
       // counts as a snipe, however fresh the pair is.
-      set('isSnipe', ev.type === 'swap-buy' && age >= 0 && age <= SNIPE_WINDOW_SECS);
+      // v0.4.0: the snipe definition also says SELF or DIRECTLY related —
+      // recursive closure entries (depth >= 2) do not snipe-flag.
+      const snipeActor = ae?.tier === 'validator' || (ae?.tier === 'related' && (ae.depth ?? 1) <= 1);
+      set('isSnipe', ev.type === 'swap-buy' && snipeActor && age >= 0 && age <= SNIPE_WINDOW_SECS);
     }
   }
   // Part D demotion: a stored non-buy event that still carries the old
@@ -730,7 +946,8 @@ export function enrichEvent(ev, ctx, creations = {}) {
   // record — only the flag is removed.
   if (ev.type !== 'swap-buy' && ev.isSnipe) set('isSnipe', false);
   // v0.2.4 (Part C): insider flag for the ⚠ Insider section (validator X).
-  set('isInsider', isInsiderEvent(ev, ctx));
+  // v0.4.0: pair-created events are never insider/snipe material.
+  set('isInsider', ev.type === 'pair-created' ? false : isInsiderEvent(ev, ctx));
   // v0.3.0 (Phase 3): estimated tier guard. An estimated actor's events keep
   // the 推定 tag + the concrete basis from the watchlist entry, and NEVER
   // carry the confirmed-only markers: no snipe, no insider, no bridge-out
@@ -1183,8 +1400,8 @@ async function resolvePairCreation(pairAddr, creations, creationsPath) {
         const [receipt] = await rpcBatch([{ method: 'eth_getTransactionReceipt', params: [h] }]);
         if (receipt?.blockNumber) {
           const blk = parseInt(receipt.blockNumber, 16);
-          const [b] = await rpcBatch([{ method: 'eth_getBlockByNumber', params: ['0x' + blk.toString(16), false] }]);
-          if (b?.timestamp) return save({ createdBlock: blk, createdTs: parseInt(b.timestamp, 16), source: 'blockscout-creation-tx' });
+          const [b, tx] = await rpcBatch([{ method: 'eth_getBlockByNumber', params: ['0x' + blk.toString(16), false] }, { method: 'eth_getTransactionByHash', params: [h] }]);
+          if (b?.timestamp) return save({ createdBlock: blk, createdTs: parseInt(b.timestamp, 16), source: 'blockscout-creation-tx', txHash: lc(h), creator: tx?.from ? lc(tx.from) : null });
         }
       }
     }
@@ -1198,14 +1415,64 @@ async function resolvePairCreation(pairAddr, creations, creationsPath) {
         const pairInLog = '0x' + String(log.data).slice(26, 66).toLowerCase();
         if (pairInLog === pairAddr) {
           const blk = parseInt(log.blockNumber, 16);
-          const [b] = await rpcBatch([{ method: 'eth_getBlockByNumber', params: ['0x' + blk.toString(16), false] }]);
-          if (b?.timestamp) return save({ createdBlock: blk, createdTs: parseInt(b.timestamp, 16), source: 'factory-paircreated-log' });
+          const [b, tx] = await rpcBatch([{ method: 'eth_getBlockByNumber', params: ['0x' + blk.toString(16), false] }, { method: 'eth_getTransactionByHash', params: [log.transactionHash] }]);
+          if (b?.timestamp) return save({ createdBlock: blk, createdTs: parseInt(b.timestamp, 16), source: 'factory-paircreated-log', txHash: lc(log.transactionHash), creator: tx?.from ? lc(tx.from) : null });
         }
       }
     }
   } catch { /* leave unresolved; a later run can retry */ }
   return null;
 }
+// Resolve a pair's FIRST Mint (v0.4.0, for the 新規ペア速報 section's
+// 「最初の流動性」). Scans Mint logs on the pair from its creation block,
+// at most 200k blocks forward (~12 days — pairs that ever get used are
+// minted on almost immediately; a pair with no mint in that window is
+// recorded as firstMint null, never guessed). Cached in pairs-creation.json.
+async function resolveFirstMint(pairAddr, creations, creationsPath) {
+  pairAddr = lc(pairAddr);
+  const info = creations[pairAddr];
+  if (!info?.createdTs || 'firstMint' in info) return info?.firstMint ?? null;
+  const save = (v) => { info.firstMint = v; writeFileSync(creationsPath, JSON.stringify(creations, null, 1)); return v; };
+  try {
+    const tip = Number(BigInt(await rpcOne('eth_blockNumber', [])));
+    const last = Math.min(tip, info.createdBlock + 200000);
+    for (let start = info.createdBlock; start <= last; start += 10000) {
+      const end = Math.min(last, start + 9999);
+      const logs = (await rpcBatch([{ method: 'eth_getLogs', params: [{ address: pairAddr, topics: [TOPIC.mint], fromBlock: '0x' + start.toString(16), toBlock: '0x' + end.toString(16) }] }]))[0];
+      if (logs?.length) {
+        const log = logs[0];
+        const blk = parseInt(log.blockNumber, 16);
+        const [b] = await rpcBatch([{ method: 'eth_getBlockByNumber', params: ['0x' + blk.toString(16), false] }]);
+        const d = String(log.data).slice(2);
+        return save({ block: blk, ts: b?.timestamp ? parseInt(b.timestamp, 16) : info.createdTs, txHash: lc(log.transactionHash), a0: u256('0x' + d.slice(0, 64)).toString(), a1: u256('0x' + d.slice(64, 128)).toString() });
+      }
+    }
+  } catch { /* leave unresolved; a later run can retry */ }
+  return null;
+}
+// Register a pair created by the Don't Panic factory (live detection):
+// creation record + pair tokens in ctx/cache + a core-side watchlist
+// entry, so the pair is core infrastructure (never a "related wallet",
+// never auto-added, never a new face).
+function registerCreatedPair(ctx, watchlist, pairsCache, cachePath, creations, creationsPath, { pair, token0, token1, block, ts, txHash, creator }) {
+  pair = lc(pair);
+  if (!creations[pair]) {
+    creations[pair] = { createdBlock: block, createdTs: ts, source: 'factory-paircreated-log', txHash: txHash ? lc(txHash) : null, creator: creator ? lc(creator) : null };
+    writeFileSync(creationsPath, JSON.stringify(creations, null, 1));
+  }
+  if (!ctx.pairs[pair]) {
+    ctx.pairs[pair] = { token0: lc(token0), token1: lc(token1) };
+    pairsCache[pair] = ctx.pairs[pair];
+    writeFileSync(cachePath, JSON.stringify(pairsCache, null, 1));
+  }
+  if (!ctx.watch.has(pair)) {
+    const i0 = ctx.tokenInfo(token0), i1 = ctx.tokenInfo(token1);
+    const entry = { address: pair, tier: 'core', label: `${i0.symbol}/${i1.symbol} ペア`, isCore: true, isPair: true, watch: false, validators: [], relatedValidators: [] };
+    watchlist.entries.push(entry);
+    ctx.watch.set(pair, entry);
+  }
+}
+
 // Ensure creation info exists for the pairs used by candidate (swap-buy /
 // lp-add) events, bounded per call so an Actions run stays short.
 async function ensureCreations(events, creations, creationsPath, cap = 8) {
@@ -1285,17 +1552,33 @@ export async function refreshValidatorList(watchlist, { fetchValidators = fetchC
   return { added, bonded: bonded.length, total: chain.length, changed };
 }
 
-// Feed selection: the latest 500 events, PLUS every snipe / bridge-out /
-// insider event ever recorded (deduplicated, sort order preserved). The
-// special site sections (⚠インサイダー / 🎯スナイプ速報 / 🌉ブリッジ出金)
-// are fed from these flags, and the historical backfills (events flagged
-// `backfill:true`, recovered from the full per-tx flow index) must stay
-// visible permanently instead of falling out of the latest-500 window.
+// Feed selection: the latest 500 events, PLUS pinned categories
+// (deduplicated, sort order preserved). Snipe / bridge-out / insider events
+// are pinned without a cap (they feed the ⚠/🎯/🌉 sections and the
+// historical backfills must stay visible permanently). v0.4.0 adds capped
+// pins for the new sections: pair-created (latest 100), LP moves (latest
+// 150), dormant returns (latest 200 — the flags are rare by construction),
+// and new-counterparty first appearances (latest 100).
 export function selectFeedEvents(sorted) {
   const head = sorted.slice(0, 500);
   const seenIds = new Set(head.map((e) => e.id));
+  const take = (pred, cap) => {
+    const out = [];
+    for (const e of sorted) {
+      if (out.length >= cap) break;
+      if (!seenIds.has(e.id) && pred(e)) { seenIds.add(e.id); out.push(e); }
+    }
+    return out;
+  };
   const pinned = sorted.filter((e) => (e.isSnipe || e.type === 'bridge-out' || e.isInsider) && !seenIds.has(e.id));
-  return [...head, ...pinned];
+  for (const e of pinned) seenIds.add(e.id);
+  return [
+    ...head, ...pinned,
+    ...take((e) => e.type === 'pair-created', 100),
+    ...take((e) => e.type === 'lp-add' || e.type === 'lp-remove', 150),
+    ...take((e) => !!e.isDormantReturn, 200),
+    ...take((e) => !!e.isNewCounterparty, 100),
+  ];
 }
 
 // ---------------- main collector ----------------
@@ -1308,6 +1591,7 @@ async function main() {
   const range = rangeIdx >= 0 ? args[rangeIdx + 1].split(':').map(Number) : null;
   const cosmosBackfillIdx = args.indexOf('--cosmos-backfill');
   const cosmosBackfill = cosmosBackfillIdx >= 0 ? Number(args[cosmosBackfillIdx + 1]) : null;
+  const pairsSync = args.includes('--pairs-sync'); // v0.4.0: pair-created sync only, uncapped
   const pollMs = Number(process.env.POLL_MS ?? 10000);
 
   const watchlist = JSON.parse(readFileSync(join(__dir, 'watchlist.json'), 'utf8'));
@@ -1328,6 +1612,40 @@ async function main() {
   const creationsPath = join(__dir, 'pairs-creation.json');
   const creations = existsSync(creationsPath) ? JSON.parse(readFileSync(creationsPath, 'utf8')) : {};
   const ctx = makeCtx(watchlist, registries, pairsCache);
+  // v0.4.0: exclusion set for auto-add / new faces (static inputs; pairs
+  // created live during the run are added to it as they are registered).
+  const excluded = buildExcludedSet(watchlist, registries);
+  let watchlistDirty = false;
+  const persistWatchlist = () => {
+    if (!watchlistDirty) return;
+    recomputeWatchlistSummary(watchlist);
+    writeFileSync(join(__dir, 'watchlist.json'), JSON.stringify(watchlist, null, 1));
+    watchlistDirty = false;
+    console.log(`[collector] watchlist updated: ${watchlist.entries.length} entries (related ${watchlist.summary.related}, auto-added ${watchlist.summary.autoAdded})`);
+  };
+  // v0.4.0: [42] price from the 42/USDT pair reserves (getReserves), with a
+  // local price history for the ~24h change. The pool is small, so the
+  // figure is labelled an estimate on the site.
+  const priceHistoryPath = join(__dir, 'price-history.jsonl');
+  let priceInfo = null;
+  async function refreshPrice() {
+    try {
+      const [res] = await rpcBatch([{ method: 'eth_call', params: [{ to: PAIR_42_USDT, data: '0x0902f1ac' }, 'latest'] }]);
+      if (!res || res === '0x') return;
+      const r0 = u256('0x' + res.slice(2, 66)); // token0 = USDT
+      const r1 = u256('0x' + res.slice(66, 130)); // token1 = [42] (0xeeee)
+      if (r1 === 0n) return;
+      const price = Number((r0 * 100000000n) / r1) / 1e8;
+      const now = Math.floor(Date.now() / 1000);
+      let hist = [];
+      if (existsSync(priceHistoryPath)) hist = readFileSync(priceHistoryPath, 'utf8').split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+      const last = hist[hist.length - 1];
+      if (!last || now - last.ts >= 240) { appendFileSync(priceHistoryPath, JSON.stringify({ ts: now, price }) + '\n'); hist.push({ ts: now, price }); }
+      let old = null;
+      for (let i = hist.length - 1; i >= 0; i--) { if (hist[i].ts <= now - 86400) { old = hist[i]; break; } }
+      priceInfo = { usdt: price, updatedAt: new Date(now * 1000).toISOString(), change24hPct: old ? Math.round(((price - old.price) / old.price) * 10000) / 100 : null };
+    } catch (e) { console.error('[collector] price refresh failed (continuing):', e.message); }
+  }
 
   const statePath = join(__dir, 'state.json');
   const eventsPath = join(__dir, 'events.jsonl');
@@ -1358,6 +1676,7 @@ async function main() {
     const validators = watchlist.entries.filter((e) => e.tier === 'validator').map((v) => ({
       moniker: v.label, address: v.address, bech32: hexToBech32(v.address), isCore: v.isCore,
       relatedCount: watchlist.entries.filter((e) => e.tier === 'related' && e.relatedValidators.includes(v.label)).length,
+      autoAddedCount: watchlist.entries.filter((e) => e.autoAdded && e.relatedValidators.includes(v.label)).length,
       estimatedCount: watchlist.entries.filter((e) => e.tier === 'estimated' && e.relatedValidators.includes(v.label)).length,
       ...(v.inactive ? { inactive: true } : {}),
     }));
@@ -1373,17 +1692,81 @@ async function main() {
         bridgeOutRule: BRIDGE_OUT_RULE,
         insiderRule: INSIDER_RULE,
         estimatedRule: ESTIMATED_RULE,
+        dormantRule: DORMANT_RULE,
         ...(validatorRefresh ? {
           chainValidators: { bonded: validatorRefresh.bonded, total: validatorRefresh.total, checkedAt: new Date().toISOString() },
           ...(validatorRefresh.added.length ? { validatorsAdded: validatorRefresh.added } : {}),
         } : {}),
         actionRule: '操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。',
+        ...(priceInfo ? { price: priceInfo } : {}),
       },
+      stats: { staking: computeStakingStats(allEvents, ctx) },
       validators,
       events: selectFeedEvents(sorted),
     };
     writeFileSync(join(__dir, 'feed.json'), JSON.stringify(feed, null, 1));
     return feed;
+  }
+
+  // v0.4.0: deterministic history flags (dormant returns / new
+  // counterparties) over the full stored history; rewrites events.jsonl
+  // only when a flag actually changed.
+  function refreshHistoryFlags() {
+    const r = computeHistoryFlags(allEvents, ctx);
+    if (r.changed) {
+      writeFileSync(eventsPath, allEvents.map((e) => JSON.stringify(e)).join('\n') + '\n');
+      console.log(`[collector] history flags: ${r.changed} fields updated (dormant returns ${r.dormantCount}, longest ${r.longestDays}d; new-counterparty events ${r.newfaceCount})`);
+    }
+    return r;
+  }
+  // v0.4.0: pair-created events for every Don't Panic factory pair whose
+  // creation is known (or resolvable within the op budget). Creations
+  // entries gain txHash/creator/firstMint as they are resolved.
+  const initialCheckpoint = state.lastProcessedBlock;
+  async function syncPairEvents(cap = 6) {
+    let ops = 0, added = 0;
+    const candidates = Object.keys(ctx.pairs).filter((p) => {
+      const reg = registries.pairs[p];
+      return !reg?.factory || lc(reg.factory) === FACTORY; // Don't Panic factory pairs only
+    }).sort((a, b) => (creations[a]?.createdBlock ?? Infinity) - (creations[b]?.createdBlock ?? Infinity));
+    for (const pairAddr of candidates) {
+      let info = creations[pairAddr];
+      if (!info?.createdTs) {
+        if (ops >= cap) continue;
+        ops++;
+        info = await resolvePairCreation(pairAddr, creations, creationsPath).catch(() => null);
+        if (!info) continue;
+      }
+      if (info.createdTs && !info.txHash && ops < cap) {
+        ops++;
+        // cached entries from before v0.4.0 lack the creation tx: re-resolve
+        // the tx hash + creator via Blockscout once.
+        try {
+          const r = await fetch(`${BLOCKSCOUT}/addresses/${pairAddr}`, { headers: { 'User-Agent': UA } });
+          if (r.ok) {
+            const j = await r.json();
+            if (j.creation_transaction_hash) {
+              const [tx] = await rpcBatch([{ method: 'eth_getTransactionByHash', params: [j.creation_transaction_hash] }]);
+              info.txHash = lc(j.creation_transaction_hash);
+              info.creator = tx?.from ? lc(tx.from) : null;
+              writeFileSync(creationsPath, JSON.stringify(creations, null, 1));
+            }
+          }
+        } catch { /* leave for a later run */ }
+      }
+      if (!('firstMint' in info) && ops < cap) { ops++; await resolveFirstMint(pairAddr, creations, creationsPath).catch(() => null); }
+      const id = `pair-created:${pairAddr}`;
+      if (seen.has(id)) continue;
+      const ev = buildPairCreatedEvent(ctx, pairAddr, info, info.firstMint ?? null);
+      if (!ev) continue;
+      enrichEvent(ev, ctx, creations);
+      if (initialCheckpoint != null && info.createdBlock <= initialCheckpoint) ev.backfill = true;
+      seen.add(ev.id); allEvents.push(ev);
+      appendFileSync(eventsPath, JSON.stringify(ev) + '\n');
+      added++;
+    }
+    if (added) { state.totalEventsFound = allEvents.length; saveState(); console.log(`[collector] pair-created events: +${added} (total events ${allEvents.length})`); }
+    return added;
   }
 
   async function processRange(start, end) {
@@ -1408,6 +1791,22 @@ async function main() {
         for (let j = 0; j < receipts.length; j++) {
           const meta = receiptMeta[i + j]; const receipt = receipts[j];
           if (!receipt) continue;
+          // v0.4.0: a PairCreated log from the Don't Panic factory registers
+          // the new pair immediately (creation record + core-side entry),
+          // so this same tx's first swap/LP classifies against it and the
+          // pair itself is never treated as a new counterparty.
+          for (const log of receipt.logs ?? []) {
+            if (lc(log.address) === FACTORY && log.topics?.[0] === PAIR_CREATED_TOPIC) {
+              const pairAddr = '0x' + String(log.data).slice(26, 66).toLowerCase();
+              registerCreatedPair(ctx, watchlist, pairsCache, cachePath, creations, creationsPath, {
+                pair: pairAddr, token0: topicAddr(log.topics[1]), token1: topicAddr(log.topics[2]),
+                block: meta.block, ts: meta.ts, txHash: meta.tx.hash, creator: meta.tx.from,
+              });
+              excluded.add(pairAddr);
+              watchlistDirty = true;
+              console.log(`[collector] new pair registered: ${pairAddr} (block ${meta.block})`);
+            }
+          }
           // resolve unknown pairs before classifying swaps in this tx
           for (const log of receipt.logs ?? []) {
             if (log.topics?.[0] === TOPIC.swap && !ctx.pairs[lc(log.address)]) {
@@ -1434,6 +1833,17 @@ async function main() {
               const last = lastOtherByKey.get(key);
               if (last != null && meta.block - last < OTHER_REPEAT_WINDOW_BLOCKS) continue;
               lastOtherByKey.set(key, meta.block);
+            }
+            // v0.4.0 live auto-add: a first-appearance counterparty of a
+            // confirmed watched wallet joins the watchlist on the spot
+            // (recursive — auto-added wallets trigger adds themselves).
+            // Runs BEFORE the append so the watchlistAdded marker is
+            // persisted with the event itself.
+            const addedEntry = maybeAutoAdd(watchlist, ctx, ev, excluded);
+            if (addedEntry) {
+              ev.watchlistAdded = true;
+              watchlistDirty = true;
+              console.log(`[collector] auto-added related address ${addedEntry.address} (depth ${addedEntry.depth}, via ${addedEntry.via.address}: ${addedEntry.relatedValidators.join(', ')})`);
             }
             seen.add(ev.id); allEvents.push(ev);
             appendFileSync(eventsPath, JSON.stringify(ev) + '\n');
@@ -1477,6 +1887,12 @@ async function main() {
       for (const ev of evs) {
         enrichEvent(ev, ctx, creations);
         if (seen.has(ev.id)) continue;
+        const addedEntry = maybeAutoAdd(watchlist, ctx, ev, excluded);
+        if (addedEntry) {
+          ev.watchlistAdded = true;
+          watchlistDirty = true;
+          console.log(`[collector] auto-added related address (cosmos) ${addedEntry.address} (depth ${addedEntry.depth}, via ${addedEntry.via.address}: ${addedEntry.relatedValidators.join(', ')})`);
+        }
         seen.add(ev.id); allEvents.push(ev);
         appendFileSync(eventsPath, JSON.stringify(ev) + '\n');
         newEvents++;
@@ -1518,10 +1934,22 @@ async function main() {
   const latest = Number(await rpcOne('eth_blockNumber', []).then((h) => BigInt(h)));
   console.log('[collector] chain tip:', latest, '| checkpoint:', state.lastProcessedBlock, '| cosmos checkpoint:', state.lastProcessedCosmosBlock, '| known events:', allEvents.length);
 
+  if (pairsSync) {
+    console.log('[collector] --pairs-sync: pair-created events only (uncapped)');
+    await refreshPrice();
+    await syncPairEvents(Infinity);
+    refreshHistoryFlags();
+    persistWatchlist();
+    writeFeed(latest);
+    console.log(`[collector] pairs-sync done: total events ${allEvents.length}`);
+    return;
+  }
   if (range) {
     const [a, b] = range;
     console.log(`[collector] --range ${a}:${b}`);
     const r = await processRange(a, b);
+    refreshHistoryFlags();
+    persistWatchlist();
     writeFeed(latest);
     console.log(`[collector] done: blocks ${b - a + 1}, txs ${r.txs}, new watched events ${r.newEvents}, total events ${allEvents.length}`);
     return;
@@ -1530,6 +1958,8 @@ async function main() {
     const start = Math.max(0, latest - backfill + 1);
     console.log(`[collector] --backfill ${backfill}: blocks ${start}..${latest}`);
     const r = await processRange(start, latest);
+    refreshHistoryFlags();
+    persistWatchlist();
     writeFeed(latest);
     console.log(`[collector] done: blocks ${backfill}, txs ${r.txs}, new watched events ${r.newEvents}, total events ${allEvents.length}`);
     return;
@@ -1540,6 +1970,8 @@ async function main() {
     await processCosmosRange(start, latest);
     state.totalEventsFound = allEvents.length;
     saveState();
+    refreshHistoryFlags();
+    persistWatchlist();
     writeFeed(latest);
     console.log(`[collector] cosmos backfill done: total events ${allEvents.length}`);
     return;
@@ -1576,6 +2008,11 @@ async function main() {
       // simply stays behind and the next pass catches up.
       console.error('[cosmos] pass failed (will retry next pass):', e.message);
     }
+    // v0.4.0 passes: price, pair-created events, history flags, watchlist.
+    await refreshPrice();
+    await syncPairEvents(6).catch((e) => console.error('[collector] pair sync failed (will retry next pass):', e.message));
+    refreshHistoryFlags();
+    persistWatchlist();
     writeFeed(tip);
     if (once) break;
     await sleep(pollMs);

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.3.2</title>
+<title>42 Chain Validator Real-Time Tracker v0.4.0</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -85,14 +85,42 @@
   .bchart-bar{height:100%;background:linear-gradient(90deg,#2f9e44,#69db7c);border-radius:6px}
   .bchart-amt{flex:0 0 auto;font-weight:700;white-space:nowrap}
   .bchart-cnt{color:var(--sub);font-size:.82rem;font-weight:400}
+  .pricebar{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 14px;font-size:.95rem;margin-top:10px}
+  .pricebar b{font-size:1.25rem;color:var(--ok)}
+  .pricebar .chg-up{color:#69db7c;font-weight:700}
+  .pricebar .chg-dn{color:#ff8fa3;font-weight:700}
+  .pricebar .note{color:var(--sub);font-size:.8rem}
+  .ev.lpadd{border-left:5px solid #2dd4bf}
+  .ev.lpremove{border-left:5px solid #ffa94d}
+  .badge.dormant{color:#e9d5ff;background:#5b21b6;border-color:#c084fc;font-weight:700}
+  .badge.newface{color:#081018;background:#7dd3fc;border-color:#7dd3fc;font-weight:700}
+  .badge.added{color:#081018;background:#69db7c;border-color:#69db7c;font-weight:700}
+  section.newpairs>h2{color:#93c5fd}
+  section.lp>h2{color:#2dd4bf}
+  section.dormant>h2{color:#c084fc}
+  section.newfaces>h2{color:#7dd3fc}
+  section.staking>h2{color:#ffd166}
+  section.newpairs:not(.open)>:not(h2),section.lp:not(.open)>:not(h2),section.dormant:not(.open)>:not(h2),section.newfaces:not(.open)>:not(h2),section.staking:not(.open)>:not(h2){display:none}
+  section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{cursor:pointer;user-select:none}
+  section.newpairs>h2::after,section.lp>h2::after,section.dormant>h2::after,section.newfaces>h2::after,section.staking>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.newpairs.open>h2::after,section.lp.open>h2::after,section.dormant.open>h2::after,section.newfaces.open>h2::after,section.staking.open>h2::after{content:' ▼'}
+  section.newpairs,section.lp,section.dormant,section.newfaces,section.staking{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
+  section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{margin-top:8px}
+  table.staking{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
+  table.staking th,table.staking td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right}
+  table.staking th:first-child,table.staking td:first-child{text-align:left}
+  table.staking th{color:var(--sub);font-weight:600}
+  .staking-totals{font-size:1rem;margin:8px 0}
+  .staking-totals b{color:var(--acc)}
 </style>
 </head>
 <body>
 <header>
   <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b></div></div>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.3.2). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
-  <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-feed">Latest</a><a href="#sec-validators">Validators</a></nav>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (everyone who transacted with them, and the counterparties of those counterparties) (EVM side + Cosmos side, v0.4.0). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
+  <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-newpairs">🆕 New pairs</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-lp">💧 Liquidity</a><a href="#sec-dormant">😴 Dormant</a><a href="#sec-newfaces">👤 New faces</a><a href="#sec-feed">Latest</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
+  <div class="pricebar" id="pricebar" style="display:none"></div>
 </header>
 <main>
   <section class="insider" id="sec-insider">
@@ -105,6 +133,12 @@
     <h2>🎯 Snipe Alerts</h2>
     <p class="rule" id="snipeRule"></p>
     <div id="snipes"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="newpairs" id="sec-newpairs">
+    <h2>🆕 New Pairs</h2>
+    <p class="rule">Newly created pairs on the Don't Panic DEX. Only pairs containing at least one of the 17 listed tokens are shown (pairs where both sides are non-listed are kept in the record but not displayed here). A pair with one non-listed side carries a "Non-listed token" badge. When the pair's creator is known, their name is shown.</p>
+    <div id="newpairs"><p class="empty">Loading…</p></div>
   </section>
 
   <section class="bridge" id="sec-bridge">
@@ -125,6 +159,24 @@
     <div id="alerts"><p class="empty">Loading…</p></div>
   </section>
 
+  <section class="lp" id="sec-lp">
+    <h2>💧 Liquidity Moves</h2>
+    <p class="rule">Adding liquidity = putting money into a pool to support trading; removing liquidity = withdrawing what was deposited. A large removal can be a sign of withdrawal from the market, so it is worth watching. Adds have a teal line, removals an orange line. Estimated addresses are not included (confirmed information only).</p>
+    <div id="lpmoves"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="dormant" id="sec-dormant">
+    <h2>😴 Back After a Long Silence</h2>
+    <p class="rule" id="dormantRule"></p>
+    <div id="dormant"><p class="empty">Loading…</p></div>
+  </section>
+
+  <section class="newfaces" id="sec-newfaces">
+    <h2>👤 New Faces</h2>
+    <p class="rule">Counterparties that a watched address (validator itself, related, or core) transacted with for the first time in this site's entire record. Related addresses have been expanded over the full history, past included (counterparties of counterparties, without limit), and a newly appearing counterparty is automatically added to the watchlist as a related address (v0.4.0, in operation since November 2026). Cards marked "Added to the watchlist" are the ones added automatically. System, pair and token contracts are never added.</p>
+    <div id="newfaces"><p class="empty">Loading…</p></div>
+  </section>
+
   <section class="fold open" id="sec-feed"><h2>Latest activity</h2><div class="fold-body">
   <p class="sub">About estimated addresses (v0.3.0 / Phase 3): addresses whose link to a validator could not be confirmed by a direct transfer, estimated in three ways — (1) through-pool (a trade on the other side of the same pool matching within 10% in amount and 24 hours in time), (2) 2-hop (validator → this address → validator, both legs confirmed transfers), (3) shared counterparty (a third party transacting directly with 2 or more validators that is not already confirmed-related). Estimated moves appear only in Latest activity, with an Estimated badge and the basis shown. The special sections (Insider / Snipes / Notable / Bridge Withdrawals / Totals) use confirmed links only and never include estimates.</p>
   <div class="filters">
@@ -136,6 +188,7 @@
       <option value="swap-sell">Sell</option>
       <option value="lp-add">Add liquidity</option>
       <option value="lp-remove">Remove liquidity</option>
+      <option value="pair-created">New pair</option>
       <option value="delegate">Delegate</option>
       <option value="undelegate">Undelegate</option>
       <option value="redelegate">Redelegate</option>
@@ -185,32 +238,41 @@
       <li><b>(3) 2-hop:</b> an indirect link of the form validator → another address → validator, where both transfers are confirmed. (Currently, no address has been newly registered under this type.)</li>
     </ul>
     <p><b>How estimates are handled:</b> moves by estimated addresses appear only in Latest activity, with a dashed border and an "Estimated" badge, and can be hidden by unchecking "Show estimated" above. They are never included in the Snipe Alerts, Notable, Insider Watch, or Bridge Withdrawals sections, nor in the bridge-out totals chart — all amounts there are totals of confirmed activity only.</p>
-    <p><b>Currently registered:</b> 6 estimated addresses (5 through-pool, 1 shared counterparty), as of v0.3.2, 5 November 2026.</p>
+    <p><b>Currently registered:</b> 6 estimated addresses (5 through-pool, 1 shared counterparty), as of v0.4.0, 5 November 2026.</p>
   </details>
   <div id="feed"><p class="empty">Loading…</p></div>
   </div></section>
 
+  <section class="staking" id="sec-staking">
+    <h2>🏦 Delegations &amp; Rewards</h2>
+    <p class="rule" id="stakingRange"></p>
+    <div id="stakingTotals"><p class="empty">Loading…</p></div>
+    <div id="stakingTable"></div>
+    <p class="sub" id="stakingNote"></p>
+  </section>
+
   <section class="fold" id="sec-validators"><h2>Validators (23)</h2><div class="fold-body">
-  <p class="sub">"N related addresses" is the number of addresses confirmed to have transacted directly with that validator; "M estimated" counts addresses linked only by one of the three estimation methods (no confirmed direct transfer).</p>
+  <p class="sub">"N related addresses" is the number of addresses confirmed to have transacted with that validator (direct counterparties and, beyond them, their counterparties as well; "incl. auto-added" counts the ones added automatically from the record); "M estimated" counts addresses linked only by one of the three estimation methods (no confirmed direct transfer).</p>
   <div class="vals" id="validators"></div>
   </div></section>
 </main>
 <footer>
-  Data source: the 42 Chain blocks themselves (via RPC). Tapping a transaction or address opens the official explorer, scan.infinitedrive.xyz.
+  Data source: the 42 Chain blocks themselves (via RPC). Coverage is limited to transactions on the 42 Chain only (EVM chain ID 421018 and its Cosmos side, infinite_421018-1). Transactions on QL1 or any other chain are not included. Tapping a transaction or address opens the official explorer, scan.infinitedrive.xyz.
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated addresses (Phase 3): addresses whose link cannot be confirmed by a direct transfer are also watched, estimated in three ways — through-pool, 2-hop, and shared counterparty. Their moves appear only in Latest activity, with a dashed border, an Estimated badge and the basis shown; they are never included in the Insider / Snipes / Notable / Bridge Withdrawals / Totals sections (those stay confirmed-only). The validator list is refreshed from the chain on every run: newly bonded validators are added automatically, and validators that leave the bonded set stay watched as history (marked inactive). Nothing is posted externally (no X bot) — alerts live on this site only.
+  Scope of related addresses (v0.4.0): in addition to every address that sent to or received from a validator, the full-history expansion (counterparties of counterparties, without limit) has been applied to the whole record, past included (system / pair / token contracts, and contacts reachable only through an estimated address, are excluded). When a new counterparty appears, it is also added automatically as a related address on the spot. / New Pairs covers pairs created by the Don't Panic factory and displays only pairs containing at least one of the 17 listed tokens. / The [42] price is calculated from the 42/USDT pool's reserves; the pool is small, so the figure has a margin of error.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). Validator X is also known as Rioshi, shown in small text as (Rioshi) next to the name.
-  <br>Version: <b>v0.3.2</b> (v0.3.2: Xenia reclassified from core infrastructure to an ordinary validator — a classification correction. Previously, v0.3.1 added the definition of estimated relations next to the Latest activity filters, and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
+  <br>Version: <b>v0.4.0</b> (v0.4.0: six additions — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price. Previously, v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
 const COSMOS_SCAN = 'https://ql1-infinite42-guppy-histoire.github.io/42-cosmos-scan/';
 const shortAddr = (a) => a ? '0x…' + a.slice(-4).toUpperCase() : '—';
 const addrLink = (a, label) => a ? `<a href="${SCAN}/address/${a}" target="_blank" rel="noopener" title="${a}">${label ?? shortAddr(a)}</a>` : '—';
-const txLink = (ev) => ev.chain === 'cosmos'
+const txLink = (ev) => !ev.txHash ? '<span>Tx —</span>' : ev.chain === 'cosmos'
   ? `<a href="${COSMOS_SCAN}#/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()} (Cosmos)</a>`
   : `<a href="${SCAN}/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()}</a>`;
-const TYPE_EN = {'transfer':'Transfer','swap-buy':'Buy','swap-sell':'Sell','lp-add':'Add liquidity','lp-remove':'Remove liquidity','delegate':'Delegate','undelegate':'Undelegate','redelegate':'Redelegate','reward':'Reward claim (delegation rewards)','commission':'Validator reward claim (commission)','reward-claim-fish':'Reward claim (FISH distribution)','reward-claim-staking':'Reward claim (staking rewards)','reward-claim-starlight':'Starlight reward claim','reward-distribution-fish':'FISH reward batch distribution','bridge-out':'Bridge send (USDT, outbound)','bridge-send-other':'Bridge send (non-USDT)','bridge-delivery':'Bridge delivery processing','nft-mint':'NFT mint','nft-transfer':'NFT transfer','fluke-commit':'Fluke entry (commit)','fluke-reveal':'Fluke reveal','fluke-boost':'Fluke boost','fluke-settle':'Fluke settle (new Guide issued)','fluke-seed':'Fluke pool funding','guide-write':'Guide text write','guide-append':'Guide text append','starlight-register':'Starlight registration','st42-deposit':'st42 deposit','st42-redeem-request':'st42 redemption request','st42-claim':'st42 claim','st42-instant-exit':'st42 instant exit','st42-order':'st42 order','approve':'Approve','token-burn':'Token burn','dex-swap':'DEX swap','wrap':'Wrap to W42','unwrap':'Unwrap W42','nft-approve-all':'NFT approve-all','unclassified':'Unclassified action','other-contract':'Unclassified action'};
+const TYPE_EN = {'transfer':'Transfer','swap-buy':'Buy','swap-sell':'Sell','lp-add':'Add liquidity','lp-remove':'Remove liquidity','pair-created':'New pair','delegate':'Delegate','undelegate':'Undelegate','redelegate':'Redelegate','reward':'Reward claim (delegation rewards)','commission':'Validator reward claim (commission)','reward-claim-fish':'Reward claim (FISH distribution)','reward-claim-staking':'Reward claim (staking rewards)','reward-claim-starlight':'Starlight reward claim','reward-distribution-fish':'FISH reward batch distribution','bridge-out':'Bridge send (USDT, outbound)','bridge-send-other':'Bridge send (non-USDT)','bridge-delivery':'Bridge delivery processing','nft-mint':'NFT mint','nft-transfer':'NFT transfer','fluke-commit':'Fluke entry (commit)','fluke-reveal':'Fluke reveal','fluke-boost':'Fluke boost','fluke-settle':'Fluke settle (new Guide issued)','fluke-seed':'Fluke pool funding','guide-write':'Guide text write','guide-append':'Guide text append','starlight-register':'Starlight registration','st42-deposit':'st42 deposit','st42-redeem-request':'st42 redemption request','st42-claim':'st42 claim','st42-instant-exit':'st42 instant exit','st42-order':'st42 order','approve':'Approve','token-burn':'Token burn','dex-swap':'DEX swap','wrap':'Wrap to W42','unwrap':'Unwrap W42','nft-approve-all':'NFT approve-all','unclassified':'Unclassified action','other-contract':'Unclassified action'};
 // Stored counterparty / destination labels come from the collector and a
 // few are Japanese; translate the known ones, turn "X/Y ペア" into
 // "X/Y pair", and fall back to the short address for anything else that
@@ -282,6 +344,11 @@ function summaryEn(ev){
       return `Added liquidity: ${(ev.amounts || []).map((a) => `${a.amount} ${sym(a.symbol)}`).join(' + ')}${ev.pairLabel ? ` (${enLabel(ev.pairLabel) || 'pair'})` : ''}`;
     case 'lp-remove':
       return `Removed liquidity: ${(ev.amounts || []).map((a) => `${a.amount} ${sym(a.symbol)}`).join(' + ')}${ev.pairLabel ? ` (${enLabel(ev.pairLabel) || 'pair'})` : ''}`;
+    case 'pair-created': {
+      const ps = (ev.pairSymbols || ev.tokens || []).map(sym).join('/');
+      const fm = ev.firstMint ? ` First liquidity: ${ev.firstMint.amount0.amount} ${sym(ev.firstMint.amount0.symbol)} + ${ev.firstMint.amount1.amount} ${sym(ev.firstMint.amount1.symbol)}.` : '';
+      return `New pair created: ${ps}.${fm}`;
+    }
     case 'delegate':
       return `Delegated ${amt}${cp ? ' to ' + cp : ''}`;
     case 'undelegate':
@@ -399,14 +466,34 @@ function renderEvent(ev){
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
   const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 Snipe (${ageEn(ev.pairAgeSecs)})</span>` : '';
   const insider = ev.isInsider ? ` <span class="badge insider">⚠ Insider (${valName('X')})</span>` : '';
+  const dormant = ev.isDormantReturn ? ` <span class="badge dormant">😴 First move in ${ev.dormantDays} days</span>` : '';
+  const newface = ev.isNewCounterparty ? ` <span class="badge newface">👤 New counterparty</span>` : '';
+  const added = ev.watchlistAdded ? ` <span class="badge added">Added to the watchlist</span>` : '';
+  const pairWl = ev.type === 'pair-created' && ev.nonWhitelistedSide ? ' <span class="badge">Non-listed token</span>' : '';
+  const lpCls = ev.type === 'lp-add' ? ' lpadd' : ev.type === 'lp-remove' ? ' lpremove' : '';
   const bn = bigName(ev);
-  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}">
+  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
     <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
-    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${cosmos}${snipe}${insider}</div>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${insider}${dormant}${newface}${added}</div>
     <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
     ${relationLine(ev)}
     <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
+}
+function renderStaking(){
+  const st = FEED.stats && FEED.stats.staking;
+  if (!st) return;
+  const t = st.totals;
+  const r = st.range || {};
+  document.getElementById('stakingRange').textContent = `Scope: the collector aggregates this site's full record (blocks ${r.fromBlock ?? '—'} to ${r.toBlock ?? '—'}) on every run.`;
+  document.getElementById('stakingTotals').innerHTML =
+    `<div class="staking-totals">Delegations <b>${t.delegate.count} (${t.delegate.amount42} [42])</b> / Undelegations <b>${t.undelegate.count} (${t.undelegate.amount42} [42])</b> / Redelegations <b>${t.redelegate.count}</b> / Delegation reward claims <b>${t.reward.count} (${t.reward.amount42} [42])</b> / Validator commission claims <b>${t.commission.count} (${t.commission.amount42} [42])</b></div>`;
+  document.getElementById('stakingTable').innerHTML = st.perValidator.length
+    ? `<table class="staking"><tr><th>Validator</th><th>Operating rewards it received itself (commission)</th><th>Delegated to this validator</th><th>Undelegated from this validator</th></tr>` + st.perValidator.map((v) =>
+      `<tr><td><b>${valName(v.moniker)}</b></td><td>${v.commission42} [42] (${v.commissionCount} claims)</td><td>${v.delegateIn42} [42] (${v.delegateInCount})</td><td>${v.undelegateOut42} [42] (${v.undelegateOutCount})</td></tr>`).join('') + '</table>'
+    : '<p class="empty">No per-validator totals yet.</p>';
+  const u = st.unattributed || {};
+  document.getElementById('stakingNote').textContent = `Note: "Operating rewards it received itself" counts only commission claimed from that validator's own address. Delegations and undelegations are attributed per validator only when the counterparty validator is certain (ambiguous ones — commission ${u.commission ?? 0}, delegations ${u.delegate ?? 0}, undelegations ${u.undelegate ?? 0} — are included in the overall totals only).`;
 }
 function applyFilters(){
   if (!FEED) return;
@@ -425,6 +512,20 @@ function applyFilters(){
   document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">No recent bridge withdrawals.</p>';
   const snipes = FEED.events.filter((ev) => ev.isSnipe && ev.actorTier !== 'estimated');
   document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">No snipes detected in the recent feed.</p>';
+  // 🆕 New pairs (v0.4.0): display only pairs with at least one whitelisted side.
+  const newpairs = FEED.events.filter((ev) => ev.type === 'pair-created' && (ev.pairWhitelist || []).some(Boolean));
+  document.getElementById('newpairs').innerHTML = newpairs.length ? newpairs.slice(0,100).map(renderEvent).join('') : '<p class="empty">No displayable new pairs yet.</p>';
+  // 💧 Liquidity moves (v0.4.0): confirmed-only, like the other sections.
+  const lps = FEED.events.filter((ev) => (ev.type === 'lp-add' || ev.type === 'lp-remove') && ev.actorTier !== 'estimated');
+  document.getElementById('lpmoves').innerHTML = lps.length
+    ? `<p class="sub">Showing ${lps.length} moves (${lps.filter((e) => e.type === 'lp-add').length} adds, ${lps.filter((e) => e.type === 'lp-remove').length} removals)</p>` + lps.map(renderEvent).join('')
+    : '<p class="empty">No liquidity moves yet.</p>';
+  // 😴 Dormant returns (v0.4.0): 60+ days of silence, then a move.
+  const dormant = FEED.events.filter((ev) => ev.isDormantReturn && ev.actorTier !== 'estimated');
+  document.getElementById('dormant').innerHTML = dormant.length ? dormant.slice(0,100).map(renderEvent).join('') : '<p class="empty">No address has moved after 60+ days of silence yet.</p>';
+  // 👤 New faces (v0.4.0): first-appearance counterparties in the whole record.
+  const newfaces = FEED.events.filter((ev) => ev.isNewCounterparty && ev.actorTier !== 'estimated');
+  document.getElementById('newfaces').innerHTML = newfaces.length ? newfaces.slice(0,100).map(renderEvent).join('') : '<p class="empty">No new faces yet.</p>';
   // ⚠ Insider section (v0.2.5, user-narrowed): ONLY buys by X / X-related
   // before 14:00 JST on listing day 2026-06-30 (window epochs below).
   // Display capped at 100 with the total shown (records are never dropped).
@@ -435,7 +536,7 @@ function applyFilters(){
     ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">Showing the 100 most recent of ${insiders.length} moves (all of them are kept in the record)</p>` : '')
     : '<p class="empty">No matching pre-listing buys.</p>';
 }
-if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.alerts, section.fold')) {
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.alerts, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
   const h = sec.querySelector('h2');
   if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
 }
@@ -448,6 +549,14 @@ async function load(){
     document.getElementById('alertRule').textContent = 'Notable rule: (1) a validator\u2019s own buys and sells, (2) moves of 1,000 [42] or more. USDT bridge withdrawals are shown separately in the green section above. Only moves matching these rules are listed here (shown on this site only; nothing is posted externally).';
     document.getElementById('bridgeOutRule').textContent = 'Bridge withdrawal = a validator itself, or a directly related wallet, sending USDT out of the 42 Chain to an external chain through a bridge. These moves glow green in this dedicated section (they are not put in Notable). Bridge sends of tokens other than USDT are recorded as regular moves and are not shown here. Inbound receipts (receiving on the 42 Chain side) are treated as ordinary transfers.';
     document.getElementById('snipeRule').textContent = 'Snipe = a validator itself, or a directly related wallet, buying on a pair within 3 hours of that pair\u2019s creation (buys only \u2014 LP adds are not counted as snipes). Matching moves are listed here, prominently.';
+    document.getElementById('dormantRule').textContent = 'Dormant return: a watched address (a validator itself, a related address, or a core-labelled EOA — pair and other contracts and estimated addresses are excluded) that moves again after 60 or more days with no move in this site\u2019s record. The returning move is marked \u201cFirst move in N days\u201d.';
+    if (s.price) {
+      const pb = document.getElementById('pricebar');
+      const chg = s.price.change24hPct;
+      const chgHtml = chg == null ? 'vs. 24h ago —' : `vs. 24h ago <span class="${chg >= 0 ? 'chg-up' : 'chg-dn'}">${chg >= 0 ? '+' : ''}${chg}%</span>`;
+      pb.innerHTML = `[42] price: <b>about ${s.price.usdt} USDT</b> (${chgHtml})<br><span class="note">Calculated from the trading pool's reserves. The pool is small, so the figure has a margin of error.</span>`;
+      pb.style.display = '';
+    }
     const vsel = document.getElementById('fValidator');
     if (vsel.options.length <= 1) for (const v of FEED.validators) { const o = document.createElement('option'); o.value = v.moniker; o.textContent = valNameText(v.moniker); vsel.appendChild(o); }
     const tsel = document.getElementById('fToken');
@@ -457,9 +566,10 @@ async function load(){
     }
     document.querySelector('#sec-validators h2').textContent = `Validators (${FEED.validators.length})`;
     document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
-      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">also core infra</span>' : ''}${v.inactive ? ' <span class="badge">currently inactive</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} related addresses / ${v.estimatedCount ?? 0} estimated</span></div>`).join('');
+      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">also core infra</span>' : ''}${v.inactive ? ' <span class="badge">currently inactive</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} related addresses (incl. ${v.autoAddedCount ?? 0} auto-added) / ${v.estimatedCount ?? 0} estimated</span></div>`).join('');
     applyFilters();
     renderBridgeChart();
+    renderStaking();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
     { const d = document.getElementById('estimated-def'); if (d && location.hash === '#estimated-def') { d.open = true; setTimeout(() => d.scrollIntoView({behavior:'smooth'}), 80); } }
   } catch (e) {

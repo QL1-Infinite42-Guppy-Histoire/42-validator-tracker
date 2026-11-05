@@ -26,6 +26,11 @@
   a.card.bridge h2{color:#69db7c}
   a.card.alerts{background:#2a2110;border:1px solid #6b5518}
   a.card.alerts h2{color:#ffd166}
+  .pricecard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:1rem}
+  .pricecard b{font-size:1.6rem;color:var(--ok)}
+  .pricecard .chg-up{color:#69db7c;font-weight:700}
+  .pricecard .chg-dn{color:#ff8fa3;font-weight:700}
+  .pricecard .note{color:var(--sub);font-size:.82rem}
   .lang{margin-top:18px}
   .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
   .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
@@ -40,6 +45,7 @@
   <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <b>English</b></div></div>
   <p class="sub">This site automatically collects the moves of the validators themselves and of the addresses confirmed to transact with them directly. Pick a section to jump to it.</p>
   <div class="status" id="status">Loading…</div>
+  <div class="pricecard" id="pricecard" style="display:none"></div>
 </header>
 <main>
   <div class="cards">
@@ -52,6 +58,11 @@
       <h2>🎯 Snipe Alerts</h2>
       <p>Buys by a validator itself or a directly related wallet within 3 hours of a pair's creation (LP adds are not counted).</p>
       <div class="count" id="c-snipes">—</div>
+    </a>
+    <a class="card" href="en.html#sec-newpairs">
+      <h2>🆕 New Pairs</h2>
+      <p>Newly created pairs on the Don't Panic DEX (only pairs containing at least one of the 17 listed tokens are shown), with the creator and the first liquidity.</p>
+      <div class="count" id="c-newpairs">—</div>
     </a>
     <a class="card bridge" href="en.html#sec-bridge">
       <h2>🌉 Bridge Withdrawals (USDT, outbound)</h2>
@@ -68,10 +79,30 @@
       <p>Validator-self trades and large moves of 1,000 [42] or more.</p>
       <div class="count" id="c-alerts">—</div>
     </a>
+    <a class="card" href="en.html#sec-lp">
+      <h2>💧 Liquidity Moves</h2>
+      <p>Liquidity additions (deposits into pools) and removals (withdrawals) in one section. A large withdrawal can be a sign of exit.</p>
+      <div class="count" id="c-lp">—</div>
+    </a>
+    <a class="card" href="en.html#sec-dormant">
+      <h2>😴 Back After a Long Silence</h2>
+      <p>Watched addresses that moved again after 60 or more days of silence.</p>
+      <div class="count" id="c-dormant">—</div>
+    </a>
+    <a class="card" href="en.html#sec-newfaces">
+      <h2>👤 New Faces</h2>
+      <p>Counterparties a watched address transacted with for the first time in the whole record. Newly appearing counterparties are added to the watchlist automatically.</p>
+      <div class="count" id="c-newfaces">—</div>
+    </a>
     <a class="card" href="en.html#sec-feed">
       <h2>📜 Latest Activity (full record)</h2>
       <p>Every recorded move on the EVM and Cosmos sides, filterable by validator, type and token. Moves by estimated addresses are included here, clearly marked as estimated (the special sections stay confirmed-only).</p>
       <div class="count" id="c-total">—</div>
+    </a>
+    <a class="card" href="en.html#sec-staking">
+      <h2>🏦 Delegations &amp; Rewards</h2>
+      <p>Totals for delegations, undelegations and reward claims (delegation rewards and the validators' own operating rewards), with a per-validator breakdown.</p>
+      <div class="count" id="c-staking">—</div>
     </a>
     <a class="card" href="en.html#sec-validators">
       <h2>👥 Validators</h2>
@@ -83,8 +114,8 @@
   <p class="lang">🌐 日本語版： <a href="home.html">トップページ</a> ／ <a href="index.html">追跡ページ</a></p>
 </main>
 <footer>
-  Data source: the 42 Chain blocks themselves (via RPC). Moves by estimated addresses appear in Latest Activity only, clearly marked as estimated; the special sections stay confirmed-only. Alerts are shown on this site only.
-  <br>Version: <b>v0.3.2</b> (top page)
+  Data source: the 42 Chain blocks themselves (via RPC). Coverage is limited to transactions on the 42 Chain only (EVM chain ID 421018 and its Cosmos side, infinite_421018-1). Transactions on QL1 or any other chain are not included. Moves by estimated addresses appear in Latest Activity only, clearly marked as estimated; the special sections stay confirmed-only. Alerts are shown on this site only.
+  <br>Version: <b>v0.4.0</b> (top page)
 </footer>
 <script>
 (async () => {
@@ -101,6 +132,19 @@
     document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
     const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
     document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
+    if (s.price) {
+      const pc = document.getElementById('pricecard');
+      const chg = s.price.change24hPct;
+      const chgHtml = chg == null ? 'vs. 24h ago —' : `vs. 24h ago <span class="${chg >= 0 ? 'chg-up' : 'chg-dn'}">${chg >= 0 ? '+' : ''}${chg}%</span>`;
+      pc.innerHTML = `[42] price: <b>about ${s.price.usdt} USDT</b> (${chgHtml})<br><span class="note">Calculated from the trading pool's reserves. The pool is small, so the figure has a margin of error.</span>`;
+      pc.style.display = '';
+    }
+    document.getElementById('c-newpairs').textContent = ev.filter((e) => e.type === 'pair-created' && (e.pairWhitelist || []).some(Boolean)).length;
+    document.getElementById('c-lp').textContent = ev.filter((e) => (e.type === 'lp-add' || e.type === 'lp-remove') && e.actorTier !== 'estimated').length;
+    document.getElementById('c-dormant').textContent = ev.filter((e) => e.isDormantReturn && e.actorTier !== 'estimated').length;
+    document.getElementById('c-newfaces').textContent = ev.filter((e) => e.isNewCounterparty && e.actorTier !== 'estimated').length;
+    const st = FEED.stats && FEED.stats.staking;
+    document.getElementById('c-staking').textContent = st ? `${st.totals.delegate.count} delegations / ${st.totals.commission.amount42} [42] commission` : '—';
     document.getElementById('c-total').textContent = s.totalEvents;
     document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23);
   } catch (e) {

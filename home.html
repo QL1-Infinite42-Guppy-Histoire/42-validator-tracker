@@ -26,6 +26,11 @@
   a.card.bridge h2{color:#69db7c}
   a.card.alerts{background:#2a2110;border:1px solid #6b5518}
   a.card.alerts h2{color:#ffd166}
+  .pricecard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:1rem}
+  .pricecard b{font-size:1.6rem;color:var(--ok)}
+  .pricecard .chg-up{color:#69db7c;font-weight:700}
+  .pricecard .chg-dn{color:#ff8fa3;font-weight:700}
+  .pricecard .note{color:var(--sub);font-size:.82rem}
   .lang{margin-top:18px}
   .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
   .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
@@ -40,6 +45,7 @@
   <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="home-en.html" id="langOther">English</a></div></div>
   <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを自動で拾って表示するサイトです。見たい項目を選んでください。</p>
   <div class="status" id="status">読み込み中…</div>
+  <div class="pricecard" id="pricecard" style="display:none"></div>
 </header>
 <main>
   <div class="cards">
@@ -52,6 +58,11 @@
       <h2>🎯 スナイプ速報</h2>
       <p>ペアが作られてから3時間以内に、バリデーター本人または直接関連ウォレットが買った動き（LP追加は含みません）。</p>
       <div class="count" id="c-snipes">—</div>
+    </a>
+    <a class="card" href="index.html#sec-newpairs">
+      <h2>🆕 新規ペア速報</h2>
+      <p>Don't Panic の取引所で新しく作られたペア（17銘柄のうち少なくとも1つを含むものだけ表示）。作った人と最初の流動性も分かります。</p>
+      <div class="count" id="c-newpairs">—</div>
     </a>
     <a class="card bridge" href="index.html#sec-bridge">
       <h2>🌉 ブリッジ出金（USDT・外部へ）</h2>
@@ -68,10 +79,30 @@
       <p>バリデーター本人の売買と、1,000 [42] 以上の大きな移動を集めた欄です。</p>
       <div class="count" id="c-alerts">—</div>
     </a>
+    <a class="card" href="index.html#sec-lp">
+      <h2>💧 流動性の動き</h2>
+      <p>LP追加（プールへの預け入れ）とLP解除（引き上げ）を集めた欄。大きな引き上げは撤退の兆候として注目です。</p>
+      <div class="count" id="c-lp">—</div>
+    </a>
+    <a class="card" href="index.html#sec-dormant">
+      <h2>😴 久しぶりに動いたアドレス</h2>
+      <p>60日以上動きがなかった監視アドレスが、久しぶりに動いた記録です。</p>
+      <div class="count" id="c-dormant">—</div>
+    </a>
+    <a class="card" href="index.html#sec-newfaces">
+      <h2>👤 新しい顔ぶれ</h2>
+      <p>監視アドレスが全記録の中で初めてやり取りした相手。新しく現れた相手は自動で監視対象に追加されます。</p>
+      <div class="count" id="c-newfaces">—</div>
+    </a>
     <a class="card" href="index.html#sec-feed">
       <h2>📜 最新の動き（全記録）</h2>
       <p>EVM側＋Cosmos側の全ての記録。バリデーター別・種類別・銘柄別に絞り込めます。推定アドレスの動きも、推定と明記して含みます（特別欄は確定情報のみ）。</p>
       <div class="count" id="c-total">—</div>
+    </a>
+    <a class="card" href="index.html#sec-staking">
+      <h2>🏦 委任・報酬の集計</h2>
+      <p>委任・委任解除と、報酬請求（委任報酬／バリデーター本人の運営報酬）の合計と、バリデーター別の内訳です。</p>
+      <div class="count" id="c-staking">—</div>
     </a>
     <a class="card" href="index.html#sec-validators">
       <h2>👥 バリデーター一覧</h2>
@@ -83,8 +114,8 @@
   <p class="lang">🌐 English version: <a href="home-en.html">Top page (English)</a> ／ <a href="en.html">Tracker (English)</a></p>
 </main>
 <footer>
-  データの出どころ：42チェーンのブロックそのもの（RPC経由）。推定アドレスの動きは「最新の動き」にだけ推定と明記して表示し、特別欄は確定情報のみです。アラートはこのサイト内だけの表示です。
-  <br>バージョン：<b>v0.3.2</b>（トップページ）
+  データの出どころ：42チェーンのブロックそのもの（RPC経由）。対象は 42 Chain（EVM チェーンID 421018 と、その Cosmos 側 infinite_421018-1）の取引のみです。QL1 など他のチェーンの取引は含みません。推定アドレスの動きは「最新の動き」にだけ推定と明記して表示し、特別欄は確定情報のみです。アラートはこのサイト内だけの表示です。
+  <br>バージョン：<b>v0.4.0</b>（トップページ）
 </footer>
 <script>
 (async () => {
@@ -101,6 +132,19 @@
     document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
     const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
     document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length + ' 件';
+    if (s.price) {
+      const pc = document.getElementById('pricecard');
+      const chg = s.price.change24hPct;
+      const chgHtml = chg == null ? '前日比 —' : `前日比 <span class="${chg >= 0 ? 'chg-up' : 'chg-dn'}">${chg >= 0 ? '+' : ''}${chg}%</span>`;
+      pc.innerHTML = `[42] の価格：<b>約 ${s.price.usdt} USDT</b>（${chgHtml}）<br><span class="note">取引プールの残高からの計算値です。プールが小さいため誤差があります。</span>`;
+      pc.style.display = '';
+    }
+    document.getElementById('c-newpairs').textContent = ev.filter((e) => e.type === 'pair-created' && (e.pairWhitelist || []).some(Boolean)).length + ' 件';
+    document.getElementById('c-lp').textContent = ev.filter((e) => (e.type === 'lp-add' || e.type === 'lp-remove') && e.actorTier !== 'estimated').length + ' 件';
+    document.getElementById('c-dormant').textContent = ev.filter((e) => e.isDormantReturn && e.actorTier !== 'estimated').length + ' 件';
+    document.getElementById('c-newfaces').textContent = ev.filter((e) => e.isNewCounterparty && e.actorTier !== 'estimated').length + ' 件';
+    const st = FEED.stats && FEED.stats.staking;
+    document.getElementById('c-staking').textContent = st ? `委任 ${st.totals.delegate.count}件／コミッション ${st.totals.commission.amount42} [42]` : '—';
     document.getElementById('c-total').textContent = s.totalEvents + ' 件';
     document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23) + ' 名';
   } catch (e) {
