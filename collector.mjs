@@ -209,7 +209,7 @@ export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター
 // part of X's insider set either.)
 export const X_VALIDATOR_ADDR = '0xdb34ff92995c74d170755a563a1a2c35a3db4738'; // watchlist validator entry, moniker 'X'
 export const DONT_TOKEN = '0xfaa842c8871f7f99c183f77871f79ce07dd056cd'; // whitelist PANIC contract == DONT
-export const INSIDER_RULE = 'インサイダー欄：バリデーターX本人とXの直接関連アドレスによる、[42] と DONT（PANIC）の動きだけを表示します';
+export const INSIDER_RULE = 'インサイダー欄：リスティング当日（2026年6月30日）14時00分（日本時間）より前に、バリデーターX本人とXの直接関連アドレスが行った [42] と DONT（PANIC）の「買い」だけを表示します。それ以外の動きは通常の記録に含まれます';
 export function isInsiderEvent(ev, ctx) {
   const ae = ctx.entry(ev.actor);
   if (!ae) return false;

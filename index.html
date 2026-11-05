@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42チェーン バリデーター リアルタイム追跡 v0.2.4</title>
+<title>42チェーン バリデーター リアルタイム追跡 v0.2.5</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -55,7 +55,7 @@
 <header>
   <h1>42チェーン バリデーター リアルタイム追跡</h1>
   <p class="sub"><a href="en.html">English version</a></p>
-  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.4）。推定のつながりは含みません。</p>
+  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.5）。推定のつながりは含みません。</p>
   <div class="status" id="status">読み込み中…</div>
 </header>
 <main>
@@ -141,7 +141,7 @@
   表示している銘柄は Don't Panic 掲載の17銘柄が中心です（それ以外は「対象外銘柄」と表示）。金額の大小で記録を落とすことはしていません（小さな送金も全て記録）。
   v0.2.0 の範囲：EVM側＋Cosmos側（送金・委任・報酬請求）／操作の種類は判別できた範囲で具体名表示（Fluke参加・NFTミント・報酬請求・ブリッジ送信など、判別できないものは「未分類の操作（メソッド／宛先）」）／ブリッジ出金欄は USDT を外部へ送った動きだけが対象（USDT以外のブリッジ送信は通常の動きとして記録し、専用の緑色の欄には入れない／入金は通常の受取）／推定リンクは Phase 3／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
   Cosmos側の取引リンクは自作の Cosmos スキャナー（42 Cosmos Scan）に飛びます。見出しの名前は「動いた本人」だけを表示し、関係するバリデーターは別の行に分けて書きます（複数のバリデーターと取引する共通の相手先には「共有の相手先」の印が付きます）。
-  <br>バージョン：<b>v0.2.4</b>（v0.2.3＋最上部に紫色の警告風「⚠ インサイダー」欄を追加：バリデーターX本人とX関連アドレスの [42] と DONT の動きだけを表示。過去分も全履歴の索引から掘り起こして収録＋スナイプの定義を「買いのみ」に変更し、LP追加は含まないことに明記）
+  <br>バージョン：<b>v0.2.5</b>（v0.2.4＋インサイダー欄の表示を「リスティング当日（2026年6月30日）14時00分より前の、X本人とX関連アドレスによる [42] と DONT の買い」だけに絞り込み）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -219,14 +219,15 @@ function applyFilters(){
   document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">直近のブリッジ出金はありません。</p>';
   const snipes = FEED.events.filter((ev) => ev.isSnipe);
   document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">直近のスナイプは検出されていません。</p>';
-  // ⚠ Insider section (v0.2.4): X-cluster [42]/DONT moves, newest first,
-  // display capped at 100 with the total shown (records are never dropped).
-  const insiders = FEED.events.filter((ev) => ev.isInsider)
+  // ⚠ Insider section (v0.2.5, user-narrowed): ONLY buys by X / X-related
+  // before 14:00 JST on listing day 2026-06-30 (window epochs below).
+  // Display capped at 100 with the total shown (records are never dropped).
+  const insiders = FEED.events.filter((ev) => ev.isInsider && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
     .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
   document.getElementById('insiderRule').textContent = (FEED.status.insiderRule || '') + (insiders.length ? `（該当 ${insiders.length} 件）` : '');
   document.getElementById('insiders').innerHTML = insiders.length
     ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">全${insiders.length}件のうち、新しい順に100件を表示しています（全件が記録に残っています）</p>` : '')
-    : '<p class="empty">直近のインサイダー該当の動きはありません。</p>';
+    : '<p class="empty">該当する買い（リスティング当日14時より前）はありません。</p>';
 }
 async function load(){
   try {

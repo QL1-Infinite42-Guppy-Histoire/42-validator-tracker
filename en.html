@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.2.4</title>
+<title>42 Chain Validator Real-Time Tracker v0.2.5</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -55,7 +55,7 @@
 <header>
   <h1>42 Chain Validator Real-Time Tracker</h1>
   <p class="sub"><a href="index.html">日本語版</a></p>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.4). Estimated links are not included.</p>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.5). Estimated links are not included.</p>
   <div class="status" id="status">Loading…</div>
 </header>
 <main>
@@ -141,7 +141,7 @@
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated links are Phase 3. Nothing is posted externally (no X bot) — alerts live on this site only.
   Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark).
-  <br>Version: <b>v0.2.4</b> (v0.2.3 + a purple warning-style "⚠ Insider Watch — X" section at the very top: only validator X's own and X-related wallets' moves in [42] and DONT, with historical moves backfilled from the full-history index + the snipe definition narrowed to buys only, LP adds explicitly excluded)
+  <br>Version: <b>v0.2.5</b> (v0.2.4 + the Insider Watch section now shows ONLY the buys of [42] and DONT by X itself and X-related addresses made before 14:00 JST on listing day, June 30, 2026)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -318,14 +318,15 @@ function applyFilters(){
   document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">No recent bridge withdrawals.</p>';
   const snipes = FEED.events.filter((ev) => ev.isSnipe);
   document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">No snipes detected in the recent feed.</p>';
-  // ⚠ Insider section (v0.2.4): X-cluster [42]/DONT moves, newest first,
-  // display capped at 100 with the total shown (records are never dropped).
-  const insiders = FEED.events.filter((ev) => ev.isInsider)
+  // ⚠ Insider section (v0.2.5, user-narrowed): ONLY buys by X / X-related
+  // before 14:00 JST on listing day 2026-06-30 (window epochs below).
+  // Display capped at 100 with the total shown (records are never dropped).
+  const insiders = FEED.events.filter((ev) => ev.isInsider && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
     .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
-  document.getElementById('insiderRule').textContent = 'Insider Watch: only the moves in [42] and DONT (PANIC) made by validator X itself and the addresses directly related to X.' + (insiders.length ? ` (${insiders.length} matching moves)` : '');
+  document.getElementById('insiderRule').textContent = 'Insider Watch: only the BUYS of [42] and DONT (PANIC) made by validator X itself and the addresses directly related to X before 14:00 JST on listing day (June 30, 2026). All other moves are in the regular record.' + (insiders.length ? ` (${insiders.length} matching buys)` : '');
   document.getElementById('insiders').innerHTML = insiders.length
     ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">Showing the 100 most recent of ${insiders.length} moves (all of them are kept in the record)</p>` : '')
-    : '<p class="empty">No insider-matching moves in the recent feed.</p>';
+    : '<p class="empty">No matching pre-listing buys.</p>';
 }
 async function load(){
   try {
