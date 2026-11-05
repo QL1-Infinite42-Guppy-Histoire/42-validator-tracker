@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T23:35:14.574Z",
+ "generatedAt": "2026-11-05T23:40:12.286Z",
  "status": {
-  "lastProcessedBlock": 4287889,
-  "latestBlockSeen": 4287889,
-  "lastProcessedCosmosBlock": 4287889,
-  "lastProcessedAt": "2026-11-05T23:35:14.415Z",
-  "totalEvents": 9230,
+  "lastProcessedBlock": 4287944,
+  "latestBlockSeen": 4287944,
+  "lastProcessedCosmosBlock": 4287944,
+  "lastProcessedAt": "2026-11-05T23:40:12.175Z",
+  "totalEvents": 9231,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T23:35:14.594Z"
+   "checkedAt": "2026-11-05T23:40:12.315Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
-   "usdt": 0.68519849,
-   "updatedAt": "2026-11-05T23:35:14.000Z",
+   "usdt": 0.69286537,
+   "updatedAt": "2026-11-05T23:40:12.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4287563,
+    "toBlock": 4287893,
     "fromTs": 1770178474,
-    "toTs": 1793919945
+    "toTs": 1793921728
    },
    "totals": {
     "delegate": {
@@ -791,7 +791,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 110,
-   "relatedActivity": 109,
+   "relatedActivity": 110,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x43dd9c4150d45280157381c8bcda14b8a28f27f997a25145068745d800059a15:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1793921728,
+   "block": 4287893,
+   "txHash": "0x43dd9c4150d45280157381c8bcda14b8a28f27f997a25145068745d800059a15",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x3669090e8bc9e1095819eb3865343e1feafa2037bd7fdbf0cc15152fb2e6781c:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1793919945,
@@ -23941,50 +23975,6 @@
    ],
    "whitelisted": true,
    "summary": "299,627,127,539.493955 QOM を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true
-  },
-  {
-   "id": "0x19361523df7be309165f13851dac9b56d4ef1bbc4564fb414890f62d2c3c4ce4:0:transfer:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "ts": 1793265111,
-   "block": 4166342,
-   "txHash": "0x19361523df7be309165f13851dac9b56d4ef1bbc4564fb414890f62d2c3c4ce4",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xf4c14c0322e361f35eb9465c992fb1c21c91c156",
-    "symbol": "O",
-    "amountRaw": "747240133743667743386791547",
-    "amount": "747,240,133.743667",
-    "whitelisted": true
-   },
-   "from": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "to": "0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "tokens": [
-    "O"
-   ],
-   "whitelisted": true,
-   "summary": "747,240,133.743667 O を送金",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
