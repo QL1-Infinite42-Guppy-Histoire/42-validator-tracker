@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 Chain Validator Real-Time Tracker v0.2.9</title>
+<title>42 Chain Validator Real-Time Tracker v0.3.0</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -27,6 +27,13 @@
   .rule{font-size:.82rem;color:var(--warn)}
   section.snipes .rule{color:#ffb3ba}
   .badge.shared{color:#081018;background:#ffa94d;border-color:#ffa94d;font-weight:700}
+  .badge.estimated{color:#081018;background:#e8c476;border-color:#e8c476;font-weight:700}
+  .ev.estimated{border-style:dashed;border-color:#b5893c}
+  .alias{font-size:.6em;color:var(--sub);font-weight:600}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .langsw b{color:var(--txt)}
+  .est-toggle{align-self:center;font-size:.92rem;cursor:pointer}
   .badge.cosmos{color:#081018;background:#63e6be;border-color:#63e6be;font-weight:700}
   .badge.snipe{color:#fff;background:#ff5964;border-color:#ff5964;font-weight:700}
   .note{color:var(--warn);font-size:.82rem;margin-top:2px}
@@ -78,15 +85,14 @@
 </head>
 <body>
 <header>
-  <h1>42 Chain Validator Real-Time Tracker</h1>
-  <p class="sub"><a href="index.html">日本語版</a></p>
-  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.2.9). Estimated links are not included.</p>
+  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b></div></div>
+  <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of the addresses confirmed to transact with them directly (EVM side + Cosmos side, v0.3.0). Moves by addresses whose link is only estimated appear in Latest activity only, clearly marked as estimated (the special sections stay confirmed-only).</p>
   <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-alerts">⭐ Notable</a><a href="#sec-feed">Latest</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
 </header>
 <main>
   <section class="insider" id="sec-insider">
-    <h2>⚠ Insider Watch — X</h2>
+    <h2>⚠ Insider Watch — X<span class="alias"> (Rioshi)</span></h2>
     <p class="rule" id="insiderRule"></p>
     <div id="insiders"><p class="empty">Loading…</p></div>
   </section>
@@ -116,6 +122,7 @@
   </section>
 
   <section class="fold open" id="sec-feed"><h2>Latest activity</h2><div class="fold-body">
+  <p class="sub">About estimated addresses (v0.3.0 / Phase 3): addresses whose link to a validator could not be confirmed by a direct transfer, estimated in three ways — (1) through-pool (a trade on the other side of the same pool matching within 10% in amount and 24 hours in time), (2) 2-hop (validator → this address → validator, both legs confirmed transfers), (3) shared counterparty (a third party transacting directly with 2 or more validators that is not already confirmed-related). Estimated moves appear only in Latest activity, with an Estimated badge and the basis shown. The special sections (Insider / Snipes / Notable / Bridge Withdrawals / Totals) use confirmed links only and never include estimates.</p>
   <div class="filters">
     <select id="fValidator"><option value="">Validator: All</option></select>
     <select id="fType">
@@ -161,21 +168,22 @@
       <option value="unclassified">Unclassified action</option>
     </select>
     <select id="fToken"><option value="">Token: All</option></select>
+    <label class="est-toggle"><input type="checkbox" id="fEstimated" checked> Show estimated</label>
   </div>
   <div id="feed"><p class="empty">Loading…</p></div>
   </div></section>
 
   <section class="fold" id="sec-validators"><h2>Validators (23)</h2><div class="fold-body">
-  <p class="sub">"Related addresses" is the number of addresses confirmed to have transacted directly with that validator.</p>
+  <p class="sub">"N related addresses" is the number of addresses confirmed to have transacted directly with that validator; "M estimated" counts addresses linked only by one of the three estimation methods (no confirmed direct transfer).</p>
   <div class="vals" id="validators"></div>
   </div></section>
 </main>
 <footer>
   Data source: the 42 Chain blocks themselves (via RPC). Tapping a transaction or address opens the official explorer, scan.infinitedrive.xyz.
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
-  Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated links are Phase 3. Nothing is posted externally (no X bot) — alerts live on this site only.
-  Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark).
-  <br>Version: <b>v0.2.9</b> (v0.2.8 + a new "Total USDT Bridged Out" section with the grand total and a per-name bar chart) with count badges linking into each section, plus tap-to-open collapsible sections on the tracker pages to keep the page compact)
+  Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated addresses (Phase 3): addresses whose link cannot be confirmed by a direct transfer are also watched, estimated in three ways — through-pool, 2-hop, and shared counterparty. Their moves appear only in Latest activity, with a dashed border, an Estimated badge and the basis shown; they are never included in the Insider / Snipes / Notable / Bridge Withdrawals / Totals sections (those stay confirmed-only). The validator list is refreshed from the chain on every run: newly bonded validators are added automatically, and validators that leave the bonded set stay watched as history (marked inactive). Nothing is posted externally (no X bot) — alerts live on this site only.
+  Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). Validator X is also known as Rioshi, shown in small text as (Rioshi) next to the name.
+  <br>Version: <b>v0.3.0</b> (Phase 3 complete: estimated-address watching + validator-list auto-refresh. Also: the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -208,17 +216,25 @@ const amtStr = (a) => a ? `${a.amount} ${sym(a.symbol)}` : '';
 
 let FEED = null;
 
+// Display-name helpers (v0.3.0): validator X is also known as Rioshi
+// (user-provided fact). Display-only suffix — monikers and filter values
+// stay the raw chain moniker. valName is for HTML, valNameText for text.
+const valName = (n) => n === 'X' ? 'X <span class="alias">(Rioshi)</span>' : n;
+const valNameText = (n) => n === 'X' ? 'X (Rioshi)' : n;
+
 function tierBadge(ev){
   if (ev.actorIsCore) return '<span class="badge core">Core (infrastructure)</span>';
   if (ev.actorTier === 'validator') return '<span class="badge self">Validator</span>';
   if (ev.actorTier === 'related') return '<span class="badge related">Related address</span>';
+  if (ev.actorTier === 'estimated') return '<span class="badge estimated">Estimated</span>';
   return '';
 }
 // Headline = the ACTOR only (same rule as the Japanese page).
 function whoLabel(ev){
-  if (ev.actorTier === 'validator' && ev.actorLabel && !hasJa(ev.actorLabel)) return ev.actorLabel;
+  if (ev.actorTier === 'validator' && ev.actorLabel && !hasJa(ev.actorLabel)) return valName(ev.actorLabel);
   if (ev.actorIsCore) return enLabel(ev.actorLabel) || shortAddr(ev.actor);
   if (ev.actorTier === 'related') return 'Related ' + shortAddr(ev.actor);
+  if (ev.actorTier === 'estimated') return 'Estimated ' + shortAddr(ev.actor);
   return enLabel(ev.actorLabel) || shortAddr(ev.actor);
 }
 function cpName(ev){
@@ -308,9 +324,17 @@ function summaryEn(ev){
 function relationLine(ev){
   if (ev.actorTier === 'validator') return '';
   const rel = ev.actorValidators || [];
+  if (ev.actorTier === 'estimated') {
+    let s = '';
+    if (rel.length === 1) s = `Related validators (estimated): <b class="rel-name">${valName(rel[0])}</b>`;
+    else if (rel.length >= 2) s = `Related validators (estimated): <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} more`;
+    const basisEn = ev.estimateBasis && ev.estimateBasis.textEn && !hasJa(ev.estimateBasis.textEn) ? ev.estimateBasis.textEn : '';
+    const note = basisEn ? `<div class="note">Basis for the estimate: ${basisEn}</div>` : '';
+    return (s ? `<div class="meta">${s}</div>` : '') + note;
+  }
   let s = '';
-  if (rel.length === 1) s = `Related validators: <b class="rel-name">${rel[0]}</b>`;
-  else if (rel.length >= 2) s = `Related validators: <b class="rel-name">${rel[0]}</b> + ${rel.length - 1} more`;
+  if (rel.length === 1) s = `Related validators: <b class="rel-name">${valName(rel[0])}</b>`;
+  else if (rel.length >= 2) s = `Related validators: <b class="rel-name">${valName(rel[0])}</b> + ${rel.length - 1} more`;
   const badge = ev.actorShared ? ' <span class="badge shared">Shared counterparty</span>' : '';
   const noteEn = enNote(ev.actorContractNote);
   const note = ev.actorShared
@@ -319,14 +343,14 @@ function relationLine(ev){
   return line + note;
 }
 function renderBridgeChart(){
-  const outs = FEED.events.filter((ev) => ev.type === 'bridge-out');
+  const outs = FEED.events.filter((ev) => ev.type === 'bridge-out' && ev.actorTier !== 'estimated');
   const groups = new Map(); let total = 0;
   for (const ev of outs) {
     const a = parseFloat(String((ev.amount && ev.amount.amount) || '0').replace(/,/g, '')) || 0;
     total += a;
     let name;
-    if (ev.actorTier === 'validator' && ev.actorLabel) name = ev.actorLabel + ' (itself)';
-    else { const rel = ev.actorValidators || []; name = rel.length ? rel[0] + ' — related' : (ev.actorLabel || shortAddr(ev.actor)); }
+    if (ev.actorTier === 'validator' && ev.actorLabel) name = valName(ev.actorLabel) + ' (itself)';
+    else { const rel = ev.actorValidators || []; name = rel.length ? valName(rel[0]) + ' — related' : (ev.actorLabel || shortAddr(ev.actor)); }
     const g = groups.get(name) || {sum: 0, n: 0}; g.sum += a; g.n += 1; groups.set(name, g);
   }
   const rows = [...groups.entries()].sort((x, y) => y[1].sum - x[1].sum);
@@ -338,9 +362,10 @@ function renderBridgeChart(){
     : '<p class="empty">No bridge withdrawals recorded yet.</p>';
 }
 function bigName(ev){
-  if (ev.actorTier === 'validator' && ev.actorLabel) return {main: ev.actorLabel, sub: 'the validator itself', cls: ' self'};
+  if (ev.actorTier === 'validator' && ev.actorLabel) return {main: valName(ev.actorLabel), sub: 'the validator itself', cls: ' self'};
   const rel = ev.actorValidators || [];
-  if (ev.actorTier === 'related' && rel.length) return {main: rel[0], sub: rel.length > 1 ? ` — related wallet (also related to ${rel.length - 1} more)` : ' — related wallet', cls: ''};
+  if (ev.actorTier === 'estimated') return {main: rel.length ? valName(rel[0]) : shortAddr(ev.actor), sub: rel.length > 1 ? ` — estimated related wallet (also estimated-related to ${rel.length - 1} more)` : ' — estimated related wallet', cls: ''};
+  if (ev.actorTier === 'related' && rel.length) return {main: valName(rel[0]), sub: rel.length > 1 ? ` — related wallet (also related to ${rel.length - 1} more)` : ' — related wallet', cls: ''};
   if (ev.actorIsCore && ev.actorLabel) return {main: ev.actorLabel, sub: 'core', cls: ''};
   if (ev.actorLabel) return {main: ev.actorLabel, sub: '', cls: ''};
   return {main: shortAddr(ev.actor), sub: ev.actorTier === 'related' ? 'related wallet' : '', cls: ''};
@@ -356,9 +381,9 @@ function renderEvent(ev){
   const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "Validator's own USDT bridge-out" : ev.actorTier === 'related' ? "Related wallet's USDT bridge-out" : 'USDT bridge-out'}</span>` : '';
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
   const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 Snipe (${ageEn(ev.pairAgeSecs)})</span>` : '';
-  const insider = ev.isInsider ? ' <span class="badge insider">⚠ Insider (X)</span>' : '';
+  const insider = ev.isInsider ? ` <span class="badge insider">⚠ Insider (${valName('X')})</span>` : '';
   const bn = bigName(ev);
-  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}">
+  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}">
     <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
     <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${cosmos}${snipe}${insider}</div>
@@ -371,22 +396,24 @@ function applyFilters(){
   const v = document.getElementById('fValidator').value;
   const t = document.getElementById('fType').value;
   const tk = document.getElementById('fToken').value;
-  const match = (ev) => (!v || (ev.validatorNames||[]).includes(v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk));
+  const showEst = document.getElementById('fEstimated').checked;
+  const match = (ev) => (!v || (ev.validatorNames||[]).includes(v)) && (!t || ev.type === t) && (!tk || (ev.tokens||[]).includes(tk)) && (showEst || ev.actorTier !== 'estimated');
   const list = FEED.events.filter(match);
   document.getElementById('feed').innerHTML = list.length ? list.map(renderEvent).join('') : '<p class="empty">No moves match the selected filters yet.</p>';
+  // Special sections are CONFIRMED-ONLY (v0.3.0): estimated actors excluded.
   const isBO = (ev) => ev.type === 'bridge-out' || (ev.notableReasons||[]).includes('bridge-out');
-  const alerts = FEED.events.filter((ev) => !isBO(ev) && (ev.notableReasons||[]).filter((r) => r !== 'bridge-out').length);
+  const alerts = FEED.events.filter((ev) => ev.actorTier !== 'estimated' && !isBO(ev) && (ev.notableReasons||[]).filter((r) => r !== 'bridge-out').length);
   document.getElementById('alerts').innerHTML = alerts.length ? alerts.slice(0,20).map(renderEvent).join('') : '<p class="empty">No notable moves right now.</p>';
-  const bridgeouts = FEED.events.filter(isBO);
+  const bridgeouts = FEED.events.filter((ev) => isBO(ev) && ev.actorTier !== 'estimated');
   document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">No recent bridge withdrawals.</p>';
-  const snipes = FEED.events.filter((ev) => ev.isSnipe);
+  const snipes = FEED.events.filter((ev) => ev.isSnipe && ev.actorTier !== 'estimated');
   document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">No snipes detected in the recent feed.</p>';
   // ⚠ Insider section (v0.2.5, user-narrowed): ONLY buys by X / X-related
   // before 14:00 JST on listing day 2026-06-30 (window epochs below).
   // Display capped at 100 with the total shown (records are never dropped).
-  const insiders = FEED.events.filter((ev) => ev.isInsider && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
+  const insiders = FEED.events.filter((ev) => ev.isInsider && ev.actorTier !== 'estimated' && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
     .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
-  document.getElementById('insiderRule').textContent = 'Insider Watch: only the BUYS of [42] and DONT (PANIC) made by validator X itself and the addresses directly related to X before 14:00 JST on listing day (June 30, 2026). All other moves are in the regular record.' + (insiders.length ? ` (${insiders.length} matching buys)` : '');
+  document.getElementById('insiderRule').textContent = 'Insider Watch: only the BUYS of [42] and DONT (PANIC) made by validator X (Rioshi) itself and the addresses directly related to X (Rioshi) before 14:00 JST on listing day (June 30, 2026). All other moves are in the regular record.' + (insiders.length ? ` (${insiders.length} matching buys)` : '');
   document.getElementById('insiders').innerHTML = insiders.length
     ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">Showing the 100 most recent of ${insiders.length} moves (all of them are kept in the record)</p>` : '')
     : '<p class="empty">No matching pre-listing buys.</p>';
@@ -400,19 +427,20 @@ async function load(){
     FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
     const s = FEED.status;
     document.getElementById('status').innerHTML =
-      `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> (chain tip ${s.latestBlockSeen ?? '—'}) / Cosmos last processed: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / Recorded moves: ${s.totalEvents} / Watching: ${s.watchSummary.validators} validators + ${s.watchSummary.directRelated} directly related addresses`;
+      `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> (chain tip ${s.latestBlockSeen ?? '—'}) / Cosmos last processed: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / Recorded moves: ${s.totalEvents} / Watching: ${s.watchSummary.validators} validators + ${s.watchSummary.directRelated} directly related addresses + ${s.watchSummary.estimated ?? 0} estimated${s.validatorsAdded ? ` / Validators auto-added this run: ${s.validatorsAdded.map(valNameText).join(', ')}` : ''}`;
     document.getElementById('alertRule').textContent = 'Notable rule: (1) a validator\u2019s own buys and sells, (2) moves of 1,000 [42] or more. USDT bridge withdrawals are shown separately in the green section above. Only moves matching these rules are listed here (shown on this site only; nothing is posted externally).';
     document.getElementById('bridgeOutRule').textContent = 'Bridge withdrawal = a validator itself, or a directly related wallet, sending USDT out of the 42 Chain to an external chain through a bridge. These moves glow green in this dedicated section (they are not put in Notable). Bridge sends of tokens other than USDT are recorded as regular moves and are not shown here. Inbound receipts (receiving on the 42 Chain side) are treated as ordinary transfers.';
     document.getElementById('snipeRule').textContent = 'Snipe = a validator itself, or a directly related wallet, buying on a pair within 3 hours of that pair\u2019s creation (buys only \u2014 LP adds are not counted as snipes). Matching moves are listed here, prominently.';
     const vsel = document.getElementById('fValidator');
-    if (vsel.options.length <= 1) for (const v of FEED.validators) { const o = document.createElement('option'); o.value = v.moniker; o.textContent = v.moniker; vsel.appendChild(o); }
+    if (vsel.options.length <= 1) for (const v of FEED.validators) { const o = document.createElement('option'); o.value = v.moniker; o.textContent = valNameText(v.moniker); vsel.appendChild(o); }
     const tsel = document.getElementById('fToken');
     if (tsel.options.length <= 1) {
       const toks = [...new Set(FEED.events.flatMap((e) => e.tokens || []))].sort();
       for (const tk of toks) { const o = document.createElement('option'); o.value = tk; o.textContent = tk; tsel.appendChild(o); }
     }
+    document.querySelector('#sec-validators h2').textContent = `Validators (${FEED.validators.length})`;
     document.getElementById('validators').innerHTML = FEED.validators.map((v) =>
-      `<div class="val"><b>${v.moniker}</b>${v.isCore ? ' <span class="badge core">also core infra</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} related addresses</span></div>`).join('');
+      `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">also core infra</span>' : ''}${v.inactive ? ' <span class="badge">currently inactive</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} related addresses / ${v.estimatedCount ?? 0} estimated</span></div>`).join('');
     applyFilters();
     renderBridgeChart();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
@@ -420,7 +448,8 @@ async function load(){
     document.getElementById('status').textContent = 'Could not load feed.json (the collector may not have run yet).';
   }
 }
-for (const id of ['fValidator','fType','fToken']) document.getElementById(id).addEventListener('change', applyFilters);
+for (const id of ['fValidator','fType','fToken','fEstimated']) document.getElementById(id).addEventListener('change', applyFilters);
+{ const lo = document.getElementById('langOther'); if (lo && typeof location !== 'undefined' && location.hash) lo.href = 'index.html' + location.hash; }
 load();
 setInterval(load, 30000);
 </script>

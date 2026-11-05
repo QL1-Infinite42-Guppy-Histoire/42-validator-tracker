@@ -41,7 +41,7 @@ console.log('old (v0.1.0) headline for the …30E0 event:', OLD_HEADLINE);
 console.log('new headline:', whoLabel(evRelated));
 check('related headline is actor-only', whoLabel(evRelated) === '関連 0x…30E0');
 const relHtml = renderEvent(evRelated);
-check('relation line capped (first + count)', relHtml.includes('関係バリデーター：farmer ほか7名'));
+check('relation line capped (first + count)', relHtml.includes('関係バリデーター：<b class="rel-name">farmer</b> ほか7名'));
 check('shared-counterparty badge present', relHtml.includes('共有の相手先'));
 check('shared note present', relHtml.includes('複数のバリデーターと取引する共通の相手先です（バリデーター本人ではありません）'));
 check('contract note present for 0x71b1…', relHtml.includes('コントラクト'));

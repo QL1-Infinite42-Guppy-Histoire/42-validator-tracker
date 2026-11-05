@@ -16,10 +16,13 @@
 # blocks newer than the checkpoint, and commits the updated data files back.
 #
 # Notes / caveats:
-#  - Do NOT add a watchlist-rebuild step here: build-watchlist.mjs reads the
-#    research data in ~/workspace/42-flowmap etc., which does not exist in the
-#    Actions runner. watchlist.json / registries.json are committed artifacts;
-#    regenerate them locally and commit when the research data changes.
+#  - Do NOT add a watchlist-rebuild step here: build-watchlist.mjs and
+#    build-estimates.mjs read the research data in ~/workspace/42-flowmap
+#    etc., which does not exist in the Actions runner. watchlist.json /
+#    registries.json are committed artifacts; regenerate them locally and
+#    commit when the research data changes. (v0.3.0: the collector's own
+#    validator auto-refresh CAN run here — it only needs the chain RPC —
+#    and any watchlist.json change it makes is committed back below.)
 #  - Scheduled workflows run only on the default branch and can be disabled by
 #    GitHub after 60 days without repository activity (the data commits from
 #    this workflow themselves count as activity).
@@ -56,7 +59,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in feed.json events.jsonl state.json pairs-cache.json pairs-creation.json; do
+          for f in feed.json events.jsonl state.json pairs-cache.json pairs-creation.json watchlist.json; do
             [ -f "$f" ] && git add "$f"
           done
           if git diff --cached --quiet; then

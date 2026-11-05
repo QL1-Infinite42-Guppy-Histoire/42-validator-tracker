@@ -27,21 +27,25 @@
   a.card.alerts{background:#2a2110;border:1px solid #6b5518}
   a.card.alerts h2{color:#ffd166}
   .lang{margin-top:18px}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .langsw b{color:var(--txt)}
+  .alias{font-size:.6em;color:var(--sub);font-weight:600}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   a{color:var(--acc)}
 </style>
 </head>
 <body>
 <header>
-  <h1>42 Chain Validator Real-Time Tracker</h1>
+  <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <b>English</b></div></div>
   <p class="sub">This site automatically collects the moves of the validators themselves and of the addresses confirmed to transact with them directly. Pick a section to jump to it.</p>
   <div class="status" id="status">Loading…</div>
 </header>
 <main>
   <div class="cards">
     <a class="card insider" href="en.html#sec-insider">
-      <h2>⚠ Insider Watch — X</h2>
-      <p>Only the buys of [42] and DONT made by validator X itself and X-related addresses before 14:00 JST on listing day (June 30, 2026).</p>
+      <h2>⚠ Insider Watch — X<span class="alias"> (Rioshi)</span></h2>
+      <p>Only the buys of [42] and DONT made by validator X (Rioshi) itself and X (Rioshi)-related addresses before 14:00 JST on listing day (June 30, 2026).</p>
       <div class="count" id="c-insider">—</div>
     </a>
     <a class="card snipes" href="en.html#sec-snipes">
@@ -66,20 +70,20 @@
     </a>
     <a class="card" href="en.html#sec-feed">
       <h2>📜 Latest Activity (full record)</h2>
-      <p>Every recorded move on the EVM and Cosmos sides, filterable by validator, type and token.</p>
+      <p>Every recorded move on the EVM and Cosmos sides, filterable by validator, type and token. Moves by estimated addresses are included here, clearly marked as estimated (the special sections stay confirmed-only).</p>
       <div class="count" id="c-total">—</div>
     </a>
     <a class="card" href="en.html#sec-validators">
       <h2>👥 Validators</h2>
-      <p>The 23 validators being watched.</p>
+      <p>The validators being watched (the list refreshes from the chain automatically).</p>
       <div class="count" id="c-validators">—</div>
     </a>
   </div>
   <p class="lang">🌐 日本語版： <a href="home.html">トップページ</a> ／ <a href="index.html">追跡ページ</a></p>
 </main>
 <footer>
-  Data source: the 42 Chain blocks themselves (via RPC). Estimated links are not included. Alerts are shown on this site only.
-  <br>Version: <b>v0.2.9</b> (top page)
+  Data source: the 42 Chain blocks themselves (via RPC). Moves by estimated addresses appear in Latest Activity only, clearly marked as estimated; the special sections stay confirmed-only. Alerts are shown on this site only.
+  <br>Version: <b>v0.3.0</b> (top page)
 </footer>
 <script>
 (async () => {
@@ -88,14 +92,14 @@
     const s = FEED.status, ev = FEED.events;
     document.getElementById('status').innerHTML =
       `Last processed block: <b>${s.lastProcessedBlock ?? '—'}</b> / Cosmos side: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Updated: ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('en-US',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / Recorded moves: ${s.totalEvents}`;
-    const insider = ev.filter((e) => e.isInsider && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
+    const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
     document.getElementById('c-insider').textContent = insider;
-    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe).length;
-    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out').length;
-    const bsum = ev.filter((e) => e.type === 'bridge-out').reduce((t, e) => t + (parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0), 0);
+    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
+    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
+    const bsum = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').reduce((t, e) => t + (parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0), 0);
     document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
     const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
-    document.getElementById('c-alerts').textContent = ev.filter((e) => !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
+    document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
     document.getElementById('c-total').textContent = s.totalEvents;
     document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23);
   } catch (e) {

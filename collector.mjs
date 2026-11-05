@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// 42 Validator Tracker — collector (v0.2.4: EVM side + Cosmos side,
-// USDT-only bridge-out section, buys-only snipes, insider flag for X).
+// 42 Validator Tracker — collector (v0.3.0: EVM side + Cosmos side,
+// estimated tier + validator-list auto-refresh; v0.2.4: USDT-only
+// bridge-out section, buys-only snipes, insider flag for X).
 //
 // Polls the 42 Chain EVM RPC for new blocks, decodes receipts with NO external
 // dependencies (topic hashes are the standard ERC-20 / Uniswap V2 ones,
@@ -55,6 +56,20 @@
 //    Plus the ⚠ Insider flag (isInsider): validator X itself or an
 //    X-related wallet moving [42] or DONT (whitelist PANIC contract);
 //    insider events are pinned into the feed like snipes/bridge-outs.
+//  - v0.3.0 (Phase 3): ESTIMATED addresses. A third watch tier built from
+//    the 2026-10-31 flow-map research (build-estimates.mjs): through-pool
+//    matches (relaxed FIFO, 24h / 10%), 2-hop paths over confirmed legs,
+//    and shared counterparties of >= 2 validators that are not already
+//    watched. Estimated actors are watched live on BOTH sides like the
+//    other tiers, but their events are tagged actorTier "estimated" with a
+//    concrete estimateBasis, are NEVER flagged snipe / insider / bridge-out
+//    (enrichEvent strips those), are NOT pinned into the feed, and appear
+//    ONLY in the main feed with 推定 styling — the special sections and
+//    the USDT totals stay confirmed-only by construction AND by explicit
+//    frontend filters. Also: the validator list now auto-refreshes from
+//    the chain on every run (refreshValidatorList): new bonded validators
+//    are added as self-tier entries with their on-chain moniker (never an
+//    invented name), departed ones are marked inactive but stay watched.
 //
 // Standing rules honoured here:
 //  - NO minimum-amount filtering anywhere: a watched transfer of any size,
@@ -86,7 +101,7 @@ const RPC_HOSTS = ['https://evm-rpc.infinitepanda.xyz', 'https://evm-rpc-infinit
 const COMET_HOSTS = ['https://comet-rpc.infinitepanda.xyz', 'https://comet-rpc-infinite.mschihuahua.org', 'https://comet-rpc.infinitedrive.xyz'];
 const FACTORY = '0x3157c6aca800d507af95ab1466adba3a6f11ee1a';
 const BLOCKSCOUT = 'https://scan.infinitedrive.xyz/api/v2';
-const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36 42-validator-tracker/0.2';
+const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36 42-validator-tracker/0.3';
 const W42 = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'; // wrapped/native [42] marker used across the flowmap data
 const ZERO = '0x0000000000000000000000000000000000000000';
 const ROUTER = '0xbf07dfe35746894bae373f63f4bf2379f9bafec0';
@@ -209,7 +224,8 @@ export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター
 // part of X's insider set either.)
 export const X_VALIDATOR_ADDR = '0xdb34ff92995c74d170755a563a1a2c35a3db4738'; // watchlist validator entry, moniker 'X'
 export const DONT_TOKEN = '0xfaa842c8871f7f99c183f77871f79ce07dd056cd'; // whitelist PANIC contract == DONT
-export const INSIDER_RULE = 'インサイダー欄：リスティング当日（2026年6月30日）14時00分（日本時間）より前に、バリデーターX本人とXの直接関連アドレスが行った [42] と DONT（PANIC）の「買い」だけを表示します。それ以外の動きは通常の記録に含まれます';
+export const INSIDER_RULE = 'インサイダー欄：リスティング当日（2026年6月30日）14時00分（日本時間）より前に、バリデーターX（Rioshi）本人とX（Rioshi）の直接関連アドレスが行った [42] と DONT（PANIC）の「買い」だけを表示します。それ以外の動きは通常の記録に含まれます';
+export const ESTIMATED_RULE = '推定アドレスについて（v0.3.0 / Phase 3）：直接の送金が確認できないつながりを、次の3つの方法で推定したアドレスです。①プール経由（プールの反対側の売買と、金額差10%以内・24時間以内で一致）②2ホップ経由（バリデーター→このアドレス→バリデーターの両レッグとも確認済みの送金）③共通の相手先（2名以上のバリデーターと直接取引した第三者で、まだ確定関連に入っていないもの）。推定アドレスの動きは「最新の動き」にだけ、推定バッジと根拠つきで表示します。インサイダー／スナイプ／注目／ブリッジ出金／総額グラフの特別欄は、確定情報（本人＋直接関連）だけを使い、推定は一切含みません';
 export function isInsiderEvent(ev, ctx) {
   const ae = ctx.entry(ev.actor);
   if (!ae) return false;
@@ -697,6 +713,26 @@ export function enrichEvent(ev, ctx, creations = {}) {
   if (ev.type !== 'swap-buy' && ev.isSnipe) set('isSnipe', false);
   // v0.2.4 (Part C): insider flag for the ⚠ Insider section (validator X).
   set('isInsider', isInsiderEvent(ev, ctx));
+  // v0.3.0 (Phase 3): estimated tier guard. An estimated actor's events keep
+  // the 推定 tag + the concrete basis from the watchlist entry, and NEVER
+  // carry the confirmed-only markers: no snipe, no insider, no bridge-out
+  // (its bridge sends are demoted to the plain bridge-send-other type, so
+  // the USDT totals chart cannot include them), no shared-counterparty
+  // badge, and no feed pinning (selectFeedEvents pins on those flags).
+  const estEntry = ctx.entry(ev.actor);
+  if (estEntry?.tier === 'estimated') {
+    if (ev.actorTier !== 'estimated') set('actorTier', 'estimated');
+    const basis = { type: estEntry.basisType, validators: estEntry.relatedValidators ?? [], text: estEntry.basisText ?? '', textEn: estEntry.basisTextEn ?? '' };
+    if (JSON.stringify(ev.estimateBasis) !== JSON.stringify(basis)) { ev.estimateBasis = basis; changed = true; }
+    if (ev.isSnipe) set('isSnipe', false);
+    if (ev.isInsider) set('isInsider', false);
+    if (ev.actorShared) set('actorShared', false);
+    if (ev.type === 'bridge-out') {
+      set('type', 'bridge-send-other');
+      if (typeof ev.summary === 'string') set('summary', ev.summary.replace('ブリッジで外部へ送信：', 'ブリッジで外部へ送信（推定アドレスのため特別欄の対象外）：'));
+    }
+    if ((ev.notableReasons ?? []).includes('bridge-out')) set('notableReasons', ev.notableReasons.filter((r) => r !== 'bridge-out'));
+  }
   return changed;
 }
 
@@ -1165,6 +1201,72 @@ async function ensureCreations(events, creations, creationsPath, cap = 8) {
   }
 }
 
+// ---------------- validator-list auto-refresh (Phase 3 / v0.3.0) ----------------
+// The bonded validator set is read from the chain itself: an abci_query of
+// /cosmos.staking.v1beta1.Query/Validators with an EMPTY request returns all
+// validators with their status (3 = BONDED) and description.moniker, and the
+// operator address (bech32 valoper) decodes to the same 20 bytes as the
+// account address. Verified live 2026-11-05: 25 validators total, 23 bonded,
+// exactly the watchlist's 23 (monikers all matching).
+export async function fetchChainValidators() {
+  const res = await cometOne('abci_query', { path: '/cosmos.staking.v1beta1.Query/Validators', data: '', prove: false });
+  const valueB64 = res?.response?.value;
+  if (!valueB64) throw new Error('abci_query Validators: empty response value');
+  const top = parseProto(Buffer.from(valueB64, 'base64'));
+  const out = [];
+  for (const vf of top.filter((f) => f.field === 1 && f.wire === 2)) {
+    const f = parseProto(vf.value);
+    const operator = pfS(f, 1)[0];
+    if (!operator) continue;
+    const status = Number(f.find((x) => x.field === 4 && x.wire === 0)?.value ?? 0n);
+    const descBytes = pfB(f, 7)[0];
+    const moniker = descBytes ? (pfS(parseProto(descBytes), 1)[0] ?? '') : '';
+    let address;
+    try { address = lc(bech32ToHex(operator)); } catch { continue; }
+    out.push({ address, operator, moniker, status, bonded: status === 3 });
+  }
+  return out;
+}
+
+const shortAddrLabel = (a) => '0x' + a.slice(2, 6).toUpperCase() + '…' + a.slice(-4).toUpperCase();
+
+// Compare the watchlist's validator tier with the chain's CURRENT bonded
+// set. New bonded validators are appended as self-tier entries (moniker
+// from chain data; a short-address label when the chain has no moniker —
+// never an invented name). Validators no longer bonded stay watched and
+// are marked inactive. Nothing is ever removed. Persists watchlist.json
+// only when something changed. Returns { added, bonded, total, changed }.
+export async function refreshValidatorList(watchlist, { fetchValidators = fetchChainValidators, log = console.log, persist = true } = {}) {
+  const chain = await fetchValidators();
+  const bonded = chain.filter((v) => v.bonded);
+  const bondedSet = new Set(bonded.map((v) => v.address));
+  const byAddr = new Map(watchlist.entries.map((e) => [e.address, e]));
+  const added = [];
+  let changed = false;
+  for (const v of bonded) {
+    if (byAddr.has(v.address)) continue;
+    const label = v.moniker || shortAddrLabel(v.address);
+    const entry = { address: v.address, tier: 'validator', label, isCore: false, isPair: false, watch: true, operator: v.operator, validators: [label], relatedValidators: [], autoAdded: new Date().toISOString().slice(0, 10) };
+    watchlist.entries.push(entry);
+    byAddr.set(v.address, entry);
+    added.push(label);
+    changed = true;
+    log(`[collector] validator auto-added from chain: ${label} (${v.address}, operator ${v.operator})`);
+  }
+  for (const e of watchlist.entries) {
+    if (e.tier !== 'validator') continue;
+    const inactive = !bondedSet.has(e.address);
+    if (inactive && !e.inactive) { e.inactive = true; changed = true; log(`[collector] validator no longer bonded — kept watched, marked inactive: ${e.label} (${e.address})`); }
+    if (!inactive && e.inactive) { delete e.inactive; changed = true; log(`[collector] validator bonded again — inactive mark removed: ${e.label} (${e.address})`); }
+  }
+  const s = (watchlist.summary ??= {});
+  s.validators = watchlist.entries.filter((e) => e.tier === 'validator').length;
+  s.watchedActors = watchlist.entries.filter((e) => e.watch).length;
+  s.totalEntries = watchlist.entries.length;
+  if (changed && persist) writeFileSync(join(__dir, 'watchlist.json'), JSON.stringify(watchlist, null, 1));
+  return { added, bonded: bonded.length, total: chain.length, changed };
+}
+
 // Feed selection: the latest 500 events, PLUS every snipe / bridge-out /
 // insider event ever recorded (deduplicated, sort order preserved). The
 // special site sections (⚠インサイダー / 🎯スナイプ速報 / 🌉ブリッジ出金)
@@ -1191,6 +1293,17 @@ async function main() {
   const pollMs = Number(process.env.POLL_MS ?? 10000);
 
   const watchlist = JSON.parse(readFileSync(join(__dir, 'watchlist.json'), 'utf8'));
+  // Phase 3: refresh the validator tier from the chain BEFORE the ctx is
+  // built, so a validator that bonded since the last run is watched from
+  // this run on. A chain/RPC failure never blocks collection — the stored
+  // watchlist is used as-is and the refresh retries next run.
+  let validatorRefresh = null;
+  try {
+    validatorRefresh = await refreshValidatorList(watchlist);
+    console.log(`[collector] validator auto-refresh: chain ${validatorRefresh.total} validators / ${validatorRefresh.bonded} bonded; watchlist ${watchlist.summary.validators} self-tier; added this run: ${validatorRefresh.added.length ? validatorRefresh.added.join(', ') : 'none'}`);
+  } catch (e) {
+    console.error('[collector] validator auto-refresh failed (continuing with stored watchlist):', e.message);
+  }
   const registries = JSON.parse(readFileSync(join(__dir, 'registries.json'), 'utf8'));
   const cachePath = join(__dir, 'pairs-cache.json');
   const pairsCache = existsSync(cachePath) ? JSON.parse(readFileSync(cachePath, 'utf8')) : {};
@@ -1227,6 +1340,8 @@ async function main() {
     const validators = watchlist.entries.filter((e) => e.tier === 'validator').map((v) => ({
       moniker: v.label, address: v.address, bech32: hexToBech32(v.address), isCore: v.isCore,
       relatedCount: watchlist.entries.filter((e) => e.tier === 'related' && e.relatedValidators.includes(v.label)).length,
+      estimatedCount: watchlist.entries.filter((e) => e.tier === 'estimated' && e.relatedValidators.includes(v.label)).length,
+      ...(v.inactive ? { inactive: true } : {}),
     }));
     const feed = {
       generatedAt: new Date().toISOString(),
@@ -1239,6 +1354,11 @@ async function main() {
         snipeRule: SNIPE_RULE,
         bridgeOutRule: BRIDGE_OUT_RULE,
         insiderRule: INSIDER_RULE,
+        estimatedRule: ESTIMATED_RULE,
+        ...(validatorRefresh ? {
+          chainValidators: { bonded: validatorRefresh.bonded, total: validatorRefresh.total, checkedAt: new Date().toISOString() },
+          ...(validatorRefresh.added.length ? { validatorsAdded: validatorRefresh.added } : {}),
+        } : {}),
         actionRule: '操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。',
       },
       validators,

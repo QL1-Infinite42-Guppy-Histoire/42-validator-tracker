@@ -27,21 +27,25 @@
   a.card.alerts{background:#2a2110;border:1px solid #6b5518}
   a.card.alerts h2{color:#ffd166}
   .lang{margin-top:18px}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .langsw{font-size:.92rem;color:var(--sub);white-space:nowrap;padding-top:14px}
+  .langsw b{color:var(--txt)}
+  .alias{font-size:.6em;color:var(--sub);font-weight:600}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   a{color:var(--acc)}
 </style>
 </head>
 <body>
 <header>
-  <h1>42チェーン バリデーター リアルタイム追跡</h1>
+  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="home-en.html" id="langOther">English</a></div></div>
   <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを自動で拾って表示するサイトです。見たい項目を選んでください。</p>
   <div class="status" id="status">読み込み中…</div>
 </header>
 <main>
   <div class="cards">
     <a class="card insider" href="index.html#sec-insider">
-      <h2>⚠ インサイダー</h2>
-      <p>リスティング当日（2026年6月30日）14時00分より前に、バリデーターX本人とX関連アドレスが行った [42] と DONT の買いだけを表示します。</p>
+      <h2>⚠ インサイダー（X<span class="alias"> (Rioshi)</span>）</h2>
+      <p>リスティング当日（2026年6月30日）14時00分より前に、バリデーターX（Rioshi）本人とX（Rioshi）関連アドレスが行った [42] と DONT の買いだけを表示します。</p>
       <div class="count" id="c-insider">—</div>
     </a>
     <a class="card snipes" href="index.html#sec-snipes">
@@ -66,20 +70,20 @@
     </a>
     <a class="card" href="index.html#sec-feed">
       <h2>📜 最新の動き（全記録）</h2>
-      <p>EVM側＋Cosmos側の全ての記録。バリデーター別・種類別・銘柄別に絞り込めます。</p>
+      <p>EVM側＋Cosmos側の全ての記録。バリデーター別・種類別・銘柄別に絞り込めます。推定アドレスの動きも、推定と明記して含みます（特別欄は確定情報のみ）。</p>
       <div class="count" id="c-total">—</div>
     </a>
     <a class="card" href="index.html#sec-validators">
       <h2>👥 バリデーター一覧</h2>
-      <p>監視中のバリデーター23名の一覧です。</p>
+      <p>監視中のバリデーターの一覧です（名簿はチェーンから自動更新されます）。</p>
       <div class="count" id="c-validators">—</div>
     </a>
   </div>
   <p class="lang">🌐 English version: <a href="home-en.html">Top page (English)</a> ／ <a href="en.html">Tracker (English)</a></p>
 </main>
 <footer>
-  データの出どころ：42チェーンのブロックそのもの（RPC経由）。推定のつながりは含みません。アラートはこのサイト内だけの表示です。
-  <br>バージョン：<b>v0.2.9</b>（トップページ）
+  データの出どころ：42チェーンのブロックそのもの（RPC経由）。推定アドレスの動きは「最新の動き」にだけ推定と明記して表示し、特別欄は確定情報のみです。アラートはこのサイト内だけの表示です。
+  <br>バージョン：<b>v0.3.0</b>（トップページ）
 </footer>
 <script>
 (async () => {
@@ -88,14 +92,14 @@
     const s = FEED.status, ev = FEED.events;
     document.getElementById('status').innerHTML =
       `最終処理ブロック：<b>${s.lastProcessedBlock ?? '—'}</b>／Cosmos側 最終処理：<b>${s.lastProcessedCosmosBlock ?? '—'}</b>／更新：${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}) : '—'}／記録した動き：${s.totalEvents}件`;
-    const insider = ev.filter((e) => e.isInsider && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
+    const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
     document.getElementById('c-insider').textContent = insider + ' 件';
-    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe).length + ' 件';
-    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out').length + ' 件';
-    const bsum = ev.filter((e) => e.type === 'bridge-out').reduce((t, e) => t + (parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0), 0);
+    document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length + ' 件';
+    document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length + ' 件';
+    const bsum = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').reduce((t, e) => t + (parseFloat(String((e.amount && e.amount.amount) || '0').replace(/,/g, '')) || 0), 0);
     document.getElementById('c-bridgetotal').textContent = bsum.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' USDT';
     const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
-    document.getElementById('c-alerts').textContent = ev.filter((e) => !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length + ' 件';
+    document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length + ' 件';
     document.getElementById('c-total').textContent = s.totalEvents + ' 件';
     document.getElementById('c-validators').textContent = (s.watchSummary ? s.watchSummary.validators : 23) + ' 名';
   } catch (e) {

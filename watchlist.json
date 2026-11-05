@@ -4,17 +4,21 @@
   "validators": "42-cosmos-scan/validators-snapshot.json (staking precompile 0x0800 bonded set, 2026-10-31), cross-checked with 42-flowmap/validator-balances.json",
   "directRelated": "42-flowmap/data.json validators[].confirmed[] — CONFIRMED direct counterparties only; estimates intentionally excluded (Phase 3)",
   "core": "42-flowmap/data.json nodes[core=true] + 42-flowmap/pairs.json + explicit system contracts",
-  "snapshotBlockOfSourceData": 4193609
+  "snapshotBlockOfSourceData": 4193609,
+  "estimated": "42-flowmap/validator-estimates.json (2026-10-31 research: through-pool relaxed FIFO 24h/10%, 2-hop confirmed legs, shared counterparties >=2 validators); merged by build-estimates.mjs — estimates are a separate tier, always labelled 推定 with their basis, and never enter the confirmed-only sections"
  },
  "summary": {
   "validators": 23,
   "directRelated": 110,
   "coreLabelOnly": 90,
   "coreFlaggedTotal": 107,
-  "watchedActors": 133,
-  "totalEntries": 223,
+  "watchedActors": 139,
+  "totalEntries": 229,
   "confirmedCounterpartyLinks": 212,
-  "uniqueConfirmedCounterparties": 129
+  "uniqueConfirmedCounterparties": 129,
+  "related": 110,
+  "core": 90,
+  "estimated": 6
  },
  "entries": [
   {
@@ -2635,6 +2639,172 @@
    "watch": false,
    "validators": [],
    "relatedValidators": []
+  },
+  {
+   "address": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "tier": "estimated",
+   "label": null,
+   "isCore": false,
+   "isPair": false,
+   "watch": true,
+   "validators": [],
+   "relatedValidators": [
+    "PhoenixRing"
+   ],
+   "basisType": "pool",
+   "basisText": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+   "basisTextEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer",
+   "estimateLinks": {
+    "pool": [
+     {
+      "validator": "PhoenixRing",
+      "asset": "USDT",
+      "gapPct": 2.707,
+      "dtSeconds": 74713,
+      "score": 0.722,
+      "side": "to"
+     }
+    ]
+   }
+  },
+  {
+   "address": "0x5a368c3128cf40581a22fb6209b6cdb883881b65",
+   "tier": "estimated",
+   "label": null,
+   "isCore": false,
+   "isPair": false,
+   "watch": true,
+   "validators": [],
+   "relatedValidators": [
+    "kimnmike"
+   ],
+   "basisType": "pool",
+   "basisText": "プール経由の推定：kimnmike がプールから受け取った 42 と、このアドレスが先に同じプールへ売った分が、金額差 5.518%・時間差 約19.7時間で一致（スコア 0.715）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+   "basisTextEn": "Through-pool estimate: kimnmike received 42 from a pool, and this address had sold into the same pool shortly before — amount gap 5.518%, time gap about 19.7h (score 0.715). It may simply be a different person using the same pool; this is not a confirmed transfer",
+   "estimateLinks": {
+    "pool": [
+     {
+      "validator": "kimnmike",
+      "asset": "42",
+      "gapPct": 5.518,
+      "dtSeconds": 71006,
+      "score": 0.715,
+      "side": "to"
+     }
+    ]
+   }
+  },
+  {
+   "address": "0x98fd9e32eaf45e0adf7f5c8bd7714f24a5dc0e88",
+   "tier": "estimated",
+   "label": null,
+   "isCore": false,
+   "isPair": false,
+   "watch": true,
+   "validators": [],
+   "relatedValidators": [
+    "panda42",
+    "ayc"
+   ],
+   "basisType": "shared",
+   "basisText": "共通の相手先からの推定：panda42・ayc の2名のバリデーターと直接の送受信が計8件あります。複数のバリデーターと取引する相手先ですが、各バリデーターとの関係は確定していません",
+   "basisTextEn": "Shared-counterparty estimate: this address transacted directly with 2 validators (panda42, ayc), 8 legs in total. It deals with several validators, but no single relationship is confirmed",
+   "estimateLinks": {
+    "shared": {
+     "validators": [
+      {
+       "moniker": "panda42",
+       "legs": 4
+      },
+      {
+       "moniker": "ayc",
+       "legs": 4
+      }
+     ],
+     "totalLegs": 8
+    }
+   }
+  },
+  {
+   "address": "0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
+   "tier": "estimated",
+   "label": null,
+   "isCore": false,
+   "isPair": false,
+   "watch": true,
+   "validators": [],
+   "relatedValidators": [
+    "XenIt"
+   ],
+   "basisType": "pool",
+   "basisText": "プール経由の推定：XenIt がプールへ売った FISH と、このアドレスが後に同じプールから買った分が、金額差 8.213%・時間差 約24.0時間で一致（スコア 0.643）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+   "basisTextEn": "Through-pool estimate: XenIt sold FISH into a pool, and this address bought from the same pool shortly after — amount gap 8.213%, time gap about 24.0h (score 0.643). It may simply be a different person using the same pool; this is not a confirmed transfer",
+   "estimateLinks": {
+    "pool": [
+     {
+      "validator": "XenIt",
+      "asset": "FISH",
+      "gapPct": 8.213,
+      "dtSeconds": 86324,
+      "score": 0.643,
+      "side": "from"
+     }
+    ]
+   }
+  },
+  {
+   "address": "0xf35267269cb68d2a130338ffce4200a5f9f609dd",
+   "tier": "estimated",
+   "label": null,
+   "isCore": false,
+   "isPair": false,
+   "watch": true,
+   "validators": [],
+   "relatedValidators": [
+    "Luke"
+   ],
+   "basisType": "pool",
+   "basisText": "プール経由の推定：Luke がプールから受け取った 42 と、このアドレスが先に同じプールへ売った分が、金額差 3.557%・時間差 約23.4時間で一致（スコア 0.683）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+   "basisTextEn": "Through-pool estimate: Luke received 42 from a pool, and this address had sold into the same pool shortly before — amount gap 3.557%, time gap about 23.4h (score 0.683). It may simply be a different person using the same pool; this is not a confirmed transfer",
+   "estimateLinks": {
+    "pool": [
+     {
+      "validator": "Luke",
+      "asset": "42",
+      "gapPct": 3.557,
+      "dtSeconds": 84244,
+      "score": 0.683,
+      "side": "to"
+     }
+    ]
+   }
+  },
+  {
+   "address": "0xfcebe4797ed94bac6d09503f04fa13d997675553",
+   "tier": "estimated",
+   "label": null,
+   "isCore": false,
+   "isPair": false,
+   "watch": true,
+   "validators": [],
+   "relatedValidators": [
+    "DRIVESTATS"
+   ],
+   "basisType": "pool",
+   "basisText": "プール経由の推定：DRIVESTATS がプールから受け取った 42 と、このアドレスが先に同じプールへ売った分が、金額差 1.86%・時間差 約17.7時間で一致（スコア 0.765）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+   "basisTextEn": "Through-pool estimate: DRIVESTATS received 42 from a pool, and this address had sold into the same pool shortly before — amount gap 1.86%, time gap about 17.7h (score 0.765). It may simply be a different person using the same pool; this is not a confirmed transfer",
+   "estimateLinks": {
+    "pool": [
+     {
+      "validator": "DRIVESTATS",
+      "asset": "42",
+      "gapPct": 1.86,
+      "dtSeconds": 63860,
+      "score": 0.765,
+      "side": "to"
+     }
+    ]
+   }
   }
  ]
 }
