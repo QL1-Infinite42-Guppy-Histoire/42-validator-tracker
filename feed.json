@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T08:05:13.849Z",
+ "generatedAt": "2026-11-05T08:10:11.663Z",
  "status": {
-  "lastProcessedBlock": 4277558,
-  "latestBlockSeen": 4277558,
-  "lastProcessedCosmosBlock": 4277558,
-  "lastProcessedAt": "2026-11-05T08:05:13.692Z",
-  "totalEvents": 7587,
+  "lastProcessedBlock": 4277613,
+  "latestBlockSeen": 4277613,
+  "lastProcessedCosmosBlock": 4277613,
+  "lastProcessedAt": "2026-11-05T08:10:11.568Z",
+  "totalEvents": 7596,
   "watchSummary": {
    "validators": 23,
    "directRelated": 62,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T08:05:13.873Z"
+   "checkedAt": "2026-11-05T08:10:11.692Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
-   "usdt": 0.68824769,
-   "updatedAt": "2026-11-05T08:05:13.000Z",
+   "usdt": 0.68791772,
+   "updatedAt": "2026-11-05T08:10:11.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4277546,
+    "toBlock": 4277613,
     "fromTs": 1770178474,
-    "toTs": 1793865838
+    "toTs": 1793866201
    },
    "totals": {
     "delegate": {
@@ -679,7 +679,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 33,
+   "relatedActivity": 34,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -778,12 +778,549 @@
    "isCore": false,
    "relatedCount": 0,
    "selfActivity": 66,
-   "relatedActivity": 2079,
+   "relatedActivity": 2087,
    "autoAddedCount": 0,
    "estimatedCount": 1
   }
  ],
  "events": [
+  {
+   "id": "0xd4df88e9a9ee96455652729dcd85733c8025129e4ce6c44466c4319f1af043da:29:swap-sell:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "ts": 1793866201,
+   "block": 4277613,
+   "txHash": "0xd4df88e9a9ee96455652729dcd85733c8025129e4ce6c44466c4319f1af043da",
+   "logIndex": 29,
+   "type": "swap-sell",
+   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "actorLabel": null,
+   "actorTier": "estimated",
+   "actorIsCore": false,
+   "counterparty": "0xfac6a97837fd3ef5876e18457eea52415296c613",
+   "counterpartyLabel": "USDT/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "PhoenixRing"
+   ],
+   "sold": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3729486435352685108",
+    "amount": "3.729486",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
+    "symbol": "USDT",
+    "amountRaw": "2558497409129353728",
+    "amount": "2.558497",
+    "whitelisted": true
+   },
+   "subjectSymbol": "42",
+   "price": 0.68601869,
+   "priceUnit": "USDT/42",
+   "pair": "0xfac6a97837fd3ef5876e18457eea52415296c613",
+   "pairLabel": "USDT/42 ペア",
+   "tokens": [
+    "42",
+    "USDT"
+   ],
+   "whitelisted": true,
+   "summary": "42を売り（受取 2.558497 USDT／価格 約0.68601869 USDT/42）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": null,
+   "actorEvidence": null,
+   "actorValidators": [
+    "PhoenixRing"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false,
+   "estimateBasis": {
+    "type": "pool",
+    "validators": [
+     "PhoenixRing"
+    ],
+    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
+   }
+  },
+  {
+   "id": "0xd4df88e9a9ee96455652729dcd85733c8025129e4ce6c44466c4319f1af043da:25:swap-sell:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "ts": 1793866201,
+   "block": 4277613,
+   "txHash": "0xd4df88e9a9ee96455652729dcd85733c8025129e4ce6c44466c4319f1af043da",
+   "logIndex": 25,
+   "type": "swap-sell",
+   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "actorLabel": null,
+   "actorTier": "estimated",
+   "actorIsCore": false,
+   "counterparty": "0xb647ce2aa7d436cce95dc961d066ef610ca451b7",
+   "counterpartyLabel": "ZAP/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "PhoenixRing"
+   ],
+   "sold": {
+    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
+    "symbol": "ZAP",
+    "amountRaw": "27187153464257338243",
+    "amount": "27.187153",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3742115137175035741",
+    "amount": "3.742115",
+    "whitelisted": true
+   },
+   "subjectSymbol": "ZAP",
+   "price": 0.13764277,
+   "priceUnit": "42/ZAP",
+   "pair": "0xb647ce2aa7d436cce95dc961d066ef610ca451b7",
+   "pairLabel": "ZAP/42 ペア",
+   "tokens": [
+    "ZAP",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "ZAPを売り（受取 3.742115 42／価格 約0.13764277 42/ZAP）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": null,
+   "actorEvidence": null,
+   "actorValidators": [
+    "PhoenixRing"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false,
+   "estimateBasis": {
+    "type": "pool",
+    "validators": [
+     "PhoenixRing"
+    ],
+    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
+   }
+  },
+  {
+   "id": "0xd4df88e9a9ee96455652729dcd85733c8025129e4ce6c44466c4319f1af043da:22:swap-buy:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "ts": 1793866201,
+   "block": 4277613,
+   "txHash": "0xd4df88e9a9ee96455652729dcd85733c8025129e4ce6c44466c4319f1af043da",
+   "logIndex": 22,
+   "type": "swap-buy",
+   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "actorLabel": null,
+   "actorTier": "estimated",
+   "actorIsCore": false,
+   "counterparty": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
+   "counterpartyLabel": "FISH/ZAP ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "PhoenixRing"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1963783731003254369",
+    "amount": "1.963783",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
+    "symbol": "ZAP",
+    "amountRaw": "27187153464257338243",
+    "amount": "27.187153",
+    "whitelisted": true
+   },
+   "subjectSymbol": "ZAP",
+   "price": 0.07223205,
+   "priceUnit": "FISH/ZAP",
+   "pair": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
+   "pairLabel": "FISH/ZAP ペア",
+   "tokens": [
+    "FISH",
+    "ZAP"
+   ],
+   "whitelisted": true,
+   "summary": "ZAPを買い（支払い 1.963783 FISH／価格 約0.07223205 FISH/ZAP）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": null,
+   "actorEvidence": null,
+   "actorValidators": [
+    "PhoenixRing"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788487977,
+   "pairAgeSecs": 5378224,
+   "isSnipe": false,
+   "isInsider": false,
+   "estimateBasis": {
+    "type": "pool",
+    "validators": [
+     "PhoenixRing"
+    ],
+    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
+   }
+  },
+  {
+   "id": "0xd4df88e9a9ee96455652729dcd85733c8025129e4ce6c44466c4319f1af043da:19:swap-buy:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "ts": 1793866201,
+   "block": 4277613,
+   "txHash": "0xd4df88e9a9ee96455652729dcd85733c8025129e4ce6c44466c4319f1af043da",
+   "logIndex": 19,
+   "type": "swap-buy",
+   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "actorLabel": null,
+   "actorTier": "estimated",
+   "actorIsCore": false,
+   "counterparty": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
+   "counterpartyLabel": "FISH/USDT ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "PhoenixRing"
+   ],
+   "sold": {
+    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
+    "symbol": "USDT",
+    "amountRaw": "2558497409129353728",
+    "amount": "2.558497",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1963783731003254369",
+    "amount": "1.963783",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.30284072,
+   "priceUnit": "USDT/FISH",
+   "pair": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
+   "pairLabel": "FISH/USDT ペア",
+   "tokens": [
+    "USDT",
+    "FISH"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを買い（支払い 2.558497 USDT／価格 約1.30284072 USDT/FISH）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": null,
+   "actorEvidence": null,
+   "actorValidators": [
+    "PhoenixRing"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788520213,
+   "pairAgeSecs": 5345988,
+   "isSnipe": false,
+   "isInsider": false,
+   "estimateBasis": {
+    "type": "pool",
+    "validators": [
+     "PhoenixRing"
+    ],
+    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
+   }
+  },
+  {
+   "id": "0xd5b0818cdea908ae0f03e4f0b202554a26de26321e772657e0fc729724247805:14:swap-buy:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "ts": 1793866201,
+   "block": 4277613,
+   "txHash": "0xd5b0818cdea908ae0f03e4f0b202554a26de26321e772657e0fc729724247805",
+   "logIndex": 14,
+   "type": "swap-buy",
+   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "actorLabel": null,
+   "actorTier": "estimated",
+   "actorIsCore": false,
+   "counterparty": "0x259c54ee0f0c4a90d11376444dc82f4b9ec19d15",
+   "counterpartyLabel": "QOM/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "PhoenixRing"
+   ],
+   "sold": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3409804952569114663",
+    "amount": "3.409804",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0x53465cbbba5b14f5dc00794330f0f4afb30eaa1d",
+    "symbol": "QOM",
+    "amountRaw": "5368156989273285361812897792",
+    "amount": "5,368,156,989.273285",
+    "whitelisted": true
+   },
+   "subjectSymbol": "QOM",
+   "price": 0,
+   "priceUnit": "42/QOM",
+   "pair": "0x259c54ee0f0c4a90d11376444dc82f4b9ec19d15",
+   "pairLabel": "QOM/42 ペア",
+   "tokens": [
+    "42",
+    "QOM"
+   ],
+   "whitelisted": true,
+   "summary": "QOMを買い（支払い 3.409804 42／価格 約0 42/QOM）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": null,
+   "actorEvidence": null,
+   "actorValidators": [
+    "PhoenixRing"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1789536215,
+   "pairAgeSecs": 4329986,
+   "isSnipe": false,
+   "isInsider": false,
+   "estimateBasis": {
+    "type": "pool",
+    "validators": [
+     "PhoenixRing"
+    ],
+    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
+   }
+  },
+  {
+   "id": "0xd5b0818cdea908ae0f03e4f0b202554a26de26321e772657e0fc729724247805:10:swap-sell:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "ts": 1793866201,
+   "block": 4277613,
+   "txHash": "0xd5b0818cdea908ae0f03e4f0b202554a26de26321e772657e0fc729724247805",
+   "logIndex": 10,
+   "type": "swap-sell",
+   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "actorLabel": null,
+   "actorTier": "estimated",
+   "actorIsCore": false,
+   "counterparty": "0xb647ce2aa7d436cce95dc961d066ef610ca451b7",
+   "counterpartyLabel": "ZAP/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "PhoenixRing"
+   ],
+   "sold": {
+    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
+    "symbol": "ZAP",
+    "amountRaw": "25396595610394264276",
+    "amount": "25.396595",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3510161691796644140",
+    "amount": "3.510161",
+    "whitelisted": true
+   },
+   "subjectSymbol": "ZAP",
+   "price": 0.13821387,
+   "priceUnit": "42/ZAP",
+   "pair": "0xb647ce2aa7d436cce95dc961d066ef610ca451b7",
+   "pairLabel": "ZAP/42 ペア",
+   "tokens": [
+    "ZAP",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "ZAPを売り（受取 3.510161 42／価格 約0.13821387 42/ZAP）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": null,
+   "actorEvidence": null,
+   "actorValidators": [
+    "PhoenixRing"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false,
+   "estimateBasis": {
+    "type": "pool",
+    "validators": [
+     "PhoenixRing"
+    ],
+    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
+   }
+  },
+  {
+   "id": "0xd5b0818cdea908ae0f03e4f0b202554a26de26321e772657e0fc729724247805:7:swap-buy:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "ts": 1793866201,
+   "block": 4277613,
+   "txHash": "0xd5b0818cdea908ae0f03e4f0b202554a26de26321e772657e0fc729724247805",
+   "logIndex": 7,
+   "type": "swap-buy",
+   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "actorLabel": null,
+   "actorTier": "estimated",
+   "actorIsCore": false,
+   "counterparty": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
+   "counterpartyLabel": "FISH/ZAP ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "PhoenixRing"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1833685685644408117",
+    "amount": "1.833685",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
+    "symbol": "ZAP",
+    "amountRaw": "25396595610394264276",
+    "amount": "25.396595",
+    "whitelisted": true
+   },
+   "subjectSymbol": "ZAP",
+   "price": 0.07220203,
+   "priceUnit": "FISH/ZAP",
+   "pair": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
+   "pairLabel": "FISH/ZAP ペア",
+   "tokens": [
+    "FISH",
+    "ZAP"
+   ],
+   "whitelisted": true,
+   "summary": "ZAPを買い（支払い 1.833685 FISH／価格 約0.07220203 FISH/ZAP）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": null,
+   "actorEvidence": null,
+   "actorValidators": [
+    "PhoenixRing"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788487977,
+   "pairAgeSecs": 5378224,
+   "isSnipe": false,
+   "isInsider": false,
+   "estimateBasis": {
+    "type": "pool",
+    "validators": [
+     "PhoenixRing"
+    ],
+    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
+   }
+  },
+  {
+   "id": "0xd5b0818cdea908ae0f03e4f0b202554a26de26321e772657e0fc729724247805:4:swap-buy:0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "ts": 1793866201,
+   "block": 4277613,
+   "txHash": "0xd5b0818cdea908ae0f03e4f0b202554a26de26321e772657e0fc729724247805",
+   "logIndex": 4,
+   "type": "swap-buy",
+   "actor": "0x06342c34b7ebaa7dd528064b69ae5f78acf4a22e",
+   "actorLabel": null,
+   "actorTier": "estimated",
+   "actorIsCore": false,
+   "counterparty": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
+   "counterpartyLabel": "FISH/QOM ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "PhoenixRing"
+   ],
+   "sold": {
+    "token": "0x53465cbbba5b14f5dc00794330f0f4afb30eaa1d",
+    "symbol": "QOM",
+    "amountRaw": "5368156989273285361812897792",
+    "amount": "5,368,156,989.273285",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1833685685644408117",
+    "amount": "1.833685",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 2927522983.5187187,
+   "priceUnit": "QOM/FISH",
+   "pair": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
+   "pairLabel": "FISH/QOM ペア",
+   "tokens": [
+    "QOM",
+    "FISH"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを買い（支払い 5,368,156,989.273285 QOM／価格 約2927522983.5187187 QOM/FISH）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": null,
+   "actorEvidence": null,
+   "actorValidators": [
+    "PhoenixRing"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1789535681,
+   "pairAgeSecs": 4330520,
+   "isSnipe": false,
+   "isInsider": false,
+   "estimateBasis": {
+    "type": "pool",
+    "validators": [
+     "PhoenixRing"
+    ],
+    "text": "プール経由の推定：PhoenixRing がプールから受け取った USDT と、このアドレスが先に同じプールへ売った分が、金額差 2.707%・時間差 約20.8時間で一致（スコア 0.722）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
+    "textEn": "Through-pool estimate: PhoenixRing received USDT from a pool, and this address had sold into the same pool shortly before — amount gap 2.707%, time gap about 20.8h (score 0.722). It may simply be a different person using the same pool; this is not a confirmed transfer"
+   }
+  },
+  {
+   "id": "0xaea4ded8b58d3424dd35057305854855c3ae52eb0fb95b7bd14818a0267621c6:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793865936,
+   "block": 4277564,
+   "txHash": "0xaea4ded8b58d3424dd35057305854855c3ae52eb0fb95b7bd14818a0267621c6",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x38c8d5ea551fa2393d8149ffbedeea3a907d34ac1ad09d418549b8760d477cbc:0:transfer:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
    "ts": 1793865838,
@@ -25759,525 +26296,6 @@
    "actorEvidence": {
     "HeraMoon": [
      "bidirectional"
-    ]
-   }
-  },
-  {
-   "id": "0x729bc0aaf06a8c5d481d59d3991ebfa9c12911d2792b1dcfd2050c1f6db5d72c:3:swap-sell:0xc9fd7cab65b2f4efa30c4d10c0c68681b442860b",
-   "ts": 1793067095,
-   "block": 4129749,
-   "txHash": "0x729bc0aaf06a8c5d481d59d3991ebfa9c12911d2792b1dcfd2050c1f6db5d72c",
-   "logIndex": 3,
-   "type": "swap-sell",
-   "actor": "0xc9fd7cab65b2f4efa30c4d10c0c68681b442860b",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-   "counterpartyLabel": "FISH/USDT ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "HeraMoon"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "511258509750486629",
-    "amount": "0.511258",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
-    "symbol": "USDT",
-    "amountRaw": "779327405901452125",
-    "amount": "0.779327",
-    "whitelisted": true
-   },
-   "subjectSymbol": "FISH",
-   "price": 1.52433141,
-   "priceUnit": "USDT/FISH",
-   "pair": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-   "pairLabel": "FISH/USDT ペア",
-   "tokens": [
-    "FISH",
-    "USDT"
-   ],
-   "whitelisted": true,
-   "summary": "FISHを売り（受取 0.779327 USDT／価格 約1.52433141 USDT/FISH）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "HeraMoon"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 2,
-   "actorEvidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "id": "0x68276ed6e3738a6be9c666062666d57ca81276c5b64b3a5dd068cbe72775743e:3:swap-sell:0x11e94dba0f6b2b0f862d55cdb6cb38aad906bbba",
-   "ts": 1793067063,
-   "block": 4129743,
-   "txHash": "0x68276ed6e3738a6be9c666062666d57ca81276c5b64b3a5dd068cbe72775743e",
-   "logIndex": 3,
-   "type": "swap-sell",
-   "actor": "0x11e94dba0f6b2b0f862d55cdb6cb38aad906bbba",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-   "counterpartyLabel": "FISH/USDT ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "HeraMoon"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "345753844432191947",
-    "amount": "0.345753",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
-    "symbol": "USDT",
-    "amountRaw": "527241856830056116",
-    "amount": "0.527241",
-    "whitelisted": true
-   },
-   "subjectSymbol": "FISH",
-   "price": 1.52490526,
-   "priceUnit": "USDT/FISH",
-   "pair": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-   "pairLabel": "FISH/USDT ペア",
-   "tokens": [
-    "FISH",
-    "USDT"
-   ],
-   "whitelisted": true,
-   "summary": "FISHを売り（受取 0.527241 USDT／価格 約1.52490526 USDT/FISH）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "HeraMoon"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 2,
-   "actorEvidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "id": "0x5b74b50cf512b466bf752795b03bd39845846a87ed569560af2d3827f26f7a2c:3:swap-sell:0xddf09ec67832c6ab5d839cfc5f434b5bbcc8bf4c",
-   "ts": 1793067036,
-   "block": 4129738,
-   "txHash": "0x5b74b50cf512b466bf752795b03bd39845846a87ed569560af2d3827f26f7a2c",
-   "logIndex": 3,
-   "type": "swap-sell",
-   "actor": "0xddf09ec67832c6ab5d839cfc5f434b5bbcc8bf4c",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-   "counterpartyLabel": "FISH/USDT ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "HeraMoon"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "150236641327042901",
-    "amount": "0.150236",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
-    "symbol": "USDT",
-    "amountRaw": "229146547402024129",
-    "amount": "0.229146",
-    "whitelisted": true
-   },
-   "subjectSymbol": "FISH",
-   "price": 1.52523742,
-   "priceUnit": "USDT/FISH",
-   "pair": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-   "pairLabel": "FISH/USDT ペア",
-   "tokens": [
-    "FISH",
-    "USDT"
-   ],
-   "whitelisted": true,
-   "summary": "FISHを売り（受取 0.229146 USDT／価格 約1.52523742 USDT/FISH）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "HeraMoon"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 2,
-   "actorEvidence": {
-    "HeraMoon": [
-     "bidirectional"
-    ]
-   }
-  },
-  {
-   "id": "0xfbd33b3a0530abe43eab97ac4d9ab4a59ab705338c7f848185e5504d1980d8a0:3:swap-buy:0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "ts": 1793064386,
-   "block": 4129248,
-   "txHash": "0xfbd33b3a0530abe43eab97ac4d9ab4a59ab705338c7f848185e5504d1980d8a0",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "actorLabel": null,
-   "actorTier": "estimated",
-   "actorIsCore": false,
-   "counterparty": "0x18c87a587aec042f77c7988334e274b3d832f5a1",
-   "counterpartyLabel": "FISH/HAWK ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "XenIt"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "261061918247582227",
-    "amount": "0.261061",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0x4e3e79981a64d5678e2e70fd7b4b9550c2b41db2",
-    "symbol": "HAWK",
-    "amountRaw": "27015365707863465506072",
-    "amount": "27,015.365707",
-    "whitelisted": true
-   },
-   "subjectSymbol": "HAWK",
-   "price": 0.00000966,
-   "priceUnit": "FISH/HAWK",
-   "pair": "0x18c87a587aec042f77c7988334e274b3d832f5a1",
-   "pairLabel": "FISH/HAWK ペア",
-   "tokens": [
-    "FISH",
-    "HAWK"
-   ],
-   "whitelisted": true,
-   "summary": "HAWKを買い（支払い 0.261061 FISH／価格 約0.00000966 FISH/HAWK）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "XenIt"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1789554136,
-   "pairAgeSecs": 3510250,
-   "isSnipe": false,
-   "isInsider": false,
-   "estimateBasis": {
-    "type": "pool",
-    "validators": [
-     "XenIt"
-    ],
-    "text": "プール経由の推定：XenIt がプールへ売った FISH と、このアドレスが後に同じプールから買った分が、金額差 8.213%・時間差 約24.0時間で一致（スコア 0.643）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-    "textEn": "Through-pool estimate: XenIt sold FISH into a pool, and this address bought from the same pool shortly after — amount gap 8.213%, time gap about 24.0h (score 0.643). It may simply be a different person using the same pool; this is not a confirmed transfer"
-   },
-   "backfill": true,
-   "actorDepth": null,
-   "actorEvidence": null
-  },
-  {
-   "id": "0xc4d8e8524aa11ae33fe8387314b785436615db82f803ab5547ae13e8854023e2:3:swap-buy:0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "ts": 1793064273,
-   "block": 4129227,
-   "txHash": "0xc4d8e8524aa11ae33fe8387314b785436615db82f803ab5547ae13e8854023e2",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "actorLabel": null,
-   "actorTier": "estimated",
-   "actorIsCore": false,
-   "counterparty": "0x61e34770a601588eaacde5d443f27fc08e743492",
-   "counterpartyLabel": "FISH/O ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "XenIt"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "172910064361874017",
-    "amount": "0.172910",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xf4c14c0322e361f35eb9465c992fb1c21c91c156",
-    "symbol": "O",
-    "amountRaw": "700000000000000000000000",
-    "amount": "700,000",
-    "whitelisted": true
-   },
-   "subjectSymbol": "O",
-   "price": 2.5e-7,
-   "priceUnit": "FISH/O",
-   "pair": "0x61e34770a601588eaacde5d443f27fc08e743492",
-   "pairLabel": "FISH/O ペア",
-   "tokens": [
-    "FISH",
-    "O"
-   ],
-   "whitelisted": true,
-   "summary": "Oを買い（支払い 0.172910 FISH／価格 約2.5e-7 FISH/O）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "XenIt"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1789554223,
-   "pairAgeSecs": 3510050,
-   "isSnipe": false,
-   "isInsider": false,
-   "estimateBasis": {
-    "type": "pool",
-    "validators": [
-     "XenIt"
-    ],
-    "text": "プール経由の推定：XenIt がプールへ売った FISH と、このアドレスが後に同じプールから買った分が、金額差 8.213%・時間差 約24.0時間で一致（スコア 0.643）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-    "textEn": "Through-pool estimate: XenIt sold FISH into a pool, and this address bought from the same pool shortly after — amount gap 8.213%, time gap about 24.0h (score 0.643). It may simply be a different person using the same pool; this is not a confirmed transfer"
-   },
-   "backfill": true,
-   "actorDepth": null,
-   "actorEvidence": null
-  },
-  {
-   "id": "0xcd109251f5f9e0fddd14f0ace543a3d113a1fba68566e9c7e97fa7bcf3c70b8e:3:swap-buy:0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "ts": 1793064234,
-   "block": 4129220,
-   "txHash": "0xcd109251f5f9e0fddd14f0ace543a3d113a1fba68566e9c7e97fa7bcf3c70b8e",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0xa6b34bf363c810720eb2aaaf7cfe9862ceea6f9e",
-   "actorLabel": null,
-   "actorTier": "estimated",
-   "actorIsCore": false,
-   "counterparty": "0x53df50e949eb821ea1ad563b3db8d13abca5b07d",
-   "counterpartyLabel": "FISH/FOXXEY ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "XenIt"
-   ],
-   "sold": {
-    "token": "0x68d5a28d3bf09a32d3b9c35714ab7a6166ae2a00",
-    "symbol": "FOXXEY",
-    "amountRaw": "32449663859650820000",
-    "amount": "32.449663",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "433971982609456244",
-    "amount": "0.433971",
-    "whitelisted": true
-   },
-   "subjectSymbol": "FISH",
-   "price": 74.77363784,
-   "priceUnit": "FOXXEY/FISH",
-   "pair": "0x53df50e949eb821ea1ad563b3db8d13abca5b07d",
-   "pairLabel": "FISH/FOXXEY ペア",
-   "tokens": [
-    "FOXXEY",
-    "FISH"
-   ],
-   "whitelisted": true,
-   "summary": "FISHを買い（支払い 32.449663 FOXXEY／価格 約74.77363784 FOXXEY/FISH）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "XenIt"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1788458062,
-   "pairAgeSecs": 4606172,
-   "isSnipe": false,
-   "isInsider": false,
-   "estimateBasis": {
-    "type": "pool",
-    "validators": [
-     "XenIt"
-    ],
-    "text": "プール経由の推定：XenIt がプールへ売った FISH と、このアドレスが後に同じプールから買った分が、金額差 8.213%・時間差 約24.0時間で一致（スコア 0.643）。同じプールを経由しただけの別人の可能性もあり、確定した送金ではありません",
-    "textEn": "Through-pool estimate: XenIt sold FISH into a pool, and this address bought from the same pool shortly after — amount gap 8.213%, time gap about 24.0h (score 0.643). It may simply be a different person using the same pool; this is not a confirmed transfer"
-   },
-   "backfill": true,
-   "actorDepth": null,
-   "actorEvidence": null
-  },
-  {
-   "id": "0xbf5f951337ac1323e224024accb53ee4bd993412cb12c372c81759efb1540eed:0:transfer:0xe1794313faaaed9c5e038df778224b3d8eda96ed",
-   "ts": 1793063033,
-   "block": 4128998,
-   "txHash": "0xbf5f951337ac1323e224024accb53ee4bd993412cb12c372c81759efb1540eed",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xe1794313faaaed9c5e038df778224b3d8eda96ed",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "counterpartyLabel": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-    "symbol": "NUTRI-V2",
-    "amountRaw": "32434339256477730298111",
-    "amount": "32,434.339256",
-    "whitelisted": false
-   },
-   "from": "0xe1794313faaaed9c5e038df778224b3d8eda96ed",
-   "to": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "tokens": [
-    "NUTRI-V2"
-   ],
-   "whitelisted": false,
-   "summary": "32,434.339256 NUTRI-V2 を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 2,
-   "actorEvidence": {
-    "X": [
-     "delegation",
-     "synchronized"
-    ]
-   }
-  },
-  {
-   "id": "0x3b1a57d365eeba601a459545b32612e4da1fec969f939097742dd6911cdc62cd:tx:approve:0xe1794313faaaed9c5e038df778224b3d8eda96ed",
-   "ts": 1793063028,
-   "block": 4128997,
-   "txHash": "0x3b1a57d365eeba601a459545b32612e4da1fec969f939097742dd6911cdc62cd",
-   "logIndex": null,
-   "type": "approve",
-   "actor": "0xe1794313faaaed9c5e038df778224b3d8eda96ed",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-   "counterpartyLabel": "FISH/QOM ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "method": "0x095ea7b3",
-   "actionLabel": "使用許可（approve）",
-   "destLabel": "FISH/QOM ペア",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "NUTRI-V2の使用許可（approve）：…30E0 に利用を許可",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 2,
-   "actorEvidence": {
-    "X": [
-     "delegation",
-     "synchronized"
-    ]
-   }
-  },
-  {
-   "id": "0x4b10fce0748211dd96db7bc5415fdfdfd6381333fd9e677d8758382151c0a817:4:lp-add:0xe1794313faaaed9c5e038df778224b3d8eda96ed",
-   "ts": 1793063017,
-   "block": 4128995,
-   "txHash": "0x4b10fce0748211dd96db7bc5415fdfdfd6381333fd9e677d8758382151c0a817",
-   "logIndex": 4,
-   "type": "lp-add",
-   "actor": "0xe1794313faaaed9c5e038df778224b3d8eda96ed",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-   "counterpartyLabel": "FISH/QOM ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "amounts": [
-    {
-     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-     "symbol": "FISH",
-     "amountRaw": "713771994271692189",
-     "amount": "0.713771",
-     "whitelisted": true
-    },
-    {
-     "token": "0x53465cbbba5b14f5dc00794330f0f4afb30eaa1d",
-     "symbol": "QOM",
-     "amountRaw": "1549844685250797476908718238",
-     "amount": "1,549,844,685.250797",
-     "whitelisted": true
-    }
-   ],
-   "pair": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-   "pairLabel": "FISH/QOM ペア",
-   "tokens": [
-    "FISH",
-    "QOM"
-   ],
-   "whitelisted": true,
-   "summary": "LP追加：0.713771 FISH ＋ 1,549,844,685.250797 QOM（FISH/QOM ペア）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1789535681,
-   "pairAgeSecs": 3527336,
-   "isSnipe": false,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 2,
-   "actorEvidence": {
-    "X": [
-     "delegation",
-     "synchronized"
     ]
    }
   },
@@ -68174,6 +68192,67 @@
    "actorEvidence": null
   },
   {
+   "id": "0x4b10fce0748211dd96db7bc5415fdfdfd6381333fd9e677d8758382151c0a817:4:lp-add:0xe1794313faaaed9c5e038df778224b3d8eda96ed",
+   "ts": 1793063017,
+   "block": 4128995,
+   "txHash": "0x4b10fce0748211dd96db7bc5415fdfdfd6381333fd9e677d8758382151c0a817",
+   "logIndex": 4,
+   "type": "lp-add",
+   "actor": "0xe1794313faaaed9c5e038df778224b3d8eda96ed",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
+   "counterpartyLabel": "FISH/QOM ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "X"
+   ],
+   "amounts": [
+    {
+     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+     "symbol": "FISH",
+     "amountRaw": "713771994271692189",
+     "amount": "0.713771",
+     "whitelisted": true
+    },
+    {
+     "token": "0x53465cbbba5b14f5dc00794330f0f4afb30eaa1d",
+     "symbol": "QOM",
+     "amountRaw": "1549844685250797476908718238",
+     "amount": "1,549,844,685.250797",
+     "whitelisted": true
+    }
+   ],
+   "pair": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
+   "pairLabel": "FISH/QOM ペア",
+   "tokens": [
+    "FISH",
+    "QOM"
+   ],
+   "whitelisted": true,
+   "summary": "LP追加：0.713771 FISH ＋ 1,549,844,685.250797 QOM（FISH/QOM ペア）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1789535681,
+   "pairAgeSecs": 3527336,
+   "isSnipe": false,
+   "isInsider": false,
+   "backfill": true,
+   "actorDepth": 2,
+   "actorEvidence": {
+    "X": [
+     "delegation",
+     "synchronized"
+    ]
+   }
+  },
+  {
    "id": "0xe1619bac3ed087d1857116e445fdf920baf869636e85f23393a650e8a9a237aa:5:lp-add:0xe1794313faaaed9c5e038df778224b3d8eda96ed",
    "ts": 1792975630,
    "block": 4112821,
@@ -77128,67 +77207,6 @@
     "X": [
      "delegation",
      "synchronized"
-    ]
-   }
-  },
-  {
-   "id": "0x1508eedcf8236db1d966e355e251e50b47f1d920ae9d01f9c4c307ef94672f11:6:lp-add:0xaeca0c02baee386e45c273a1bf2d7ddfda48ed30",
-   "ts": 1788458062,
-   "block": 3274580,
-   "txHash": "0x1508eedcf8236db1d966e355e251e50b47f1d920ae9d01f9c4c307ef94672f11",
-   "logIndex": 6,
-   "type": "lp-add",
-   "actor": "0xaeca0c02baee386e45c273a1bf2d7ddfda48ed30",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x53df50e949eb821ea1ad563b3db8d13abca5b07d",
-   "counterpartyLabel": "FISH/FOXXEY ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "FoxxOne"
-   ],
-   "amounts": [
-    {
-     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-     "symbol": "FISH",
-     "amountRaw": "1500000000000000000000",
-     "amount": "1,500",
-     "whitelisted": true
-    },
-    {
-     "token": "0x68d5a28d3bf09a32d3b9c35714ab7a6166ae2a00",
-     "symbol": "FOXXEY",
-     "amountRaw": "50000000000000000000000",
-     "amount": "50,000",
-     "whitelisted": true
-    }
-   ],
-   "pair": "0x53df50e949eb821ea1ad563b3db8d13abca5b07d",
-   "pairLabel": "FISH/FOXXEY ペア",
-   "tokens": [
-    "FISH",
-    "FOXXEY"
-   ],
-   "whitelisted": true,
-   "summary": "LP追加：1,500 FISH ＋ 50,000 FOXXEY（FISH/FOXXEY ペア）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "FoxxOne"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1788458062,
-   "pairAgeSecs": 0,
-   "isSnipe": false,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 2,
-   "actorEvidence": {
-    "FoxxOne": [
-     "bidirectional",
-     "concentrated-repeat"
     ]
    }
   },
