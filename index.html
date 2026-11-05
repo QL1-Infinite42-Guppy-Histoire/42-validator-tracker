@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42チェーン バリデーター リアルタイム追跡 v0.1.0</title>
+<title>42チェーン バリデーター リアルタイム追跡 v0.2.0</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -13,7 +13,14 @@
   .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem}
   .status b{color:var(--ok)}
   section.alerts{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.snipes{background:#33121a;border:2px solid #ff5964;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(255,89,100,.25)}
+  section.snipes h2{color:#ff8fa3;font-size:1.25rem}
   .rule{font-size:.82rem;color:var(--warn)}
+  section.snipes .rule{color:#ffb3ba}
+  .badge.shared{color:#081018;background:#ffa94d;border-color:#ffa94d;font-weight:700}
+  .badge.cosmos{color:#081018;background:#63e6be;border-color:#63e6be;font-weight:700}
+  .badge.snipe{color:#fff;background:#ff5964;border-color:#ff5964;font-weight:700}
+  .note{color:var(--warn);font-size:.82rem;margin-top:2px}
   .filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
   select{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:.95rem}
   .ev{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
@@ -38,10 +45,16 @@
 <body>
 <header>
   <h1>42チェーン バリデーター リアルタイム追跡</h1>
-  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側のみ・Phase 1）。推定のつながりは含みません。</p>
+  <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを、新しいブロックから自動で拾って表示します（EVM側＋Cosmos側・v0.2.0）。推定のつながりは含みません。</p>
   <div class="status" id="status">読み込み中…</div>
 </header>
 <main>
+  <section class="snipes">
+    <h2>🎯 スナイプ速報</h2>
+    <p class="rule" id="snipeRule"></p>
+    <div id="snipes"><p class="empty">読み込み中…</p></div>
+  </section>
+
   <section class="alerts">
     <h2>⭐ 注目</h2>
     <p class="rule" id="alertRule"></p>
@@ -58,6 +71,11 @@
       <option value="swap-sell">売り</option>
       <option value="lp-add">LP追加</option>
       <option value="lp-remove">LP解除</option>
+      <option value="delegate">委任（Cosmos）</option>
+      <option value="undelegate">委任解除（Cosmos）</option>
+      <option value="redelegate">委任先変更（Cosmos）</option>
+      <option value="reward">報酬受取（Cosmos）</option>
+      <option value="commission">手数料報酬（Cosmos）</option>
       <option value="other-contract">その他の操作</option>
     </select>
     <select id="fToken"><option value="">銘柄：すべて</option></select>
@@ -71,15 +89,20 @@
 <footer>
   データの出どころ：42チェーンのブロックそのもの（RPC経由）。取引・アドレスをタップすると公式エクスプローラー scan.infinitedrive.xyz が開きます。
   表示している銘柄は Don't Panic 掲載の17銘柄が中心です（それ以外は「対象外銘柄」と表示）。金額の大小で記録を落とすことはしていません（小さな送金も全て記録）。
-  Phase 1 の範囲：EVM側のみ／Cosmos側は Phase 2／推定リンクは Phase 3／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
-  <br>バージョン：<b>v0.1.0</b>（Phase 1：EVM側ライブフィード＋自動更新）
+  v0.2.0 の範囲：EVM側＋Cosmos側（送金・委任・報酬）／推定リンクは Phase 3／外部への自動投稿（X bot等）は行いません（アラートはこのサイト内だけ）。
+  Cosmos側の取引リンクは自作の Cosmos スキャナー（42 Cosmos Scan）に飛びます。見出しの名前は「動いた本人」だけを表示し、関係するバリデーターは別の行に分けて書きます（複数のバリデーターと取引する共通の相手先には「共有の相手先」の印が付きます）。
+  <br>バージョン：<b>v0.2.0</b>（Phase 2：Cosmos側追加＋スナイプ速報＋見出し表示の修正）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
+const COSMOS_SCAN = 'https://ql1-infinite42-guppy-histoire.github.io/42-cosmos-scan/';
 const shortAddr = (a) => a ? '0x…' + a.slice(-4).toUpperCase() : '—';
 const addrLink = (a, label) => a ? `<a href="${SCAN}/address/${a}" target="_blank" rel="noopener" title="${a}">${label ?? shortAddr(a)}</a>` : '—';
-const txLink = (h) => `<a href="${SCAN}/tx/${h}" target="_blank" rel="noopener" title="${h}">Tx …${h.slice(-4).toUpperCase()}</a>`;
-const TYPE_JA = {'transfer':'送金・受取','swap-buy':'買い','swap-sell':'売り','lp-add':'LP追加','lp-remove':'LP解除','other-contract':'その他の操作'};
+const txLink = (ev) => ev.chain === 'cosmos'
+  ? `<a href="${COSMOS_SCAN}#/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()}（Cosmos）</a>`
+  : `<a href="${SCAN}/tx/${ev.txHash}" target="_blank" rel="noopener" title="${ev.txHash}">Tx …${ev.txHash.slice(-4).toUpperCase()}</a>`;
+const TYPE_JA = {'transfer':'送金・受取','swap-buy':'買い','swap-sell':'売り','lp-add':'LP追加','lp-remove':'LP解除','delegate':'委任','undelegate':'委任解除','redelegate':'委任先変更','reward':'報酬受取','commission':'手数料報酬','other-contract':'その他の操作'};
+const ageJp = (secs) => { if (secs == null) return ''; const m = Math.round(secs/60); if (m < 60) return `作成後${m}分`; const h = Math.floor(m/60); return `作成後${h}時間${m%60 ? (m%60)+'分' : ''}`; };
 const jst = (ts) => new Date(ts*1000).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});
 
 let FEED = null;
@@ -90,20 +113,39 @@ function tierBadge(ev){
   if (ev.actorTier === 'related') return '<span class="badge related">関連アドレス</span>';
   return '';
 }
+// Headline = the ACTOR only (v0.2.0 fix). Joining every related validator
+// into the headline made it look like many validators acted together; the
+// actor's relations are shown separately, capped, in relationLine().
 function whoLabel(ev){
   if (ev.actorTier === 'validator' && ev.actorLabel) return ev.actorLabel;
-  if (ev.validatorNames && ev.validatorNames.length) return ev.validatorNames.join('・') + ' 関連';
-  return ev.actorLabel || '関連アドレス';
+  if (ev.actorIsCore) return ev.actorLabel || shortAddr(ev.actor);
+  if (ev.actorTier === 'related') return '関連 ' + shortAddr(ev.actor);
+  return ev.actorLabel || shortAddr(ev.actor);
+}
+function relationLine(ev){
+  if (ev.actorTier === 'validator') return ''; // self events: no relation list (counterparty line shows the other side)
+  const rel = ev.actorValidators || [];
+  let s = '';
+  if (rel.length === 1) s = `関係バリデーター：${rel[0]}`;
+  else if (rel.length >= 2) s = `関係バリデーター：${rel[0]} ほか${rel.length - 1}名`;
+  const badge = ev.actorShared ? ' <span class="badge shared">共有の相手先</span>' : '';
+  const note = ev.actorShared
+    ? `<div class="note">複数のバリデーターと取引する共通の相手先です（バリデーター本人ではありません）${ev.actorContractNote ? '／' + ev.actorContractNote : ''}</div>` : '';
+  const line = (s || badge) ? `<div class="meta">${s}${badge}</div>` : '';
+  return line + note;
 }
 function renderEvent(ev){
   const cp = ev.counterparty ? `／相手：${addrLink(ev.counterparty, ev.counterpartyLabel ? ev.counterpartyLabel + ' ' + shortAddr(ev.counterparty) : null)}${ev.counterpartyIsCore ? ' <span class="badge core">中核</span>' : ''}` : '';
   const wl = ev.whitelisted === false ? ' <span class="badge">対象外銘柄を含む</span>' : '';
   const notable = (ev.notableReasons && ev.notableReasons.length) ? `<span class="badge notable">⭐注目：${ev.notableReasons.join('・')}</span>` : '';
+  const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos側</span>' : '';
+  const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯スナイプ（${ageJp(ev.pairAgeSecs)}）</span>` : '';
   return `<div class="ev${notable ? ' notable' : ''}">
     <div class="top"><span class="time">${jst(ev.ts)}（ブロック ${ev.block}）</span>
-    <span class="badge type">${TYPE_JA[ev.type] ?? ev.type}</span>${tierBadge(ev)}${notable}${wl}</div>
+    <span class="badge type">${TYPE_JA[ev.type] ?? ev.type}</span>${tierBadge(ev)}${notable}${wl}${cosmos}${snipe}</div>
     <div class="summary"><b>${whoLabel(ev)}</b> ${addrLink(ev.actor)}：${ev.summary}</div>
-    <div class="meta">${cp} ／ ${txLink(ev.txHash)}</div></div>`;
+    ${relationLine(ev)}
+    <div class="meta">${cp} ／ ${txLink(ev)}</div></div>`;
 }
 function applyFilters(){
   if (!FEED) return;
@@ -115,14 +157,17 @@ function applyFilters(){
   document.getElementById('feed').innerHTML = list.length ? list.map(renderEvent).join('') : '<p class="empty">条件に合う動きはまだありません。</p>';
   const alerts = FEED.events.filter((ev) => (ev.notableReasons||[]).length);
   document.getElementById('alerts').innerHTML = alerts.length ? alerts.slice(0,20).map(renderEvent).join('') : '<p class="empty">いまのところ注目の動きはありません。</p>';
+  const snipes = FEED.events.filter((ev) => ev.isSnipe);
+  document.getElementById('snipes').innerHTML = snipes.length ? snipes.slice(0,20).map(renderEvent).join('') : '<p class="empty">直近のスナイプは検出されていません。</p>';
 }
 async function load(){
   try {
     FEED = await (await fetch('feed.json?t=' + Date.now(), {cache:'no-store'})).json();
     const s = FEED.status;
     document.getElementById('status').innerHTML =
-      `最終処理ブロック：<b>${s.lastProcessedBlock ?? '—'}</b>（チェーン最新 ${s.latestBlockSeen ?? '—'}）／更新：${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}) : '—'}／記録した動き：${s.totalEvents}件／監視中：バリデーター${s.watchSummary.validators}名＋直接関連${s.watchSummary.directRelated}件`;
+      `最終処理ブロック：<b>${s.lastProcessedBlock ?? '—'}</b>（チェーン最新 ${s.latestBlockSeen ?? '—'}）／Cosmos側 最終処理：<b>${s.lastProcessedCosmosBlock ?? '—'}</b>／更新：${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('ja-JP',{timeZone:'Asia/Tokyo'}) : '—'}／記録した動き：${s.totalEvents}件／監視中：バリデーター${s.watchSummary.validators}名＋直接関連${s.watchSummary.directRelated}件`;
     document.getElementById('alertRule').textContent = s.notableRule + '。この条件に当てはまった動きだけをここに並べます（サイト内だけの表示で、外部への投稿はしません）。';
+    document.getElementById('snipeRule').textContent = (s.snipeRule || '') + '。当てはまった動きをここに目立つ形で並べます。';
     const vsel = document.getElementById('fValidator');
     if (vsel.options.length <= 1) for (const v of FEED.validators) { const o = document.createElement('option'); o.value = v.moniker; o.textContent = v.moniker; vsel.appendChild(o); }
     const tsel = document.getElementById('fToken');

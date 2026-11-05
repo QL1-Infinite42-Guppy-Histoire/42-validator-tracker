@@ -1,8 +1,8 @@
-# 42チェーン バリデーター リアルタイム追跡ツール v0.1.0（Phase 1）
+# 42チェーン バリデーター リアルタイム追跡ツール v0.2.0（Phase 2）
 
-**現在のバージョン：v0.1.0**（2026-11-05、Phase 1：EVM側ライブフィード＋公開＋自動更新）— 以後の予定：v0.2.0 = Phase 2（Cosmos側）、v0.3.0 = Phase 3（推定リンク・名簿自動更新）、v1.0.0 = 全フェーズ完了＋運用安定時点
+**現在のバージョン：v0.2.0**（2026-11-05、Phase 2：Cosmos側追加＋スナイプ速報＋見出し表示の修正）— バージョン対応：v0.1.0 = Phase 1（EVM側）、v0.2.0 = Phase 2（Cosmos側）、v0.3.0 = Phase 3（推定リンク・名簿自動更新）、v1.0.0 = 全フェーズ完了＋運用安定時点
 
-42 Chain（EVM chainId 421018）のバリデーター23名と、その本人と**直接**やり取りした関連アドレスの動きを、新しいブロックから自動で拾い、時系列フィードで公開するためのツールです。
+42 Chain（EVM chainId 421018 / Cosmos chainId infinite_421018-1）のバリデーター23名と、その本人と**直接**やり取りした関連アドレスの動きを、新しいブロックから自動で拾い、時系列フィードで公開するためのツールです。EVM側と Cosmos側の両方を見ます（Cosmos のアカウントと EVM アドレスは同じ20バイトなので、同一人物として統合されます）。
 
 - 公開サイト： https://ql1-infinite42-guppy-histoire.github.io/42-validator-tracker/
 - リポジトリ： https://github.com/QL1-Infinite42-Guppy-Histoire/42-validator-tracker
@@ -11,27 +11,33 @@
 
 ## 何が表示されるか
 
-- ライブフィード：時刻（JST）／バリデーター名＋区分バッジ（本人・関連・中核）／アドレス（末尾4文字表示、タップで公式エクスプローラー）／分類（送金・受取／買い／売り／LP追加／LP解除／その他の操作）／銘柄と金額／相手／Txリンク
+- ライブフィード：時刻（JST）／区分バッジ（本人・関連・中核）／アドレス（末尾4文字表示、タップで公式エクスプローラー）／分類（送金・受取／買い／売り／LP追加／LP解除／委任・委任解除・委任先変更・報酬受取・手数料報酬／その他の操作）／銘柄と金額／相手／Txリンク。Cosmos側の動きには「Cosmos側」バッジが付き、Txリンクは自作の Cosmos スキャナー（https://ql1-infinite42-guppy-histoire.github.io/42-cosmos-scan/ の Tx ビュー）に飛びます（公式の Blockscout は Cosmos Tx を表示しないため）
+- **見出しは「動いた本人」だけ**を表示します（v0.2.0で修正）。関係するバリデーターは別の行に「関係バリデーター：○○ ほか△名」と上限付きで分け、3名以上のバリデーターと取引するアドレスには「共有の相手先」バッジ＋説明を付けます（複数のバリデーター名を見出しに並べて、共同で動いたように見える表示はしません）
 - 絞り込み：バリデーター別・種類別・銘柄別
-- バリデーター一覧（23名、それぞれの直接関連アドレス数つき）
+- バリデーター一覧（23名、それぞれの直接関連アドレス数つき。Cosmos側の bech32 アドレス `infinite1…` も feed.json に併記）
+- **「🎯 スナイプ速報」欄（最上部）**：スナイプの定義は **ペアが作られてから3時間以内に、バリデーター本人または直接関連ウォレットが、そのペアで買う（買い）またはLP追加した動き**。ペアの作成時刻は Blockscout の作成Tx（creation_transaction_hash）から取得して `pairs-creation.json` にキャッシュします。当てはまる動きが無い期間は「直近のスナイプは検出されていません」と定義ごと表示します
 - 「注目」欄（サイト内アラート）：ルールは明示しています —
   ① バリデーター本人の売買、② 1,000 [42] 以上の移動。条件は `collector.mjs` の `NOTABLE_42_THRESHOLD` とサイト上の表記が正です
-- ステータス行：最終処理ブロック番号と更新時刻（鮮度が誰にでも分かります）
+- ステータス行：最終処理ブロック番号（EVM側／Cosmos側）と更新時刻（鮮度が誰にでも分かります）
 
 ## 仕組み
 
 ```
-42 Chain (EVM RPC)
-   │  新ブロックを約10秒間隔で確認（collector.mjs、依存パッケージなし）
-   ▼
-ブロック＋レシートをまとめて取得 → ログを復号
-（ERC-20 Transfer / Uniswap V2型 Swap・Mint・Burn）
-   ▼
-監視アドレスに絡む動きだけを分類して events.jsonl に追記
-（txHash+logIndex で重複排除、state.json にチェックポイント）
-   ▼
+42 Chain (EVM RPC)                        42 Chain (CometBFT RPC / Cosmos側)
+   │  新ブロックを確認                        │  対象メッセージ種別ごとに tx_search
+   ▼                                          ▼
+ブロック＋レシート → ログ復号              Tx本体を protobuf 復号してメッセージ単位で分類
+（Transfer / V2 Swap・Mint・Burn）        （MsgSend / 委任・解除・変更 / 報酬・手数料）
+   │                                          │  ※ MsgEthereumTx はEVM側と重なるので対象外
+   └──────────────┬───────────────────────────┘
+                  ▼
+監視アドレスに絡む動きだけを events.jsonl に追記
+（IDで重複排除、state.json に EVM / Cosmos 両方のチェックポイント）
+                  ▼
 feed.json（最新500件）を再生成 → 静的サイト index.html が30秒ごとに読み直し
 ```
+
+Cosmos側の初回だけは全履歴を一括取り込みします（このチェーンの Cosmos ネイティブ取引は全期間でも約800件と少ないため）。以後はチェックポイント以降の高さだけを tx_search で引くので、5分間隔の Actions 実行に十分収まります。Cosmos の高さと EVM のブロック番号はこのチェーンでは一致しますが、チェックポイントは安全のため別々に保持します（`state.json` の `lastProcessedCosmosBlock`）。
 
 ### 監視リスト（watchlist.json）
 
@@ -55,19 +61,32 @@ feed.json（最新500件）を再生成 → 静的サイト index.html が30秒�
 - **LP追加／LP解除**：Mint／Burn イベント。実行者は Tx送信者とLPトークンの発行・焼却先から特定します
 - **その他の操作**：上記に当てはまらない、監視アドレスからのコントラクト実行。ただし同一アドレス・宛先・メソッドの繰り返しは約360ブロック（約30分）に1回まで記録します（キーパー的な関連アドレス 0xbfc5…4f29 の同一コール連打でフィードが埋まるのを防ぐため。送金・売買・LPは一切抑制しません）
 - Swap／LP を含む Tx の内部 Transfer は、その変換の一部なので二重に記録しません
+- **スナイプ判定**：買い／LP追加のイベントに、ペア作成時刻（`pairs-creation.json`）から計算した「作成後の経過秒数」を付け、3時間以内なら `isSnipe=true`。保存済みイベントにも同じ判定を後付けします（遡及フラグ）。作成時刻が解決できないペアは判定しません（推測で埋めません）
+
+### Cosmos側の分類ルール（collector.mjs、v0.2.0）
+
+- 取得は CometBFT の `tx_search`（メッセージ種別ごと、高さ範囲つき、全ページ走査）。Tx本体を最小 protobuf デコーダーで復号してメッセージ単位で見るので、**手数料レッグは構造的に混入しません**（手数料は AuthInfo 側にあり、メッセージには現れません）
+- **送金（bank MsgSend）**：`drop` は [42]（18桁）として表示。それ以外の denom はそのまま表示し対象外扱い。**金額の下限は一切ありません**（Xenia の 2 [42] のような小額送金が典型例）
+- **委任／委任解除／委任先変更**（staking MsgDelegate / MsgUndelegate / MsgBeginRedelegate）：宛先バリデーターは valoper アドレスを復号してアカウントと同一の20バイトに直し、名前で表示します
+- **報酬受取／手数料報酬**（distribution MsgWithdrawDelegatorReward / MsgWithdrawValidatorCommission）：金額は Tx の実行結果イベント（withdraw_rewards / withdraw_commission）から取得します
+- **MsgEthereumTx は完全に対象外**です（EVM側で既に記録されるため、二重計上を防ぎます）
+- Cosmos アドレス（bech32 `infinite1…` / `infinitevaloper1…`）は自前の bech32 実装で16進アドレスに変換し、EVM側と同一の監視リストで照合します
 
 ## ローカルでの動かし方
 
 ```bash
 node build-watchlist.mjs          # watchlist.json / registries.json を生成（初回のみ）
 node collector.mjs --backfill 300 # 直近300ブロックを処理して feed.json を作る
-node collector.mjs --once         # チェックポイントから先端まで1回処理
+node collector.mjs --once         # チェックポイントから先端まで1回処理（EVM＋Cosmos）
+node collector.mjs --cosmos-backfill 20000  # Cosmos側だけ直近N高さを再走査
 node collector.mjs                # 常駐モード（約10秒間隔、POLL_MS で変更可）
 node server.mjs                   # http://localhost:8787/ でサイト表示
 node test-decoder.mjs             # 既知の過去フロー2件（スワップ／送金）で復号を照合
+node test-render.mjs              # v0.2.0 見出し表示の回帰テスト（共有の相手先の誤認防止）
+node test-cosmos.mjs              # Cosmos復号の照合（bech32往復／MsgSendと msg_index レッグの一致）
 ```
 
-ファイル構成：`collector.mjs`（収集・分類）／`build-watchlist.mjs`（監視リスト生成）／`watchlist.json`・`registries.json`（生成物）／`events.jsonl`（全イベント追記）／`feed.json`（最新500件）／`state.json`（チェックポイント）／`pairs-cache.json`（新規ペアの token0/token1 キャッシュ）／`index.html`（サイト本体、外部CDNなし）／`server.mjs`（ローカル確認用）／`test-decoder.mjs`（検証）
+ファイル構成：`collector.mjs`（収集・分類、EVM＋Cosmos）／`build-watchlist.mjs`（監視リスト生成）／`watchlist.json`・`registries.json`（生成物）／`events.jsonl`（全イベント追記、`chain` フィールド付き）／`feed.json`（最新500件）／`state.json`（EVM／Cosmos チェックポイント）／`pairs-cache.json`（新規ペアの token0/token1 キャッシュ）／`pairs-creation.json`（ペア作成ブロック・時刻のキャッシュ）／`index.html`（サイト本体、外部CDNなし）／`server.mjs`（ローカル確認用）／`test-decoder.mjs`・`test-render.mjs`・`test-cosmos.mjs`（検証）
 
 RPCの注意：42 Chain の RPC はブラウザ風 User-Agent を付けないと接続を切ることがあります（実測済み）。`collector.mjs` は最初から付けており、ホスト2系統（infinitepanda → mschihuahua）の切替＋リトライも入っています。ブロック間隔は実測で約5.4秒と安定しています。
 
@@ -93,9 +112,10 @@ RPCの注意：42 Chain の RPC はブラウザ風 User-Agent を付けないと
 
 常駐モード（約10秒間隔ポーリング）をそのまま動かせて最もリアルタイムに近いですが、月額がかかるため **0円前提では採りません**。必要になった場合の選択肢としてだけ挙げておきます。
 
-## Phase 1 の範囲と限界（正直な表記）
+## v0.2.0 の範囲と限界（正直な表記）
 
-- EVM側のみです。**Cosmos側は Phase 2**（未実装）
+- EVM側＋Cosmos側（送金・委任・委任解除・委任先変更・報酬・手数料報酬）が対象です。Cosmos側のその他のメッセージ種別（ガバナンス投票など）は未対応です
+- スナイプ速報は「ペア作成時刻が解決できた買い／LP追加」だけが判定対象です。作成時刻の分からないペアは判定しません
 - **推定リンクは含みません**（プール経由などの推定は Phase 3。本人→直接関連の確認済みデータのみ）
 - X bot などの外部アラートは行いません（サイト内「注目」だけ）
 - バリデーター集合は 2026-10-31 のスナップショットが元です。新規バリデーターの自動取り込みは今後の課題です
