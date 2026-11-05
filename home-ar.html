@@ -25,8 +25,10 @@
   a.card.snipes h2{color:#ff8fa3}
   a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
   a.card.bridge h2{color:#69db7c}
-  a.card.alerts{background:#2a2110;border:1px solid #6b5518}
-  a.card.alerts h2{color:#ffd166}
+  a.card.trades{background:#2a2110;border:1px solid #6b5518}
+  a.card.tradesnf{background:#211a0c;border:1px dashed #6b5518}
+  a.card.trades h2{color:#ffd166}
+  a.card.tradesnf h2{color:#ffd166}
   .pricecard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:1rem}
   .pricecard b{font-size:1.6rem;color:var(--ok)}
   .pricecard .chg-up{color:#69db7c;font-weight:700}
@@ -60,7 +62,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <b>العربية</b> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
+  <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <b>العربية</b> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.6.0</span></div></div>
   <p class="sub">يجمع هذا الموقع تلقائيًا حركات المدققين أنفسهم والعناوين المؤكد تعاملها المباشر معهم. اختر قسمًا للانتقال إليه.</p>
   <div class="status" id="status">جارٍ التحميل…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -89,10 +91,20 @@
       <div class="count" id="c-bridgetotal">—</div>
       <div class="segsub" id="c-bridgeseg">—</div>
     </a>
-    <a class="card alerts" href="ar.html#sec-alerts">
-      <h2>⭐ جدير بالملاحظة</h2>
-      <p>صفقات المدققين أنفسهم والحركات الكبيرة بقيمة 1,000 [42] أو أكثر.</p>
-      <div class="count" id="c-alerts">—</div>
+    <a class="card trades" href="ar.html#sec-trades">
+      <h2>💱 التداول</h2>
+      <p>جميع عمليات التبادل (الشراء والبيع) التي قام بها المدققون أنفسهم وعناوينهم المرتبطة من المستوى الأول، الأحدث أولًا.</p>
+      <div class="count" id="c-trades">—</div>
+    </a>
+    <a class="card tradesnf" href="ar.html#sec-tradesnf">
+      <h2>💱 التداول (باستثناء مبيعات FISH الصغيرة)</h2>
+      <p>قائمة التداول مع إزالة مبيعات FISH الصغيرة فقط — المبيعات التي استلمت أقل من 10 [42] (أو 10 USDT).</p>
+      <div class="count" id="c-tradesnf">—</div>
+    </a>
+    <a class="card trading" href="ar.html#sec-trading">
+      <h2>📈 ملخص التداول</h2>
+      <p>مجاميع الشراء/البيع حسب الرمز خلال آخر 24 ساعة و7 أيام و30 يومًا (FISH مستثنى).</p>
+      <div class="count" id="c-trading">—</div>
     </a>
     <a class="card" href="ar.html#sec-lp">
       <h2>💧 حركات السيولة</h2>
@@ -135,7 +147,7 @@
 </main>
 <footer>
   مصدر البيانات: كتل 42 Chain نفسها (عبر RPC). تقتصر التغطية على معاملات 42 Chain فقط (معرّف سلسلة EVM 421018 وجانبها Cosmos، infinite_421018-1). لا تُضمّن معاملات QL1 أو أي سلسلة أخرى. تُعرض التنبيهات على هذا الموقع فقط.
-  <br>الإصدار: <b>v0.5.3</b> (الصفحة الرئيسية)
+  <br>الإصدار: <b>v0.6.0</b> (الصفحة الرئيسية)
 </footer>
 <script>
 (async () => {
@@ -162,8 +174,10 @@
     if (!bst) for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
     const bfmt = (v) => v.toLocaleString('ar-u-nu-latn', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('c-bridgeseg').textContent = `نفسه ${bfmt(bseg[0])} / العمق 1 ‏${bfmt(bseg[1])} / العمق 2+ ‏${bfmt(bseg[2])} USDT`;
-    const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
-    document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
+    const isSmallFishSell = (e) => e.type === 'swap-sell' && e.sold && e.sold.symbol === 'FISH' && e.bought && parseFloat(e.bought.amount) < 10;
+    document.getElementById('c-trades').textContent = ev.filter((e) => (e.type === 'swap-buy' || e.type === 'swap-sell') && e.actorTier !== 'estimated').length;
+    document.getElementById('c-tradesnf').textContent = ev.filter((e) => (e.type === 'swap-buy' || e.type === 'swap-sell') && e.actorTier !== 'estimated' && !isSmallFishSell(e)).length;
+    document.getElementById('c-trading').textContent = ((FEED.stats && FEED.stats.trading && FEED.stats.trading['30d']) ? FEED.stats.trading['30d'].buyTotal + FEED.stats.trading['30d'].sellTotal : 0);
     if (s.price) {
       const pc = document.getElementById('pricecard');
       const chg = s.price.change24hPct;

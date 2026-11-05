@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Traqueur en temps réel des validateurs 42 Chain v0.5.3</title>
+<title>Traqueur en temps réel des validateurs 42 Chain v0.6.0</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -16,7 +16,13 @@
   section.insider h2{color:#e9d5ff;font-size:1.3rem}
   section.insider .rule{color:#c084fc}
   .badge.insider{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
-  section.alerts{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.trades{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.tradesnf{background:#211a0c;border:1px dashed #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.trades h2,section.tradesnf h2{color:#ffd166}
+  .pie-wrap{display:flex;flex-wrap:wrap;gap:8px 28px;margin:6px 0 14px}
+  .pie-box h4{margin:6px 0}
+  .pie-leg{font-size:.88rem;color:var(--sub);margin:2px 0}
+  .pie-leg .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
   section.snipes{background:#33121a;border:2px solid #ff5964;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(255,89,100,.25)}
   .ev.bridgeout{border:2px solid #2f9e44;background:#0e2416;box-shadow:0 0 18px rgba(47,158,68,.65)}
   .badge.bridgeout{color:#fff;background:#2f9e44;border-color:#69db7c;font-weight:700;box-shadow:0 0 10px rgba(105,219,124,.8)}
@@ -42,7 +48,6 @@
   .filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
   select{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:.95rem}
   .ev{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
-  .ev.notable{border-color:#6b5518;background:#241e10}
   .ev .top{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
   .time{color:var(--sub);font-size:.85rem}
   .badge{font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--line);color:var(--sub)}
@@ -50,7 +55,6 @@
   .badge.related{color:var(--acc);border-color:var(--acc)}
   .badge.core{color:var(--core);border-color:var(--core)}
   .badge.type{color:var(--txt);background:var(--card2)}
-  .badge.notable{color:#081018;background:var(--warn);border-color:var(--warn);font-weight:700}
   .summary{font-size:1rem;margin-top:2px}
   .meta{color:var(--sub);font-size:.85rem}
   a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
@@ -60,10 +64,10 @@
   .empty{color:var(--sub);padding:18px 0}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
-  section.insider>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.alerts>h2,section.fold>h2{cursor:pointer;user-select:none}
-  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.alerts>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
-  section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.alerts.open>h2::after,section.fold.open>h2::after{content:' ▼'}
-  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.alerts:not(.open)>:not(h2){display:none}
+  section.insider>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.trades>h2,section.tradesnf>h2,section.trading>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.trades>h2::after,section.tradesnf>h2::after,section.trading>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.trades.open>h2::after,section.tradesnf.open>h2::after,section.trading.open>h2::after,section.fold.open>h2::after{content:' ▼'}
+  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.trades:not(.open)>:not(h2),section.tradesnf:not(.open)>:not(h2),section.trading:not(.open)>:not(h2){display:none}
   section.fold:not(.open)>.fold-body{display:none}
   section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.fold>h2{margin-top:8px}
@@ -111,7 +115,7 @@
   section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{cursor:pointer;user-select:none}
   section.newpairs>h2::after,section.lp>h2::after,section.dormant>h2::after,section.newfaces>h2::after,section.staking>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
   section.newpairs.open>h2::after,section.lp.open>h2::after,section.dormant.open>h2::after,section.newfaces.open>h2::after,section.staking.open>h2::after{content:' ▼'}
-  section.newpairs,section.lp,section.dormant,section.newfaces,section.staking{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
+  section.newpairs,section.lp,section.dormant,section.newfaces,section.staking,section.trading{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{margin-top:8px}
   table.staking{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
   table.staking th,table.staking td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right}
@@ -123,9 +127,9 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>Traqueur en temps réel des validateurs 42 Chain</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <b>Français</b> <span class="verbadge">v0.5.3</span></div></div>
-  <p class="sub">Cette page collecte automatiquement, à partir des nouveaux blocs, les mouvements des validateurs eux-mêmes et de leurs adresses liées (uniquement celles qui ont transigé directement avec eux) (côté EVM + côté Cosmos, v0.5.3). Les adresses de programmes (contrats) ne comptent pas comme des relations d’une personne, et les liens ne sont jamais tracés à travers elles. Une adresse n’est jamais traitée comme une infrastructure simplement parce qu’il s’agit d’un portefeuille partagé ; le seul critère est de savoir si c’est un programme (un contrat). Ce site ne suit que les validateurs eux-mêmes et les adresses liées reliées à eux par des transactions directes. Les adresses au-delà (profondeur 2 et plus) et celles dont le lien n’est qu’estimé ne sont pas suivies. Les adresses liées sont des adresses d'AUTRES personnes qui ont déjà effectué des transactions avec ce validateur ; ce ne sont pas nécessairement les propres portefeuilles du validateur. Leur activité est affichée séparément de celle du validateur lui-même. Par « adresse liée », on entend uniquement une adresse qui a traité directement avec le validateur au moins deux fois, ou dans les deux sens. Une seule transaction à sens unique ne compte pas comme un lien.</p>
-  <nav class="topnav"><a href="home-fr.html">🏠 Accueil</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Retraits via pont</a><a href="#sec-bridgechart">📊 Totaux</a><a href="#sec-alerts">⭐ À noter</a><a href="#sec-lp">💧 Liquidité</a><a href="#sec-dormant">😴 Inactifs</a><a href="#sec-newfaces">👤 Nouveaux visages</a><a href="#sec-newpairs">🆕 Nouvelles paires</a><a href="#sec-feed">Activité récente</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validateurs</a></nav>
+  <div class="head-row"><h1>Traqueur en temps réel des validateurs 42 Chain</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <b>Français</b> <span class="verbadge">v0.6.0</span></div></div>
+  <p class="sub">Cette page collecte automatiquement, à partir des nouveaux blocs, les mouvements des validateurs eux-mêmes et de leurs adresses liées (uniquement celles qui ont transigé directement avec eux) (côté EVM + côté Cosmos, v0.6.0). Les adresses de programmes (contrats) ne comptent pas comme des relations d’une personne, et les liens ne sont jamais tracés à travers elles. Une adresse n’est jamais traitée comme une infrastructure simplement parce qu’il s’agit d’un portefeuille partagé ; le seul critère est de savoir si c’est un programme (un contrat). Ce site ne suit que les validateurs eux-mêmes et les adresses liées reliées à eux par des transactions directes. Les adresses au-delà (profondeur 2 et plus) et celles dont le lien n’est qu’estimé ne sont pas suivies. Les adresses liées sont des adresses d'AUTRES personnes qui ont déjà effectué des transactions avec ce validateur ; ce ne sont pas nécessairement les propres portefeuilles du validateur. Leur activité est affichée séparément de celle du validateur lui-même. Par « adresse liée », on entend uniquement une adresse qui a traité directement avec le validateur au moins deux fois, ou dans les deux sens. Une seule transaction à sens unique ne compte pas comme un lien.</p>
+  <nav class="topnav"><a href="home-fr.html">🏠 Accueil</a><a href="#sec-insider">⚠ Insider</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Retraits via pont</a><a href="#sec-bridgechart">📊 Totaux</a><a href="#sec-trades">💱 Échanges</a><a href="#sec-tradesnf">💱 Échanges (hors petites ventes de FISH)</a><a href="#sec-trading">📈 Récapitulatif des échanges</a><a href="#sec-lp">💧 Liquidité</a><a href="#sec-dormant">😴 Inactifs</a><a href="#sec-newfaces">👤 Nouveaux visages</a><a href="#sec-newpairs">🆕 Nouvelles paires</a><a href="#sec-feed">Activité récente</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validateurs</a></nav>
   <div class="status" id="status">Chargement…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
 </header>
@@ -154,10 +158,20 @@
     <div id="bridgeChart"><p class="empty">Chargement…</p></div>
   </section>
 
-  <section class="alerts" id="sec-alerts">
-    <h2>⭐ À noter</h2>
-    <p class="rule" id="alertRule"></p>
-    <div id="alerts"><p class="empty">Chargement…</p></div>
+  <section class="trades" id="sec-trades">
+    <h2>💱 Échanges</h2>
+    <p class="rule">Tous les échanges (achats et ventes) des validateurs eux-mêmes et de leurs adresses liées de premier niveau, du plus récent au plus ancien.</p>
+    <div id="trades"><p class="empty">Chargement…</p></div>
+  </section>
+  <section class="tradesnf" id="sec-tradesnf">
+    <h2>💱 Échanges (hors petites ventes de FISH)</h2>
+    <p class="rule" id="tradesNfRule"></p>
+    <div id="tradesNofish"><p class="empty">Chargement…</p></div>
+  </section>
+  <section class="trading" id="sec-trading">
+    <h2>📈 Récapitulatif des échanges</h2>
+    <p class="rule">Couvre les échanges des validateurs eux-mêmes et de leurs adresses liées de premier niveau. Le collecteur agrège l’ensemble de l’historique sur des fenêtres glissantes comptées à partir du moment où les données ont été générées (dernières 24 heures / 7 jours / 30 jours). Le FISH est exclu de ce récapitulatif (les échanges dont le jeton objet est le FISH ne sont pas comptés). Les camemberts montrent les parts en nombre.</p>
+    <div id="trading"><p class="empty">Chargement…</p></div>
   </section>
 
   <section class="lp" id="sec-lp">
@@ -255,10 +269,10 @@
 <footer>
   Source des données : les blocs de la 42 Chain elle-même (via RPC). La couverture est limitée aux seules transactions sur la 42 Chain (identifiant de chaîne EVM 421018 et son côté Cosmos, infinite_421018-1). Les transactions sur QL1 ou sur toute autre chaîne ne sont pas incluses. Toucher une transaction ou une adresse ouvre l’explorateur officiel, scan.infinitedrive.xyz.
   Les jetons affichés sont principalement les 17 jetons listés sur Don’t Panic (tout autre est marqué comme jeton non listé). Aucun mouvement n’est ignoré en raison de sa taille — les petits transferts sont tous enregistrés.
-  Portée : côté EVM + côté Cosmos (transferts, délégations, réclamations de récompenses). Les types d’action sont affichés avec des noms concrets chaque fois que le contrat de destination et la méthode les identifient (participation Fluke, frappe de NFT, réclamation de récompense, envoi par pont, etc.) ; tout ce qui ne peut pas être identifié est affiché honnêtement comme « Action non classée (méthode / destination) ». La section Retraits via pont ne couvre que les mouvements qui envoient des USDT vers une chaîne externe (les envois par pont d’autres jetons sont enregistrés comme des mouvements ordinaires et ne sont pas affichés dans la section verte ; les réceptions entrantes sont des réceptions ordinaires). Adresses estimées (Phase 3) : les adresses dont le lien ne peut pas être confirmé par un transfert direct sont également surveillées, estimées de trois manières — à travers le pool, 2 sauts et contrepartie partagée. Leurs mouvements apparaissent uniquement dans Activité récente, avec une bordure en pointillés, un badge Estimé et la base affichée ; ils ne sont jamais inclus dans les sections Insider / Snipes / À noter / Retraits via pont / Totaux (celles-ci ne contiennent que des informations confirmées). La liste des validateurs est actualisée depuis la chaîne à chaque exécution : les validateurs nouvellement liés sont ajoutés automatiquement, et les validateurs qui quittent l’ensemble lié restent surveillés comme historique (marqués inactifs). Rien n’est publié à l’extérieur (pas de bot X) — les alertes vivent uniquement sur ce site.
+  Portée : côté EVM + côté Cosmos (transferts, délégations, réclamations de récompenses). Les types d’action sont affichés avec des noms concrets chaque fois que le contrat de destination et la méthode les identifient (participation Fluke, frappe de NFT, réclamation de récompense, envoi par pont, etc.) ; tout ce qui ne peut pas être identifié est affiché honnêtement comme « Action non classée (méthode / destination) ». La section Retraits via pont ne couvre que les mouvements qui envoient des USDT vers une chaîne externe (les envois par pont d’autres jetons sont enregistrés comme des mouvements ordinaires et ne sont pas affichés dans la section verte ; les réceptions entrantes sont des réceptions ordinaires). Adresses estimées (Phase 3) : les adresses dont le lien ne peut pas être confirmé par un transfert direct sont également surveillées, estimées de trois manières — à travers le pool, 2 sauts et contrepartie partagée. Leurs mouvements apparaissent uniquement dans Activité récente, avec une bordure en pointillés, un badge Estimé et la base affichée ; ils ne sont jamais inclus dans les sections Insider / Snipes / Échanges / Retraits via pont / Totaux (celles-ci ne contiennent que des informations confirmées). La liste des validateurs est actualisée depuis la chaîne à chaque exécution : les validateurs nouvellement liés sont ajoutés automatiquement, et les validateurs qui quittent l’ensemble lié restent surveillés comme historique (marqués inactifs). Rien n’est publié à l’extérieur (pas de bot X) — les alertes vivent uniquement sur ce site.
   Portée des adresses liées (v0.4.0) : au-delà de chaque adresse ayant envoyé vers un validateur ou reçu de lui, l’expansion sur tout l’historique (contreparties de contreparties, sans limite) a été appliquée à l’ensemble de l’historique, passé inclus (les contrats système / de paire / de jeton, ainsi que les contacts atteignables uniquement par une adresse estimée, sont exclus). Lorsqu’une nouvelle contrepartie apparaît, elle est aussi automatiquement ajoutée comme adresse liée sur-le-champ. / Nouvelles paires couvre les paires créées par la fabrique Don’t Panic et n’affiche que les paires contenant au moins l’un des 17 jetons listés. / Le prix du [42] est calculé à partir des réserves du pool 42/USDT ; le pool est petit, la valeur comporte donc une marge d’erreur.
   Les liens de transaction du côté Cosmos ouvrent notre propre scanner Cosmos (42 Cosmos Scan). Les titres n’affichent que l’adresse qui a réellement bougé ; les validateurs liés sont listés sur une ligne distincte, avec un plafond (une adresse qui transige avec de nombreux validateurs reçoit une marque « Contrepartie partagée »). Le validateur X est aussi connu sous le nom de Rioshi, affiché en petit texte comme (Rioshi) à côté du nom.
-  <br>Version : <b>v0.5.3</b> (v0.5.3 : périmètre limité à la profondeur 1 (les adresses liées de profondeur 2+ avec preuves et les adresses estimées ont été retirées, ainsi que leurs enregistrements) et l’historique manquant a été entièrement complété (hors flux de récompenses Guide/Starlight). v0.5.2 : correction de l'affichage d'attribution — lors d'un filtrage par validateur, son activité propre et l'activité des adresses liées sont désormais affichées en deux groupes distincts, et les compteurs de la liste des validateurs sont répartis de la même manière, afin que les transactions d'autres personnes ne soient jamais présentées comme l'activité du validateur ; la définition de « lié » a également été resserrée (seules les adresses ayant traité directement avec le validateur au moins deux fois, ou dans les deux sens, comptent comme liées ; un seul contact à sens unique est conservé comme candidat et promu automatiquement lors de son deuxième traitement direct). v0.5.1 : correction de la mise en page de l'en-tête (le titre occupe désormais toute la largeur et le sélecteur de langue passe à la ligne sur les écrans étroits). v0.5.0 : le site est désormais disponible en huit langues — 日本語, English, 简体中文, Español, हिन्दी, العربية, Português et Français — chaque langue étant rendue à partir du même feed.json, composé à partir des champs structurés plutôt que des résumés japonais stockés. v0.4.3 : un badge de version se trouve désormais en haut à droite de l’en-tête, à côté du sélecteur de langue, sur chaque page. v0.4.2 : toutes les adresses d’infrastructure (contrats) retirées du graphe des personnes — les relations sont comptées uniquement à travers les portefeuilles personnels (EOA), jamais à travers un contrat ; le graphique des totaux des retraits via pont est désormais agrégé par validateur (tous les 23, profondeur illimitée, les portefeuilles partagés comptés dans la barre de chaque validateur lié). v0.4.1 : le graphique des totaux des retraits via pont divise désormais chaque barre par profondeur — le validateur lui-même / liés de profondeur 1 / liés de profondeur 2 et plus. Auparavant, v0.4.0 avait ajouté six sections — Nouvelles paires, Mouvements de liquidité, totaux Délégations et récompenses, retours après inactivité, Nouveaux visages (extension des adresses liées sur tout l’historique + ajouts automatiques) et le prix du [42] ; v0.3.2 a reclassé Xenia d’infrastructure cœur vers validateur ordinaire — une correction de classification ; v0.3.1 a ajouté la définition des relations estimées à côté des filtres d’Activité récente ; et v0.3.0 a achevé la Phase 3 : surveillance des adresses estimées + actualisation automatique de la liste des validateurs, l’alias (Rioshi) à côté de X, et un sélecteur de langue « 日本語 | English » en haut à droite)
+  <br>Version : <b>v0.6.0</b> (v0.6.0: la section ⭐ À noter a été remplacée par 💱 Échanges (tous les échanges des validateurs + liés de premier niveau), 💱 Échanges (hors petites ventes de FISH) — la même liste sans les ventes de FISH ayant reçu moins de 10 [42] / 10 USDT — et un 📈 Récapitulatif des échanges (totaux d’achat/vente par période et jeton ; FISH exclu). v0.5.3 : périmètre limité à la profondeur 1 (les adresses liées de profondeur 2+ avec preuves et les adresses estimées ont été retirées, ainsi que leurs enregistrements) et l’historique manquant a été entièrement complété (hors flux de récompenses Guide/Starlight). v0.5.2 : correction de l'affichage d'attribution — lors d'un filtrage par validateur, son activité propre et l'activité des adresses liées sont désormais affichées en deux groupes distincts, et les compteurs de la liste des validateurs sont répartis de la même manière, afin que les transactions d'autres personnes ne soient jamais présentées comme l'activité du validateur ; la définition de « lié » a également été resserrée (seules les adresses ayant traité directement avec le validateur au moins deux fois, ou dans les deux sens, comptent comme liées ; un seul contact à sens unique est conservé comme candidat et promu automatiquement lors de son deuxième traitement direct). v0.5.1 : correction de la mise en page de l'en-tête (le titre occupe désormais toute la largeur et le sélecteur de langue passe à la ligne sur les écrans étroits). v0.5.0 : le site est désormais disponible en huit langues — 日本語, English, 简体中文, Español, हिन्दी, العربية, Português et Français — chaque langue étant rendue à partir du même feed.json, composé à partir des champs structurés plutôt que des résumés japonais stockés. v0.4.3 : un badge de version se trouve désormais en haut à droite de l’en-tête, à côté du sélecteur de langue, sur chaque page. v0.4.2 : toutes les adresses d’infrastructure (contrats) retirées du graphe des personnes — les relations sont comptées uniquement à travers les portefeuilles personnels (EOA), jamais à travers un contrat ; le graphique des totaux des retraits via pont est désormais agrégé par validateur (tous les 23, profondeur illimitée, les portefeuilles partagés comptés dans la barre de chaque validateur lié). v0.4.1 : le graphique des totaux des retraits via pont divise désormais chaque barre par profondeur — le validateur lui-même / liés de profondeur 1 / liés de profondeur 2 et plus. Auparavant, v0.4.0 avait ajouté six sections — Nouvelles paires, Mouvements de liquidité, totaux Délégations et récompenses, retours après inactivité, Nouveaux visages (extension des adresses liées sur tout l’historique + ajouts automatiques) et le prix du [42] ; v0.3.2 a reclassé Xenia d’infrastructure cœur vers validateur ordinaire — une correction de classification ; v0.3.1 a ajouté la définition des relations estimées à côté des filtres d’Activité récente ; et v0.3.0 a achevé la Phase 3 : surveillance des adresses estimées + actualisation automatique de la liste des validateurs, l’alias (Rioshi) à côté de X, et un sélecteur de langue « 日本語 | English » en haut à droite)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -460,9 +474,6 @@ function renderEvent(ev){
   const cpLabel = enLabel(ev.counterpartyLabel);
   const cp = ev.counterparty ? ` / Contrepartie : ${addrLink(ev.counterparty, cpLabel ? cpLabel + ' ' + shortAddr(ev.counterparty) : null)}${ev.counterpartyIsCore ? ' <span class="badge core">Cœur</span>' : ''}` : '';
   const wl = ev.whitelisted === false ? ' <span class="badge">Contient un jeton non listé</span>' : '';
-  const reasons = (ev.notableReasons || []).filter((r) => r !== 'bridge-out');
-  const mapped = reasons.map((r) => REASON_EN[r]).filter(Boolean);
-  const notable = reasons.length ? `<span class="badge notable">⭐ À noter${mapped.length ? ' : ' + mapped.join(' · ') : ''}</span>` : '';
   const isBridgeOut = ev.type === 'bridge-out' || (ev.notableReasons || []).includes('bridge-out');
   const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "Retrait USDT par pont du validateur lui-même" : ev.actorTier === 'related' ? "Retrait USDT par pont d’un portefeuille lié" : 'Retrait USDT par pont'}</span>` : '';
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
@@ -474,13 +485,55 @@ function renderEvent(ev){
   const pairWl = ev.type === 'pair-created' && ev.nonWhitelistedSide ? ' <span class="badge">Jeton non listé</span>' : '';
   const lpCls = ev.type === 'lp-add' ? ' lpadd' : ev.type === 'lp-remove' ? ' lpremove' : '';
   const bn = bigName(ev);
-  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
+  return `<div class="ev${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
     <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
-    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${insider}${dormant}${newface}${added}</div>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${insider}${dormant}${newface}${added}</div>
     <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
     ${relationLine(ev)}
     <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
+}
+// 📈 Trading summary (v0.6.0): per-period, per-token buy/sell totals
+// pre-aggregated by the collector (feed.stats.trading; FISH excluded).
+// Pie charts are count-based, drawn as inline SVG (no external library).
+const PIE_COLORS = ['#6ea8fe', '#ffd166', '#69db7c', '#ff8fa3', '#b197fc', '#ffa94d', '#63e6be', '#f783ac', '#a9e34b', '#74c0fc', '#e599f7', '#ffe066', '#8ce99a', '#ffa8a8'];
+function pieChart(entries, colorOf){
+  const total = entries.reduce((t, [, n]) => t + n, 0);
+  if (!total) return '';
+  const R = 60, C = 70;
+  const pt = (f) => [C + R * Math.sin(2 * Math.PI * f), C - R * Math.cos(2 * Math.PI * f)];
+  let acc = 0, paths = '';
+  if (entries.length === 1) paths = `<circle cx="${C}" cy="${C}" r="${R}" fill="${colorOf(entries[0][0])}"><title>${entries[0][0]}: ${entries[0][1]}</title></circle>`;
+  else for (const [sym, n] of entries) {
+    const f0 = acc / total, f1 = (acc + n) / total; acc += n;
+    const [x0, y0] = pt(f0), [x1, y1] = pt(f1);
+    paths += `<path d="M${C},${C} L${x0.toFixed(1)},${y0.toFixed(1)} A${R},${R} 0 ${f1 - f0 > 0.5 ? 1 : 0} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z" fill="${colorOf(sym)}"><title>${sym}: ${n}</title></path>`;
+  }
+  return `<svg class="pie" width="140" height="140" viewBox="0 0 140 140">${paths}</svg>`;
+}
+function renderTrading(){
+  const T = FEED.stats && FEED.stats.trading;
+  const el = document.getElementById('trading');
+  if (!T) { el.innerHTML = '<p class="empty">Aucun échange sur cette période.</p>'; return; }
+  const fmtAmt = (v) => v.toLocaleString('en-US', { maximumFractionDigits: 6 });
+  const order = [];
+  for (const k of ['30d', '7d', '24h']) for (const sym of Object.keys(T[k].tokens)) if (!order.includes(sym)) order.push(sym);
+  order.sort((a, b) => { const ta = T['30d'].tokens[a], tb = T['30d'].tokens[b]; const d = ((tb ? tb.buyN + tb.sellN : 0) - (ta ? ta.buyN + ta.sellN : 0)); return d || a.localeCompare(b); });
+  const colorOf = (sym) => PIE_COLORS[Math.max(0, order.indexOf(sym)) % PIE_COLORS.length];
+  const periods = [['24h', 'Dernières 24 heures'], ['7d', '7 derniers jours'], ['30d', '30 derniers jours']];
+  el.innerHTML = periods.map(([key, label]) => {
+    const w = T[key];
+    const syms = Object.keys(w.tokens).sort((a, b) => (w.tokens[b].buyN + w.tokens[b].sellN) - (w.tokens[a].buyN + w.tokens[a].sellN) || a.localeCompare(b));
+    if (!w.buyTotal && !w.sellTotal) return `<h3 class="vgroup">${label}</h3><p class="empty">Aucun échange sur cette période.</p>`;
+    const rows = syms.map((sym) => { const t = w.tokens[sym]; return `<tr><td><b>${sym}</b></td><td>${t.buyN}</td><td>${fmtAmt(t.buyAmt)}</td><td>${t.sellN}</td><td>${fmtAmt(t.sellAmt)}</td></tr>`; }).join('');
+    const pieBox = (title, field, total, noneText) => {
+      const entries = syms.filter((s) => w.tokens[s][field] > 0).map((s) => [s, w.tokens[s][field]]);
+      if (!total) return `<div class="pie-box"><h4>${title} (0)</h4><p class="empty">${noneText}</p></div>`;
+      const legend = entries.map(([s, n]) => `<div class="pie-leg"><span class="sw" style="background:${colorOf(s)}"></span>${s} ${n} (${(n / total * 100).toFixed(1)}%)</div>`).join('');
+      return `<div class="pie-box"><h4>${title} (${total})</h4>${pieChart(entries, colorOf)}${legend}</div>`;
+    };
+    return `<h3 class="vgroup">${label}</h3><table class="staking"><tr><th>Jeton</th><th>Achats</th><th>Quantité achetée</th><th>Ventes</th><th>Quantité vendue</th></tr>${rows}</table><div class="pie-wrap">${pieBox('Achats', 'buyN', w.buyTotal, 'Aucun achat')}${pieBox('Ventes', 'sellN', w.sellTotal, 'Aucune vente')}</div>`;
+  }).join('');
 }
 function renderStaking(){
   const st = FEED.stats && FEED.stats.staking;
@@ -524,8 +577,24 @@ function applyFilters(){
   renderFeedList(list, v);
   // Special sections are CONFIRMED-ONLY (v0.3.0): estimated actors excluded.
   const isBO = (ev) => ev.type === 'bridge-out' || (ev.notableReasons||[]).includes('bridge-out');
-  const alerts = FEED.events.filter((ev) => ev.actorTier !== 'estimated' && !isBO(ev) && (ev.notableReasons||[]).filter((r) => r !== 'bridge-out').length);
-  document.getElementById('alerts').innerHTML = alerts.length ? alerts.slice(0,20).map(renderEvent).join('') : '<p class="empty">Aucun mouvement notable pour le moment.</p>';
+  // 💱 Trading (v0.6.0, replaces the ⭐ Notable section): every swap buy /
+  // sell by tracked addresses (validators + tier-1 related), newest first.
+  // The companion list drops small FISH sells — received amount under 10
+  // in the received currency ([42] or USDT, no conversion) — which
+  // dominate the raw list (full-history median ≈ 2.5 [42]; 96% under 10).
+  const byRecency = (a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts);
+  const trades = FEED.events.filter((ev) => (ev.type === 'swap-buy' || ev.type === 'swap-sell') && ev.actorTier !== 'estimated').sort(byRecency);
+  const tradeLine = (list) => `<p class="sub">Affichage de ${list.length} échanges (${list.filter((e) => e.type === 'swap-buy').length} achats, ${list.filter((e) => e.type === 'swap-sell').length} ventes)</p>`;
+  document.getElementById('trades').innerHTML = trades.length
+    ? tradeLine(trades) + trades.slice(0, 100).map(renderEvent).join('') + (trades.length > 100 ? `<p class="empty">Affichage des 100 plus récents parmi ${list.length} échanges (tous sont conservés dans l’historique)</p>` : '')
+    : '<p class="empty">Aucun échange pour le moment.</p>';
+  const isSmallFishSell = (ev) => ev.type === 'swap-sell' && ev.sold && ev.sold.symbol === 'FISH' && ev.bought && parseFloat(ev.bought.amount) < 10;
+  const fishSmall = trades.filter(isSmallFishSell);
+  const tradesNf = trades.filter((ev) => !isSmallFishSell(ev));
+  document.getElementById('tradesNfRule').textContent = `La même liste qu’Échanges, en retirant uniquement les petites ventes de FISH. Une vente de FISH est considérée comme petite lorsque le montant reçu est inférieur à 10 [42] (ou inférieur à 10 USDT) — jugé dans la devise reçue, sans conversion. ${fishSmall.length} mouvements dans la plage affichée correspondaient à cette règle.`;
+  document.getElementById('tradesNofish').innerHTML = tradesNf.length
+    ? tradeLine(tradesNf) + tradesNf.slice(0, 100).map(renderEvent).join('') + (tradesNf.length > 100 ? `<p class="empty">Affichage des 100 plus récents parmi ${list.length} échanges (tous sont conservés dans l’historique)</p>` : '')
+    : '<p class="empty">Aucun échange pour le moment.</p>';
   const bridgeouts = FEED.events.filter((ev) => isBO(ev) && ev.actorTier !== 'estimated');
   document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">Aucun retrait via pont récent.</p>';
   const snipes = FEED.events.filter((ev) => ev.isSnipe && ev.actorTier !== 'estimated');
@@ -554,7 +623,7 @@ function applyFilters(){
     ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">Affichage des 100 plus récents parmi ${insiders.length} mouvements (tous sont conservés dans l’historique)</p>` : '')
     : '<p class="empty">Aucun achat pré-cotation correspondant.</p>';
 }
-if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.alerts, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.trades, section.tradesnf, section.trading, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
   const h = sec.querySelector('h2');
   if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
 }
@@ -564,8 +633,7 @@ async function load(){
     const s = FEED.status;
     document.getElementById('status').innerHTML =
       `Dernier bloc traité : <b>${s.lastProcessedBlock ?? '—'}</b> (pointe de la chaîne ${s.latestBlockSeen ?? '—'}) / Dernier bloc Cosmos traité : <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Mis à jour : ${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / Mouvements enregistrés : ${s.totalEvents} / Surveillance : ${s.watchSummary.validators} validateurs + ${s.watchSummary.directRelated} adresses directement liées${s.validatorsAdded ? ` / Validateurs ajoutés automatiquement à cette exécution : ${s.validatorsAdded.map(valNameText).join(', ')}` : ''}`;
-    document.getElementById('alertRule').textContent = 'Règle « À noter » : (1) les achats et ventes propres d’un validateur, (2) les mouvements de 1 000 [42] ou plus. Les retraits USDT via pont sont affichés séparément dans la section verte ci-dessus. Seuls les mouvements correspondant à ces règles sont listés ici (affichés uniquement sur ce site ; rien n’est publié à l’extérieur).';
-    document.getElementById('bridgeOutRule').textContent = 'Retrait via pont = un validateur lui-même, ou un portefeuille directement lié, qui envoie des USDT hors de la 42 Chain vers une chaîne externe via un pont. Ces mouvements brillent en vert dans cette section dédiée (ils ne sont pas placés dans À noter). Les envois par pont de jetons non-USDT sont enregistrés comme des mouvements ordinaires et ne sont pas affichés ici. Les réceptions entrantes (recevoir du côté de la 42 Chain) sont traitées comme des transferts ordinaires.';
+    document.getElementById('bridgeOutRule').textContent = 'Retrait via pont = un validateur lui-même, ou un portefeuille directement lié, qui envoie des USDT hors de la 42 Chain vers une chaîne externe via un pont. Ces mouvements brillent en vert dans cette section dédiée (ils sont affichés uniquement ici). Les envois par pont de jetons non-USDT sont enregistrés comme des mouvements ordinaires et ne sont pas affichés ici. Les réceptions entrantes (recevoir du côté de la 42 Chain) sont traitées comme des transferts ordinaires.';
     document.getElementById('snipeRule').textContent = 'Snipe = un validateur lui-même, ou un portefeuille directement lié, qui achète sur une paire dans les 3 heures suivant la création de cette paire (achats uniquement — les ajouts de liquidité ne comptent pas comme des snipes). Les mouvements correspondants sont listés ici, en bonne place.';
     document.getElementById('dormantRule').textContent = 'Retour après inactivité : une adresse surveillée (un validateur lui-même, une adresse liée ou un EOA étiqueté cœur — les paires et autres contrats ainsi que les adresses estimées sont exclus) qui bouge à nouveau après 60 jours ou plus sans mouvement dans l’historique de ce site. Le mouvement de retour est marqué « Premier mouvement depuis N jours ».';
     if (s.price) {
@@ -587,6 +655,7 @@ async function load(){
       `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">également infrastructure cœur</span>' : ''}${v.inactive ? ' <span class="badge">actuellement inactif</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} adresses liées (dont ${v.autoAddedCount ?? 0} ajoutées automatiquement)</span><br><span class="sub">Activité propre ${v.selfActivity ?? 0} / Activité des adresses liées ${v.relatedActivity ?? 0}</span></div>`).join('');
     applyFilters();
     renderBridgeChart();
+    renderTrading();
     renderStaking();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
   } catch (e) {

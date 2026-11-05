@@ -238,7 +238,7 @@ export const NFT_COLLECTIONS = {
 // to an external chain through a bridge. Bridge sends of other tokens are
 // recorded as plain moves and never enter this section; inbound receipts
 // are plain transfers, never glowing.
-export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター本人または直接関連ウォレットが、USDTをブリッジ経由で42チェーンから外部チェーンへ送り出した動き。専用の「ブリッジ出金（USDT・外部へ）」欄で緑色に光って表示されます（注目欄には入れません）。USDT以外の銘柄のブリッジ送信は通常の動きとして記録し、この欄には入れません。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
+export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター本人または直接関連ウォレットが、USDTをブリッジ経由で42チェーンから外部チェーンへ送り出した動き。専用の「ブリッジ出金（USDT・外部へ）」欄で緑色に光って表示されます（他の欄とは分けて、専用欄だけに表示します）。USDT以外の銘柄のブリッジ送信は通常の動きとして記録し、この欄には入れません。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
 
 // ---------------- v0.2.4: ⚠ Insider section (validator X) ----------------
 // User rule: a dedicated warning-style section at the very top of the site
@@ -253,7 +253,7 @@ export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター
 export const X_VALIDATOR_ADDR = '0xdb34ff92995c74d170755a563a1a2c35a3db4738'; // watchlist validator entry, moniker 'X'
 export const DONT_TOKEN = '0xfaa842c8871f7f99c183f77871f79ce07dd056cd'; // whitelist PANIC contract == DONT
 export const INSIDER_RULE = 'インサイダー欄：リスティング当日（2026年6月30日）14時00分（日本時間）より前に、バリデーターX（Rioshi）本人とX（Rioshi）の直接関連アドレスが行った [42] と DONT（PANIC）の「買い」だけを表示します。それ以外の動きは通常の記録に含まれます';
-export const ESTIMATED_RULE = '推定アドレスについて（v0.3.0 / Phase 3）：直接の送金が確認できないつながりを、次の3つの方法で推定したアドレスです。①プール経由（プールの反対側の売買と、金額差10%以内・24時間以内で一致）②2ホップ経由（バリデーター→このアドレス→バリデーターの両レッグとも確認済みの送金）③共通の相手先（2名以上のバリデーターと直接取引した第三者で、まだ確定関連に入っていないもの）。推定アドレスの動きは「最新の動き」にだけ、推定バッジと根拠つきで表示します。インサイダー／スナイプ／注目／ブリッジ出金／総額グラフの特別欄は、確定情報（本人＋直接関連）だけを使い、推定は一切含みません';
+export const ESTIMATED_RULE = '推定アドレスについて（v0.3.0 / Phase 3）：直接の送金が確認できないつながりを、次の3つの方法で推定したアドレスです。①プール経由（プールの反対側の売買と、金額差10%以内・24時間以内で一致）②2ホップ経由（バリデーター→このアドレス→バリデーターの両レッグとも確認済みの送金）③共通の相手先（2名以上のバリデーターと直接取引した第三者で、まだ確定関連に入っていないもの）。推定アドレスの動きは「最新の動き」にだけ、推定バッジと根拠つきで表示します。インサイダー／スナイプ／売買／ブリッジ出金／総額グラフの特別欄は、確定情報（本人＋直接関連）だけを使い、推定は一切含みません';
 
 // ---------------- v0.4.0: pairs / dormant / new faces / price ----------------
 // The 42/USDT pair (Don't Panic factory) whose reserves price [42].
@@ -430,6 +430,37 @@ export function computeBridgeChart(events, ctx) {
     .map((g) => ({ moniker: g.moniker, seg: g.seg.map(r6), total: r6(g.total), count: g.count }))
     .sort((x, y) => (y.total - x.total) || x.moniker.localeCompare(y.moniker));
   return { total: r6(total), count, segTotals: segTotals.map(r6), perValidator };
+}
+// Trading summary (v0.6.0): swap buys/sells by tracked actors
+// (validators + tier-1 related), aggregated per token over rolling
+// windows counted back from the feed generation time. A buy counts
+// under its BOUGHT token, a sell under its SOLD token. FISH is fully
+// excluded (a trade whose counted token is FISH is not aggregated);
+// non-whitelisted tokens are excluded as well. Amounts are native
+// token units (sums of the stored 6-dp human amounts).
+export const TRADING_WINDOWS = [['24h', 86400e3], ['7d', 7 * 86400e3], ['30d', 30 * 86400e3]];
+export function computeTradingStats(events, nowMs) {
+  const r6 = (v) => Math.round(v * 1e6) / 1e6;
+  const out = {};
+  for (const [key, spanMs] of TRADING_WINDOWS) {
+    const cutoffSec = Math.floor((nowMs - spanMs) / 1000);
+    const tokens = {};
+    let buyTotal = 0, sellTotal = 0;
+    for (const e of events) {
+      if (e.type !== 'swap-buy' && e.type !== 'swap-sell') continue;
+      if (e.actorTier !== 'validator' && e.actorTier !== 'related') continue;
+      if (!(e.ts > cutoffSec) || e.ts * 1000 > nowMs) continue;
+      const leg = e.type === 'swap-buy' ? e.bought : e.sold;
+      if (!leg || !leg.symbol || leg.symbol === 'FISH' || leg.whitelisted === false) continue;
+      const amt = parseFloat(String(leg.amount ?? '0').replace(/,/g, '')) || 0;
+      const t = (tokens[leg.symbol] ??= { buyN: 0, buyAmt: 0, sellN: 0, sellAmt: 0 });
+      if (e.type === 'swap-buy') { t.buyN++; t.buyAmt += amt; buyTotal++; }
+      else { t.sellN++; t.sellAmt += amt; sellTotal++; }
+    }
+    for (const t of Object.values(tokens)) { t.buyAmt = r6(t.buyAmt); t.sellAmt = r6(t.sellAmt); }
+    out[key] = { tokens, buyTotal, sellTotal };
+  }
+  return out;
 }
 // Deterministic history pass (v0.4.0): derives isDormantReturn /
 // dormantDays and isNewCounterparty from the FULL event history in
@@ -2002,8 +2033,9 @@ async function main() {
       estimatedCount: watchlist.entries.filter((e) => e.tier === 'estimated' && e.relatedValidators.includes(v.label)).length,
       ...(v.inactive ? { inactive: true } : {}),
     }));
+    const feedNow = new Date();
     const feed = {
-      generatedAt: new Date().toISOString(),
+      generatedAt: feedNow.toISOString(),
       status: {
         lastProcessedBlock: state.lastProcessedBlock, latestBlockSeen: latestBlock ?? null,
         lastProcessedCosmosBlock: state.lastProcessedCosmosBlock ?? null,
@@ -2022,7 +2054,7 @@ async function main() {
         actionRule: '操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。',
         ...(priceInfo ? { price: priceInfo } : {}),
       },
-      stats: { staking: computeStakingStats(allEvents, ctx), bridge: computeBridgeChart(allEvents, ctx) },
+      stats: { staking: computeStakingStats(allEvents, ctx), bridge: computeBridgeChart(allEvents, ctx), trading: computeTradingStats(allEvents, feedNow.getTime()) },
       validators,
       events: selectFeedEvents(sorted),
     };

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>42 链验证者实时追踪 v0.5.3</title>
+<title>42 链验证者实时追踪 v0.6.0</title>
 <style>
   :root{--bg:#0b1020;--card:#151c33;--card2:#1b2442;--line:#2a3557;--txt:#eef1fa;--sub:#a7b0cc;--acc:#6ea8fe;--warn:#ffd166;--core:#b388ff;--ok:#69db7c}
   *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.55}
@@ -16,7 +16,13 @@
   section.insider h2{color:#e9d5ff;font-size:1.3rem}
   section.insider .rule{color:#c084fc}
   .badge.insider{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
-  section.alerts{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.trades{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.tradesnf{background:#211a0c;border:1px dashed #6b5518;border-radius:10px;padding:6px 14px 12px}
+  section.trades h2,section.tradesnf h2{color:#ffd166}
+  .pie-wrap{display:flex;flex-wrap:wrap;gap:8px 28px;margin:6px 0 14px}
+  .pie-box h4{margin:6px 0}
+  .pie-leg{font-size:.88rem;color:var(--sub);margin:2px 0}
+  .pie-leg .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
   section.snipes{background:#33121a;border:2px solid #ff5964;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 18px rgba(255,89,100,.25)}
   .ev.bridgeout{border:2px solid #2f9e44;background:#0e2416;box-shadow:0 0 18px rgba(47,158,68,.65)}
   .badge.bridgeout{color:#fff;background:#2f9e44;border-color:#69db7c;font-weight:700;box-shadow:0 0 10px rgba(105,219,124,.8)}
@@ -42,7 +48,6 @@
   .filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
   select{background:var(--card2);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px;font-size:.95rem}
   .ev{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0}
-  .ev.notable{border-color:#6b5518;background:#241e10}
   .ev .top{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
   .time{color:var(--sub);font-size:.85rem}
   .badge{font-size:.72rem;border-radius:999px;padding:2px 8px;border:1px solid var(--line);color:var(--sub)}
@@ -50,7 +55,6 @@
   .badge.related{color:var(--acc);border-color:var(--acc)}
   .badge.core{color:var(--core);border-color:var(--core)}
   .badge.type{color:var(--txt);background:var(--card2)}
-  .badge.notable{color:#081018;background:var(--warn);border-color:var(--warn);font-weight:700}
   .summary{font-size:1rem;margin-top:2px}
   .meta{color:var(--sub);font-size:.85rem}
   a{color:var(--acc);text-decoration:none} a:hover{text-decoration:underline}
@@ -60,10 +64,10 @@
   .empty{color:var(--sub);padding:18px 0}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
-  section.insider>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.alerts>h2,section.fold>h2{cursor:pointer;user-select:none}
-  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.alerts>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
-  section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.alerts.open>h2::after,section.fold.open>h2::after{content:' ▼'}
-  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.alerts:not(.open)>:not(h2){display:none}
+  section.insider>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.trades>h2,section.tradesnf>h2,section.trading>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.trades>h2::after,section.tradesnf>h2::after,section.trading>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.trades.open>h2::after,section.tradesnf.open>h2::after,section.trading.open>h2::after,section.fold.open>h2::after{content:' ▼'}
+  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.trades:not(.open)>:not(h2),section.tradesnf:not(.open)>:not(h2),section.trading:not(.open)>:not(h2){display:none}
   section.fold:not(.open)>.fold-body{display:none}
   section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.fold>h2{margin-top:8px}
@@ -111,7 +115,7 @@
   section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{cursor:pointer;user-select:none}
   section.newpairs>h2::after,section.lp>h2::after,section.dormant>h2::after,section.newfaces>h2::after,section.staking>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
   section.newpairs.open>h2::after,section.lp.open>h2::after,section.dormant.open>h2::after,section.newfaces.open>h2::after,section.staking.open>h2::after{content:' ▼'}
-  section.newpairs,section.lp,section.dormant,section.newfaces,section.staking{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
+  section.newpairs,section.lp,section.dormant,section.newfaces,section.staking,section.trading{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.newpairs>h2,section.lp>h2,section.dormant>h2,section.newfaces>h2,section.staking>h2{margin-top:8px}
   table.staking{width:100%;border-collapse:collapse;font-size:.92rem;margin-top:8px}
   table.staking th,table.staking td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:right}
@@ -123,9 +127,9 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 链验证者实时追踪</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <b>简体中文</b> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
+  <div class="head-row"><h1>42 链验证者实时追踪</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <b>简体中文</b> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.6.0</span></div></div>
   <p class="sub">本页面从新区块中自动收集验证者本人及其关联地址（仅限与他们直接交易过的人）的动态（EVM 侧 + Cosmos 侧，v0.5.2）。程序（合约）地址不计为某个人的关联，关联也不会经由它们追溯。一个地址不会仅仅因为是共享钱包就被当作基础设施；唯一的判断标准是它是否为程序（合约）。本站仅追踪验证者本人以及通过直接交易与之关联的地址。其之外的地址（第 2 层及更深）以及关联仅属推定的地址均不在追踪范围内。关联地址是过去与该验证者有过交易的「其他人的地址」，未必是验证者本人的钱包。其动态与验证者本人的动态分开显示。「关联地址」仅指与验证者有过至少两次直接交易，或有过双向往来的地址。只有一次的单向交易不计为关联。</p>
-  <nav class="topnav"><a href="home-zh.html">🏠 首页</a><a href="#sec-insider">⚠ 内幕</a><a href="#sec-snipes">🎯 抢购</a><a href="#sec-bridge">🌉 跨链转出</a><a href="#sec-bridgechart">📊 总额</a><a href="#sec-alerts">⭐ 值得关注</a><a href="#sec-lp">💧 流动性</a><a href="#sec-dormant">😴 久违动态</a><a href="#sec-newfaces">👤 新面孔</a><a href="#sec-newpairs">🆕 新交易对</a><a href="#sec-feed">最新动态</a><a href="#sec-staking">🏦 质押</a><a href="#sec-validators">验证者</a></nav>
+  <nav class="topnav"><a href="home-zh.html">🏠 首页</a><a href="#sec-insider">⚠ 内幕</a><a href="#sec-snipes">🎯 抢购</a><a href="#sec-bridge">🌉 跨链转出</a><a href="#sec-bridgechart">📊 总额</a><a href="#sec-trades">💱 交易</a><a href="#sec-tradesnf">💱 交易（不含 FISH 小额卖出）</a><a href="#sec-trading">📈 交易汇总</a><a href="#sec-lp">💧 流动性</a><a href="#sec-dormant">😴 久违动态</a><a href="#sec-newfaces">👤 新面孔</a><a href="#sec-newpairs">🆕 新交易对</a><a href="#sec-feed">最新动态</a><a href="#sec-staking">🏦 质押</a><a href="#sec-validators">验证者</a></nav>
   <div class="status" id="status">正在加载…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
 </header>
@@ -154,10 +158,20 @@
     <div id="bridgeChart"><p class="empty">正在加载…</p></div>
   </section>
 
-  <section class="alerts" id="sec-alerts">
-    <h2>⭐ 值得关注</h2>
-    <p class="rule" id="alertRule"></p>
-    <div id="alerts"><p class="empty">正在加载…</p></div>
+  <section class="trades" id="sec-trades">
+    <h2>💱 交易</h2>
+    <p class="rule">显示验证者本人及其第 1 层关联地址的全部兑换（买入与卖出），按时间从新到旧排列。</p>
+    <div id="trades"><p class="empty">加载中…</p></div>
+  </section>
+  <section class="tradesnf" id="sec-tradesnf">
+    <h2>💱 交易（不含 FISH 小额卖出）</h2>
+    <p class="rule" id="tradesNfRule"></p>
+    <div id="tradesNofish"><p class="empty">加载中…</p></div>
+  </section>
+  <section class="trading" id="sec-trading">
+    <h2>📈 交易汇总</h2>
+    <p class="rule">统计范围为验证者本人及第 1 层关联地址的兑换。收集器从全部记录中，按自数据生成时刻起算的滚动窗口（过去 24 小时 / 1 周 / 1 个月），按代币汇总。本汇总不含 FISH（以 FISH 为对象的交易不计入）。饼图为件数占比。</p>
+    <div id="trading"><p class="empty">加载中…</p></div>
   </section>
 
   <section class="lp" id="sec-lp">
@@ -255,10 +269,10 @@
 <footer>
   数据来源：42 链区块本身（通过 RPC）。覆盖范围仅限 42 链上的交易（EVM 链 ID 421018 及其 Cosmos 侧 infinite_421018-1）。不包括 QL1 或任何其他链上的交易。点击交易或地址可打开官方浏览器 scan.infinitedrive.xyz。
   显示的代币主要是 Don't Panic 上线的 17 个代币（其他代币标注为非上线代币）。没有任何动态会因金额大小而被丢弃——小额转账全部记录。
-  范围：EVM 侧 + Cosmos 侧（转账、委托、奖励领取）。只要目标合约和方法能识别，操作类型就以具体名称显示（Fluke 参与、NFT 铸造、奖励领取、跨链发送等）；无法识别的会如实显示为「未分类操作（方法 / 目标）」。跨链转出栏目只涵盖把 USDT 转出到外部链的动态（其他代币的跨链发送作为普通动态记录，不在绿色栏目中显示；入链收款为普通收款）。推定地址（第 3 阶段）：无法通过直接转账确认关联的地址也会被监控，用三种方式推定——经池、两跳和共享交易对手。它们的动态只出现在「最新动态」中，带虚线边框、「推定」徽章并显示依据；永不计入内幕 / 抢购 / 值得关注 / 跨链转出 / 总额栏目（那些栏目只收录已确认信息）。验证者列表在每次运行时从链上刷新：新加入的验证者会被自动添加，离开验证者集合的验证者仍作为历史保留监控（标注为不活跃）。本站不会向外部发布任何内容（没有 X 机器人）——提醒只在本网站内。
+  范围：EVM 侧 + Cosmos 侧（转账、委托、奖励领取）。只要目标合约和方法能识别，操作类型就以具体名称显示（Fluke 参与、NFT 铸造、奖励领取、跨链发送等）；无法识别的会如实显示为「未分类操作（方法 / 目标）」。跨链转出栏目只涵盖把 USDT 转出到外部链的动态（其他代币的跨链发送作为普通动态记录，不在绿色栏目中显示；入链收款为普通收款）。推定地址（第 3 阶段）：无法通过直接转账确认关联的地址也会被监控，用三种方式推定——经池、两跳和共享交易对手。它们的动态只出现在「最新动态」中，带虚线边框、「推定」徽章并显示依据；永不计入内幕 / 抢购 / 交易 / 跨链转出 / 总额栏目（那些栏目只收录已确认信息）。验证者列表在每次运行时从链上刷新：新加入的验证者会被自动添加，离开验证者集合的验证者仍作为历史保留监控（标注为不活跃）。本站不会向外部发布任何内容（没有 X 机器人）——提醒只在本网站内。
   关联地址的范围（v0.4.0）：除与验证者有过发送或接收的每个地址外，还对全部记录（包括过去）应用了全历史展开（交易对手的交易对手，不设上限）（系统 / 交易对 / 代币合约，以及只能经由推定地址到达的联系人除外）。新交易对手出现时，也会被当场自动作为关联地址加入。/ 新交易对栏目涵盖由 Don't Panic 工厂创建的交易对，只显示至少包含 17 个上线代币之一的交易对。/ [42] 价格由 42/USDT 池子的储备计算；池子较小，因此该数字存在误差范围。
   Cosmos 侧的交易链接打开我们自己的 Cosmos 浏览器（42 Cosmos Scan）。标题只显示实际发生动态的地址本身；关联验证者在单独一行列出并设有上限（与多位验证者交易的地址带有「共享交易对手」标记）。验证者 X 也被称为 Rioshi，名字旁以小字显示为 (Rioshi)。
-  <br>版本：<b>v0.5.3</b>（v0.5.3：将追踪范围限定为第 1 层（移除带证据的第 2 层及更深关联与推定地址，并删除其记录），并完整补回缺失的历史记录（Guide/Starlight 奖励流除外）。v0.5.2：修正了归属显示——按验证者筛选时，本人动态与关联地址动态分成两组显示，验证者列表中的件数也按本人／关联分开统计，他人的交易不再显示为验证者本人的动态；同时收紧了「关联」的定义（仅与验证者有至少两次直接交易、或有双向往来的地址才算关联；只有一次单向往来的地址保留为候选，第二次直接交易时自动恢复为关联）。v0.5.1：修复页眉布局（标题改为整行显示，语言切换在窄屏上自动换行）。v0.5.0：本站现已提供八种语言——日本語、English、简体中文、Español、हिन्दी、العربية、Português 和 Français——每种语言都从同一份 feed.json 渲染，由结构化字段组装，而非使用保存的日语摘要。v0.4.3：在每个页面的页眉右上角、语言切换旁添加了版本徽章。v0.4.2：将所有基础设施（合约）地址从人物关系图中移除——关联只经由个人钱包（EOA）计算，永不经由合约；跨链转出总额图表现按验证者逐一统计（全部 23 位，深度不限，共享钱包计入每位相连验证者的柱子）。v0.4.1：跨链转出总额图表现按深度拆分每根柱子——验证者本人 / 第 1 层关联 / 第 2 层及更深关联。此前，v0.4.0 增加了六个栏目——新交易对、流动性动态、委托与奖励总计、久违回归、新面孔（全历史关联地址展开 + 自动加入）以及 [42] 价格；v0.3.2 将 Xenia 从核心基础设施重新归类为普通验证者——一次分类纠正；v0.3.1 在「最新动态」筛选旁增加了推定关联的定义；v0.3.0 完成了第 3 阶段：推定地址监控 + 验证者列表自动刷新、在 X 旁标注 (Rioshi) 别名，以及右上角的「日本語 | English」语言切换）
+  <br>版本：<b>v0.6.0</b>（v0.6.0：将“⭐值得关注”栏目改为“💱交易”（验证者本人＋第 1 层关联的全部兑换）、“💱交易（不含 FISH 小额卖出）”（同一列表去除收到不足 10 [42]／10 USDT 的 FISH 卖出）和“📈交易汇总”（按期间、按代币的买入／卖出汇总；不含 FISH）。v0.5.3：将追踪范围限定为第 1 层（移除带证据的第 2 层及更深关联与推定地址，并删除其记录），并完整补回缺失的历史记录（Guide/Starlight 奖励流除外）。v0.5.2：修正了归属显示——按验证者筛选时，本人动态与关联地址动态分成两组显示，验证者列表中的件数也按本人／关联分开统计，他人的交易不再显示为验证者本人的动态；同时收紧了「关联」的定义（仅与验证者有至少两次直接交易、或有双向往来的地址才算关联；只有一次单向往来的地址保留为候选，第二次直接交易时自动恢复为关联）。v0.5.1：修复页眉布局（标题改为整行显示，语言切换在窄屏上自动换行）。v0.5.0：本站现已提供八种语言——日本語、English、简体中文、Español、हिन्दी、العربية、Português 和 Français——每种语言都从同一份 feed.json 渲染，由结构化字段组装，而非使用保存的日语摘要。v0.4.3：在每个页面的页眉右上角、语言切换旁添加了版本徽章。v0.4.2：将所有基础设施（合约）地址从人物关系图中移除——关联只经由个人钱包（EOA）计算，永不经由合约；跨链转出总额图表现按验证者逐一统计（全部 23 位，深度不限，共享钱包计入每位相连验证者的柱子）。v0.4.1：跨链转出总额图表现按深度拆分每根柱子——验证者本人 / 第 1 层关联 / 第 2 层及更深关联。此前，v0.4.0 增加了六个栏目——新交易对、流动性动态、委托与奖励总计、久违回归、新面孔（全历史关联地址展开 + 自动加入）以及 [42] 价格；v0.3.2 将 Xenia 从核心基础设施重新归类为普通验证者——一次分类纠正；v0.3.1 在「最新动态」筛选旁增加了推定关联的定义；v0.3.0 完成了第 3 阶段：推定地址监控 + 验证者列表自动刷新、在 X 旁标注 (Rioshi) 别名，以及右上角的「日本語 | English」语言切换）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -460,9 +474,6 @@ function renderEvent(ev){
   const cpLabel = enLabel(ev.counterpartyLabel);
   const cp = ev.counterparty ? ` / 交易对手：${addrLink(ev.counterparty, cpLabel ? cpLabel + ' ' + shortAddr(ev.counterparty) : null)}${ev.counterpartyIsCore ? ' <span class="badge core">核心</span>' : ''}` : '';
   const wl = ev.whitelisted === false ? ' <span class="badge">包含非上线代币</span>' : '';
-  const reasons = (ev.notableReasons || []).filter((r) => r !== 'bridge-out');
-  const mapped = reasons.map((r) => REASON_EN[r]).filter(Boolean);
-  const notable = reasons.length ? `<span class="badge notable">⭐ 值得关注${mapped.length ? '：' + mapped.join(' · ') : ''}</span>` : '';
   const isBridgeOut = ev.type === 'bridge-out' || (ev.notableReasons || []).includes('bridge-out');
   const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "验证者本人的 USDT 跨链转出" : ev.actorTier === 'related' ? "关联钱包的 USDT 跨链转出" : 'USDT 跨链转出'}</span>` : '';
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
@@ -474,13 +485,55 @@ function renderEvent(ev){
   const pairWl = ev.type === 'pair-created' && ev.nonWhitelistedSide ? ' <span class="badge">非上线代币</span>' : '';
   const lpCls = ev.type === 'lp-add' ? ' lpadd' : ev.type === 'lp-remove' ? ' lpremove' : '';
   const bn = bigName(ev);
-  return `<div class="ev${notable ? ' notable' : ''}${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
+  return `<div class="ev${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
     <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
-    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${notable}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${insider}${dormant}${newface}${added}</div>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${insider}${dormant}${newface}${added}</div>
     <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
     ${relationLine(ev)}
     <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
+}
+// 📈 Trading summary (v0.6.0): per-period, per-token buy/sell totals
+// pre-aggregated by the collector (feed.stats.trading; FISH excluded).
+// Pie charts are count-based, drawn as inline SVG (no external library).
+const PIE_COLORS = ['#6ea8fe', '#ffd166', '#69db7c', '#ff8fa3', '#b197fc', '#ffa94d', '#63e6be', '#f783ac', '#a9e34b', '#74c0fc', '#e599f7', '#ffe066', '#8ce99a', '#ffa8a8'];
+function pieChart(entries, colorOf){
+  const total = entries.reduce((t, [, n]) => t + n, 0);
+  if (!total) return '';
+  const R = 60, C = 70;
+  const pt = (f) => [C + R * Math.sin(2 * Math.PI * f), C - R * Math.cos(2 * Math.PI * f)];
+  let acc = 0, paths = '';
+  if (entries.length === 1) paths = `<circle cx="${C}" cy="${C}" r="${R}" fill="${colorOf(entries[0][0])}"><title>${entries[0][0]}: ${entries[0][1]}</title></circle>`;
+  else for (const [sym, n] of entries) {
+    const f0 = acc / total, f1 = (acc + n) / total; acc += n;
+    const [x0, y0] = pt(f0), [x1, y1] = pt(f1);
+    paths += `<path d="M${C},${C} L${x0.toFixed(1)},${y0.toFixed(1)} A${R},${R} 0 ${f1 - f0 > 0.5 ? 1 : 0} 1 ${x1.toFixed(1)},${y1.toFixed(1)} Z" fill="${colorOf(sym)}"><title>${sym}: ${n}</title></path>`;
+  }
+  return `<svg class="pie" width="140" height="140" viewBox="0 0 140 140">${paths}</svg>`;
+}
+function renderTrading(){
+  const T = FEED.stats && FEED.stats.trading;
+  const el = document.getElementById('trading');
+  if (!T) { el.innerHTML = '<p class="empty">该期间无交易。</p>'; return; }
+  const fmtAmt = (v) => v.toLocaleString('en-US', { maximumFractionDigits: 6 });
+  const order = [];
+  for (const k of ['30d', '7d', '24h']) for (const sym of Object.keys(T[k].tokens)) if (!order.includes(sym)) order.push(sym);
+  order.sort((a, b) => { const ta = T['30d'].tokens[a], tb = T['30d'].tokens[b]; const d = ((tb ? tb.buyN + tb.sellN : 0) - (ta ? ta.buyN + ta.sellN : 0)); return d || a.localeCompare(b); });
+  const colorOf = (sym) => PIE_COLORS[Math.max(0, order.indexOf(sym)) % PIE_COLORS.length];
+  const periods = [['24h', '过去 24 小时'], ['7d', '过去 1 周'], ['30d', '过去 1 个月']];
+  el.innerHTML = periods.map(([key, label]) => {
+    const w = T[key];
+    const syms = Object.keys(w.tokens).sort((a, b) => (w.tokens[b].buyN + w.tokens[b].sellN) - (w.tokens[a].buyN + w.tokens[a].sellN) || a.localeCompare(b));
+    if (!w.buyTotal && !w.sellTotal) return `<h3 class="vgroup">${label}</h3><p class="empty">该期间无交易。</p>`;
+    const rows = syms.map((sym) => { const t = w.tokens[sym]; return `<tr><td><b>${sym}</b></td><td>${t.buyN}</td><td>${fmtAmt(t.buyAmt)}</td><td>${t.sellN}</td><td>${fmtAmt(t.sellAmt)}</td></tr>`; }).join('');
+    const pieBox = (title, field, total, noneText) => {
+      const entries = syms.filter((s) => w.tokens[s][field] > 0).map((s) => [s, w.tokens[s][field]]);
+      if (!total) return `<div class="pie-box"><h4>${title} (0)</h4><p class="empty">${noneText}</p></div>`;
+      const legend = entries.map(([s, n]) => `<div class="pie-leg"><span class="sw" style="background:${colorOf(s)}"></span>${s} ${n} (${(n / total * 100).toFixed(1)}%)</div>`).join('');
+      return `<div class="pie-box"><h4>${title} (${total})</h4>${pieChart(entries, colorOf)}${legend}</div>`;
+    };
+    return `<h3 class="vgroup">${label}</h3><table class="staking"><tr><th>代币</th><th>买入（件数）</th><th>买入（数量）</th><th>卖出（件数）</th><th>卖出（数量）</th></tr>${rows}</table><div class="pie-wrap">${pieBox('买入', 'buyN', w.buyTotal, '无买入')}${pieBox('卖出', 'sellN', w.sellTotal, '无卖出')}</div>`;
+  }).join('');
 }
 function renderStaking(){
   const st = FEED.stats && FEED.stats.staking;
@@ -524,8 +577,24 @@ function applyFilters(){
   renderFeedList(list, v);
   // Special sections are CONFIRMED-ONLY (v0.3.0): estimated actors excluded.
   const isBO = (ev) => ev.type === 'bridge-out' || (ev.notableReasons||[]).includes('bridge-out');
-  const alerts = FEED.events.filter((ev) => ev.actorTier !== 'estimated' && !isBO(ev) && (ev.notableReasons||[]).filter((r) => r !== 'bridge-out').length);
-  document.getElementById('alerts').innerHTML = alerts.length ? alerts.slice(0,20).map(renderEvent).join('') : '<p class="empty">目前没有值得关注的动态。</p>';
+  // 💱 Trading (v0.6.0, replaces the ⭐ Notable section): every swap buy /
+  // sell by tracked addresses (validators + tier-1 related), newest first.
+  // The companion list drops small FISH sells — received amount under 10
+  // in the received currency ([42] or USDT, no conversion) — which
+  // dominate the raw list (full-history median ≈ 2.5 [42]; 96% under 10).
+  const byRecency = (a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts);
+  const trades = FEED.events.filter((ev) => (ev.type === 'swap-buy' || ev.type === 'swap-sell') && ev.actorTier !== 'estimated').sort(byRecency);
+  const tradeLine = (list) => `<p class="sub">共显示 ${list.length} 条（${list.filter((e) => e.type === 'swap-buy').length} 条买入，${list.filter((e) => e.type === 'swap-sell').length} 条卖出）</p>`;
+  document.getElementById('trades').innerHTML = trades.length
+    ? tradeLine(trades) + trades.slice(0, 100).map(renderEvent).join('') + (trades.length > 100 ? `<p class="empty">显示 ${list.length} 条交易中最近的 100 条（全部都保留在记录中）</p>` : '')
+    : '<p class="empty">暂无交易记录。</p>';
+  const isSmallFishSell = (ev) => ev.type === 'swap-sell' && ev.sold && ev.sold.symbol === 'FISH' && ev.bought && parseFloat(ev.bought.amount) < 10;
+  const fishSmall = trades.filter(isSmallFishSell);
+  const tradesNf = trades.filter((ev) => !isSmallFishSell(ev));
+  document.getElementById('tradesNfRule').textContent = `与“交易”相同的列表，仅去除了 FISH 的小额卖出。FISH 卖出中，收到金额低于 10 [42]（或低于 10 USDT）的视为小额（按收到的货币判定，不做换算）。在当前显示范围内，共有 ${fishSmall.length} 条符合此条件。`;
+  document.getElementById('tradesNofish').innerHTML = tradesNf.length
+    ? tradeLine(tradesNf) + tradesNf.slice(0, 100).map(renderEvent).join('') + (tradesNf.length > 100 ? `<p class="empty">显示 ${list.length} 条交易中最近的 100 条（全部都保留在记录中）</p>` : '')
+    : '<p class="empty">暂无交易记录。</p>';
   const bridgeouts = FEED.events.filter((ev) => isBO(ev) && ev.actorTier !== 'estimated');
   document.getElementById('bridgeouts').innerHTML = bridgeouts.length ? bridgeouts.slice(0,20).map(renderEvent).join('') : '<p class="empty">近期没有跨链转出。</p>';
   const snipes = FEED.events.filter((ev) => ev.isSnipe && ev.actorTier !== 'estimated');
@@ -554,7 +623,7 @@ function applyFilters(){
     ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">显示 ${insiders.length} 条动态中最近的 100 条（全部都保留在记录中）</p>` : '')
     : '<p class="empty">没有符合条件的上市前买入。</p>';
 }
-if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.alerts, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.trades, section.tradesnf, section.trading, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
   const h = sec.querySelector('h2');
   if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
 }
@@ -564,8 +633,7 @@ async function load(){
     const s = FEED.status;
     document.getElementById('status').innerHTML =
       `最后处理的区块：<b>${s.lastProcessedBlock ?? '—'}</b>（链顶端 ${s.latestBlockSeen ?? '—'}）/ Cosmos 最后处理：<b>${s.lastProcessedCosmosBlock ?? '—'}</b> / 更新：${s.lastProcessedAt ? jstEn(Math.floor(new Date(s.lastProcessedAt).getTime()/1000)) : '—'} / 已记录动态：${s.totalEvents} / 监控中：${s.watchSummary.validators} 位验证者 + ${s.watchSummary.directRelated} 个直接关联地址${s.validatorsAdded ? ` / 本次自动加入的验证者：${s.validatorsAdded.map(valNameText).join('、')}` : ''}`;
-    document.getElementById('alertRule').textContent = '值得关注的规则：（1）验证者本人的买入与卖出，（2）1,000 [42] 或以上的移动。USDT 跨链转出在上方的绿色栏目中单独显示。只有符合这些规则的动态才会在此列出（只在本网站显示；不会向外部发布）。';
-    document.getElementById('bridgeOutRule').textContent = '跨链转出 = 验证者本人或直接关联钱包通过桥将 USDT 从 42 链转出到外部链。这些动态在本专栏中以绿色发光显示（不放入「值得关注」）。USDT 以外代币的跨链发送作为普通动态记录，不在此显示。入链收款（在 42 链一侧收到）按普通转账处理。';
+    document.getElementById('bridgeOutRule').textContent = '跨链转出 = 验证者本人或直接关联钱包通过桥将 USDT 从 42 链转出到外部链。这些动态在本专栏中以绿色发光显示（只在本栏显示）。USDT 以外代币的跨链发送作为普通动态记录，不在此显示。入链收款（在 42 链一侧收到）按普通转账处理。';
     document.getElementById('snipeRule').textContent = '抢购 = 验证者本人或直接关联钱包在某个交易对创建后 3 小时内在该交易对上买入（仅限买入——添加流动性不算抢购）。符合的动态在此醒目列出。';
     document.getElementById('dormantRule').textContent = '久违回归：被监控地址（验证者本人、关联地址或带核心标签的 EOA——交易对等合约和推定地址除外）在本站记录中 60 天或以上没有动态后再次出现动态。该回归动态会标注「N 天来的首次动态」。';
     if (s.price) {
@@ -587,6 +655,7 @@ async function load(){
       `<div class="val"><b>${valName(v.moniker)}</b>${v.isCore ? ' <span class="badge core">兼核心基础设施</span>' : ''}${v.inactive ? ' <span class="badge">当前不活跃</span>' : ''}<br>${addrLink(v.address)}<br><span class="sub">${v.relatedCount} 个关联地址（含自动加入 ${v.autoAddedCount ?? 0} 个）</span><br><span class="sub">本人动态 ${v.selfActivity ?? 0}条／关联地址动态 ${v.relatedActivity ?? 0}条</span></div>`).join('');
     applyFilters();
     renderBridgeChart();
+    renderTrading();
     renderStaking();
     if (location.hash) { const el = document.querySelector(location.hash); if (el) { el.classList.add('open'); setTimeout(() => el.scrollIntoView({behavior:'smooth'}), 60); } }
   } catch (e) {

@@ -46,7 +46,7 @@ const wir42 = validators.find((v) => v.label === 'Woman-In-Red-42');
 check('Sirius Cybernetics: self activity = 0', recompute(sirius).self === 0, String(recompute(sirius).self));
 check('Sirius Cybernetics: related activity = 0', recompute(sirius).related === 0, String(recompute(sirius).related));
 check('Woman-In-Red-42: self activity = 32', recompute(wir42).self === 32, String(recompute(wir42).self));
-check('Woman-In-Red-42: related activity = 70 (v0.5.3 full-history backfill of her depth-1 related wallets; was 32)', recompute(wir42).related === 70, String(recompute(wir42).related));
+check('Woman-In-Red-42: related activity = 80 (v0.5.3 backfill gave 70; +10 of live data since — two of her related wallets act hourly; value at v0.6.0 data)', recompute(wir42).related === 80, String(recompute(wir42).related));
 
 // ---- (3) feed split counts ----
 for (const fv of feed.validators) {

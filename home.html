@@ -25,8 +25,10 @@
   a.card.snipes h2{color:#ff8fa3}
   a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
   a.card.bridge h2{color:#69db7c}
-  a.card.alerts{background:#2a2110;border:1px solid #6b5518}
-  a.card.alerts h2{color:#ffd166}
+  a.card.trades{background:#2a2110;border:1px solid #6b5518}
+  a.card.tradesnf{background:#211a0c;border:1px dashed #6b5518}
+  a.card.trades h2{color:#ffd166}
+  a.card.tradesnf h2{color:#ffd166}
   .pricecard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:1rem}
   .pricecard b{font-size:1.6rem;color:var(--ok)}
   .pricecard .chg-up{color:#69db7c;font-weight:700}
@@ -44,7 +46,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="home-en.html" id="langOther">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
+  <div class="head-row"><h1>42チェーン バリデーター リアルタイム追跡</h1><div class="langsw"><b>日本語</b> | <a href="home-en.html" id="langOther">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <a href="home-hi.html">हिन्दी</a> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.6.0</span></div></div>
   <p class="sub">バリデーター本人と、その本人と直接やり取りした関連アドレスの動きを自動で拾って表示するサイトです。見たい項目を選んでください。</p>
   <div class="status" id="status">読み込み中…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -73,10 +75,20 @@
       <div class="count" id="c-bridgetotal">—</div>
       <div class="segsub" id="c-bridgeseg">—</div>
     </a>
-    <a class="card alerts" href="index.html#sec-alerts">
-      <h2>⭐ 注目</h2>
-      <p>バリデーター本人の売買と、1,000 [42] 以上の大きな移動を集めた欄です。</p>
-      <div class="count" id="c-alerts">—</div>
+    <a class="card trades" href="index.html#sec-trades">
+      <h2>💱 売買</h2>
+      <p>バリデーター本人と1段目の関連アドレスのスワップ（買い・売り）を、新しい順に並べた欄です。</p>
+      <div class="count" id="c-trades">—</div>
+    </a>
+    <a class="card tradesnf" href="index.html#sec-tradesnf">
+      <h2>💱 売買（FISHの少額売却を除く）</h2>
+      <p>「売買」から、受け取りが 10 [42]（または 10 USDT）未満の FISH の少額売却だけを除いた欄です。</p>
+      <div class="count" id="c-tradesnf">—</div>
+    </a>
+    <a class="card trading" href="index.html#sec-trading">
+      <h2>📈 売買まとめ</h2>
+      <p>過去24時間・1週間・1か月の期間ごとに、銘柄別の買い・売りを集計した欄です（FISH は除きます）。</p>
+      <div class="count" id="c-trading">—</div>
     </a>
     <a class="card" href="index.html#sec-lp">
       <h2>💧 流動性の動き</h2>
@@ -119,7 +131,7 @@
 </main>
 <footer>
   データの出どころ：42チェーンのブロックそのもの（RPC経由）。対象は 42 Chain（EVM チェーンID 421018 と、その Cosmos 側 infinite_421018-1）の取引のみです。QL1 など他のチェーンの取引は含みません。アラートはこのサイト内だけの表示です。
-  <br>バージョン：<b>v0.5.3</b>（トップページ）
+  <br>バージョン：<b>v0.6.0</b>（トップページ）
 </footer>
 <script>
 (async () => {
@@ -146,8 +158,10 @@
     if (!bst) for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
     const bfmt = (v) => v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('c-bridgeseg').textContent = `本人 ${bfmt(bseg[0])} ／ 1段目 ${bfmt(bseg[1])} ／ 2段目以降 ${bfmt(bseg[2])} USDT`;
-    const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
-    document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length + ' 件';
+    const isSmallFishSell = (e) => e.type === 'swap-sell' && e.sold && e.sold.symbol === 'FISH' && e.bought && parseFloat(e.bought.amount) < 10;
+    document.getElementById('c-trades').textContent = ev.filter((e) => (e.type === 'swap-buy' || e.type === 'swap-sell') && e.actorTier !== 'estimated').length + ' 件';
+    document.getElementById('c-tradesnf').textContent = ev.filter((e) => (e.type === 'swap-buy' || e.type === 'swap-sell') && e.actorTier !== 'estimated' && !isSmallFishSell(e)).length + ' 件';
+    document.getElementById('c-trading').textContent = ((FEED.stats && FEED.stats.trading && FEED.stats.trading['30d']) ? FEED.stats.trading['30d'].buyTotal + FEED.stats.trading['30d'].sellTotal : 0) + ' 件';
     if (s.price) {
       const pc = document.getElementById('pricecard');
       const chg = s.price.change24hPct;

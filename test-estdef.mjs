@@ -32,7 +32,7 @@ for (const f of [...TRACKERS, ...HOMES]) {
   check(`${f}: no estimated-def block or deep-link`, !html.includes('estimated-def'));
   check(`${f}: no fEstimated toggle`, !html.includes('fEstimated'));
   check(`${f}: no estimated badge/style`, !html.includes('.badge.estimated') && !html.includes('.ev.estimated'));
-  check(`${f}: version badge v0.5.3`, html.includes('<span class="verbadge">v0.5.3</span>'));
+  check(`${f}: version badge v0.6.0`, html.includes('<span class="verbadge">v0.6.0</span>'));
 }
 // JP/EN wording spot checks
 const jp = read('index.html'), en = read('en.html');

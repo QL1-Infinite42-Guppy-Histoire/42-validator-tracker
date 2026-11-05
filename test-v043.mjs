@@ -15,7 +15,7 @@ import { fileURLToPath } from 'node:url';
 const __dir = dirname(fileURLToPath(import.meta.url));
 const read = (f) => readFileSync(join(__dir, f), 'utf8');
 
-const EXPECTED = 'v0.5.3';
+const EXPECTED = 'v0.6.0';
 const pages = {
   'index.html': read('index.html'),
   'en.html': read('en.html'),

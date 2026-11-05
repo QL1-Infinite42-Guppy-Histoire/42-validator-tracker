@@ -243,7 +243,7 @@ check('current recomputation total equals the v0.5.3 total (evidence-tier sender
 // Coloured special sections on top (insider, snipes, bridge-out, totals
 // chart, notable), plain data sections below (LP, dormant, new faces, NEW
 // PAIRS, feed, staking, validators). Anchors unchanged.
-const ORDER = ['sec-insider', 'sec-snipes', 'sec-bridge', 'sec-bridgechart', 'sec-alerts', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-newpairs', 'sec-feed', 'sec-staking', 'sec-validators'];
+const ORDER = ['sec-insider', 'sec-snipes', 'sec-bridge', 'sec-bridgechart', 'sec-trades', 'sec-tradesnf', 'sec-trading', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-newpairs', 'sec-feed', 'sec-staking', 'sec-validators'];
 const seqOf = (html, re) => [...html.matchAll(re)].map((m) => m[1]);
 for (const file of ['index.html', 'en.html']) {
   const html = read(file);

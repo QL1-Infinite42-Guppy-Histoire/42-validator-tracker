@@ -58,8 +58,8 @@ for (const L of LANGS) {
     check(`${tag} RTL overrides present`, html.includes('Arabic RTL overrides') && html.includes("[dir='rtl'] .ev.lpadd")
       && home.includes('Arabic RTL overrides'));
   }
-  check(`${tag} version badge v0.5.3 (tracker)`, html.includes('<span class="verbadge">v0.5.3</span>'));
-  check(`${tag} version badge v0.5.3 (home)`, home.includes('<span class="verbadge">v0.5.3</span>'));
+  check(`${tag} version badge v0.6.0 (tracker)`, html.includes('<span class="verbadge">v0.6.0</span>'));
+  check(`${tag} version badge v0.6.0 (home)`, home.includes('<span class="verbadge">v0.6.0</span>'));
   for (const n of NATIVE) check(`${tag} switcher lists ${n}`, html.includes(`>${n}</a>`) || html.includes(`<b>${n}</b>`));
   // the page's own language is shown as <b>current</b>, not a self-link
   for (const f of TRACKER_FILES) check(`${tag} switcher links ${f}`, f === L.file ? html.includes(`<b>${L.native}</b>`) : html.includes(`href="${f}"`));
@@ -68,7 +68,7 @@ for (const L of LANGS) {
   check(`${tag} localized snipe heading`, html.includes(L.snipeH2));
   check(`${tag} no EN/JP feed heading left`, !html.includes('<h2>Latest activity</h2>') && !html.includes('<h2>最新の動き</h2>'));
   check(`${tag} home title localized`, home.includes(`<title>${L.homeTitle}</title>`));
-  check(`${tag} home cards point to ${L.file}`, (home.match(new RegExp(`href="${L.file}#`, 'g')) || []).length === 12, // v0.5.3: the estimated-definition link was removed with the tier
+  check(`${tag} home cards point to ${L.file}`, (home.match(new RegExp(`href="${L.file}#`, 'g')) || []).length === 14, // v0.6.0: 14 cards (trading + trading-no-small-FISH + trading summary added; estimated-def card gone since v0.5.3)
     String((home.match(new RegExp(`href="${L.file}#`, 'g')) || []).length));
 
   // renderer harness (mirrors test-en.mjs)

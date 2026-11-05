@@ -25,8 +25,10 @@
   a.card.snipes h2{color:#ff8fa3}
   a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
   a.card.bridge h2{color:#69db7c}
-  a.card.alerts{background:#2a2110;border:1px solid #6b5518}
-  a.card.alerts h2{color:#ffd166}
+  a.card.trades{background:#2a2110;border:1px solid #6b5518}
+  a.card.tradesnf{background:#211a0c;border:1px dashed #6b5518}
+  a.card.trades h2{color:#ffd166}
+  a.card.tradesnf h2{color:#ffd166}
   .pricecard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;font-size:1rem}
   .pricecard b{font-size:1.6rem;color:var(--ok)}
   .pricecard .chg-up{color:#69db7c;font-weight:700}
@@ -44,7 +46,7 @@
 </head>
 <body>
 <header>
-  <div class="head-row"><h1>42 Chain वैलिडेटर रीयल-टाइम ट्रैकर</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <b>हिन्दी</b> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.5.3</span></div></div>
+  <div class="head-row"><h1>42 Chain वैलिडेटर रीयल-टाइम ट्रैकर</h1><div class="langsw"><a href="home.html" id="langOther">日本語</a> | <a href="home-en.html">English</a> | <a href="home-zh.html">简体中文</a> | <a href="home-es.html">Español</a> | <b>हिन्दी</b> | <a href="home-ar.html">العربية</a> | <a href="home-pt.html">Português</a> | <a href="home-fr.html">Français</a> <span class="verbadge">v0.6.0</span></div></div>
   <p class="sub">यह साइट स्वयं वैलिडेटरों और उन पतों की गतिविधियों को स्वचालित रूप से एकत्र करती है जिनके उनके साथ सीधे लेन-देन की पुष्टि हुई है। किसी अनुभाग को चुनकर उस पर जाएँ।</p>
   <div class="status" id="status">लोड हो रहा है…</div>
   <div class="pricecard" id="pricecard" style="display:none"></div>
@@ -73,10 +75,20 @@
       <div class="count" id="c-bridgetotal">—</div>
       <div class="segsub" id="c-bridgeseg">—</div>
     </a>
-    <a class="card alerts" href="hi.html#sec-alerts">
-      <h2>⭐ उल्लेखनीय</h2>
-      <p>स्वयं वैलिडेटरों के व्यापार और 1,000 [42] या अधिक की बड़ी गतिविधियाँ।</p>
-      <div class="count" id="c-alerts">—</div>
+    <a class="card trades" href="hi.html#sec-trades">
+      <h2>💱 ट्रेडिंग</h2>
+      <p>वैलिडेटर स्वयं और उनके प्रथम-स्तरीय संबंधित पतों के सभी स्वैप (खरीद और बिक्री), नवीनतम पहले।</p>
+      <div class="count" id="c-trades">—</div>
+    </a>
+    <a class="card tradesnf" href="hi.html#sec-tradesnf">
+      <h2>💱 ट्रेडिंग (FISH की छोटी बिक्री को छोड़कर)</h2>
+      <p>ट्रेडिंग सूची, केवल FISH की छोटी बिक्री हटाकर — वे बिक्री जिनमें 10 [42] (या 10 USDT) से कम प्राप्त हुआ।</p>
+      <div class="count" id="c-tradesnf">—</div>
+    </a>
+    <a class="card trading" href="hi.html#sec-trading">
+      <h2>📈 ट्रेडिंग सारांश</h2>
+      <p>पिछले 24 घंटे, 7 दिन और 30 दिन में टोकन के अनुसार खरीद/बिक्री योग (FISH शामिल नहीं)।</p>
+      <div class="count" id="c-trading">—</div>
     </a>
     <a class="card" href="hi.html#sec-lp">
       <h2>💧 लिक्विडिटी गतिविधियाँ</h2>
@@ -119,7 +131,7 @@
 </main>
 <footer>
   डेटा स्रोत: स्वयं 42 Chain ब्लॉक (RPC के माध्यम से)। कवरेज केवल 42 Chain पर लेन-देन तक सीमित है (EVM chain ID 421018 और उसका Cosmos पक्ष, infinite_421018-1)। QL1 या किसी अन्य चेन पर लेन-देन शामिल नहीं हैं। अलर्ट केवल इस साइट पर दिखाए जाते हैं।
-  <br>संस्करण: <b>v0.5.3</b> (शीर्ष पेज)
+  <br>संस्करण: <b>v0.6.0</b> (शीर्ष पेज)
 </footer>
 <script>
 (async () => {
@@ -146,8 +158,10 @@
     if (!bst) for (const e of bouts) { const d = typeof e.actorDepth === 'number' ? e.actorDepth : (e.actorTier === 'validator' ? 0 : 1); bseg[d <= 0 ? 0 : d === 1 ? 1 : 2] += bamt(e); }
     const bfmt = (v) => v.toLocaleString('hi-IN-u-nu-latn', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('c-bridgeseg').textContent = `स्वयं ${bfmt(bseg[0])} / गहराई-1 ${bfmt(bseg[1])} / गहराई-2+ ${bfmt(bseg[2])} USDT`;
-    const isBO = (e) => e.type === 'bridge-out' || (e.notableReasons||[]).includes('bridge-out');
-    document.getElementById('c-alerts').textContent = ev.filter((e) => e.actorTier !== 'estimated' && !isBO(e) && (e.notableReasons||[]).filter((r) => r !== 'bridge-out').length).length;
+    const isSmallFishSell = (e) => e.type === 'swap-sell' && e.sold && e.sold.symbol === 'FISH' && e.bought && parseFloat(e.bought.amount) < 10;
+    document.getElementById('c-trades').textContent = ev.filter((e) => (e.type === 'swap-buy' || e.type === 'swap-sell') && e.actorTier !== 'estimated').length;
+    document.getElementById('c-tradesnf').textContent = ev.filter((e) => (e.type === 'swap-buy' || e.type === 'swap-sell') && e.actorTier !== 'estimated' && !isSmallFishSell(e)).length;
+    document.getElementById('c-trading').textContent = ((FEED.stats && FEED.stats.trading && FEED.stats.trading['30d']) ? FEED.stats.trading['30d'].buyTotal + FEED.stats.trading['30d'].sellTotal : 0);
     if (s.price) {
       const pc = document.getElementById('pricecard');
       const chg = s.price.change24hPct;

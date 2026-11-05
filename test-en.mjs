@@ -66,7 +66,7 @@ check('anchor renders in English without Japanese', !!anchor && !JA.test(renderE
 
 // template-level checks
 check('en.html links back to index.html', html.includes('href="index.html"'));
-check('en.html has English section headings', html.includes('Snipe Alerts') && html.includes('Bridge Withdrawals (USDT, outbound)') && html.includes('Notable') && html.includes('Latest activity'));
+check('en.html has English section headings', html.includes('Snipe Alerts') && html.includes('Bridge Withdrawals (USDT, outbound)') && html.includes('Trading') && html.includes('Trading summary') && html.includes('Latest activity'));
 check('en.html has Insider Watch section', html.includes('⚠ Insider Watch — X') && html.includes('id="insiders"'));
 check('jp index.html has Insider section', jpHtml.includes('⚠ インサイダー') && jpHtml.includes('id="insiders"'));
 check('en.html template contains no Japanese summary text', !html.includes('ブリッジで外部へ送信：') && !html.includes('を送金'));
