@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-05T07:05:10.879Z",
+ "generatedAt": "2026-11-05T07:10:13.525Z",
  "status": {
-  "lastProcessedBlock": 4276891,
-  "latestBlockSeen": 4276891,
-  "lastProcessedCosmosBlock": 4276891,
-  "lastProcessedAt": "2026-11-05T07:05:10.776Z",
-  "totalEvents": 7744,
+  "lastProcessedBlock": 4276947,
+  "latestBlockSeen": 4276947,
+  "lastProcessedCosmosBlock": 4276947,
+  "lastProcessedAt": "2026-11-05T07:10:13.399Z",
+  "totalEvents": 7745,
   "watchSummary": {
    "validators": 23,
    "directRelated": 99,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-05T07:05:10.900Z"
+   "checkedAt": "2026-11-05T07:10:13.547Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68824769,
-   "updatedAt": "2026-11-05T07:05:10.000Z",
+   "updatedAt": "2026-11-05T07:10:13.000Z",
    "change24hPct": null
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4276842,
+    "toBlock": 4276897,
     "fromTs": 1770178474,
-    "toTs": 1793862038
+    "toTs": 1793862334
    },
    "totals": {
     "delegate": {
@@ -737,6 +737,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x7aaafb272f4ec30888efa436226f6f08c80f77f0eb52d538b20033e488350206:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793862334,
+   "block": 4276897,
+   "txHash": "0x7aaafb272f4ec30888efa436226f6f08c80f77f0eb52d538b20033e488350206",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x507da6c7601e82c601bd55da4657852a1958da404627c708e8de46926f21a62d:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1793862038,
@@ -27730,55 +27764,6 @@
      "synchronized"
     ]
    }
-  },
-  {
-   "id": "0x7db166db2651f8847c509fd3d2beb8d59171e011dc0053412332553729f4c1c2:0:transfer:0xfbbd8bd81226ac65d164bb6f7562122487e137b5",
-   "ts": 1793062758,
-   "block": 4128947,
-   "txHash": "0x7db166db2651f8847c509fd3d2beb8d59171e011dc0053412332553729f4c1c2",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xfbbd8bd81226ac65d164bb6f7562122487e137b5",
-   "actorLabel": "PhoenixRing",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "counterpartyLabel": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "PhoenixRing",
-    "Xenia",
-    "farmer",
-    "Metal Raptor",
-    "HeraMoon",
-    "ayc",
-    "panda42",
-    "light888"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-    "symbol": "NUTRI-V2",
-    "amountRaw": "2858862089293576441",
-    "amount": "2.858862",
-    "whitelisted": false
-   },
-   "from": "0xfbbd8bd81226ac65d164bb6f7562122487e137b5",
-   "to": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "tokens": [
-    "NUTRI-V2"
-   ],
-   "whitelisted": false,
-   "summary": "2.858862 NUTRI-V2 を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 0,
-   "actorEvidence": null
   },
   {
    "id": "0xfc3491543fb1281b92b27f2e568ba530b2c3ef63759e55869d0a0f50b859aa0a:4:swap-sell:0xf75b159860f3de7f229e22d08eab844fd97baade",
