@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T09:00:12.955Z",
+ "generatedAt": "2026-11-06T09:05:11.442Z",
  "status": {
-  "lastProcessedBlock": 4294166,
-  "latestBlockSeen": 4294166,
-  "lastProcessedCosmosBlock": 4294166,
-  "lastProcessedAt": "2026-11-06T09:00:12.853Z",
-  "totalEvents": 9327,
+  "lastProcessedBlock": 4294221,
+  "latestBlockSeen": 4294221,
+  "lastProcessedCosmosBlock": 4294221,
+  "lastProcessedAt": "2026-11-06T09:05:11.350Z",
+  "totalEvents": 9328,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T09:00:12.976Z"
+   "checkedAt": "2026-11-06T09:05:11.465Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69071209,
-   "updatedAt": "2026-11-06T09:00:12.000Z",
+   "updatedAt": "2026-11-06T09:05:11.000Z",
    "change24hPct": 0.41
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4293838,
+    "toBlock": 4294172,
     "fromTs": 1770178474,
-    "toTs": 1793953835
+    "toTs": 1793955638
    },
    "totals": {
     "delegate": {
@@ -800,7 +800,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 119,
+   "relatedActivity": 120,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x10a9f5b9d471974fdebe2c1dbbee675e14331fb2c263e5f46b275fb3ac641c1b:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1793955638,
+   "block": 4294172,
+   "txHash": "0x10a9f5b9d471974fdebe2c1dbbee675e14331fb2c263e5f46b275fb3ac641c1b",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x50777203366bc14f841c308c9a1b1ada5fc853c6338ac8f6e0c923693746aeae:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
    "ts": 1793953835,
@@ -23357,47 +23391,6 @@
    "actorShared": false,
    "actorContractNote": null,
    "actionLabel": "報酬請求（委任報酬）",
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
-  },
-  {
-   "id": "cosmos:0D4D5E6705BD414CBACB0A37C2F1DF73F8EA8311E5FC7491975E093F7A67F4CA:1:commission:0xd3349cac126ce02ca481e6a1ae8cc8d3ad46aa4d",
-   "chain": "cosmos",
-   "ts": 1793341984,
-   "block": 4180577,
-   "txHash": "0D4D5E6705BD414CBACB0A37C2F1DF73F8EA8311E5FC7491975E093F7A67F4CA",
-   "logIndex": null,
-   "type": "commission",
-   "actor": "0xd3349cac126ce02ca481e6a1ae8cc8d3ad46aa4d",
-   "actorLabel": "kimnmike",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": null,
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "kimnmike",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "218906954526297003734",
-    "amount": "218.906954",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "バリデーター報酬請求（コミッション）：218.906954 [42]",
-   "notableReasons": [],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "バリデーター報酬請求（コミッション）",
    "isInsider": false,
    "actorDepth": 0,
    "actorEvidence": null
