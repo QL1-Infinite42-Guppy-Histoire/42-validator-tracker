@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T08:30:11.155Z",
+ "generatedAt": "2026-11-06T08:35:10.586Z",
  "status": {
-  "lastProcessedBlock": 4293832,
-  "latestBlockSeen": 4293832,
-  "lastProcessedCosmosBlock": 4293832,
-  "lastProcessedAt": "2026-11-06T08:30:11.055Z",
-  "totalEvents": 9326,
+  "lastProcessedBlock": 4293887,
+  "latestBlockSeen": 4293887,
+  "lastProcessedCosmosBlock": 4293887,
+  "lastProcessedAt": "2026-11-06T08:35:10.478Z",
+  "totalEvents": 9327,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,22 +32,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T08:30:11.176Z"
+   "checkedAt": "2026-11-06T08:35:10.608Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
-   "usdt": 0.65101618,
-   "updatedAt": "2026-11-06T08:30:11.000Z",
-   "change24hPct": -5.36
+   "usdt": 0.69071209,
+   "updatedAt": "2026-11-06T08:35:10.000Z",
+   "change24hPct": 0.41
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4293560,
+    "toBlock": 4293838,
     "fromTs": 1770178474,
-    "toTs": 1793952335
+    "toTs": 1793953835
    },
    "totals": {
     "delegate": {
@@ -778,7 +778,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 111,
-   "relatedActivity": 122,
+   "relatedActivity": 123,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x50777203366bc14f841c308c9a1b1ada5fc853c6338ac8f6e0c923693746aeae:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1793953835,
+   "block": 4293838,
+   "txHash": "0x50777203366bc14f841c308c9a1b1ada5fc853c6338ac8f6e0c923693746aeae",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x5cb5cf0f86789f187e993de32d2e437e237c992e9b52e6c324aefaf4e314bc77:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1793952335,
@@ -23367,55 +23401,6 @@
    "isInsider": false,
    "actorDepth": 0,
    "actorEvidence": null
-  },
-  {
-   "id": "0xd331daf6ba42553a1baa7957fdfb699d3bf6e86b9ff86b356745bc5258c0dcb5:tx:transfer:0x0e4005e7dd0d4a165edeebec3166f483e28bfe1a",
-   "ts": 1793336957,
-   "block": 4179646,
-   "txHash": "0xd331daf6ba42553a1baa7957fdfb699d3bf6e86b9ff86b356745bc5258c0dcb5",
-   "logIndex": null,
-   "type": "transfer",
-   "actor": "0x0e4005e7dd0d4a165edeebec3166f483e28bfe1a",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x78f40e828a92af9e137ff7660e52ac8b0f1d121e",
-   "counterpartyLabel": "st42バルト",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "the_rider"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "1994000000000000000000",
-    "amount": "1,994",
-    "whitelisted": true
-   },
-   "from": "0x0e4005e7dd0d4a165edeebec3166f483e28bfe1a",
-   "to": "0x78f40e828a92af9e137ff7660e52ac8b0f1d121e",
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "1,994 [42] を送金",
-   "notableReasons": [
-    "大きな[42]の移動（1,000 [42]以上）"
-   ],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "the_rider"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "isDormantReturn": true,
-   "dormantDays": 153,
-   "dormantSinceTs": 1780033733
   },
   {
    "id": "0x700af09e97e2e2a5ae12916f2d4b31cb1f819c004c2cbecf56b65de9b04b2f44:3:swap-sell:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
@@ -75056,6 +75041,55 @@
    "isSnipe": false,
    "isInsider": false,
    "backfill": true
+  },
+  {
+   "id": "0xd331daf6ba42553a1baa7957fdfb699d3bf6e86b9ff86b356745bc5258c0dcb5:tx:transfer:0x0e4005e7dd0d4a165edeebec3166f483e28bfe1a",
+   "ts": 1793336957,
+   "block": 4179646,
+   "txHash": "0xd331daf6ba42553a1baa7957fdfb699d3bf6e86b9ff86b356745bc5258c0dcb5",
+   "logIndex": null,
+   "type": "transfer",
+   "actor": "0x0e4005e7dd0d4a165edeebec3166f483e28bfe1a",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x78f40e828a92af9e137ff7660e52ac8b0f1d121e",
+   "counterpartyLabel": "st42バルト",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "the_rider"
+   ],
+   "direction": "out",
+   "amount": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "1994000000000000000000",
+    "amount": "1,994",
+    "whitelisted": true
+   },
+   "from": "0x0e4005e7dd0d4a165edeebec3166f483e28bfe1a",
+   "to": "0x78f40e828a92af9e137ff7660e52ac8b0f1d121e",
+   "tokens": [
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "1,994 [42] を送金",
+   "notableReasons": [
+    "大きな[42]の移動（1,000 [42]以上）"
+   ],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "the_rider"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false,
+   "backfill": true,
+   "isDormantReturn": true,
+   "dormantDays": 153,
+   "dormantSinceTs": 1780033733
   },
   {
    "id": "0x6d8b029711e544810831e5f76d9a93402da5e98ae1015da5d0ba4797b66e7b53:tx:transfer:0x42eb01b85b8c7df4ace961682d69f357b6efcc40",
