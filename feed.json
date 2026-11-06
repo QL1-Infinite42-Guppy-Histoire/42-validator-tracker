@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T00:15:13.411Z",
+ "generatedAt": "2026-11-06T00:20:13.879Z",
  "status": {
-  "lastProcessedBlock": 4288333,
-  "latestBlockSeen": 4288333,
-  "lastProcessedCosmosBlock": 4288333,
-  "lastProcessedAt": "2026-11-06T00:15:13.173Z",
-  "totalEvents": 9240,
+  "lastProcessedBlock": 4288388,
+  "latestBlockSeen": 4288388,
+  "lastProcessedCosmosBlock": 4288388,
+  "lastProcessedAt": "2026-11-06T00:20:13.694Z",
+  "totalEvents": 9241,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T00:15:13.623Z"
+   "checkedAt": "2026-11-06T00:20:14.115Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
-   "usdt": 0.67416615,
-   "updatedAt": "2026-11-06T00:15:13.000Z",
+   "usdt": 0.68143523,
+   "updatedAt": "2026-11-06T00:20:13.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4288283,
+    "toBlock": 4288375,
     "fromTs": 1770178474,
-    "toTs": 1793923836
+    "toTs": 1793924333
    },
    "totals": {
     "delegate": {
@@ -538,8 +538,8 @@
      "42": {
       "buyN": 0,
       "buyAmt": 0,
-      "sellN": 4,
-      "sellAmt": 1154.019616
+      "sellN": 3,
+      "sellAmt": 1094.979772
      },
      "MARVIN": {
       "buyN": 8,
@@ -567,7 +567,7 @@
      }
     },
     "buyTotal": 11,
-    "sellTotal": 4
+    "sellTotal": 3
    },
    "30d": {
     "tokens": {
@@ -584,8 +584,8 @@
       "sellAmt": 0
      },
      "QOM": {
-      "buyN": 69,
-      "buyAmt": 1192577169743.1382,
+      "buyN": 67,
+      "buyAmt": 1166982585581.0403,
       "sellN": 2,
       "sellAmt": 373775013.987699
      },
@@ -644,7 +644,7 @@
       "sellAmt": 0
      }
     },
-    "buyTotal": 195,
+    "buyTotal": 193,
     "sellTotal": 11
    }
   }
@@ -778,7 +778,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 110,
-   "relatedActivity": 110,
+   "relatedActivity": 111,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x1fbf92754d9a54cebd84ceec751662225fcf2199f4bfd10bccbd304ea713042a:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1793924333,
+   "block": 4288375,
+   "txHash": "0x1fbf92754d9a54cebd84ceec751662225fcf2199f4bfd10bccbd304ea713042a",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x9815cdf488149af6f55a7ef65a8ff1e61db979e62edc7227bef1b177766f24a1:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1793923836,
@@ -23867,63 +23901,6 @@
    "isInsider": true,
    "actorDepth": 1,
    "actorEvidence": null
-  },
-  {
-   "id": "0x5d18e51a7813b1f308b181b94f3b586ad0a485897ae2e86fef02725cc1202447:3:swap-buy:0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "ts": 1793266072,
-   "block": 4166520,
-   "txHash": "0x5d18e51a7813b1f308b181b94f3b586ad0a485897ae2e86fef02725cc1202447",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-   "counterpartyLabel": "FISH/QOM ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "30000000000000000005",
-    "amount": "30.000000",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0x53465cbbba5b14f5dc00794330f0f4afb30eaa1d",
-    "symbol": "QOM",
-    "amountRaw": "73320431302709307687394028962",
-    "amount": "73,320,431,302.709307",
-    "whitelisted": true
-   },
-   "subjectSymbol": "QOM",
-   "price": 0,
-   "priceUnit": "FISH/QOM",
-   "pair": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-   "pairLabel": "FISH/QOM ペア",
-   "tokens": [
-    "FISH",
-    "QOM"
-   ],
-   "whitelisted": true,
-   "summary": "QOMを買い（支払い 30.000000 FISH／価格 約0 FISH/QOM）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1789535681,
-   "pairAgeSecs": 3730391,
-   "isSnipe": false,
-   "isInsider": false,
-   "backfill": true
   },
   {
    "id": "0x7c4bf291b421479541fba330923594ca0e500bdc74babf2a54d6180c7b3434a8:4:swap-buy:0x5af775f3bec809b893de59e2f06ef995d280111a",
