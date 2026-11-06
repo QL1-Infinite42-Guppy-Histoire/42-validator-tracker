@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T01:28:57.133Z",
+ "generatedAt": "2026-11-06T01:30:16.269Z",
  "status": {
-  "lastProcessedBlock": 4289152,
-  "latestBlockSeen": 4289152,
-  "lastProcessedCosmosBlock": 4289152,
-  "lastProcessedAt": "2026-11-06T01:28:56.950Z",
-  "totalEvents": 9270,
+  "lastProcessedBlock": 4289166,
+  "latestBlockSeen": 4289166,
+  "lastProcessedCosmosBlock": 4289166,
+  "lastProcessedAt": "2026-11-06T01:30:15.996Z",
+  "totalEvents": 9271,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T01:28:57.345Z"
+   "checkedAt": "2026-11-06T01:30:16.470Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69977399,
-   "updatedAt": "2026-11-06T01:28:57.000Z",
+   "updatedAt": "2026-11-06T01:30:16.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4289121,
+    "toBlock": 4289162,
     "fromTs": 1770178474,
-    "toTs": 1793928362
+    "toTs": 1793928583
    },
    "totals": {
     "delegate": {
@@ -778,7 +778,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 110,
-   "relatedActivity": 111,
+   "relatedActivity": 112,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xe60b8bb45cf7e49376cd406783152d5488ec03c0ccc168b525d2cefbe0cf30e4:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1793928583,
+   "block": 4289162,
+   "txHash": "0xe60b8bb45cf7e49376cd406783152d5488ec03c0ccc168b525d2cefbe0cf30e4",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x8a891d6865e6e7141cc49822813730065db02b73fcc395c0205327d8cfb0d9ac:3:swap-sell:0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
    "ts": 1793928362,
@@ -23825,51 +23859,6 @@
    "isDormantReturn": true,
    "dormantDays": 155,
    "dormantSinceTs": 1779867520
-  },
-  {
-   "id": "cosmos:B05A50CB04F98E4405AAF470FAC9BB03AC491585DD3FA76867E86E7267947F9D:0:transfer:0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
-   "chain": "cosmos",
-   "ts": 1793277555,
-   "block": 4168646,
-   "txHash": "B05A50CB04F98E4405AAF470FAC9BB03AC491585DD3FA76867E86E7267947F9D",
-   "logIndex": null,
-   "type": "transfer",
-   "actor": "0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
-   "actorLabel": "vethawk",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x42eb01b85b8c7df4ace961682d69f357b6efcc40",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "vethawk",
-    "Xenia"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "2300000000000000000000",
-    "amount": "2,300",
-    "whitelisted": true
-   },
-   "from": "0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
-   "to": "0x42eb01b85b8c7df4ace961682d69f357b6efcc40",
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "2,300 [42] を送金",
-   "notableReasons": [
-    "大きな[42]の移動（1,000 [42]以上）"
-   ],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
   },
   {
    "id": "0xf6a6e08c4a3601e856277491facf977527ab43b98293ee092eccbd7cd472eba2:4:swap-buy:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
