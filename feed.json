@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T14:05:15.041Z",
+ "generatedAt": "2026-11-06T14:10:13.222Z",
  "status": {
-  "lastProcessedBlock": 4297553,
-  "latestBlockSeen": 4297553,
-  "lastProcessedCosmosBlock": 4297553,
-  "lastProcessedAt": "2026-11-06T14:05:14.886Z",
-  "totalEvents": 9348,
+  "lastProcessedBlock": 4297608,
+  "latestBlockSeen": 4297608,
+  "lastProcessedCosmosBlock": 4297608,
+  "lastProcessedAt": "2026-11-06T14:10:13.073Z",
+  "totalEvents": 9349,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T14:05:15.067Z"
+   "checkedAt": "2026-11-06T14:10:13.237Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68586156,
-   "updatedAt": "2026-11-06T14:05:14.000Z",
+   "updatedAt": "2026-11-06T14:10:13.000Z",
    "change24hPct": 0.1
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4297503,
+    "toBlock": 4297558,
     "fromTs": 1770178474,
-    "toTs": 1793973635
+    "toTs": 1793973932
    },
    "totals": {
     "delegate": {
@@ -813,7 +813,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 130,
+   "relatedActivity": 131,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x08982a825a31abe0f7fb26e9fd07cf6d1c38fa23558504c3808d52767a7c1d30:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793973932,
+   "block": 4297558,
+   "txHash": "0x08982a825a31abe0f7fb26e9fd07cf6d1c38fa23558504c3808d52767a7c1d30",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x83c388321628ceb408dc6f8468871dacc19a26a4dac3512c2f8791c6f88e8c5d:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1793973635,
