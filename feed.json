@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T09:05:11.442Z",
+ "generatedAt": "2026-11-06T09:10:11.338Z",
  "status": {
-  "lastProcessedBlock": 4294221,
-  "latestBlockSeen": 4294221,
-  "lastProcessedCosmosBlock": 4294221,
-  "lastProcessedAt": "2026-11-06T09:05:11.350Z",
-  "totalEvents": 9328,
+  "lastProcessedBlock": 4294276,
+  "latestBlockSeen": 4294276,
+  "lastProcessedCosmosBlock": 4294276,
+  "lastProcessedAt": "2026-11-06T09:10:11.257Z",
+  "totalEvents": 9329,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T09:05:11.465Z"
+   "checkedAt": "2026-11-06T09:10:11.356Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69071209,
-   "updatedAt": "2026-11-06T09:05:11.000Z",
+   "updatedAt": "2026-11-06T09:10:11.000Z",
    "change24hPct": 0.41
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4294172,
+    "toBlock": 4294227,
     "fromTs": 1770178474,
-    "toTs": 1793955638
+    "toTs": 1793955935
    },
    "totals": {
     "delegate": {
@@ -800,7 +800,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 120,
+   "relatedActivity": 121,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x7031a40a216e80f285413fb892635e558f6d1de9bbcf158e55d6910c43e83c8d:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1793955935,
+   "block": 4294227,
+   "txHash": "0x7031a40a216e80f285413fb892635e558f6d1de9bbcf158e55d6910c43e83c8d",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x10a9f5b9d471974fdebe2c1dbbee675e14331fb2c263e5f46b275fb3ac641c1b:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1793955638,
@@ -23348,49 +23382,6 @@
    "actorValidators": [],
    "actorShared": false,
    "actorContractNote": null,
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
-  },
-  {
-   "id": "cosmos:0D4D5E6705BD414CBACB0A37C2F1DF73F8EA8311E5FC7491975E093F7A67F4CA:0:reward:0xd3349cac126ce02ca481e6a1ae8cc8d3ad46aa4d",
-   "chain": "cosmos",
-   "ts": 1793341984,
-   "block": 4180577,
-   "txHash": "0D4D5E6705BD414CBACB0A37C2F1DF73F8EA8311E5FC7491975E093F7A67F4CA",
-   "logIndex": null,
-   "type": "reward",
-   "actor": "0xd3349cac126ce02ca481e6a1ae8cc8d3ad46aa4d",
-   "actorLabel": "kimnmike",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0xd3349cac126ce02ca481e6a1ae8cc8d3ad46aa4d",
-   "counterpartyLabel": "kimnmike",
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "kimnmike",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "1970133744914910330696",
-    "amount": "1,970.133744",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "報酬請求（委任報酬）：kimnmike 分 1,970.133744 [42]",
-   "notableReasons": [
-    "大きな[42]の移動（1,000 [42]以上）"
-   ],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "報酬請求（委任報酬）",
    "isInsider": false,
    "actorDepth": 0,
    "actorEvidence": null
