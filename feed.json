@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T00:50:13.539Z",
+ "generatedAt": "2026-11-06T00:55:11.610Z",
  "status": {
-  "lastProcessedBlock": 4288721,
-  "latestBlockSeen": 4288721,
-  "lastProcessedCosmosBlock": 4288721,
-  "lastProcessedAt": "2026-11-06T00:50:13.131Z",
-  "totalEvents": 9254,
+  "lastProcessedBlock": 4288776,
+  "latestBlockSeen": 4288776,
+  "lastProcessedCosmosBlock": 4288776,
+  "lastProcessedAt": "2026-11-06T00:55:11.214Z",
+  "totalEvents": 9258,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T00:50:13.770Z"
+   "checkedAt": "2026-11-06T00:55:12.330Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68766478,
-   "updatedAt": "2026-11-06T00:50:13.000Z",
+   "updatedAt": "2026-11-06T00:55:11.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4288653,
+    "toBlock": 4288774,
     "fromTs": 1770178474,
-    "toTs": 1793925835
+    "toTs": 1793926489
    },
    "totals": {
     "delegate": {
@@ -810,7 +810,7 @@
    "bech32": "infinite1e8kas2zyra7f3zqeusyxwa72nvjlavkup7xat5",
    "isCore": false,
    "relatedCount": 1,
-   "selfActivity": 222,
+   "selfActivity": 226,
    "relatedActivity": 118,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -905,6 +905,159 @@
   }
  ],
  "events": [
+  {
+   "id": "0xe843440fd62707416a14154e53b7fc4592984b67f9881b8c752fb0b248f5fd6c:tx:approve:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "ts": 1793926489,
+   "block": 4288774,
+   "txHash": "0xe843440fd62707416a14154e53b7fc4592984b67f9881b8c752fb0b248f5fd6c",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "actorLabel": "ayc",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "ayc",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": "FISH/42 ペア",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "NUTRI-V2の使用許可（approve）：コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト） に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0xf2d8e5cc664bdf1501906767fa3a3a1bef6c1793ba471b05767433bcaa96f814:6:lp-add:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "ts": 1793926451,
+   "block": 4288767,
+   "txHash": "0xf2d8e5cc664bdf1501906767fa3a3a1bef6c1793ba471b05767433bcaa96f814",
+   "logIndex": 6,
+   "type": "lp-add",
+   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "actorLabel": "ayc",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "ayc",
+    "Xenia"
+   ],
+   "amounts": [
+    {
+     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+     "symbol": "FISH",
+     "amountRaw": "2297937121205841263",
+     "amount": "2.297937",
+     "whitelisted": true
+    },
+    {
+     "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+     "symbol": "42",
+     "amountRaw": "4464547013216341029",
+     "amount": "4.464547",
+     "whitelisted": true
+    }
+   ],
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "LP追加：2.297937 FISH ＋ 4.464547 42（FISH/42 ペア）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788365400,
+   "pairAgeSecs": 5561051,
+   "isSnipe": false,
+   "isInsider": false
+  },
+  {
+   "id": "0xc764e4713179f67c7aeb52ce9e13d2b5c8b6e612a973a194d892f0d042091074:tx:approve:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "ts": 1793926418,
+   "block": 4288761,
+   "txHash": "0xc764e4713179f67c7aeb52ce9e13d2b5c8b6e612a973a194d892f0d042091074",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "actorLabel": "ayc",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "ayc",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "42の使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0xbe10211d9f8e23fd62593a52ca9ab2beb3acfc696eaa92d53015048d30f7a489:tx:approve:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "ts": 1793926386,
+   "block": 4288755,
+   "txHash": "0xbe10211d9f8e23fd62593a52ca9ab2beb3acfc696eaa92d53015048d30f7a489",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "actorLabel": "ayc",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "ayc",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x490726b9baba93e6bf62b8014447b1bc34416b992d1bdc34db05da32bdc92a91:6:swap-sell:0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
    "ts": 1793925835,
@@ -23677,185 +23830,6 @@
    "actorContractNote": null,
    "isInsider": false,
    "backfill": true
-  },
-  {
-   "id": "0x2ddd67890f6ac469dd1d4c0b64d2732d46403c35f504f822bcdadda273577007:0:transfer:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "ts": 1793275436,
-   "block": 4168254,
-   "txHash": "0x2ddd67890f6ac469dd1d4c0b64d2732d46403c35f504f822bcdadda273577007",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x1bad45bbdf6ec8a6477fc84f63b383d331510d99",
-    "symbol": "NUTRI-V2",
-    "amountRaw": "1717058951085613042578272",
-    "amount": "1,717,058.951085",
-    "whitelisted": false
-   },
-   "from": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "to": "0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "tokens": [
-    "NUTRI-V2"
-   ],
-   "whitelisted": false,
-   "summary": "1,717,058.951085 NUTRI-V2 を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true
-  },
-  {
-   "id": "0xcb00df2b323bab27bb1795f9f566233a872b3b60372b856e3dd970ed53513a7d:tx:transfer:0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
-   "ts": 1793272860,
-   "block": 4167777,
-   "txHash": "0xcb00df2b323bab27bb1795f9f566233a872b3b60372b856e3dd970ed53513a7d",
-   "logIndex": null,
-   "type": "transfer",
-   "actor": "0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x78f40e828a92af9e137ff7660e52ac8b0f1d121e",
-   "counterpartyLabel": "st42バルト",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "dudenode"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "2400000000000000000000",
-    "amount": "2,400",
-    "whitelisted": true
-   },
-   "from": "0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
-   "to": "0x78f40e828a92af9e137ff7660e52ac8b0f1d121e",
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "2,400 [42] を送金",
-   "notableReasons": [
-    "大きな[42]の移動（1,000 [42]以上）"
-   ],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "dudenode"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "isDormantReturn": true,
-   "dormantDays": 154,
-   "dormantSinceTs": 1779939458
-  },
-  {
-   "id": "cosmos:527664CBCC0EA292230E53E08A6E28FDEE6B28D5C313A201B2C183CEECF991CB:0:transfer:0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
-   "chain": "cosmos",
-   "ts": 1793272795,
-   "block": 4167765,
-   "txHash": "527664CBCC0EA292230E53E08A6E28FDEE6B28D5C313A201B2C183CEECF991CB",
-   "logIndex": null,
-   "type": "transfer",
-   "actor": "0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
-   "actorLabel": "dudenode",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "dudenode"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "2400000000000000000000",
-    "amount": "2,400",
-    "whitelisted": true
-   },
-   "from": "0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
-   "to": "0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "2,400 [42] を送金",
-   "notableReasons": [
-    "大きな[42]の移動（1,000 [42]以上）"
-   ],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
-  },
-  {
-   "id": "cosmos:DF7CC64A30CB5AFE80584BC8670D46450BA3E33B946ABA1A3D352C861FBFA2B8:0:reward:0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
-   "chain": "cosmos",
-   "ts": 1793272763,
-   "block": 4167759,
-   "txHash": "DF7CC64A30CB5AFE80584BC8670D46450BA3E33B946ABA1A3D352C861FBFA2B8",
-   "logIndex": null,
-   "type": "reward",
-   "actor": "0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
-   "actorLabel": "dudenode",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
-   "counterpartyLabel": "dudenode",
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "dudenode"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "2068936987459418153004",
-    "amount": "2,068.936987",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "報酬請求（委任報酬）：dudenode 分 2,068.936987 [42]",
-   "notableReasons": [
-    "大きな[42]の移動（1,000 [42]以上）"
-   ],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "報酬請求（委任報酬）",
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
   },
   {
    "id": "0xf6a6e08c4a3601e856277491facf977527ab43b98293ee092eccbd7cd472eba2:4:swap-buy:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
@@ -75220,6 +75194,55 @@
    "isSnipe": false,
    "isInsider": false,
    "backfill": true
+  },
+  {
+   "id": "0xcb00df2b323bab27bb1795f9f566233a872b3b60372b856e3dd970ed53513a7d:tx:transfer:0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
+   "ts": 1793272860,
+   "block": 4167777,
+   "txHash": "0xcb00df2b323bab27bb1795f9f566233a872b3b60372b856e3dd970ed53513a7d",
+   "logIndex": null,
+   "type": "transfer",
+   "actor": "0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x78f40e828a92af9e137ff7660e52ac8b0f1d121e",
+   "counterpartyLabel": "st42バルト",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "dudenode"
+   ],
+   "direction": "out",
+   "amount": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "2400000000000000000000",
+    "amount": "2,400",
+    "whitelisted": true
+   },
+   "from": "0x1933bd1ad0ebb964138ae91190bf51de34c46d34",
+   "to": "0x78f40e828a92af9e137ff7660e52ac8b0f1d121e",
+   "tokens": [
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "2,400 [42] を送金",
+   "notableReasons": [
+    "大きな[42]の移動（1,000 [42]以上）"
+   ],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "dudenode"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false,
+   "backfill": true,
+   "isDormantReturn": true,
+   "dormantDays": 154,
+   "dormantSinceTs": 1779939458
   },
   {
    "id": "0x5ad3314f6c5307cb0b02e209ae3050b3fe0edab8629bf9c9fe5252164f1ab375:tx:transfer:0x685e4bc7db3f65c8adf28c84d592edafa4c92c15",
