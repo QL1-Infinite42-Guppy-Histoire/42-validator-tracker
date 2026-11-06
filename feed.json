@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T01:15:11.099Z",
+ "generatedAt": "2026-11-06T01:20:12.847Z",
  "status": {
-  "lastProcessedBlock": 4288998,
-  "latestBlockSeen": 4288998,
-  "lastProcessedCosmosBlock": 4288998,
-  "lastProcessedAt": "2026-11-06T01:15:11.001Z",
-  "totalEvents": 9268,
+  "lastProcessedBlock": 4289054,
+  "latestBlockSeen": 4289054,
+  "lastProcessedCosmosBlock": 4289054,
+  "lastProcessedAt": "2026-11-06T01:20:12.716Z",
+  "totalEvents": 9269,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T01:15:11.114Z"
+   "checkedAt": "2026-11-06T01:20:12.877Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69977399,
-   "updatedAt": "2026-11-06T01:15:11.000Z",
+   "updatedAt": "2026-11-06T01:20:12.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4288899,
+    "toBlock": 4289010,
     "fromTs": 1770178474,
-    "toTs": 1793927164
+    "toTs": 1793927763
    },
    "totals": {
     "delegate": {
@@ -854,7 +854,7 @@
    "bech32": "infinite1m83mwjfpfnulgzsrwunskuaunahu2wzvgrga3f",
    "isCore": false,
    "relatedCount": 1,
-   "selfActivity": 86,
+   "selfActivity": 87,
    "relatedActivity": 3,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -905,6 +905,60 @@
   }
  ],
  "events": [
+  {
+   "id": "0xf4ebfa71f2f4bf5ab247025c9c7643c533e84f22c878cb2600614777a7902a0e:3:swap-sell:0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "ts": 1793927763,
+   "block": 4289010,
+   "txHash": "0xf4ebfa71f2f4bf5ab247025c9c7643c533e84f22c878cb2600614777a7902a0e",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "actorLabel": "the_rider",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "the_rider",
+    "Xenia"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1790497844092192412",
+    "amount": "1.790497",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3473528631755821006",
+    "amount": "3.473528",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.93997923,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 3.473528 42／価格 約1.93997923 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x561d629b8fa1d9872a069ae7b7ab2a9a2883aec6f4617bf628776440aee6b2e2:3:swap-sell:0x65b18070198ef86df379dd695ac8cb350cd2d03f",
    "ts": 1793927164,
@@ -23803,47 +23857,6 @@
    "actorShared": false,
    "actorContractNote": null,
    "actionLabel": "報酬請求（委任報酬）",
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
-  },
-  {
-   "id": "cosmos:93AEBC4B7F4B3A67C5FA395C2C4659426DC911955057407D7BB6BE374D1B2E54:1:commission:0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
-   "chain": "cosmos",
-   "ts": 1793277517,
-   "block": 4168639,
-   "txHash": "93AEBC4B7F4B3A67C5FA395C2C4659426DC911955057407D7BB6BE374D1B2E54",
-   "logIndex": null,
-   "type": "commission",
-   "actor": "0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
-   "actorLabel": "vethawk",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": null,
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "vethawk",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "230713020749724890137",
-    "amount": "230.713020",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "バリデーター報酬請求（コミッション）：230.713020 [42]",
-   "notableReasons": [],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "バリデーター報酬請求（コミッション）",
    "isInsider": false,
    "actorDepth": 0,
    "actorEvidence": null
