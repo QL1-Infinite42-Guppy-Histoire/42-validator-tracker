@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T00:30:15.458Z",
+ "generatedAt": "2026-11-06T00:35:12.336Z",
  "status": {
-  "lastProcessedBlock": 4288499,
-  "latestBlockSeen": 4288499,
-  "lastProcessedCosmosBlock": 4288499,
-  "lastProcessedAt": "2026-11-06T00:30:15.296Z",
-  "totalEvents": 9241,
+  "lastProcessedBlock": 4288555,
+  "latestBlockSeen": 4288555,
+  "lastProcessedCosmosBlock": 4288555,
+  "lastProcessedAt": "2026-11-06T00:35:12.225Z",
+  "totalEvents": 9244,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T00:30:15.479Z"
+   "checkedAt": "2026-11-06T00:35:12.362Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68143523,
-   "updatedAt": "2026-11-06T00:30:15.000Z",
+   "updatedAt": "2026-11-06T00:35:12.000Z",
    "change24hPct": null
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4288375,
+    "toBlock": 4288555,
     "fromTs": 1770178474,
-    "toTs": 1793924333
+    "toTs": 1793925305
    },
    "totals": {
     "delegate": {
@@ -811,7 +811,7 @@
    "isCore": false,
    "relatedCount": 1,
    "selfActivity": 222,
-   "relatedActivity": 113,
+   "relatedActivity": 116,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,129 @@
   }
  ],
  "events": [
+  {
+   "id": "0x868910f32269e22c30fa345cc6ee6fc6cb07defebd2698d765226838723c281b:6:lp-add:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "ts": 1793925305,
+   "block": 4288555,
+   "txHash": "0x868910f32269e22c30fa345cc6ee6fc6cb07defebd2698d765226838723c281b",
+   "logIndex": 6,
+   "type": "lp-add",
+   "actor": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "ayc"
+   ],
+   "amounts": [
+    {
+     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+     "symbol": "FISH",
+     "amountRaw": "33835399681282973",
+     "amount": "0.033835",
+     "whitelisted": true
+    },
+    {
+     "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+     "symbol": "42",
+     "amountRaw": "65596366661731270",
+     "amount": "0.065596",
+     "whitelisted": true
+    }
+   ],
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "LP追加：0.033835 FISH ＋ 0.065596 42（FISH/42 ペア）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "ayc"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788365400,
+   "pairAgeSecs": 5559905,
+   "isSnipe": false,
+   "isInsider": false
+  },
+  {
+   "id": "0x836b1e7a1beb29626d1d262c14224398f9005aa91df52174280cf2372286a5be:tx:approve:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "ts": 1793925300,
+   "block": 4288554,
+   "txHash": "0x836b1e7a1beb29626d1d262c14224398f9005aa91df52174280cf2372286a5be",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "ayc"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "42の使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "ayc"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x52283e143f6e7a740cb408cc42a2ad909f90148d0e70601dcd5e973168720506:tx:approve:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "ts": 1793925289,
+   "block": 4288552,
+   "txHash": "0x52283e143f6e7a740cb408cc42a2ad909f90148d0e70601dcd5e973168720506",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "ayc"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "ayc"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x1fbf92754d9a54cebd84ceec751662225fcf2199f4bfd10bccbd304ea713042a:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
    "ts": 1793924333,
