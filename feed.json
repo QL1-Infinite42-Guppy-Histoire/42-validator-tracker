@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T08:00:12.969Z",
+ "generatedAt": "2026-11-06T08:05:10.912Z",
  "status": {
-  "lastProcessedBlock": 4293499,
-  "latestBlockSeen": 4293499,
-  "lastProcessedCosmosBlock": 4293499,
-  "lastProcessedAt": "2026-11-06T08:00:12.823Z",
-  "totalEvents": 9324,
+  "lastProcessedBlock": 4293554,
+  "latestBlockSeen": 4293554,
+  "lastProcessedCosmosBlock": 4293554,
+  "lastProcessedAt": "2026-11-06T08:05:10.808Z",
+  "totalEvents": 9325,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T08:00:12.993Z"
+   "checkedAt": "2026-11-06T08:05:10.928Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.65101618,
-   "updatedAt": "2026-11-06T08:00:12.000Z",
+   "updatedAt": "2026-11-06T08:05:10.000Z",
    "change24hPct": -5.41
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4293095,
+    "toBlock": 4293505,
     "fromTs": 1770178474,
-    "toTs": 1793949824
+    "toTs": 1793952038
    },
    "totals": {
     "delegate": {
@@ -800,7 +800,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 117,
+   "relatedActivity": 118,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x2d878d8648503e297f03d8c9e164eeb432299f5a7453dfbb1a4c995ea3faba1d:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1793952038,
+   "block": 4293505,
+   "txHash": "0x2d878d8648503e297f03d8c9e164eeb432299f5a7453dfbb1a4c995ea3faba1d",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x395cb34b3f0cab988222e9b28b279ffa6edb5185b67f245ec3168ccefa125396:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
    "ts": 1793949824,
@@ -23390,49 +23424,6 @@
    "actorValidators": [],
    "actorShared": false,
    "actorContractNote": null,
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
-  },
-  {
-   "id": "cosmos:0A243C40D51E2F9A7746D0FA3B36A75564A70404B877476879CC41AF71B0CD6F:0:reward:0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
-   "chain": "cosmos",
-   "ts": 1793336676,
-   "block": 4179594,
-   "txHash": "0A243C40D51E2F9A7746D0FA3B36A75564A70404B877476879CC41AF71B0CD6F",
-   "logIndex": null,
-   "type": "reward",
-   "actor": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
-   "actorLabel": "the_rider",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
-   "counterpartyLabel": "the_rider",
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "the_rider",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "1711560744469374396930",
-    "amount": "1,711.560744",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "報酬請求（委任報酬）：the_rider 分 1,711.560744 [42]",
-   "notableReasons": [
-    "大きな[42]の移動（1,000 [42]以上）"
-   ],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "actionLabel": "報酬請求（委任報酬）",
    "isInsider": false,
    "actorDepth": 0,
    "actorEvidence": null
