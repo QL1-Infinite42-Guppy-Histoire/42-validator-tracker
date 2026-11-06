@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T09:45:26.266Z",
+ "generatedAt": "2026-11-06T09:50:11.379Z",
  "status": {
-  "lastProcessedBlock": 4294668,
-  "latestBlockSeen": 4294668,
-  "lastProcessedCosmosBlock": 4294668,
-  "lastProcessedAt": "2026-11-06T09:45:26.179Z",
-  "totalEvents": 9329,
+  "lastProcessedBlock": 4294721,
+  "latestBlockSeen": 4294721,
+  "lastProcessedCosmosBlock": 4294721,
+  "lastProcessedAt": "2026-11-06T09:50:11.266Z",
+  "totalEvents": 9330,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,22 +32,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T09:45:26.283Z"
+   "checkedAt": "2026-11-06T09:50:11.410Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
-   "usdt": 0.69071209,
-   "updatedAt": "2026-11-06T09:45:26.000Z",
-   "change24hPct": 0.79
+   "usdt": 0.69717465,
+   "updatedAt": "2026-11-06T09:50:11.000Z",
+   "change24hPct": 1.73
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4294227,
+    "toBlock": 4294676,
     "fromTs": 1770178474,
-    "toTs": 1793955935
+    "toTs": 1793958361
    },
    "totals": {
     "delegate": {
@@ -778,7 +778,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 111,
-   "relatedActivity": 123,
+   "relatedActivity": 124,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xb785204a7fe0331c7b9343072bb6fffb184cde48f03a3db25aab94212ddbc815:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1793958361,
+   "block": 4294676,
+   "txHash": "0xb785204a7fe0331c7b9343072bb6fffb184cde48f03a3db25aab94212ddbc815",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x7031a40a216e80f285413fb892635e558f6d1de9bbcf158e55d6910c43e83c8d:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1793955935,
@@ -23340,51 +23374,6 @@
    "isDormantReturn": true,
    "dormantDays": 60,
    "dormantSinceTs": 1788095122
-  },
-  {
-   "id": "cosmos:256BF3E2A2C2EF86F0CF27A6ED86D8AB349D16FA422E8348C796F0BC1301A7D8:0:transfer:0xd3349cac126ce02ca481e6a1ae8cc8d3ad46aa4d",
-   "chain": "cosmos",
-   "ts": 1793342032,
-   "block": 4180586,
-   "txHash": "256BF3E2A2C2EF86F0CF27A6ED86D8AB349D16FA422E8348C796F0BC1301A7D8",
-   "logIndex": null,
-   "type": "transfer",
-   "actor": "0xd3349cac126ce02ca481e6a1ae8cc8d3ad46aa4d",
-   "actorLabel": "kimnmike",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x813e28ef28a9e8df9b7ac710e3f3f3c6b8ba01fb",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "kimnmike",
-    "Xenia"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "2295000000000000000000",
-    "amount": "2,295",
-    "whitelisted": true
-   },
-   "from": "0xd3349cac126ce02ca481e6a1ae8cc8d3ad46aa4d",
-   "to": "0x813e28ef28a9e8df9b7ac710e3f3f3c6b8ba01fb",
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "2,295 [42] を送金",
-   "notableReasons": [
-    "大きな[42]の移動（1,000 [42]以上）"
-   ],
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "actorDepth": 0,
-   "actorEvidence": null
   },
   {
    "id": "0x700af09e97e2e2a5ae12916f2d4b31cb1f819c004c2cbecf56b65de9b04b2f44:3:swap-sell:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
