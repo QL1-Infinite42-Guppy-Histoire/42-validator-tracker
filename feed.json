@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T18:00:14.406Z",
+ "generatedAt": "2026-11-06T18:05:13.888Z",
  "status": {
-  "lastProcessedBlock": 4300162,
-  "latestBlockSeen": 4300162,
-  "lastProcessedCosmosBlock": 4300162,
-  "lastProcessedAt": "2026-11-06T18:00:14.289Z",
-  "totalEvents": 9355,
+  "lastProcessedBlock": 4300218,
+  "latestBlockSeen": 4300218,
+  "lastProcessedCosmosBlock": 4300218,
+  "lastProcessedAt": "2026-11-06T18:05:13.756Z",
+  "totalEvents": 9356,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T18:00:14.426Z"
+   "checkedAt": "2026-11-06T18:05:13.909Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68328082,
-   "updatedAt": "2026-11-06T18:00:14.000Z",
+   "updatedAt": "2026-11-06T18:05:13.000Z",
    "change24hPct": -0.28
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4299557,
+    "toBlock": 4300168,
     "fromTs": 1770178474,
-    "toTs": 1793984732
+    "toTs": 1793988036
    },
    "totals": {
     "delegate": {
@@ -813,7 +813,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 137,
+   "relatedActivity": 138,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xc75d58c701571fa15cc4385765d5bb3ad84a03202072c3e2ea82ffb6d0cb8de5:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1793988036,
+   "block": 4300168,
+   "txHash": "0xc75d58c701571fa15cc4385765d5bb3ad84a03202072c3e2ea82ffb6d0cb8de5",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x9e289b1805ad5026e85fb554991171f72d38130b34e1cb04a52975656f7b5ec5:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1793984732,
@@ -23098,49 +23132,6 @@
    "isSnipe": false,
    "isInsider": false,
    "backfill": true
-  },
-  {
-   "id": "0x50cd9fece462bb14ab9774b8d455516b635755a9980632fe151ba5cc867201c5:0:transfer:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
-   "ts": 1793406065,
-   "block": 4192444,
-   "txHash": "0x50cd9fece462bb14ab9774b8d455516b635755a9980632fe151ba5cc867201c5",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
-   "actorLabel": "ayc",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "counterpartyLabel": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "ayc",
-    "Xenia"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
-    "symbol": "NUTRI-V2",
-    "amountRaw": "3186258377708329604",
-    "amount": "3.186258",
-    "whitelisted": false
-   },
-   "from": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
-   "to": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "tokens": [
-    "NUTRI-V2"
-   ],
-   "whitelisted": false,
-   "summary": "3.186258 NUTRI-V2 を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 0,
-   "actorEvidence": null
   },
   {
    "id": "0x553821b84d0916d49bbf5c5b2f632c60c66c5f0c9485ff6d2038054ec161ad40:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
