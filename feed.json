@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-06T04:15:11.199Z",
+ "generatedAt": "2026-11-06T04:20:14.452Z",
  "status": {
-  "lastProcessedBlock": 4290998,
-  "latestBlockSeen": 4290998,
-  "lastProcessedCosmosBlock": 4290998,
-  "lastProcessedAt": "2026-11-06T04:15:11.096Z",
-  "totalEvents": 9301,
+  "lastProcessedBlock": 4291054,
+  "latestBlockSeen": 4291054,
+  "lastProcessedCosmosBlock": 4291054,
+  "lastProcessedAt": "2026-11-06T04:20:14.350Z",
+  "totalEvents": 9302,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,22 +32,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-06T04:15:11.215Z"
+   "checkedAt": "2026-11-06T04:20:14.480Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
-   "usdt": 0.67588027,
-   "updatedAt": "2026-11-06T04:15:11.000Z",
-   "change24hPct": -1.8
+   "usdt": 0.67989153,
+   "updatedAt": "2026-11-06T04:20:14.000Z",
+   "change24hPct": -1.21
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4290893,
+    "toBlock": 4291004,
     "fromTs": 1770178474,
-    "toTs": 1793937935
+    "toTs": 1793938535
    },
    "totals": {
     "delegate": {
@@ -778,7 +778,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 111,
-   "relatedActivity": 120,
+   "relatedActivity": 121,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x7de75ce9989b54573f6e5f879ae614d687a12a6b769e74b0f6d258ab67a223b3:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1793938535,
+   "block": 4291004,
+   "txHash": "0x7de75ce9989b54573f6e5f879ae614d687a12a6b769e74b0f6d258ab67a223b3",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x7475a22d5a626f6659e11ba3ede9a82eaf93c6aef2a719a6c913e233e7ef7259:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1793937935,
@@ -23630,50 +23664,6 @@
    "actorContractNote": null,
    "isInsider": false,
    "backfill": true
-  },
-  {
-   "id": "0x6b58203f7a2f2749e3c9a20d6b09f82b43716caa5423c938491de833ef747e3e:0:transfer:0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-   "ts": 1793321152,
-   "block": 4176721,
-   "txHash": "0x6b58203f7a2f2749e3c9a20d6b09f82b43716caa5423c938491de833ef747e3e",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "counterpartyLabel": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "HeraMoon"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-    "symbol": "NUTRI-V2",
-    "amountRaw": "1755380563748827985",
-    "amount": "1.755380",
-    "whitelisted": false
-   },
-   "from": "0x67b9f2f63a10ce52056b726fd603dd0f6fea5a48",
-   "to": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "tokens": [
-    "NUTRI-V2"
-   ],
-   "whitelisted": false,
-   "summary": "1.755380 NUTRI-V2 を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorValidators": [
-    "HeraMoon"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false,
-   "backfill": true,
-   "actorDepth": 1,
-   "actorEvidence": null
   },
   {
    "id": "0xdcce21773bf5464af3ba261507b99726c214bc6e7cc1b098dac1a4321ca89d4f:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
