@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-07T19:05:12.682Z",
+ "generatedAt": "2026-11-07T19:10:10.642Z",
  "status": {
-  "lastProcessedBlock": 4316868,
-  "latestBlockSeen": 4316868,
-  "lastProcessedCosmosBlock": 4316868,
-  "lastProcessedAt": "2026-11-07T19:05:12.483Z",
-  "totalEvents": 9459,
+  "lastProcessedBlock": 4316923,
+  "latestBlockSeen": 4316923,
+  "lastProcessedCosmosBlock": 4316923,
+  "lastProcessedAt": "2026-11-07T19:10:10.557Z",
+  "totalEvents": 9461,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-07T19:05:12.934Z"
+   "checkedAt": "2026-11-07T19:10:10.663Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.67865929,
-   "updatedAt": "2026-11-07T19:05:12.000Z",
+   "updatedAt": "2026-11-07T19:10:10.000Z",
    "change24hPct": -0.56
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4316726,
+    "toBlock": 4316910,
     "fromTs": 1770178474,
-    "toTs": 1794077536
+    "toTs": 1794078531
    },
    "totals": {
     "delegate": {
@@ -801,7 +801,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 165,
+   "relatedActivity": 166,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -867,7 +867,7 @@
    "isCore": false,
    "relatedCount": 6,
    "selfActivity": 235,
-   "relatedActivity": 3492,
+   "relatedActivity": 3493,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -906,6 +906,74 @@
   }
  ],
  "events": [
+  {
+   "id": "0x2c5a2494b2723e3ea1200d236d183fab0c81e3a105825b59b7380ba8ddf0dea0:tx:reward-claim-fish:0x5af775f3bec809b893de59e2f06ef995d280111a",
+   "ts": 1794078531,
+   "block": 4316910,
+   "txHash": "0x2c5a2494b2723e3ea1200d236d183fab0c81e3a105825b59b7380ba8ddf0dea0",
+   "logIndex": null,
+   "type": "reward-claim-fish",
+   "actor": "0x5af775f3bec809b893de59e2f06ef995d280111a",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "method": "0x5c74910f",
+   "actionLabel": "報酬請求（FISH配布）",
+   "destLabel": "FISH報酬コントラクト",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "報酬請求（FISH配布）：7.365236 FISH を受け取り",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x7d62f0cc33b7acb1613c4bcf82208b7fa553df1e29256a9cc184d3aa5d218ab6:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794078336,
+   "block": 4316874,
+   "txHash": "0x7d62f0cc33b7acb1613c4bcf82208b7fa553df1e29256a9cc184d3aa5d218ab6",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x60a7ed974a5424e05025c008d0525e60dc4857b1ed1b152fcb218d5da7ad651a:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
    "ts": 1794077536,
