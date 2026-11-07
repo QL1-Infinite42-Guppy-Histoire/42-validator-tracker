@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-07T06:05:11.004Z",
+ "generatedAt": "2026-11-07T06:10:12.101Z",
  "status": {
-  "lastProcessedBlock": 4308208,
-  "latestBlockSeen": 4308208,
-  "lastProcessedCosmosBlock": 4308208,
-  "lastProcessedAt": "2026-11-07T06:05:10.873Z",
-  "totalEvents": 9436,
+  "lastProcessedBlock": 4308263,
+  "latestBlockSeen": 4308263,
+  "lastProcessedCosmosBlock": 4308263,
+  "lastProcessedAt": "2026-11-07T06:10:11.982Z",
+  "totalEvents": 9437,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-07T06:05:11.024Z"
+   "checkedAt": "2026-11-07T06:10:12.121Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68222067,
-   "updatedAt": "2026-11-07T06:05:10.000Z",
+   "updatedAt": "2026-11-07T06:10:12.000Z",
    "change24hPct": 4.86
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4307547,
+    "toBlock": 4308214,
     "fromTs": 1770178474,
-    "toTs": 1794027932
+    "toTs": 1794031535
    },
    "totals": {
     "delegate": {
@@ -813,7 +813,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 151,
+   "relatedActivity": 152,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xf051d76b72bc0bb3fb9a29b6dd5de611711d50899c399b2e83308a74ce56259b:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794031535,
+   "block": 4308214,
+   "txHash": "0xf051d76b72bc0bb3fb9a29b6dd5de611711d50899c399b2e83308a74ce56259b",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x99eeab8585d884485ef10f1015926a744eef8868188f9a3e5919448a74e51069:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794027932,
@@ -22547,60 +22581,6 @@
    "actorValidators": [],
    "actorShared": false,
    "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xd5920ce2b368f99d422b28b29359fd476eadf39a9b281a5b0e4b17133f9fa434:5:lp-add:0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "ts": 1793578200,
-   "block": 4224310,
-   "txHash": "0xd5920ce2b368f99d422b28b29359fd476eadf39a9b281a5b0e4b17133f9fa434",
-   "logIndex": 5,
-   "type": "lp-add",
-   "actor": "0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "actorLabel": "panda42",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
-   "counterpartyLabel": "FISH/ZAP ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "panda42",
-    "Xenia"
-   ],
-   "amounts": [
-    {
-     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-     "symbol": "FISH",
-     "amountRaw": "971159036353721029",
-     "amount": "0.971159",
-     "whitelisted": true
-    },
-    {
-     "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-     "symbol": "ZAP",
-     "amountRaw": "13457096990042396169",
-     "amount": "13.457096",
-     "whitelisted": true
-    }
-   ],
-   "pair": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
-   "pairLabel": "FISH/ZAP ペア",
-   "tokens": [
-    "FISH",
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "LP追加：0.971159 FISH ＋ 13.457096 ZAP（FISH/ZAP ペア）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1788487977,
-   "pairAgeSecs": 5090223,
-   "isSnipe": false,
    "isInsider": false
   },
   {
@@ -66595,6 +66575,60 @@
    "actorEvidence": null
   },
   {
+   "id": "0xd5920ce2b368f99d422b28b29359fd476eadf39a9b281a5b0e4b17133f9fa434:5:lp-add:0xc032b9c05386a81b0221a575db9cf666ebc30547",
+   "ts": 1793578200,
+   "block": 4224310,
+   "txHash": "0xd5920ce2b368f99d422b28b29359fd476eadf39a9b281a5b0e4b17133f9fa434",
+   "logIndex": 5,
+   "type": "lp-add",
+   "actor": "0xc032b9c05386a81b0221a575db9cf666ebc30547",
+   "actorLabel": "panda42",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
+   "counterpartyLabel": "FISH/ZAP ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "panda42",
+    "Xenia"
+   ],
+   "amounts": [
+    {
+     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+     "symbol": "FISH",
+     "amountRaw": "971159036353721029",
+     "amount": "0.971159",
+     "whitelisted": true
+    },
+    {
+     "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
+     "symbol": "ZAP",
+     "amountRaw": "13457096990042396169",
+     "amount": "13.457096",
+     "whitelisted": true
+    }
+   ],
+   "pair": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
+   "pairLabel": "FISH/ZAP ペア",
+   "tokens": [
+    "FISH",
+    "ZAP"
+   ],
+   "whitelisted": true,
+   "summary": "LP追加：0.971159 FISH ＋ 13.457096 ZAP（FISH/ZAP ペア）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788487977,
+   "pairAgeSecs": 5090223,
+   "isSnipe": false,
+   "isInsider": false
+  },
+  {
    "id": "0x71fdef00cd5bef52426040fa8503a92bcf9bed106a700c884a9ebb158414aa04:5:lp-add:0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41",
    "ts": 1793567928,
    "block": 4222417,
@@ -74851,61 +74885,6 @@
    "actorContractNote": null,
    "pairCreatedTs": 1788365400,
    "pairAgeSecs": 4112001,
-   "isSnipe": false,
-   "isInsider": false,
-   "backfill": true
-  },
-  {
-   "id": "0xd3fe93b71796dfbe3ef74c26a16f3bdfdecbae4f20156a04597ab8342255381b:4:lp-add:0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "ts": 1792461095,
-   "block": 4017320,
-   "txHash": "0xd3fe93b71796dfbe3ef74c26a16f3bdfdecbae4f20156a04597ab8342255381b",
-   "logIndex": 4,
-   "type": "lp-add",
-   "actor": "0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "actorLabel": "panda42",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x53df50e949eb821ea1ad563b3db8d13abca5b07d",
-   "counterpartyLabel": "FISH/FOXXEY ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "panda42",
-    "Xenia"
-   ],
-   "amounts": [
-    {
-     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-     "symbol": "FISH",
-     "amountRaw": "982142791528837369",
-     "amount": "0.982142",
-     "whitelisted": true
-    },
-    {
-     "token": "0x68d5a28d3bf09a32d3b9c35714ab7a6166ae2a00",
-     "symbol": "FOXXEY",
-     "amountRaw": "71723792891768542006",
-     "amount": "71.723792",
-     "whitelisted": true
-    }
-   ],
-   "pair": "0x53df50e949eb821ea1ad563b3db8d13abca5b07d",
-   "pairLabel": "FISH/FOXXEY ペア",
-   "tokens": [
-    "FISH",
-    "FOXXEY"
-   ],
-   "whitelisted": true,
-   "summary": "LP追加：0.982142 FISH ＋ 71.723792 FOXXEY（FISH/FOXXEY ペア）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1788458062,
-   "pairAgeSecs": 4003033,
    "isSnipe": false,
    "isInsider": false,
    "backfill": true
