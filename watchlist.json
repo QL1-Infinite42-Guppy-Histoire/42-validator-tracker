@@ -9,19 +9,19 @@
  },
  "summary": {
   "validators": 23,
-  "directRelated": 50,
+  "directRelated": 51,
   "coreLabelOnly": 153,
   "coreFlaggedTotal": 154,
-  "watchedActors": 73,
-  "totalEntries": 263,
+  "watchedActors": 74,
+  "totalEntries": 264,
   "confirmedCounterpartyLinks": 212,
   "uniqueConfirmedCounterparties": 129,
-  "related": 50,
+  "related": 51,
   "core": 153,
   "estimated": 0,
-  "autoAdded": 0,
+  "autoAdded": 1,
   "autoAddedClosure": 0,
-  "autoAddedLive": 0,
+  "autoAddedLive": 1,
   "candidates": 37
  },
  "entries": [
@@ -3753,6 +3753,35 @@
    "validators": [],
    "relatedValidators": [],
    "coreNote": "プロトコル系コントラクトのため、v0.4.1 のコントラクト監査で関連から中核へ再分類"
+  },
+  {
+   "address": "0xb30ac743c8ea7338eca15ec0008a67b026bda33f",
+   "tier": "related",
+   "label": null,
+   "isCore": false,
+   "isPair": false,
+   "watch": true,
+   "validators": [],
+   "relatedValidators": [
+    "farmer"
+   ],
+   "autoAdded": true,
+   "addedVia": "live",
+   "addedAt": 1794061664,
+   "firstSeenTx": "0xdf16c525bae15b6f5a64a29b9ec01b7f0da6028ca4d82ab64e4cd3c7b86dbb50",
+   "via": {
+    "address": "0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41",
+    "validators": [
+     "farmer"
+    ]
+   },
+   "directStats": {
+    "farmer": {
+     "out": 2,
+     "in": 0
+    }
+   },
+   "promotedAt": 1794061674
   }
  ]
 }
