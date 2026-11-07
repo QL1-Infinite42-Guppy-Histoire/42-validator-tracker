@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-07T03:40:12.844Z",
+ "generatedAt": "2026-11-07T03:45:11.693Z",
  "status": {
-  "lastProcessedBlock": 4306597,
-  "latestBlockSeen": 4306597,
-  "lastProcessedCosmosBlock": 4306597,
-  "lastProcessedAt": "2026-11-07T03:40:12.719Z",
-  "totalEvents": 9425,
+  "lastProcessedBlock": 4306653,
+  "latestBlockSeen": 4306653,
+  "lastProcessedCosmosBlock": 4306653,
+  "lastProcessedAt": "2026-11-07T03:45:11.576Z",
+  "totalEvents": 9426,
   "watchSummary": {
    "validators": 23,
    "directRelated": 50,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-07T03:40:12.859Z"
+   "checkedAt": "2026-11-07T03:45:11.713Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.68209848,
-   "updatedAt": "2026-11-07T03:40:12.000Z",
+   "updatedAt": "2026-11-07T03:45:11.000Z",
    "change24hPct": -4.31
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4306399,
+    "toBlock": 4306633,
     "fromTs": 1770178474,
-    "toTs": 1794021731
+    "toTs": 1794022996
    },
    "totals": {
     "delegate": {
@@ -879,7 +879,7 @@
    "isCore": false,
    "relatedCount": 6,
    "selfActivity": 233,
-   "relatedActivity": 3481,
+   "relatedActivity": 3482,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -918,6 +918,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x628ed32d7818acf4c554ab1c0fea42f77cfee76df44d465124935a9c17f26876:tx:reward-claim-fish:0x5af775f3bec809b893de59e2f06ef995d280111a",
+   "ts": 1794022996,
+   "block": 4306633,
+   "txHash": "0x628ed32d7818acf4c554ab1c0fea42f77cfee76df44d465124935a9c17f26876",
+   "logIndex": null,
+   "type": "reward-claim-fish",
+   "actor": "0x5af775f3bec809b893de59e2f06ef995d280111a",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "method": "0x5c74910f",
+   "actionLabel": "報酬請求（FISH配布）",
+   "destLabel": "FISH報酬コントラクト",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "報酬請求（FISH配布）：3.157258 FISH を受け取り",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xaf4e523e3f90c052b32619fdad4c83b0728739fe8daa867899929e562df13d20:0:transfer:0xc032b9c05386a81b0221a575db9cf666ebc30547",
    "ts": 1794021731,
@@ -22590,48 +22624,6 @@
    "pairCreatedTs": 1789554438,
    "pairAgeSecs": 4012664,
    "isSnipe": false,
-   "isInsider": false
-  },
-  {
-   "id": "0x0143ab79fa7f736938e694e062783a5471cab42bd54dc6d267a046349495b1b2:0:transfer:0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "ts": 1793537291,
-   "block": 4216745,
-   "txHash": "0x0143ab79fa7f736938e694e062783a5471cab42bd54dc6d267a046349495b1b2",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "actorLabel": "panda42",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "counterpartyLabel": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "panda42",
-    "Xenia"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
-    "symbol": "NUTRI-V2",
-    "amountRaw": "1733330532723305386",
-    "amount": "1.733330",
-    "whitelisted": false
-   },
-   "from": "0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "to": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "tokens": [
-    "NUTRI-V2"
-   ],
-   "whitelisted": false,
-   "summary": "1.733330 NUTRI-V2 を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
    "isInsider": false
   },
   {
