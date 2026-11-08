@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T03:30:00.384Z",
+ "generatedAt": "2026-11-08T03:35:13.446Z",
  "status": {
-  "lastProcessedBlock": 4322479,
-  "latestBlockSeen": 4322479,
-  "lastProcessedCosmosBlock": 4322479,
-  "lastProcessedAt": "2026-11-08T03:30:00.236Z",
-  "totalEvents": 9499,
+  "lastProcessedBlock": 4322537,
+  "latestBlockSeen": 4322537,
+  "lastProcessedCosmosBlock": 4322537,
+  "lastProcessedAt": "2026-11-08T03:35:13.292Z",
+  "totalEvents": 9505,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T03:30:00.384Z"
+   "checkedAt": "2026-11-08T03:35:13.473Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.70373016,
-   "updatedAt": "2026-11-08T03:30:00.000Z",
+   "updatedAt": "2026-11-08T03:35:13.000Z",
    "change24hPct": 3.17
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4322478,
+    "toBlock": 4322501,
     "fromTs": 1770178474,
-    "toTs": 1794108584
+    "toTs": 1794108708
    },
    "totals": {
     "delegate": {
@@ -657,7 +657,7 @@
    "bech32": "infinite1zpmuw7672m82n98r7wz72rul7nazudg5atva9a",
    "isCore": false,
    "relatedCount": 0,
-   "selfActivity": 184,
+   "selfActivity": 190,
    "relatedActivity": 0,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -906,6 +906,234 @@
   }
  ],
  "events": [
+  {
+   "id": "0x04d8a4bf11f01ca6d8cafc320152c9ef23341b696e101d4e2aeb3b7358bf7cfd:0:transfer:0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "ts": 1794108708,
+   "block": 4322501,
+   "txHash": "0x04d8a4bf11f01ca6d8cafc320152c9ef23341b696e101d4e2aeb3b7358bf7cfd",
+   "logIndex": 0,
+   "type": "transfer",
+   "actor": "0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "actorLabel": "Metal Raptor",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "counterpartyLabel": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Metal Raptor",
+    "Xenia"
+   ],
+   "direction": "out",
+   "amount": {
+    "token": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+    "symbol": "NUTRI-V2",
+    "amountRaw": "4070059416649212349",
+    "amount": "4.070059",
+    "whitelisted": false
+   },
+   "from": "0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "to": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
+   "tokens": [
+    "NUTRI-V2"
+   ],
+   "whitelisted": false,
+   "summary": "4.070059 NUTRI-V2 を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x219869f9ccd4e463756c3bf25b95e808839b04791c5c0813aaf2f5c565c01b6a:tx:approve:0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "ts": 1794108702,
+   "block": 4322500,
+   "txHash": "0x219869f9ccd4e463756c3bf25b95e808839b04791c5c0813aaf2f5c565c01b6a",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "actorLabel": "Metal Raptor",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Metal Raptor",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": "FISH/42 ペア",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "NUTRI-V2の使用許可（approve）：コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト） に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x3ba3121efaf1ec38be05c9b893e1110e8b38b0a34617d02b9f3fa2cab1e88827:6:lp-add:0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "ts": 1794108692,
+   "block": 4322498,
+   "txHash": "0x3ba3121efaf1ec38be05c9b893e1110e8b38b0a34617d02b9f3fa2cab1e88827",
+   "logIndex": 6,
+   "type": "lp-add",
+   "actor": "0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "actorLabel": "Metal Raptor",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Metal Raptor",
+    "Xenia"
+   ],
+   "amounts": [
+    {
+     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+     "symbol": "FISH",
+     "amountRaw": "2924267617896982826",
+     "amount": "2.924267",
+     "whitelisted": true
+    },
+    {
+     "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+     "symbol": "42",
+     "amountRaw": "5731825344016902478",
+     "amount": "5.731825",
+     "whitelisted": true
+    }
+   ],
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "LP追加：2.924267 FISH ＋ 5.731825 42（FISH/42 ペア）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788365400,
+   "pairAgeSecs": 5743292,
+   "isSnipe": false,
+   "isInsider": false
+  },
+  {
+   "id": "0xa77efc79afa002b989f41c5225e6ae04a011ff3bbaebbf78dba90eafef58cdc6:tx:approve:0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "ts": 1794108686,
+   "block": 4322497,
+   "txHash": "0xa77efc79afa002b989f41c5225e6ae04a011ff3bbaebbf78dba90eafef58cdc6",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "actorLabel": "Metal Raptor",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Metal Raptor",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "42の使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x0dfd8d51be0a5798317f771d6d2efdeb4ac8c10d033fc058ca76059b1da7129f:tx:approve:0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "ts": 1794108681,
+   "block": 4322496,
+   "txHash": "0x0dfd8d51be0a5798317f771d6d2efdeb4ac8c10d033fc058ca76059b1da7129f",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "actorLabel": "Metal Raptor",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Metal Raptor",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x807642946cf0b35b2369acb8a17a71f41d5275be40bac8374e76c04a82288bdd:tx:reward-claim-fish:0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "ts": 1794108649,
+   "block": 4322490,
+   "txHash": "0x807642946cf0b35b2369acb8a17a71f41d5275be40bac8374e76c04a82288bdd",
+   "logIndex": null,
+   "type": "reward-claim-fish",
+   "actor": "0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
+   "actorLabel": "Metal Raptor",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Metal Raptor",
+    "Xenia"
+   ],
+   "method": "0x5c74910f",
+   "actionLabel": "報酬請求（FISH配布）",
+   "destLabel": "FISH報酬コントラクト",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "報酬請求（FISH配布）：2.923793 FISH を受け取り",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "cosmos:195ED3501C0093A03C04B6FC4397848DDA2EFCCCC989D075A44EDE1101696BC5:0:delegate:0x1077c77b5e56cea994e3f385e50f9ff4fa2e3514",
    "chain": "cosmos",
@@ -21516,113 +21744,6 @@
    "isInsider": false
   },
   {
-   "id": "0xc95c86ab4d58bc88cb2b77889628761b615722a4b22ab54218c600da80fba1be:3:swap-sell:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "ts": 1793685395,
-   "block": 4244131,
-   "txHash": "0xc95c86ab4d58bc88cb2b77889628761b615722a4b22ab54218c600da80fba1be",
-   "logIndex": 3,
-   "type": "swap-sell",
-   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
-   "counterpartyLabel": "FISH/42 ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "FoxxOne"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "137654842044973368",
-    "amount": "0.137654",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "262341759000229620",
-    "amount": "0.262341",
-    "whitelisted": true
-   },
-   "subjectSymbol": "FISH",
-   "price": 1.90579391,
-   "priceUnit": "42/FISH",
-   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
-   "pairLabel": "FISH/42 ペア",
-   "tokens": [
-    "FISH",
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "FISHを売り（受取 0.262341 42／価格 約1.90579391 42/FISH）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "FoxxOne"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xff85d21479254b739778080517c84167020a4209d119b1cabf189916cc5e08a9:4:swap-sell:0xce702e79ea9ae38fb80ee8ee8f586b2195140fcb",
-   "ts": 1793678156,
-   "block": 4242792,
-   "txHash": "0xff85d21479254b739778080517c84167020a4209d119b1cabf189916cc5e08a9",
-   "logIndex": 4,
-   "type": "swap-sell",
-   "actor": "0xce702e79ea9ae38fb80ee8ee8f586b2195140fcb",
-   "actorLabel": "light888",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0xfac6a97837fd3ef5876e18457eea52415296c613",
-   "counterpartyLabel": "USDT/42 ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "light888",
-    "Xenia"
-   ],
-   "sold": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "273745908041840296866",
-    "amount": "273.745908",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xc2684966e5c95b2bc636fb4a1f3da9ad23d94753",
-    "symbol": "USDT",
-    "amountRaw": "200920373631423124556",
-    "amount": "200.920373",
-    "whitelisted": true
-   },
-   "subjectSymbol": "42",
-   "price": 0.73396667,
-   "priceUnit": "USDT/42",
-   "pair": "0xfac6a97837fd3ef5876e18457eea52415296c613",
-   "pairLabel": "USDT/42 ペア",
-   "tokens": [
-    "42",
-    "USDT"
-   ],
-   "whitelisted": true,
-   "summary": "42を売り（受取 200.920373 USDT／価格 約0.73396667 USDT/42）",
-   "notableReasons": [
-    "バリデーター本人の売買"
-   ],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
    "id": "0x8c8f078d10c4d6fbccbbeb64105ec115090601ce6d104e6668743f3238efebe0:3:swap-sell:0xf75b159860f3de7f229e22d08eab844fd97baade",
    "ts": 1793678021,
    "block": 4242767,
@@ -21780,48 +21901,6 @@
    "actorShared": false,
    "actorContractNote": null,
    "isInsider": true
-  },
-  {
-   "id": "0x651afea513ef023af3b6ccc74a5c083710249237a116ed4aeffa2d79a2905659:0:transfer:0x855df84e2867899a51d8a517156e1c89c55ce446",
-   "ts": 1793676746,
-   "block": 4242531,
-   "txHash": "0x651afea513ef023af3b6ccc74a5c083710249237a116ed4aeffa2d79a2905659",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0x855df84e2867899a51d8a517156e1c89c55ce446",
-   "actorLabel": "HeraMoon",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "counterpartyLabel": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "HeraMoon",
-    "Xenia"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xc7a36397c1dd8c7bb9daa26c0639dfaa991d21a3",
-    "symbol": "NUTRI-V2",
-    "amountRaw": "1058792499365855927",
-    "amount": "1.058792",
-    "whitelisted": false
-   },
-   "from": "0x855df84e2867899a51d8a517156e1c89c55ce446",
-   "to": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "tokens": [
-    "NUTRI-V2"
-   ],
-   "whitelisted": false,
-   "summary": "1.058792 NUTRI-V2 を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
   },
   {
    "id": "0x5bf1a29e811c943c6b6e361f36afc03b4ef7bac2278d9641a55f86d556131e80:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
