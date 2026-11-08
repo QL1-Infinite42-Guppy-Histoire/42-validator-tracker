@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T15:00:16.636Z",
+ "generatedAt": "2026-11-08T15:05:13.108Z",
  "status": {
-  "lastProcessedBlock": 4330148,
-  "latestBlockSeen": 4330148,
-  "lastProcessedCosmosBlock": 4330148,
-  "lastProcessedAt": "2026-11-08T15:00:16.454Z",
-  "totalEvents": 10593,
+  "lastProcessedBlock": 4330203,
+  "latestBlockSeen": 4330203,
+  "lastProcessedCosmosBlock": 4330203,
+  "lastProcessedAt": "2026-11-08T15:05:12.994Z",
+  "totalEvents": 10594,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T15:00:16.667Z"
+   "checkedAt": "2026-11-08T15:05:13.129Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.70509259,
-   "updatedAt": "2026-11-08T15:00:16.000Z",
+   "updatedAt": "2026-11-08T15:05:13.000Z",
    "change24hPct": 3.89
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4330058,
+    "toBlock": 4330153,
     "fromTs": 1770178474,
-    "toTs": 1794149522
+    "toTs": 1794150035
    },
    "totals": {
     "delegate": {
@@ -819,7 +819,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 198,
+   "relatedActivity": 199,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -924,6 +924,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x77e20bf6677f2f08cf61daa51c6baada25e8ddbbca9ef2478f5ce949235eda0f:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1794150035,
+   "block": 4330153,
+   "txHash": "0x77e20bf6677f2f08cf61daa51c6baada25e8ddbbca9ef2478f5ce949235eda0f",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x62536ea813fba14b5eda4bfe5e0015092ef6ade980b3829c6ec2b675170d2150:0:nft-mint:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
    "ts": 1794149522,
@@ -22100,49 +22134,6 @@
    ],
    "whitelisted": true,
    "summary": "NFTミント：Guide #4786 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x11a14c649d74653229dae31649846c6ee92715ed3380ba830b4bf6b49789f038:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794129481,
-   "block": 4326348,
-   "txHash": "0x11a14c649d74653229dae31649846c6ee92715ed3380ba830b4bf6b49789f038",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "50000000000000000000",
-    "amount": "50",
-    "whitelisted": true
-   },
-   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "tokens": [
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "50 ZAP を送金",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
