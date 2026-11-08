@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T09:50:10.999Z",
+ "generatedAt": "2026-11-08T09:55:12.856Z",
  "status": {
-  "lastProcessedBlock": 4326704,
-  "latestBlockSeen": 4326704,
-  "lastProcessedCosmosBlock": 4326704,
-  "lastProcessedAt": "2026-11-08T09:50:10.901Z",
-  "totalEvents": 10237,
+  "lastProcessedBlock": 4326759,
+  "latestBlockSeen": 4326759,
+  "lastProcessedCosmosBlock": 4326759,
+  "lastProcessedAt": "2026-11-08T09:55:12.705Z",
+  "totalEvents": 10238,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T09:50:11.031Z"
+   "checkedAt": "2026-11-08T09:55:12.879Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.7077814,
-   "updatedAt": "2026-11-08T09:50:10.000Z",
+   "updatedAt": "2026-11-08T09:55:12.000Z",
    "change24hPct": 3.75
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4326704,
+    "toBlock": 4326707,
     "fromTs": 1770178474,
-    "toTs": 1794131403
+    "toTs": 1794131419
    },
    "totals": {
     "delegate": {
@@ -873,7 +873,7 @@
    "isCore": false,
    "relatedCount": 6,
    "selfActivity": 239,
-   "relatedActivity": 4094,
+   "relatedActivity": 4095,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -912,6 +912,47 @@
   }
  ],
  "events": [
+  {
+   "id": "0x5c5e4a52dc067451323b8477b27668f2c476d8d2432b18c3c5dd419bb9dc84dd:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "ts": 1794131419,
+   "block": 4326707,
+   "txHash": "0x5c5e4a52dc067451323b8477b27668f2c476d8d2432b18c3c5dd419bb9dc84dd",
+   "logIndex": 0,
+   "type": "nft-mint",
+   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+   "counterpartyLabel": "Guide/Fluke",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "in",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4860"
+   },
+   "from": "0x0000000000000000000000000000000000000000",
+   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFTミント：Guide #4860 を新規発行で受取",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xe2017461d6d8e0ad8d3b6c15b6db83a16465aac496c41fd85bc9be895511286c:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
    "ts": 1794131403,
@@ -21826,49 +21867,6 @@
    ],
    "whitelisted": true,
    "summary": "NFTミント：Guide #4630 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x17d33de04f2b7095ccf8ac49455f5ce2b9452a7295b8bdc224177c07c4e53a5e:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794123950,
-   "block": 4325324,
-   "txHash": "0x17d33de04f2b7095ccf8ac49455f5ce2b9452a7295b8bdc224177c07c4e53a5e",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "50000000000000000000",
-    "amount": "50",
-    "whitelisted": true
-   },
-   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "tokens": [
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "50 ZAP を送金",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
