@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T05:25:09.611Z",
+ "generatedAt": "2026-11-08T05:30:12.995Z",
  "status": {
-  "lastProcessedBlock": 4323759,
-  "latestBlockSeen": 4323759,
-  "lastProcessedCosmosBlock": 4323759,
-  "lastProcessedAt": "2026-11-08T05:25:09.515Z",
-  "totalEvents": 9534,
+  "lastProcessedBlock": 4323815,
+  "latestBlockSeen": 4323815,
+  "lastProcessedCosmosBlock": 4323815,
+  "lastProcessedAt": "2026-11-08T05:30:12.689Z",
+  "totalEvents": 9536,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,22 +32,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T05:25:09.633Z"
+   "checkedAt": "2026-11-08T05:30:13.011Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.70283537,
-   "updatedAt": "2026-11-08T05:25:09.000Z",
-   "change24hPct": 3.04
+   "updatedAt": "2026-11-08T05:30:12.000Z",
+   "change24hPct": 3.12
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4323733,
+    "toBlock": 4323774,
     "fromTs": 1770178474,
-    "toTs": 1794115358
+    "toTs": 1794115579
    },
    "totals": {
     "delegate": {
@@ -694,7 +694,7 @@
    "bech32": "infinite1v0x6cmhgw3450h5u6fvamtdt3yv0pu6punk42k",
    "isCore": false,
    "relatedCount": 3,
-   "selfActivity": 160,
+   "selfActivity": 162,
    "relatedActivity": 28,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -899,6 +899,127 @@
   }
  ],
  "events": [
+  {
+   "id": "0x8a340adda288103522bad2309783e7d434c0a478b813fec1925ce064d72e8493:3:swap-sell:0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "ts": 1794115579,
+   "block": 4323774,
+   "txHash": "0x8a340adda288103522bad2309783e7d434c0a478b813fec1925ce064d72e8493",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "actorLabel": "Xenia",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Xenia",
+    "Luke",
+    "Woman-In-Red-42",
+    "Metal Raptor",
+    "vethawk",
+    "X",
+    "PhoenixRing",
+    "HeraMoon",
+    "ayc",
+    "XenIt",
+    "Popo",
+    "panda42",
+    "FoxxOne",
+    "Sirius Cybernetics",
+    "light888",
+    "the_rider",
+    "CCUK",
+    "kimnmike",
+    "DON'T PANIC - DEX"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1135392301900839004",
+    "amount": "1.135392",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "2217788014470398682",
+    "amount": "2.217788",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.9533231,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 2.217788 42／価格 約1.9533231 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0xd2c8d49860c214dcdaaff8e90d328fa15589da09ef775cdab7f1ef0068dbd624:tx:approve:0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "ts": 1794115557,
+   "block": 4323770,
+   "txHash": "0xd2c8d49860c214dcdaaff8e90d328fa15589da09ef775cdab7f1ef0068dbd624",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "actorLabel": "Xenia",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Xenia",
+    "Luke",
+    "Woman-In-Red-42",
+    "Metal Raptor",
+    "vethawk",
+    "X",
+    "PhoenixRing",
+    "HeraMoon",
+    "ayc",
+    "XenIt",
+    "Popo",
+    "panda42",
+    "FoxxOne",
+    "Sirius Cybernetics",
+    "light888",
+    "the_rider",
+    "CCUK",
+    "kimnmike",
+    "DON'T PANIC - DEX"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x100b504147d405e04522a1e45fb25f4b48d3b8cc8541842a5a1908d955403139:tx:reward-claim-fish:0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
    "ts": 1794115358,
@@ -21444,49 +21565,6 @@
    "actorShared": false,
    "actorContractNote": null,
    "isInsider": true
-  },
-  {
-   "id": "0x7d0c6ec2bbf152d930567b76a7575e22ed2de6b42fc1c18bed8f9f5f78af7f4c:0:transfer:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
-   "ts": 1793751247,
-   "block": 4256325,
-   "txHash": "0x7d0c6ec2bbf152d930567b76a7575e22ed2de6b42fc1c18bed8f9f5f78af7f4c",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "counterpartyLabel": "コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "ayc"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
-    "symbol": "NUTRI-V2",
-    "amountRaw": "46435199818529040",
-    "amount": "0.046435",
-    "whitelisted": false
-   },
-   "from": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
-   "to": "0x71b138382598fbc4b890d2d20a14f9dedb1430e0",
-   "tokens": [
-    "NUTRI-V2"
-   ],
-   "whitelisted": false,
-   "summary": "0.046435 NUTRI-V2 を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "ayc"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
   },
   {
    "id": "0x5a95ffe01a9943987ed0bc92ceea6be0a8a5300c60ec95d7e3e7d00d0d27272d:3:swap-sell:0xf75b159860f3de7f229e22d08eab844fd97baade",
