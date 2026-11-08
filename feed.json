@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T05:20:10.850Z",
+ "generatedAt": "2026-11-08T05:24:11.443Z",
  "status": {
-  "lastProcessedBlock": 4323704,
-  "latestBlockSeen": 4323704,
-  "lastProcessedCosmosBlock": 4323704,
-  "lastProcessedAt": "2026-11-08T05:20:10.748Z",
-  "totalEvents": 9533,
+  "lastProcessedBlock": 4323748,
+  "latestBlockSeen": 4323748,
+  "lastProcessedCosmosBlock": 4323748,
+  "lastProcessedAt": "2026-11-08T05:24:11.169Z",
+  "totalEvents": 9534,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T05:20:10.871Z"
+   "checkedAt": "2026-11-08T05:24:11.712Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.70283537,
-   "updatedAt": "2026-11-08T05:20:10.000Z",
+   "updatedAt": "2026-11-08T05:24:11.000Z",
    "change24hPct": 3.04
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4323544,
+    "toBlock": 4323733,
     "fromTs": 1770178474,
-    "toTs": 1794114337
+    "toTs": 1794115358
    },
    "totals": {
     "delegate": {
@@ -694,7 +694,7 @@
    "bech32": "infinite1v0x6cmhgw3450h5u6fvamtdt3yv0pu6punk42k",
    "isCore": false,
    "relatedCount": 3,
-   "selfActivity": 159,
+   "selfActivity": 160,
    "relatedActivity": 28,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -899,6 +899,56 @@
   }
  ],
  "events": [
+  {
+   "id": "0x100b504147d405e04522a1e45fb25f4b48d3b8cc8541842a5a1908d955403139:tx:reward-claim-fish:0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "ts": 1794115358,
+   "block": 4323733,
+   "txHash": "0x100b504147d405e04522a1e45fb25f4b48d3b8cc8541842a5a1908d955403139",
+   "logIndex": null,
+   "type": "reward-claim-fish",
+   "actor": "0x63cdac6ee8746b47de9cd259ddadab8918f0f341",
+   "actorLabel": "Xenia",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Xenia",
+    "Luke",
+    "Woman-In-Red-42",
+    "Metal Raptor",
+    "vethawk",
+    "X",
+    "PhoenixRing",
+    "HeraMoon",
+    "ayc",
+    "XenIt",
+    "Popo",
+    "panda42",
+    "FoxxOne",
+    "Sirius Cybernetics",
+    "light888",
+    "the_rider",
+    "CCUK",
+    "kimnmike",
+    "DON'T PANIC - DEX"
+   ],
+   "method": "0x5c74910f",
+   "actionLabel": "報酬請求（FISH配布）",
+   "destLabel": "FISH報酬コントラクト",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "報酬請求（FISH配布）：1.133889 FISH を受け取り",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x71b3358d0a423ff620722e62a92215f5fbe009a597b4b8626ae90a0638932742:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794114337,
