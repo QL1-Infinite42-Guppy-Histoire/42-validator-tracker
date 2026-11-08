@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T11:45:12.226Z",
+ "generatedAt": "2026-11-08T11:50:13.229Z",
  "status": {
-  "lastProcessedBlock": 4327982,
-  "latestBlockSeen": 4327982,
-  "lastProcessedCosmosBlock": 4327982,
-  "lastProcessedAt": "2026-11-08T11:45:12.103Z",
-  "totalEvents": 10543,
+  "lastProcessedBlock": 4328038,
+  "latestBlockSeen": 4328038,
+  "lastProcessedCosmosBlock": 4328038,
+  "lastProcessedAt": "2026-11-08T11:50:13.027Z",
+  "totalEvents": 10545,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T11:45:12.543Z"
+   "checkedAt": "2026-11-08T11:50:13.436Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.7077814,
-   "updatedAt": "2026-11-08T11:45:12.000Z",
+   "updatedAt": "2026-11-08T11:50:13.000Z",
    "change24hPct": 3.75
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4327908,
+    "toBlock": 4328019,
     "fromTs": 1770178474,
-    "toTs": 1794137901
+    "toTs": 1794138500
    },
    "totals": {
     "delegate": {
@@ -535,10 +535,16 @@
       "buyAmt": 251.253245,
       "sellN": 0,
       "sellAmt": 0
+     },
+     "FOXXEY": {
+      "buyN": 0,
+      "buyAmt": 0,
+      "sellN": 1,
+      "sellAmt": 976.481631
      }
     },
     "buyTotal": 1,
-    "sellTotal": 0
+    "sellTotal": 1
    },
    "7d": {
     "tokens": {
@@ -571,10 +577,16 @@
       "buyAmt": 251.253245,
       "sellN": 0,
       "sellAmt": 0
+     },
+     "FOXXEY": {
+      "buyN": 0,
+      "buyAmt": 0,
+      "sellN": 1,
+      "sellAmt": 976.481631
      }
     },
     "buyTotal": 8,
-    "sellTotal": 3
+    "sellTotal": 4
    },
    "30d": {
     "tokens": {
@@ -647,12 +659,12 @@
      "FOXXEY": {
       "buyN": 1,
       "buyAmt": 479.869982,
-      "sellN": 0,
-      "sellAmt": 0
+      "sellN": 1,
+      "sellAmt": 976.481631
      }
     },
     "buyTotal": 183,
-    "sellTotal": 9
+    "sellTotal": 10
    }
   }
  },
@@ -873,7 +885,7 @@
    "isCore": false,
    "relatedCount": 6,
    "selfActivity": 239,
-   "relatedActivity": 4396,
+   "relatedActivity": 4398,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -912,6 +924,102 @@
   }
  ],
  "events": [
+  {
+   "id": "0x660aefd229bb06cb8ea02c07aeffd9138f9c6752c87ee2e7af1f0e48a9867487:3:swap-sell:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "ts": 1794138500,
+   "block": 4328019,
+   "txHash": "0x660aefd229bb06cb8ea02c07aeffd9138f9c6752c87ee2e7af1f0e48a9867487",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x5cfcb6e5999f06bdfaee2bd6adcc4d17afead3f5",
+   "counterpartyLabel": "FOXXEY/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "X"
+   ],
+   "sold": {
+    "token": "0x68d5a28d3bf09a32d3b9c35714ab7a6166ae2a00",
+    "symbol": "FOXXEY",
+    "amountRaw": "976481631259546000000",
+    "amount": "976.481631",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "25440627196979781753",
+    "amount": "25.440627",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FOXXEY",
+   "price": 0.02605336,
+   "priceUnit": "42/FOXXEY",
+   "pair": "0x5cfcb6e5999f06bdfaee2bd6adcc4d17afead3f5",
+   "pairLabel": "FOXXEY/42 ペア",
+   "tokens": [
+    "FOXXEY",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FOXXEYを売り（受取 25.440627 42／価格 約0.02605336 42/FOXXEY）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": true
+  },
+  {
+   "id": "0x07a9913ee0d4700e040d53a3ec1e16ff8f70f81245c623d0718297d5c93f699e:0:transfer:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "ts": 1794138305,
+   "block": 4327983,
+   "txHash": "0x07a9913ee0d4700e040d53a3ec1e16ff8f70f81245c623d0718297d5c93f699e",
+   "logIndex": 0,
+   "type": "transfer",
+   "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+   "counterpartyLabel": "FoxxStaking",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "in",
+   "amount": {
+    "token": "0x68d5a28d3bf09a32d3b9c35714ab7a6166ae2a00",
+    "symbol": "FOXXEY",
+    "amountRaw": "526889004757336000000",
+    "amount": "526.889004",
+    "whitelisted": true
+   },
+   "from": "0x9c2911d9ec8bf8fd4de37747228eee670c4ee492",
+   "to": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "tokens": [
+    "FOXXEY"
+   ],
+   "whitelisted": true,
+   "summary": "526.889004 FOXXEY を受取",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x461fc27a91d3e2bf7852506ff7a6d5333da497a72ae01cc6e672fe98434e009a:tx:starlight-register:0xf75b159860f3de7f229e22d08eab844fd97baade",
    "ts": 1794137901,
@@ -22064,90 +22172,6 @@
    ],
    "whitelisted": true,
    "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xaa71b4211aa2e59094c9390d6280eb516f35894563950a73beff0f3f2f958028:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794128812,
-   "block": 4326224,
-   "txHash": "0xaa71b4211aa2e59094c9390d6280eb516f35894563950a73beff0f3f2f958028",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "50000000000000000000",
-    "amount": "50",
-    "whitelisted": true
-   },
-   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "tokens": [
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xe54798ae1b0871833018859fe567ce52eb502b11f5a258258f9438a15e229e56:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794128801,
-   "block": 4326222,
-   "txHash": "0xe54798ae1b0871833018859fe567ce52eb502b11f5a258258f9438a15e229e56",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4769"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4769 を新規発行で受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
