@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T03:55:12.311Z",
+ "generatedAt": "2026-11-08T04:00:11.655Z",
  "status": {
-  "lastProcessedBlock": 4322759,
-  "latestBlockSeen": 4322759,
-  "lastProcessedCosmosBlock": 4322759,
-  "lastProcessedAt": "2026-11-08T03:55:12.156Z",
-  "totalEvents": 9529,
+  "lastProcessedBlock": 4322815,
+  "latestBlockSeen": 4322815,
+  "lastProcessedCosmosBlock": 4322815,
+  "lastProcessedAt": "2026-11-08T04:00:11.562Z",
+  "totalEvents": 9530,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,22 +32,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T03:55:12.334Z"
+   "checkedAt": "2026-11-08T04:00:11.683Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
-   "usdt": 0.70373016,
-   "updatedAt": "2026-11-08T03:55:12.000Z",
-   "change24hPct": 3.17
+   "usdt": 0.70283537,
+   "updatedAt": "2026-11-08T04:00:11.000Z",
+   "change24hPct": 3.04
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4322756,
+    "toBlock": 4322805,
     "fromTs": 1770178474,
-    "toTs": 1794110083
+    "toTs": 1794110347
    },
    "totals": {
     "delegate": {
@@ -772,7 +772,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 112,
-   "relatedActivity": 129,
+   "relatedActivity": 130,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -899,6 +899,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x64f30cd2f69e3529c3a5a2822b8c0c47f9330eef997b3139e60f8f7e9948577c:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1794110347,
+   "block": 4322805,
+   "txHash": "0x64f30cd2f69e3529c3a5a2822b8c0c47f9330eef997b3139e60f8f7e9948577c",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x3c353a5b4ba3680fb6b842af3871f68cde966572f2e0e1887019dcd5859b1c5d:0:transfer:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
    "ts": 1794110083,
@@ -21515,40 +21549,6 @@
    "actorShared": false,
    "actorContractNote": null,
    "isInsider": true
-  },
-  {
-   "id": "0x5420f7d25e19ff63aeaaa6bade51f1fcf7ce046360d2117765b44faa2468be0d:tx:reward-claim-fish:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
-   "ts": 1793751117,
-   "block": 4256301,
-   "txHash": "0x5420f7d25e19ff63aeaaa6bade51f1fcf7ce046360d2117765b44faa2468be0d",
-   "logIndex": null,
-   "type": "reward-claim-fish",
-   "actor": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "ayc"
-   ],
-   "method": "0x5c74910f",
-   "actionLabel": "報酬請求（FISH配布）",
-   "destLabel": "FISH報酬コントラクト",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "報酬請求（FISH配布）：0.000149 FISH を受け取り",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "ayc"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
   },
   {
    "id": "0xc5100f551e306911f6082f7a2b7299500bf49291ce995de09c0171036afe1fae:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
