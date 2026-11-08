@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T07:28:27.471Z",
+ "generatedAt": "2026-11-08T07:30:10.695Z",
  "status": {
-  "lastProcessedBlock": 4325129,
-  "latestBlockSeen": 4325129,
-  "lastProcessedCosmosBlock": 4325129,
-  "lastProcessedAt": "2026-11-08T07:28:27.388Z",
-  "totalEvents": 9723,
+  "lastProcessedBlock": 4325148,
+  "latestBlockSeen": 4325148,
+  "lastProcessedCosmosBlock": 4325148,
+  "lastProcessedAt": "2026-11-08T07:30:10.610Z",
+  "totalEvents": 9728,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T07:28:27.496Z"
+   "checkedAt": "2026-11-08T07:30:10.714Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.70876614,
-   "updatedAt": "2026-11-08T07:28:27.000Z",
+   "updatedAt": "2026-11-08T07:30:10.000Z",
    "change24hPct": 3.89
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4325127,
+    "toBlock": 4325147,
     "fromTs": 1770178474,
-    "toTs": 1794122886
+    "toTs": 1794122994
    },
    "totals": {
     "delegate": {
@@ -873,7 +873,7 @@
    "isCore": false,
    "relatedCount": 6,
    "selfActivity": 239,
-   "relatedActivity": 3622,
+   "relatedActivity": 3623,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -884,7 +884,7 @@
    "isCore": false,
    "relatedCount": 2,
    "selfActivity": 73,
-   "relatedActivity": 425,
+   "relatedActivity": 429,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -912,6 +912,215 @@
   }
  ],
  "events": [
+  {
+   "id": "0xfd28dfbda241588cbaae31df6f0eb8ad4c774b87919052fc89049f91ffec1715:0:nft-mint:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "ts": 1794122994,
+   "block": 4325147,
+   "txHash": "0xfd28dfbda241588cbaae31df6f0eb8ad4c774b87919052fc89049f91ffec1715",
+   "logIndex": 0,
+   "type": "nft-mint",
+   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+   "counterpartyLabel": "Guide/Fluke",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "FoxxOne"
+   ],
+   "direction": "in",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4619"
+   },
+   "from": "0x0000000000000000000000000000000000000000",
+   "to": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFTミント：Guide #4619 を新規発行で受取",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "FoxxOne"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x117eda6c205d01f5e9200533fbc6329eb5f221be2415edd8c1f7a4dbcb5b03ae:0:transfer:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "ts": 1794122945,
+   "block": 4325138,
+   "txHash": "0x117eda6c205d01f5e9200533fbc6329eb5f221be2415edd8c1f7a4dbcb5b03ae",
+   "logIndex": 0,
+   "type": "transfer",
+   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+   "counterpartyLabel": "Guide/Fluke",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "FoxxOne"
+   ],
+   "direction": "out",
+   "amount": {
+    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
+    "symbol": "ZAP",
+    "amountRaw": "50000000000000000000",
+    "amount": "50",
+    "whitelisted": true
+   },
+   "from": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+   "tokens": [
+    "ZAP"
+   ],
+   "whitelisted": true,
+   "summary": "50 ZAP を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "FoxxOne"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x0118265d9abc389feb551100af068a588c2d2185c626a511f06243ca6f38fa26:3:nft-mint:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "ts": 1794122929,
+   "block": 4325135,
+   "txHash": "0x0118265d9abc389feb551100af068a588c2d2185c626a511f06243ca6f38fa26",
+   "logIndex": 3,
+   "type": "nft-mint",
+   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+   "counterpartyLabel": "Guide/Fluke",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "FoxxOne"
+   ],
+   "direction": "in",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4616"
+   },
+   "from": "0x0000000000000000000000000000000000000000",
+   "to": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFTミント：Guide #4616 を新規発行で受取",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "FoxxOne"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0xc186463c97fa306193bb70a54cd78ab4f0c2f36e54c3face9a1e04617cc92475:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "ts": 1794122929,
+   "block": 4325135,
+   "txHash": "0xc186463c97fa306193bb70a54cd78ab4f0c2f36e54c3face9a1e04617cc92475",
+   "logIndex": 0,
+   "type": "transfer",
+   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+   "counterpartyLabel": "Guide/Fluke",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "out",
+   "amount": {
+    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
+    "symbol": "ZAP",
+    "amountRaw": "50000000000000000000",
+    "amount": "50",
+    "whitelisted": true
+   },
+   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+   "tokens": [
+    "ZAP"
+   ],
+   "whitelisted": true,
+   "summary": "50 ZAP を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x97adc5de2cc79ab8a063be5e877a5331708110334948869a036cff3e966759e3:0:nft-mint:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "ts": 1794122902,
+   "block": 4325130,
+   "txHash": "0x97adc5de2cc79ab8a063be5e877a5331708110334948869a036cff3e966759e3",
+   "logIndex": 0,
+   "type": "nft-mint",
+   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+   "counterpartyLabel": "Guide/Fluke",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "FoxxOne"
+   ],
+   "direction": "in",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4615"
+   },
+   "from": "0x0000000000000000000000000000000000000000",
+   "to": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFTミント：Guide #4615 を新規発行で受取",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "FoxxOne"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x0f9306536b43b1af147fe3ec800c603b402cbe51271f732f2764a524df24f511:0:transfer:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
    "ts": 1794122886,
@@ -21218,176 +21427,6 @@
    "tokens": [],
    "whitelisted": true,
    "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xf781185dda53f8d67d47c392ee207486b9ae362269689008402bdd2f0d9ca4fc:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "ts": 1793916333,
-   "block": 4286894,
-   "txHash": "0xf781185dda53f8d67d47c392ee207486b9ae362269689008402bdd2f0d9ca4fc",
-   "logIndex": null,
-   "type": "token-burn",
-   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x87157886",
-   "actionLabel": "FISHバーン（運営）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xcdb4c408c845d8f1e6255e3e0b7a9c83cf81b48863a684e431ad1d48765f30d8:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "ts": 1793916035,
-   "block": 4286839,
-   "txHash": "0xcdb4c408c845d8f1e6255e3e0b7a9c83cf81b48863a684e431ad1d48765f30d8",
-   "logIndex": null,
-   "type": "unclassified",
-   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
-   "counterpartyLabel": "コントラクト（未分類）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x98869d1f",
-   "actionLabel": null,
-   "destLabel": "コントラクト（未分類）",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x815e6f73b6c91de369cd093e393b5219e1dcac7c447788cd06777ff5ad2d3638:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "ts": 1793912735,
-   "block": 4286228,
-   "txHash": "0x815e6f73b6c91de369cd093e393b5219e1dcac7c447788cd06777ff5ad2d3638",
-   "logIndex": null,
-   "type": "token-burn",
-   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x87157886",
-   "actionLabel": "FISHバーン（運営）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xe07c00568cbc293ce85854d0160893dd6413b0149266e1c58e872414c0eccf61:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "ts": 1793912439,
-   "block": 4286173,
-   "txHash": "0xe07c00568cbc293ce85854d0160893dd6413b0149266e1c58e872414c0eccf61",
-   "logIndex": null,
-   "type": "unclassified",
-   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
-   "counterpartyLabel": "コントラクト（未分類）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x98869d1f",
-   "actionLabel": null,
-   "destLabel": "コントラクト（未分類）",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xe107b800f9f3ac150dce952b10f9659ee6d46fc0bee68414bf68b6d028f21889:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "ts": 1793909133,
-   "block": 4285561,
-   "txHash": "0xe107b800f9f3ac150dce952b10f9659ee6d46fc0bee68414bf68b6d028f21889",
-   "logIndex": null,
-   "type": "token-burn",
-   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x87157886",
-   "actionLabel": "FISHバーン（運営）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
