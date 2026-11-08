@@ -1,27 +1,27 @@
 {
- "generatedAt": "2026-11-08T15:40:15.571Z",
+ "generatedAt": "2026-11-08T15:45:14.723Z",
  "status": {
-  "lastProcessedBlock": 4330592,
-  "latestBlockSeen": 4330592,
-  "lastProcessedCosmosBlock": 4330592,
-  "lastProcessedAt": "2026-11-08T15:40:15.338Z",
-  "totalEvents": 10595,
+  "lastProcessedBlock": 4330647,
+  "latestBlockSeen": 4330647,
+  "lastProcessedCosmosBlock": 4330647,
+  "lastProcessedAt": "2026-11-08T15:45:14.461Z",
+  "totalEvents": 10598,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
    "coreLabelOnly": 153,
    "coreFlaggedTotal": 154,
    "watchedActors": 74,
-   "totalEntries": 265,
+   "totalEntries": 266,
    "confirmedCounterpartyLinks": 212,
    "uniqueConfirmedCounterparties": 129,
    "related": 51,
    "core": 153,
    "estimated": 0,
-   "autoAdded": 2,
+   "autoAdded": 3,
    "autoAddedClosure": 0,
    "autoAddedLive": 1,
-   "candidates": 38
+   "candidates": 39
   },
   "notableRule": "注目ルール：①バリデーター本人の売買 ②1,000 [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）",
   "snipeRule": "スナイプの定義：ペアが作られてから3時間以内に、バリデーター本人または直接関連ウォレットが、そのペアで買った（買い）動き。LP追加はスナイプに含みません",
@@ -32,22 +32,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T15:40:15.834Z"
+   "checkedAt": "2026-11-08T15:45:14.745Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
-   "usdt": 0.70509259,
-   "updatedAt": "2026-11-08T15:40:15.000Z",
-   "change24hPct": 3.89
+   "usdt": 0.66368678,
+   "updatedAt": "2026-11-08T15:45:14.000Z",
+   "change24hPct": -2.21
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4330208,
+    "toBlock": 4330601,
     "fromTs": 1770178474,
-    "toTs": 1794150333
+    "toTs": 1794152455
    },
    "totals": {
     "delegate": {
@@ -63,12 +63,12 @@
      "amount42": "3,499.975"
     },
     "reward": {
-     "count": 419,
-     "amount42": "384,471.964600"
+     "count": 420,
+     "amount42": "385,038.888054"
     },
     "commission": {
-     "count": 306,
-     "amount42": "44,354.065220"
+     "count": 307,
+     "amount42": "44,417.173127"
     }
    },
    "perValidator": [
@@ -172,6 +172,15 @@
      "undelegateOut42": "0"
     },
     {
+     "moniker": "the_rider",
+     "commissionCount": 9,
+     "commission42": "1,629.348653",
+     "delegateInCount": 7,
+     "delegateIn42": "12,833",
+     "undelegateOutCount": 0,
+     "undelegateOut42": "0"
+    },
+    {
      "moniker": "DRIVESTATS",
      "commissionCount": 10,
      "commission42": "1,581.574654",
@@ -179,15 +188,6 @@
      "delegateIn42": "8,659",
      "undelegateOutCount": 1,
      "undelegateOut42": "1"
-    },
-    {
-     "moniker": "the_rider",
-     "commissionCount": 8,
-     "commission42": "1,566.240746",
-     "delegateInCount": 7,
-     "delegateIn42": "12,833",
-     "undelegateOutCount": 0,
-     "undelegateOut42": "0"
     },
     {
      "moniker": "Popo",
@@ -873,7 +873,7 @@
    "bech32": "infinite1m83mwjfpfnulgzsrwunskuaunahu2wzvgrga3f",
    "isCore": false,
    "relatedCount": 1,
-   "selfActivity": 88,
+   "selfActivity": 91,
    "relatedActivity": 3,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -924,6 +924,132 @@
   }
  ],
  "events": [
+  {
+   "id": "cosmos:9A0059AEE48C10CC2D1EB269EACDFA7D3DB482C8E13B632EC1F20AB3775EB916:0:transfer:0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "chain": "cosmos",
+   "ts": 1794152455,
+   "block": 4330601,
+   "txHash": "9A0059AEE48C10CC2D1EB269EACDFA7D3DB482C8E13B632EC1F20AB3775EB916",
+   "logIndex": null,
+   "type": "transfer",
+   "actor": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "actorLabel": "the_rider",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0xc428fa07416527335752bc9fcb87450a0e3594e3",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "the_rider",
+    "Xenia"
+   ],
+   "direction": "out",
+   "amount": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "denom": "drop",
+    "symbol": "42",
+    "amountRaw": "601000000000000000000",
+    "amount": "601",
+    "whitelisted": true
+   },
+   "from": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "to": "0xc428fa07416527335752bc9fcb87450a0e3594e3",
+   "tokens": [
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "601 [42] を送金",
+   "notableReasons": [],
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false,
+   "isNewCounterparty": true
+  },
+  {
+   "id": "cosmos:128659AFDCFA9857D363CE3BB3F11D4E9D4B8D31ED0A282FD4BA513C6676FEB1:0:reward:0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "chain": "cosmos",
+   "ts": 1794152412,
+   "block": 4330593,
+   "txHash": "128659AFDCFA9857D363CE3BB3F11D4E9D4B8D31ED0A282FD4BA513C6676FEB1",
+   "logIndex": null,
+   "type": "reward",
+   "actor": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "actorLabel": "the_rider",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "counterpartyLabel": "the_rider",
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "the_rider",
+    "Xenia"
+   ],
+   "amount": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "denom": "drop",
+    "symbol": "42",
+    "amountRaw": "566923454874985795830",
+    "amount": "566.923454",
+    "whitelisted": true
+   },
+   "tokens": [
+    "42"
+   ],
+   "whitelisted": true,
+   "actionLabel": "報酬請求（委任報酬）",
+   "summary": "報酬請求（委任報酬）：the_rider 分 566.923454 [42]",
+   "notableReasons": [],
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "cosmos:128659AFDCFA9857D363CE3BB3F11D4E9D4B8D31ED0A282FD4BA513C6676FEB1:1:commission:0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "chain": "cosmos",
+   "ts": 1794152412,
+   "block": 4330593,
+   "txHash": "128659AFDCFA9857D363CE3BB3F11D4E9D4B8D31ED0A282FD4BA513C6676FEB1",
+   "logIndex": null,
+   "type": "commission",
+   "actor": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "actorLabel": "the_rider",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": null,
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "the_rider",
+    "Xenia"
+   ],
+   "amount": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "denom": "drop",
+    "symbol": "42",
+    "amountRaw": "63107906648261362910",
+    "amount": "63.107906",
+    "whitelisted": true
+   },
+   "tokens": [
+    "42"
+   ],
+   "whitelisted": true,
+   "actionLabel": "バリデーター報酬請求（コミッション）",
+   "summary": "バリデーター報酬請求（コミッション）：63.107906 [42]",
+   "notableReasons": [],
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x4aa9b565976860e3e08bb8f80a05e142ecbb77071eae00e4a9f3201bea0ac9ae:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794150333,
@@ -22002,131 +22128,6 @@
    ],
    "whitelisted": true,
    "summary": "NFTミント：Guide #4798 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x2be141171163907ca007357fedf7a31e2ee22dbdee1a42f7a31a2e1552c5c127:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794129530,
-   "block": 4326357,
-   "txHash": "0x2be141171163907ca007357fedf7a31e2ee22dbdee1a42f7a31a2e1552c5c127",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4796"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4796 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xbcefe8badbe6a3c171d9612120f3bf3d5515a7793e8c7901db02f24c22ce7e50:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794129514,
-   "block": 4326354,
-   "txHash": "0xbcefe8badbe6a3c171d9612120f3bf3d5515a7793e8c7901db02f24c22ce7e50",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4797"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4797 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x6650817399972c052b819179d2901fa65dbbacb1b31bd4d015b3e90da90a7bf0:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794129503,
-   "block": 4326352,
-   "txHash": "0x6650817399972c052b819179d2901fa65dbbacb1b31bd4d015b3e90da90a7bf0",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "50000000000000000000",
-    "amount": "50",
-    "whitelisted": true
-   },
-   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "tokens": [
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "50 ZAP を送金",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
