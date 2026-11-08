@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T16:26:42.619Z",
+ "generatedAt": "2026-11-08T16:30:11.895Z",
  "status": {
-  "lastProcessedBlock": 4331107,
-  "latestBlockSeen": 4331107,
-  "lastProcessedCosmosBlock": 4331107,
-  "lastProcessedAt": "2026-11-08T16:26:42.468Z",
-  "totalEvents": 10605,
+  "lastProcessedBlock": 4331146,
+  "latestBlockSeen": 4331146,
+  "lastProcessedCosmosBlock": 4331146,
+  "lastProcessedAt": "2026-11-08T16:30:11.754Z",
+  "totalEvents": 10611,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T16:26:42.640Z"
+   "checkedAt": "2026-11-08T16:30:11.921Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.66368678,
-   "updatedAt": "2026-11-08T16:26:42.000Z",
+   "updatedAt": "2026-11-08T16:30:11.000Z",
    "change24hPct": -2.21
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4331105,
+    "toBlock": 4331129,
     "fromTs": 1770178474,
-    "toTs": 1794155181
+    "toTs": 1794155310
    },
    "totals": {
     "delegate": {
@@ -885,7 +885,7 @@
    "isCore": false,
    "relatedCount": 6,
    "selfActivity": 239,
-   "relatedActivity": 4413,
+   "relatedActivity": 4419,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -924,6 +924,252 @@
   }
  ],
  "events": [
+  {
+   "id": "0xfbb6d9efb95f24c72ddc6640ac0a2b7192f42ca24c83637631eb6288628592cd:0:nft-transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "ts": 1794155310,
+   "block": 4331129,
+   "txHash": "0xfbb6d9efb95f24c72ddc6640ac0a2b7192f42ca24c83637631eb6288628592cd",
+   "logIndex": 0,
+   "type": "nft-transfer",
+   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "out",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4742"
+   },
+   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "to": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFT送金：Guide #4742 を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0xd883b79cb7b9a7346efb99f4cfa878e07b1391c7b366172eeaa013fcb13f45c2:0:nft-transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "ts": 1794155294,
+   "block": 4331126,
+   "txHash": "0xd883b79cb7b9a7346efb99f4cfa878e07b1391c7b366172eeaa013fcb13f45c2",
+   "logIndex": 0,
+   "type": "nft-transfer",
+   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "out",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4782"
+   },
+   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "to": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFT送金：Guide #4782 を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x9967d73f3a0c5110bba64b08d17b1ad3e5d4db358ff8afc4ec0099f76b9f9c7c:0:nft-transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "ts": 1794155284,
+   "block": 4331124,
+   "txHash": "0x9967d73f3a0c5110bba64b08d17b1ad3e5d4db358ff8afc4ec0099f76b9f9c7c",
+   "logIndex": 0,
+   "type": "nft-transfer",
+   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "out",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4817"
+   },
+   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "to": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFT送金：Guide #4817 を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x39e18d0eb2a9a3e1b9a4614662206514d9974b95505a789a248edbfa21ff4d39:0:nft-transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "ts": 1794155251,
+   "block": 4331118,
+   "txHash": "0x39e18d0eb2a9a3e1b9a4614662206514d9974b95505a789a248edbfa21ff4d39",
+   "logIndex": 0,
+   "type": "nft-transfer",
+   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "out",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4856"
+   },
+   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "to": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFT送金：Guide #4856 を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0xd5736f26e1feadc106662a585c7590493cc6094f2174a609674d7d9fafa4e285:0:nft-transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "ts": 1794155213,
+   "block": 4331111,
+   "txHash": "0xd5736f26e1feadc106662a585c7590493cc6094f2174a609674d7d9fafa4e285",
+   "logIndex": 0,
+   "type": "nft-transfer",
+   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "out",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4717"
+   },
+   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "to": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFT送金：Guide #4717 を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0xe1a2cfb61cd5c455684700438b8f7de8ad58d2ed39e730de368800d1534a92e7:0:nft-transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "ts": 1794155197,
+   "block": 4331108,
+   "txHash": "0xe1a2cfb61cd5c455684700438b8f7de8ad58d2ed39e730de368800d1534a92e7",
+   "logIndex": 0,
+   "type": "nft-transfer",
+   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "direction": "out",
+   "nft": {
+    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
+    "collectionName": "Guide",
+    "tokenId": "4687"
+   },
+   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
+   "to": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
+   "tokens": [
+    "GUIDE"
+   ],
+   "whitelisted": true,
+   "summary": "NFT送金：Guide #4687 を送金",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x064c16ed89b8f7c0dcca56f2a2faa2b6b57c9c099cf7afeceed295bdc6fcb33d:0:nft-transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
    "ts": 1794155181,
@@ -21993,131 +22239,6 @@
    "actorShared": false,
    "actorContractNote": null,
    "isInsider": true
-  },
-  {
-   "id": "0x625e878bd422a2e6321f77ad4bd41b5675731a943438d5d2615e9fd31a7df294:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794129659,
-   "block": 4326381,
-   "txHash": "0x625e878bd422a2e6321f77ad4bd41b5675731a943438d5d2615e9fd31a7df294",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "50000000000000000000",
-    "amount": "50",
-    "whitelisted": true
-   },
-   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "tokens": [
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xd6fb4941c3882ef4d55d9a27dc0189208aa08fdcf72ea2d74ad5e9f4223831c5:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794129643,
-   "block": 4326378,
-   "txHash": "0xd6fb4941c3882ef4d55d9a27dc0189208aa08fdcf72ea2d74ad5e9f4223831c5",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4801"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4801 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x9d1786cf1f4b58df2508f931e04dcc7939507bec6cf86b12309d1b8cee095528:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794129632,
-   "block": 4326376,
-   "txHash": "0x9d1786cf1f4b58df2508f931e04dcc7939507bec6cf86b12309d1b8cee095528",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4800"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4800 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
   },
   {
    "id": "0xdda9f22446bac35fa59e4b2bed2dc8b9971db941e91047a4c9b2b2b25189aa12:4:swap-buy:0xf75b159860f3de7f229e22d08eab844fd97baade",
