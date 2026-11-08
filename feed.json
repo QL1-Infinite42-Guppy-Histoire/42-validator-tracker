@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-08T21:05:12.457Z",
+ "generatedAt": "2026-11-08T21:10:12.186Z",
  "status": {
-  "lastProcessedBlock": 4334198,
-  "latestBlockSeen": 4334198,
-  "lastProcessedCosmosBlock": 4334198,
-  "lastProcessedAt": "2026-11-08T21:05:12.314Z",
-  "totalEvents": 10647,
+  "lastProcessedBlock": 4334254,
+  "latestBlockSeen": 4334254,
+  "lastProcessedCosmosBlock": 4334254,
+  "lastProcessedAt": "2026-11-08T21:10:12.077Z",
+  "totalEvents": 10650,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-08T21:05:12.474Z"
+   "checkedAt": "2026-11-08T21:10:12.203Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.66368678,
-   "updatedAt": "2026-11-08T21:05:12.000Z",
+   "updatedAt": "2026-11-08T21:10:12.000Z",
    "change24hPct": -2.21
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4334149,
+    "toBlock": 4334252,
     "fromTs": 1770178474,
-    "toTs": 1794171635
+    "toTs": 1794172192
    },
    "totals": {
     "delegate": {
@@ -748,7 +748,7 @@
    "isCore": false,
    "relatedCount": 2,
    "selfActivity": 76,
-   "relatedActivity": 164,
+   "relatedActivity": 166,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -825,7 +825,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 211,
+   "relatedActivity": 212,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -930,6 +930,127 @@
   }
  ],
  "events": [
+  {
+   "id": "0x9367602f562dbd862c0465aab0691ae1c545a5a32c21fcc7480def9a0cba629f:3:swap-sell:0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
+   "ts": 1794172192,
+   "block": 4334252,
+   "txHash": "0x9367602f562dbd862c0465aab0691ae1c545a5a32c21fcc7480def9a0cba629f",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "CCUK"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1951648857180676306",
+    "amount": "1.951648",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3880234261263866128",
+    "amount": "3.880234",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.98818258,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 3.880234 42／価格 約1.98818258 42/FISH）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "CCUK"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x2024c2bb75c8305f635b3f435351eb633646a53a696e39e5acb878729c88945d:tx:reward-claim-fish:0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
+   "ts": 1794172148,
+   "block": 4334244,
+   "txHash": "0x2024c2bb75c8305f635b3f435351eb633646a53a696e39e5acb878729c88945d",
+   "logIndex": null,
+   "type": "reward-claim-fish",
+   "actor": "0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "CCUK"
+   ],
+   "method": "0x5c74910f",
+   "actionLabel": "報酬請求（FISH配布）",
+   "destLabel": "FISH報酬コントラクト",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "報酬請求（FISH配布）：1.951648 FISH を受け取り",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "CCUK"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
+  {
+   "id": "0x13903480068c381749f280f22119c1fc743e0218c9b2964347869f13e36edf9f:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794171933,
+   "block": 4334204,
+   "txHash": "0x13903480068c381749f280f22119c1fc743e0218c9b2964347869f13e36edf9f",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x5664cf4dc8a38f98ea213b5c7ba7e26078c5bcf5612906a4e7cca3be362b333d:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794171635,
@@ -21926,129 +22047,6 @@
    ],
    "whitelisted": true,
    "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xfc48ac404a515c743c2f54bc80be1f30c98543f94d5c8a426c702989f7f8682d:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794130259,
-   "block": 4326492,
-   "txHash": "0xfc48ac404a515c743c2f54bc80be1f30c98543f94d5c8a426c702989f7f8682d",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4821"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4821 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x281f3b8f97edfe1a692c825b32acd0edd3318e19de0d5fabb723d9d0f993cc68:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794130248,
-   "block": 4326490,
-   "txHash": "0x281f3b8f97edfe1a692c825b32acd0edd3318e19de0d5fabb723d9d0f993cc68",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4807"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4807 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xf839f0eb20aa01ae105d293d940ee9e47d4a24c677ed67a6ae43ed2734eb55f5:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794130232,
-   "block": 4326487,
-   "txHash": "0xf839f0eb20aa01ae105d293d940ee9e47d4a24c677ed67a6ae43ed2734eb55f5",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4820"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4820 を新規発行で受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
