@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-09T00:10:13.752Z",
+ "generatedAt": "2026-11-09T00:15:12.342Z",
  "status": {
-  "lastProcessedBlock": 4336253,
-  "latestBlockSeen": 4336253,
-  "lastProcessedCosmosBlock": 4336253,
-  "lastProcessedAt": "2026-11-09T00:10:13.581Z",
-  "totalEvents": 10657,
+  "lastProcessedBlock": 4336308,
+  "latestBlockSeen": 4336308,
+  "lastProcessedCosmosBlock": 4336308,
+  "lastProcessedAt": "2026-11-09T00:15:12.214Z",
+  "totalEvents": 10658,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-09T00:10:13.772Z"
+   "checkedAt": "2026-11-09T00:15:12.364Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.66368678,
-   "updatedAt": "2026-11-09T00:10:13.000Z",
+   "updatedAt": "2026-11-09T00:15:12.000Z",
    "change24hPct": -2.21
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4336248,
+    "toBlock": 4336259,
     "fromTs": 1770178474,
-    "toTs": 1794182978
+    "toTs": 1794183037
    },
    "totals": {
     "delegate": {
@@ -609,8 +609,8 @@
       "sellAmt": 0
      },
      "QOM": {
-      "buyN": 62,
-      "buyAmt": 1097073402020.1703,
+      "buyN": 61,
+      "buyAmt": 1091955677074.14,
       "sellN": 2,
       "sellAmt": 373775013.987699
      },
@@ -669,7 +669,7 @@
       "sellAmt": 976.481631
      }
     },
-    "buyTotal": 187,
+    "buyTotal": 186,
     "sellTotal": 10
    }
   }
@@ -825,7 +825,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 218,
+   "relatedActivity": 219,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -930,6 +930,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xf20b2d5d2ae7d8d16166d99a988763743b1fb214cdaa00e0e0e44034870bee98:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794183037,
+   "block": 4336259,
+   "txHash": "0xf20b2d5d2ae7d8d16166d99a988763743b1fb214cdaa00e0e0e44034870bee98",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x155f4d37c5f585f1244acaaee7f59893b3328c2bcdff6f1a5da322215e3af998:3:swap-sell:0xce702e79ea9ae38fb80ee8ee8f586b2195140fcb",
    "ts": 1794182978,
@@ -21967,47 +22001,6 @@
    ],
    "whitelisted": true,
    "summary": "NFTミント：Guide #4825 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xbe47d81674a6d7e067e76ef0fbb5cc9d6a594b0bd0b951a35cfeb8e6b69f299f:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794130405,
-   "block": 4326519,
-   "txHash": "0xbe47d81674a6d7e067e76ef0fbb5cc9d6a594b0bd0b951a35cfeb8e6b69f299f",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4822"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4822 を新規発行で受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
