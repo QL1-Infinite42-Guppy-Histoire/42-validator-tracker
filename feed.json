@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-09T00:35:11.927Z",
+ "generatedAt": "2026-11-09T00:40:12.541Z",
  "status": {
-  "lastProcessedBlock": 4336530,
-  "latestBlockSeen": 4336530,
-  "lastProcessedCosmosBlock": 4336530,
-  "lastProcessedAt": "2026-11-09T00:35:11.823Z",
-  "totalEvents": 10664,
+  "lastProcessedBlock": 4336586,
+  "latestBlockSeen": 4336586,
+  "lastProcessedCosmosBlock": 4336586,
+  "lastProcessedAt": "2026-11-09T00:40:12.428Z",
+  "totalEvents": 10665,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-09T00:35:11.944Z"
+   "checkedAt": "2026-11-09T00:40:12.566Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.66368678,
-   "updatedAt": "2026-11-09T00:35:11.000Z",
+   "updatedAt": "2026-11-09T00:40:12.000Z",
    "change24hPct": -2.21
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4336435,
+    "toBlock": 4336586,
     "fromTs": 1770178474,
-    "toTs": 1794183989
+    "toTs": 1794184805
    },
    "totals": {
     "delegate": {
@@ -891,7 +891,7 @@
    "isCore": false,
    "relatedCount": 6,
    "selfActivity": 239,
-   "relatedActivity": 4438,
+   "relatedActivity": 4439,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -930,6 +930,59 @@
   }
  ],
  "events": [
+  {
+   "id": "0x7ac6010453c8e0da664dd7caba1ff3ebff0fcd2ee5a06a4868714dd9f1455899:3:swap-sell:0x5af775f3bec809b893de59e2f06ef995d280111a",
+   "ts": 1794184805,
+   "block": 4336586,
+   "txHash": "0x7ac6010453c8e0da664dd7caba1ff3ebff0fcd2ee5a06a4868714dd9f1455899",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0x5af775f3bec809b893de59e2f06ef995d280111a",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "X"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "6368155152757937786",
+    "amount": "6.368155",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "12637064833625036083",
+    "amount": "12.637064",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.98441535,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 12.637064 42／価格 約1.98441535 42/FISH）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": true
+  },
   {
    "id": "0xa9a8a32606e852e8e045499c75dd9256ded07218ee1ff4eddad2e5f3b39792b8:3:swap-sell:0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
    "ts": 1794183989,
@@ -21928,49 +21981,6 @@
    "ts": 1794130491,
    "block": 4326535,
    "txHash": "0x920e250c2de4b0a2e908d009d82b516d60232a2ab3023f615a44bb65a0882d1f",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "50000000000000000000",
-    "amount": "50",
-    "whitelisted": true
-   },
-   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "tokens": [
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xca552763ccec8b7dad69a2bff7be4087e11052b9d408b7e869f01c482e3c62f8:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794130485,
-   "block": 4326534,
-   "txHash": "0xca552763ccec8b7dad69a2bff7be4087e11052b9d408b7e869f01c482e3c62f8",
    "logIndex": 0,
    "type": "transfer",
    "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
