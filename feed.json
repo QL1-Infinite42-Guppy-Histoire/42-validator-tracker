@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-09T03:00:12.302Z",
+ "generatedAt": "2026-11-09T03:05:11.659Z",
  "status": {
-  "lastProcessedBlock": 4338140,
-  "latestBlockSeen": 4338140,
-  "lastProcessedCosmosBlock": 4338140,
-  "lastProcessedAt": "2026-11-09T03:00:12.205Z",
-  "totalEvents": 10694,
+  "lastProcessedBlock": 4338196,
+  "latestBlockSeen": 4338196,
+  "lastProcessedCosmosBlock": 4338196,
+  "lastProcessedAt": "2026-11-09T03:05:11.545Z",
+  "totalEvents": 10695,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,22 +32,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-09T03:00:12.532Z"
+   "checkedAt": "2026-11-09T03:05:11.680Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.66368678,
-   "updatedAt": "2026-11-09T03:00:12.000Z",
-   "change24hPct": -4.99
+   "updatedAt": "2026-11-09T03:05:11.000Z",
+   "change24hPct": -5.69
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4337703,
+    "toBlock": 4338147,
     "fromTs": 1770178474,
-    "toTs": 1794190841
+    "toTs": 1794193238
    },
    "totals": {
     "delegate": {
@@ -819,7 +819,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 223,
+   "relatedActivity": 224,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -924,6 +924,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xbb6afebe3d0b394d4dc77d42bf11191fc96349630fff0b59ecef6d0bbe6fe93d:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1794193238,
+   "block": 4338147,
+   "txHash": "0xbb6afebe3d0b394d4dc77d42bf11191fc96349630fff0b59ecef6d0bbe6fe93d",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x681286eecec83f48bd4c1dd192cb759bcb4cba571e36f1e460882e6f8f6b4878:0:transfer:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
    "ts": 1794190841,
@@ -22035,47 +22069,6 @@
    ],
    "whitelisted": true,
    "summary": "NFTミント：Guide #4847 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x7a545631f4b197b4308555cfbfad48787d43d6f401cf220202d4c48e8ca1a1a5:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794130836,
-   "block": 4326599,
-   "txHash": "0x7a545631f4b197b4308555cfbfad48787d43d6f401cf220202d4c48e8ca1a1a5",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4842"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4842 を新規発行で受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
