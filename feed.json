@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-09T20:25:12.111Z",
+ "generatedAt": "2026-11-09T20:30:16.375Z",
  "status": {
-  "lastProcessedBlock": 4349742,
-  "latestBlockSeen": 4349742,
-  "lastProcessedCosmosBlock": 4349742,
-  "lastProcessedAt": "2026-11-09T20:25:12.006Z",
-  "totalEvents": 10764,
+  "lastProcessedBlock": 4349798,
+  "latestBlockSeen": 4349798,
+  "lastProcessedCosmosBlock": 4349798,
+  "lastProcessedAt": "2026-11-09T20:30:16.063Z",
+  "totalEvents": 10765,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-09T20:25:12.127Z"
+   "checkedAt": "2026-11-09T20:30:16.586Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63872093,
-   "updatedAt": "2026-11-09T20:25:12.000Z",
+   "updatedAt": "2026-11-09T20:30:16.000Z",
    "change24hPct": -3.76
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4349526,
+    "toBlock": 4349788,
     "fromTs": 1770178474,
-    "toTs": 1794254736
+    "toTs": 1794256151
    },
    "totals": {
     "delegate": {
@@ -866,7 +866,7 @@
    "isCore": false,
    "relatedCount": 6,
    "selfActivity": 240,
-   "relatedActivity": 4454,
+   "relatedActivity": 4455,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x6a19f42b3c1086923c60e181d82f0b7c9918e70f0a1a9b47d030a332f21be628:tx:reward-claim-fish:0x5af775f3bec809b893de59e2f06ef995d280111a",
+   "ts": 1794256151,
+   "block": 4349788,
+   "txHash": "0x6a19f42b3c1086923c60e181d82f0b7c9918e70f0a1a9b47d030a332f21be628",
+   "logIndex": null,
+   "type": "reward-claim-fish",
+   "actor": "0x5af775f3bec809b893de59e2f06ef995d280111a",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "X"
+   ],
+   "method": "0x5c74910f",
+   "actionLabel": "報酬請求（FISH配布）",
+   "destLabel": "FISH報酬コントラクト",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "報酬請求（FISH配布）：2.703272 FISH を受け取り",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "X"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x6f4b1861ef1031e66c56f728130253186265860a66e3043d8d874a7f80d87ca8:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794254736,
@@ -21734,49 +21768,6 @@
    ],
    "whitelisted": true,
    "summary": "619.116792 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x3cd92f363340c5a893083411dbb238ba6ce1f31630156cbd917eeedb9cd7393c:78:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794131845,
-   "block": 4326786,
-   "txHash": "0x3cd92f363340c5a893083411dbb238ba6ce1f31630156cbd917eeedb9cd7393c",
-   "logIndex": 78,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "309682269257253481317",
-    "amount": "309.682269",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "309.682269 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
