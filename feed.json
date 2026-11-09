@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-09T10:00:14.864Z",
+ "generatedAt": "2026-11-09T10:05:16.787Z",
  "status": {
-  "lastProcessedBlock": 4342805,
-  "latestBlockSeen": 4342805,
-  "lastProcessedCosmosBlock": 4342805,
-  "lastProcessedAt": "2026-11-09T10:00:14.690Z",
-  "totalEvents": 10728,
+  "lastProcessedBlock": 4342861,
+  "latestBlockSeen": 4342861,
+  "lastProcessedCosmosBlock": 4342861,
+  "lastProcessedAt": "2026-11-09T10:05:16.299Z",
+  "totalEvents": 10729,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-09T10:00:14.881Z"
+   "checkedAt": "2026-11-09T10:05:17.003Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.64023095,
-   "updatedAt": "2026-11-09T10:00:14.000Z",
+   "updatedAt": "2026-11-09T10:05:16.000Z",
    "change24hPct": -9.54
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4342200,
+    "toBlock": 4342811,
     "fromTs": 1770178474,
-    "toTs": 1794215135
+    "toTs": 1794218438
    },
    "totals": {
     "delegate": {
@@ -819,7 +819,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 237,
+   "relatedActivity": 238,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -924,6 +924,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x3a3bdaa754186792c6df4b2b9221c707c68764fdb407ea0a659b68242a70c98d:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1794218438,
+   "block": 4342811,
+   "txHash": "0x3a3bdaa754186792c6df4b2b9221c707c68764fdb407ea0a659b68242a70c98d",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xcafc25a5f54997a49e3120a783103056ee4733005b40d79ae7a6e8e6408156f6:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794215135,
@@ -21958,47 +21992,6 @@
    ],
    "whitelisted": true,
    "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x57431bd3e8f6e60b0608ee9661d67732687e8f1e097c7ae621e064425878f970:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794131273,
-   "block": 4326680,
-   "txHash": "0x57431bd3e8f6e60b0608ee9661d67732687e8f1e097c7ae621e064425878f970",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4857"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4857 を新規発行で受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
