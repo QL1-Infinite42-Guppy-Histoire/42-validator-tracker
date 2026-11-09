@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-09T08:05:11.742Z",
+ "generatedAt": "2026-11-09T08:10:15.602Z",
  "status": {
-  "lastProcessedBlock": 4341527,
-  "latestBlockSeen": 4341527,
-  "lastProcessedCosmosBlock": 4341527,
-  "lastProcessedAt": "2026-11-09T08:05:11.629Z",
-  "totalEvents": 10725,
+  "lastProcessedBlock": 4341584,
+  "latestBlockSeen": 4341584,
+  "lastProcessedCosmosBlock": 4341584,
+  "lastProcessedAt": "2026-11-09T08:10:15.456Z",
+  "totalEvents": 10726,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-09T08:05:11.760Z"
+   "checkedAt": "2026-11-09T08:10:15.618Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.66368678,
-   "updatedAt": "2026-11-09T08:05:11.000Z",
+   "updatedAt": "2026-11-09T08:10:15.000Z",
    "change24hPct": -6.36
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4341478,
+    "toBlock": 4341534,
     "fromTs": 1770178474,
-    "toTs": 1794211235
+    "toTs": 1794211537
    },
    "totals": {
     "delegate": {
@@ -819,7 +819,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 234,
+   "relatedActivity": 235,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -924,6 +924,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xd0ba770045e1e1cbbf2bd807352cf7c132511a8daf044ce35ff1c7b9d1e17944:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794211537,
+   "block": 4341534,
+   "txHash": "0xd0ba770045e1e1cbbf2bd807352cf7c132511a8daf044ce35ff1c7b9d1e17944",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xc0b0c89c7865fd521375412b255413eceb419bfe6197ad7f16e44fae41349fed:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794211235,
@@ -21979,47 +22013,6 @@
    ],
    "whitelisted": true,
    "summary": "NFTミント：Guide #4856 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xf6aba8c91c8cb2921a24f47e884a18035d5a309f8e3edf91e3fc4c84c6d01555:0:nft-mint:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794131241,
-   "block": 4326674,
-   "txHash": "0xf6aba8c91c8cb2921a24f47e884a18035d5a309f8e3edf91e3fc4c84c6d01555",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "4853"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #4853 を新規発行で受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
