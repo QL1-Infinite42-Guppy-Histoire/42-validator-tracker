@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-09T04:05:20.783Z",
+ "generatedAt": "2026-11-09T04:10:22.541Z",
  "status": {
-  "lastProcessedBlock": 4338863,
-  "latestBlockSeen": 4338863,
-  "lastProcessedCosmosBlock": 4338863,
-  "lastProcessedAt": "2026-11-09T04:05:20.438Z",
-  "totalEvents": 10704,
+  "lastProcessedBlock": 4338919,
+  "latestBlockSeen": 4338919,
+  "lastProcessedCosmosBlock": 4338919,
+  "lastProcessedAt": "2026-11-09T04:10:22.206Z",
+  "totalEvents": 10705,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-09T04:05:21.392Z"
+   "checkedAt": "2026-11-09T04:10:22.932Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.66368678,
-   "updatedAt": "2026-11-09T04:05:20.000Z",
+   "updatedAt": "2026-11-09T04:10:22.000Z",
    "change24hPct": -5.57
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4338857,
+    "toBlock": 4338868,
     "fromTs": 1770178474,
-    "toTs": 1794197077
+    "toTs": 1794197137
    },
    "totals": {
     "delegate": {
@@ -819,7 +819,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 226,
+   "relatedActivity": 227,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -924,6 +924,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0xaba52682389cb9803a319337a114927d50c83d19eb9512d06913ab0b61a37ba8:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794197137,
+   "block": 4338868,
+   "txHash": "0xaba52682389cb9803a319337a114927d50c83d19eb9512d06913ab0b61a37ba8",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x24f22693a208536ed463d46c25da7a041998dba6ba831bb7b185785f57c4a145:5:lp-add:0xdac5fcc3b9c0f965888b346cf27faad5f90da274",
    "ts": 1794197077,
@@ -22053,49 +22087,6 @@
    "ts": 1794130966,
    "block": 4326623,
    "txHash": "0x07e66b16c17ec21cb7ce8bd98a46e634e8e456e9ccc6ee11a4c587b79af5c84d",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "50000000000000000000",
-    "amount": "50",
-    "whitelisted": true
-   },
-   "from": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "tokens": [
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0xacbbc165be9b65fc0497ab8a28acb2faee9fbce7b199ce4278e0a4af9073a32a:0:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794130950,
-   "block": 4326620,
-   "txHash": "0xacbbc165be9b65fc0497ab8a28acb2faee9fbce7b199ce4278e0a4af9073a32a",
    "logIndex": 0,
    "type": "transfer",
    "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
