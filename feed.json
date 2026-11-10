@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-10T08:00:14.060Z",
+ "generatedAt": "2026-11-10T08:05:11.788Z",
  "status": {
-  "lastProcessedBlock": 4357460,
-  "latestBlockSeen": 4357460,
-  "lastProcessedCosmosBlock": 4357460,
-  "lastProcessedAt": "2026-11-10T08:00:13.918Z",
-  "totalEvents": 10837,
+  "lastProcessedBlock": 4357515,
+  "latestBlockSeen": 4357515,
+  "lastProcessedCosmosBlock": 4357515,
+  "lastProcessedAt": "2026-11-10T08:05:11.673Z",
+  "totalEvents": 10838,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-10T08:00:14.106Z"
+   "checkedAt": "2026-11-10T08:05:11.811Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63872093,
-   "updatedAt": "2026-11-10T08:00:14.000Z",
+   "updatedAt": "2026-11-10T08:05:11.000Z",
    "change24hPct": -3.76
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4356855,
+    "toBlock": 4357466,
     "fromTs": 1770178474,
-    "toTs": 1794294336
+    "toTs": 1794297639
    },
    "totals": {
     "delegate": {
@@ -800,7 +800,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 282,
+   "relatedActivity": 283,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -905,6 +905,40 @@
   }
  ],
  "events": [
+  {
+   "id": "0x32fea205870f069b1fc1e4e80c5e9674e54fef528e88bac0970d66644134e297:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1794297639,
+   "block": 4357466,
+   "txHash": "0x32fea205870f069b1fc1e4e80c5e9674e54fef528e88bac0970d66644134e297",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0xcae67ff5e7563fa6213d2cf9a46b4dc2092d5cfe13f25f6fc2b2bb461f555260:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794294336,
@@ -21595,49 +21629,6 @@
    ],
    "whitelisted": true,
    "summary": "293.041334 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x6ed89e9ea1a73ddf1b3fc2543f1e6769bcd8fd9244911c8b0a4486241b8cc97b:24:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794132773,
-   "block": 4326958,
-   "txHash": "0x6ed89e9ea1a73ddf1b3fc2543f1e6769bcd8fd9244911c8b0a4486241b8cc97b",
-   "logIndex": 24,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "1174043809748235258740",
-    "amount": "1,174.043809",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "1,174.043809 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
