@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-10T06:19:57.281Z",
+ "generatedAt": "2026-11-10T06:20:14.956Z",
  "status": {
-  "lastProcessedBlock": 4356346,
-  "latestBlockSeen": 4356346,
-  "lastProcessedCosmosBlock": 4356346,
-  "lastProcessedAt": "2026-11-10T06:19:57.043Z",
-  "totalEvents": 10832,
+  "lastProcessedBlock": 4356350,
+  "latestBlockSeen": 4356350,
+  "lastProcessedCosmosBlock": 4356350,
+  "lastProcessedAt": "2026-11-10T06:20:14.695Z",
+  "totalEvents": 10833,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -32,12 +32,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-10T06:19:57.302Z"
+   "checkedAt": "2026-11-10T06:20:15.202Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63872093,
-   "updatedAt": "2026-11-10T06:19:57.000Z",
+   "updatedAt": "2026-11-10T06:20:14.000Z",
    "change24hPct": -3.76
   }
  },
@@ -45,9 +45,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4356338,
+    "toBlock": 4356349,
     "fromTs": 1770178474,
-    "toTs": 1794291538
+    "toTs": 1794291598
    },
    "totals": {
     "delegate": {
@@ -678,7 +678,7 @@
    "bech32": "infinite1gmru5t3w75cye0um4adw9ghdulwdthjpnpsauf",
    "isCore": false,
    "relatedCount": 5,
-   "selfActivity": 281,
+   "selfActivity": 282,
    "relatedActivity": 484,
    "autoAddedCount": 1,
    "estimatedCount": 0
@@ -905,6 +905,38 @@
   }
  ],
  "events": [
+  {
+   "id": "0xbe43b6cfe698bd8760cdd97d1d7b919fdd0fc231cccfa0dfb2357107102b705b:tx:approve:0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41",
+   "ts": 1794291598,
+   "block": 4356349,
+   "txHash": "0xbe43b6cfe698bd8760cdd97d1d7b919fdd0fc231cccfa0dfb2357107102b705b",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41",
+   "actorLabel": "farmer",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "farmer"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "isInsider": false
+  },
   {
    "id": "0x4d57b13e23c4390d0d7687852e6f256493d460b4a8a574f621734fb16529ae96:3:swap-sell:0x1fab3f8ca0294ebbdeed3214a57a15e550f84329",
    "ts": 1794291538,
@@ -21625,49 +21657,6 @@
    ],
    "whitelisted": true,
    "summary": "293.981039 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "isInsider": false
-  },
-  {
-   "id": "0x6ed89e9ea1a73ddf1b3fc2543f1e6769bcd8fd9244911c8b0a4486241b8cc97b:9:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794132773,
-   "block": 4326958,
-   "txHash": "0x6ed89e9ea1a73ddf1b3fc2543f1e6769bcd8fd9244911c8b0a4486241b8cc97b",
-   "logIndex": 9,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "294098679426209665293",
-    "amount": "294.098679",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "294.098679 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
