@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 import {
   recomputeWatchlistSummary, makeCtx, enrichEvent,
   computeHistoryFlags, computeBridgeChart, computeStakingStats, selectFeedEvents,
-  hexToBech32, NOTABLE_42_THRESHOLD, SNIPE_RULE, BRIDGE_OUT_RULE, PRELIST_RULE,
+  hexToBech32, NOTABLE_42_THRESHOLD, SNIPE_RULE, BRIDGE_OUT_RULE,
   ESTIMATED_RULE, DORMANT_RULE,
 } from './collector.mjs';
 
@@ -104,7 +104,7 @@ const feed = {
     lastProcessedAt: state.updatedAt, totalEvents: events.length,
     watchSummary: watchlist.summary,
     notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）`,
-    snipeRule: SNIPE_RULE, bridgeOutRule: BRIDGE_OUT_RULE, prelistRule: PRELIST_RULE,
+    snipeRule: SNIPE_RULE, bridgeOutRule: BRIDGE_OUT_RULE,
     estimatedRule: ESTIMATED_RULE, dormantRule: DORMANT_RULE,
     ...(oldFeed.status?.chainValidators ? { chainValidators: oldFeed.status.chainValidators } : {}),
     ...(oldFeed.status?.validatorsAdded ? { validatorsAdded: oldFeed.status.validatorsAdded } : {}),

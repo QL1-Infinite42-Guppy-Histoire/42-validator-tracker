@@ -19,8 +19,6 @@
   a.card p{color:var(--sub);font-size:.9rem;margin:0}
   a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
   a.card .segsub{font-size:.85rem;color:var(--sub);margin-top:3px}
-  a.card.prelist{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
-  a.card.prelist h2{color:#e9d5ff}
   a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
   a.card.snipes h2{color:#ff8fa3}
   a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
@@ -53,12 +51,7 @@
 </header>
 <main>
   <div class="cards">
-    <a class="card prelist" href="es.html#sec-prelist">
-      <h2>🕑 Compras antes de las 14:00 del día de listado — X<span class="alias"> (Rioshi)</span></h2>
-      <p>Solo las compras de [42] y DONT hechas por el propio validador X (Rioshi) y las direcciones relacionadas con X (Rioshi) antes de las 14:00 JST del día de listado (30 de junio de 2026).</p>
-      <div class="count" id="c-prelist">—</div>
-      <div class="segsub" id="c-prelist-sub">—</div>
-    </a>
+    
     <a class="card snipes" href="es.html#sec-snipes">
       <h2>🎯 Alertas de snipe</h2>
       <p>Compras de un validador en sí o de una billetera directamente relacionada dentro de las 3 horas posteriores a la creación de un par (las adiciones de liquidez no cuentan).</p>
@@ -140,11 +133,6 @@
     const s = FEED.status, ev = FEED.events;
     document.getElementById('status').innerHTML =
       `Último bloque procesado: <b>${s.lastProcessedBlock ?? '—'}</b> / Lado Cosmos: <b>${s.lastProcessedCosmosBlock ?? '—'}</b> / Actualizado: ${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('es',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / Movimientos registrados: ${s.totalEvents}`;
-    const prelist = ev.filter((e) => e.isPrelist && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
-    document.getElementById('c-prelist').textContent = prelist;
-    const xAddr = (FEED.validators.find((v) => v.moniker === 'X') || {}).address;
-    const preSelf = ev.filter((e) => e.isPrelist && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600 && e.actor === xAddr).length;
-    document.getElementById('c-prelist-sub').textContent = `Propias ${preSelf} / Relacionadas ${prelist - preSelf}`;
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
     const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');

@@ -240,10 +240,10 @@ const tightRep = JSON.parse(read('tightening-report.json'));
 check('current recomputation total equals the v0.5.3 total (evidence-tier senders removed; no new bridge-outs since)', near(R.total, 6419.27), `${fmt(R.total)} vs 6,419.27`);
 
 // ---------- (6) section order (user reorder, shipped in v0.4.1) ----------
-// Coloured special sections on top (prelist, snipes, bridge-out, totals
+// Coloured special sections on top (snipes, bridge-out, totals
 // chart, notable), plain data sections below (LP, dormant, new faces, NEW
 // PAIRS, feed, staking, validators). Anchors unchanged.
-const ORDER = ['sec-prelist', 'sec-snipes', 'sec-bridge', 'sec-bridgechart', 'sec-trades', 'sec-tradesnf', 'sec-trading', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-newpairs', 'sec-feed', 'sec-staking', 'sec-validators'];
+const ORDER = ['sec-snipes', 'sec-bridge', 'sec-bridgechart', 'sec-trades', 'sec-tradesnf', 'sec-trading', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-newpairs', 'sec-feed', 'sec-staking', 'sec-validators'];
 const seqOf = (html, re) => [...html.matchAll(re)].map((m) => m[1]);
 for (const file of ['index.html', 'en.html']) {
   const html = read(file);

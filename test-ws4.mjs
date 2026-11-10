@@ -23,7 +23,7 @@
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { classifyTx, decodeReceiptLogs, enrichEvent, isPrelistEvent, makeCtx } from './collector.mjs';
+import { classifyTx, decodeReceiptLogs, enrichEvent, makeCtx } from './collector.mjs';
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const watchlist = JSON.parse(readFileSync(join(__dir, 'watchlist.json'), 'utf8'));
@@ -111,18 +111,13 @@ check('FISH transfer OUT to bridge router -> bridge-send-other, no marker', evs2
 evs2 = classifyTx(ctx, mkTx(PANDA, USDT, '0xa9059cbb'), tokenReceipt(USDT, PANDA, QOM_ROUTER), 1762000000, 4272000);
 check('USDT transfer OUT to QOM bridge router -> bridge-out (token decides)', evs2.length === 1 && evs2[0].type === 'bridge-out' && evs2[0].notableReasons.includes('bridge-out'), JSON.stringify(evs2.map((e) => e.type)));
 
-// ---- 4) v0.2.4: prelist flag (validator X) + buys-only snipes ----
+// ---- 4) v0.2.4: buys-only snipes ----
 const X_ADDR = '0xdb34ff92995c74d170755a563a1a2c35a3db4738';
 const X_REL = '0xa8d5d10095d0d94b758e2d74c00107cfca311fd3'; // confirmed X-related wallet (listing-day buyer)
 const XENIA = '0x63cdac6ee8746b47de9cd259ddadab8918f0f341';
 const FARMER = '0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41';
 const NATIVE42 = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
 const DONT = '0xfaa842c8871f7f99c183f77871f79ce07dd056cd';
-check('prelist: X itself moving [42] -> true', isPrelistEvent({ actor: X_ADDR, tokens: ['42'], amount: { token: NATIVE42 } }, ctx) === true);
-check('prelist: X-related moving DONT -> true', isPrelistEvent({ actor: X_REL, tokens: ['PANIC'], amount: { token: DONT } }, ctx) === true);
-check('prelist: X-related moving FISH only -> false', isPrelistEvent({ actor: X_REL, tokens: ['FISH'], amount: { token: '0x2c32120a12b754272d9e85c57f64b50ca2c43513' } }, ctx) === false);
-check('prelist: another validator (farmer) moving [42] -> false', isPrelistEvent({ actor: FARMER, tokens: ['42'], amount: { token: NATIVE42 } }, ctx) === false);
-check('prelist: Xenia (separate validator) moving [42] -> false', isPrelistEvent({ actor: XENIA, tokens: ['42'], amount: { token: NATIVE42 } }, ctx) === false);
 
 const PAIR = '0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3'; // FISH/42 pair
 const creations = { [PAIR]: { createdTs: 1762000000 - 600 } };

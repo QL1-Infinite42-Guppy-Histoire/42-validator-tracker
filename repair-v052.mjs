@@ -37,7 +37,7 @@ import { fileURLToPath } from 'node:url';
 import {
   buildExcludedSet, recomputeWatchlistSummary, makeCtx, enrichEvent,
   computeHistoryFlags, computeBridgeChart, computeStakingStats, selectFeedEvents,
-  hexToBech32, NOTABLE_42_THRESHOLD, SNIPE_RULE, BRIDGE_OUT_RULE, PRELIST_RULE,
+  hexToBech32, NOTABLE_42_THRESHOLD, SNIPE_RULE, BRIDGE_OUT_RULE,
   ESTIMATED_RULE, DORMANT_RULE,
 } from './collector.mjs';
 
@@ -102,7 +102,7 @@ for (const e of d1) {
   const keep = [], drop = [];
   for (const [name, s] of Object.entries(perVal)) (s.total >= 2 ? keep : drop).push(name);
   let protectedX = false;
-  if (drop.includes('X') && isPrelistEligible(e)) { keep.push('X'); drop.splice(drop.indexOf('X'), 1); protectedX = true; e.protected = 'prelist-x'; }
+  if (drop.includes('X') && isPrelistEligible(e)) { keep.push('X'); drop.splice(drop.indexOf('X'), 1); protectedX = true; e.protected = 'protected-x'; }
   if (keep.length) {
     e.relatedValidators = keep.sort();
     decisions.push({ address: e.address, action: protectedX ? 'kept (prelist-protected)' : (drop.length ? 'kept (relations pruned)' : 'kept'), keep, drop, protectedX, perVal });
@@ -164,7 +164,7 @@ const feed = {
     lastProcessedAt: state.updatedAt, totalEvents: events.length,
     watchSummary: watchlist.summary,
     notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）`,
-    snipeRule: SNIPE_RULE, bridgeOutRule: BRIDGE_OUT_RULE, prelistRule: PRELIST_RULE,
+    snipeRule: SNIPE_RULE, bridgeOutRule: BRIDGE_OUT_RULE,
     estimatedRule: ESTIMATED_RULE, dormantRule: DORMANT_RULE,
     ...(oldFeed.status?.chainValidators ? { chainValidators: oldFeed.status.chainValidators } : {}),
     ...(oldFeed.status?.validatorsAdded ? { validatorsAdded: oldFeed.status.validatorsAdded } : {}),

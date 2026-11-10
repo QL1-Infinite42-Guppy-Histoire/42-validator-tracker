@@ -12,10 +12,6 @@
   .sub{color:var(--sub);font-size:.9rem}
   .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem}
   .status b{color:var(--ok)}
-  section.prelist{background:#1d1030;border:2px solid #9333ea;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 22px rgba(147,51,234,.5)}
-  section.prelist h2{color:#e9d5ff;font-size:1.3rem}
-  section.prelist .rule{color:#c084fc}
-  .badge.prelist{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
   section.trades{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
   section.tradesnf{background:#211a0c;border:1px dashed #6b5518;border-radius:10px;padding:6px 14px 12px}
   section.trades h2,section.tradesnf h2{color:#ffd166}
@@ -64,10 +60,10 @@
   .empty{color:var(--sub);padding:18px 0}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
-  section.prelist>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.trades>h2,section.tradesnf>h2,section.trading>h2,section.fold>h2{cursor:pointer;user-select:none}
-  section.prelist>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.trades>h2::after,section.tradesnf>h2::after,section.trading>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
-  section.prelist.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.trades.open>h2::after,section.tradesnf.open>h2::after,section.trading.open>h2::after,section.fold.open>h2::after{content:' ▼'}
-  section.prelist:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.trades:not(.open)>:not(h2),section.tradesnf:not(.open)>:not(h2),section.trading:not(.open)>:not(h2){display:none}
+  section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.trades>h2,section.tradesnf>h2,section.trading>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.trades>h2::after,section.tradesnf>h2::after,section.trading>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.snipes.open>h2::after,section.bridge.open>h2::after,section.trades.open>h2::after,section.tradesnf.open>h2::after,section.trading.open>h2::after,section.fold.open>h2::after{content:' ▼'}
+  section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.trades:not(.open)>:not(h2),section.tradesnf:not(.open)>:not(h2),section.trading:not(.open)>:not(h2){display:none}
   section.fold:not(.open)>.fold-body{display:none}
   section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.fold>h2{margin-top:8px}
@@ -129,17 +125,12 @@
 <header>
   <div class="head-row"><h1>42 Chain Validator Real-Time Tracker</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <b>English</b> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.6.0</span></div></div>
   <p class="sub">This page automatically collects, from new blocks, the moves of the validators themselves and of their related addresses (only the addresses that transacted directly with them) (EVM side + Cosmos side, v0.6.0). Program (contract) addresses are not counted as a person's relations, and connections are never traced through them. An address is never treated as infrastructure just for being a shared wallet; the only test is whether it is a program (contract). This site tracks only the validators themselves and the related addresses linked to them by direct transactions. Addresses beyond that (depth 2+) and addresses whose link is only estimated are not tracked. Related addresses are OTHER people's addresses that have transacted with that validator in the past; they are not necessarily the validator's own wallets. Their activity is shown separately from the validator's own activity. A "related address" means only an address that has dealt directly with the validator at least twice, or in both directions. A single one-way transaction does not count as a relation.</p>
-  <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-prelist">🕑 Purchases before 14:00 on listing day</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-trades">💱 Trading</a><a href="#sec-tradesnf">💱 Trading (excluding small FISH sells)</a><a href="#sec-trading">📈 Trading summary</a><a href="#sec-lp">💧 Liquidity</a><a href="#sec-dormant">😴 Dormant</a><a href="#sec-newfaces">👤 New faces</a><a href="#sec-newpairs">🆕 New pairs</a><a href="#sec-feed">Latest</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validators</a></nav>
+  <nav class="topnav"><a href="home-en.html">🏠 Top page</a><a href="#sec-snipes">🎯 Snipes</a><a href="#sec-bridge">🌉 Bridge out</a><a href="#sec-bridgechart">📊 Totals</a><a href="#sec-trades">💱 Trading</a><a href="#sec-tradesnf">💱 Trading (excluding small FISH sells)</a><a href="#sec-trading">📈 Trading summary</a><a href="#sec-lp">💧 Liquidity</a><a href="#sec-dormant">😴 Dormant</a><a href="#sec-newfaces">👤 New faces</a><a href="#sec-newpairs">🆕 New pairs</a><a href="#sec-feed">Latest</a><a href="#sec-staking">🏦 Staking</a><a href="#sec-validators">Validators</a></nav>
   <div class="status" id="status">Loading…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
 </header>
 <main>
-  <section class="prelist" id="sec-prelist">
-    <h2>🕑 Purchases before 14:00 on listing day — X<span class="alias"> (Rioshi)</span></h2>
-    <p class="rule" id="prelistRule"></p>
-    <div id="prelists"><p class="empty">Loading…</p></div>
-  </section>
-
+  
   <section class="snipes" id="sec-snipes">
     <h2>🎯 Snipe Alerts</h2>
     <p class="rule" id="snipeRule"></p>
@@ -271,8 +262,8 @@
   Displayed tokens are mainly the 17 tokens listed on Don't Panic (anything else is marked as a non-listed token). No move is dropped because of its size — small transfers are all recorded.
   Scope: EVM side + Cosmos side (transfers, delegations, reward claims). Action types are shown with concrete names wherever the destination contract and method identify them (Fluke entry, NFT mint, reward claim, bridge send, and so on); anything that cannot be identified is shown honestly as "Unclassified action (method / destination)". The Bridge Withdrawals section covers only moves that send USDT out to an external chain (bridge sends of other tokens are recorded as regular moves and are not shown in the green section; inbound receipts are ordinary receipts). Estimated addresses (Phase 3): addresses whose link cannot be confirmed by a direct transfer are also watched, estimated in three ways — through-pool, 2-hop, and shared counterparty. Their moves appear only in Latest activity, with a dashed border, an Estimated badge and the basis shown; they are never included in the Pre-listing / Snipes / Trading / Bridge Withdrawals / Totals sections (those stay confirmed-only). The validator list is refreshed from the chain on every run: newly bonded validators are added automatically, and validators that leave the bonded set stay watched as history (marked inactive). Nothing is posted externally (no X bot) — alerts live on this site only.
   Scope of related addresses (v0.4.0): in addition to every address that sent to or received from a validator, the full-history expansion (counterparties of counterparties, without limit) has been applied to the whole record, past included (system / pair / token contracts, and contacts reachable only through an estimated address, are excluded). When a new counterparty appears, it is also added automatically as a related address on the spot. / New Pairs covers pairs created by the Don't Panic factory and displays only pairs containing at least one of the 17 listed tokens. / The [42] price is calculated from the 42/USDT pool's reserves; the pool is small, so the figure has a margin of error.
-  Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). Validator X is also known as Rioshi, shown in small text as (Rioshi) next to the name.
-  <br>Version: <b>v0.6.0</b> (v0.6.0: replaced the ⭐ Notable section with 💱 Trading (all swaps by validators + tier-1 related), 💱 Trading (excluding small FISH sells) — the same list minus FISH sells that received under 10 [42] / 10 USDT — and a 📈 Trading summary (per-period, per-token buy/sell totals; FISH excluded). v0.5.3: scope limited to depth 1 (depth-2+ evidence-kept and estimated addresses removed, together with their records) and the missing history backfilled in full (except Guide/Starlight reward flows). v0.5.2: fixed the attribution display — when filtering by a validator, its own activity and related addresses' activity are now shown as two separate groups, and the validator list splits its activity counts the same way, so other people's transactions are never presented as the validator's own; also tightened the definition of "related" (only addresses with at least two direct dealings with the validator, or dealings in both directions, count as related; an address with a single one-way contact is held as a candidate and promoted automatically at its second direct dealing). v0.5.1: fixed the header layout (the title now spans the full width and the language switcher wraps on narrow screens). v0.5.0: the site is now available in eight languages — 日本語, English, 简体中文, Español, हिन्दी, العربية, Português and Français — every language rendering from the same feed.json, composed from the structured fields rather than the stored Japanese summaries. v0.4.3: a version badge now sits at the top right of the header, next to the language switcher, on every page. v0.4.2: all infrastructure (contract) addresses removed from the person graph — relations are counted through personal wallets (EOAs) only, never through a contract; the bridge-out totals chart is now aggregated per validator (all 23, unlimited depth, shared wallets counted in each connected validator's bar). v0.4.1: the bridge-out totals chart now splits each bar by depth — the validator itself / depth-1 related / depth-2+ related. Previously, v0.4.0 added six sections — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price; v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, the (Rioshi) alias next to X, and a "日本語 | English" language switch at the top right)
+ Cosmos-side transaction links open our own Cosmos scanner (42 Cosmos Scan). Headlines show only the address that actually moved; related validators are listed on a separate line, capped (an address that transacts with many validators gets a "Shared counterparty" mark). 
+  <br>Version: <b>v0.6.0</b> (v0.6.0: replaced the ⭐ Notable section with 💱 Trading (all swaps by validators + tier-1 related), 💱 Trading (excluding small FISH sells) — the same list minus FISH sells that received under 10 [42] / 10 USDT — and a 📈 Trading summary (per-period, per-token buy/sell totals; FISH excluded). v0.5.3: scope limited to depth 1 (depth-2+ evidence-kept and estimated addresses removed, together with their records) and the missing history backfilled in full (except Guide/Starlight reward flows). v0.5.2: fixed the attribution display — when filtering by a validator, its own activity and related addresses' activity are now shown as two separate groups, and the validator list splits its activity counts the same way, so other people's transactions are never presented as the validator's own; also tightened the definition of "related" (only addresses with at least two direct dealings with the validator, or dealings in both directions, count as related; an address with a single one-way contact is held as a candidate and promoted automatically at its second direct dealing). v0.5.1: fixed the header layout (the title now spans the full width and the language switcher wraps on narrow screens). v0.5.0: the site is now available in eight languages — 日本語, English, 简体中文, Español, हिन्दी, العربية, Português and Français — every language rendering from the same feed.json, composed from the structured fields rather than the stored Japanese summaries. v0.4.3: a version badge now sits at the top right of the header, next to the language switcher, on every page. v0.4.2: all infrastructure (contract) addresses removed from the person graph — relations are counted through personal wallets (EOAs) only, never through a contract; the bridge-out totals chart is now aggregated per validator (all 23, unlimited depth, shared wallets counted in each connected validator's bar). v0.4.1: the bridge-out totals chart now splits each bar by depth — the validator itself / depth-1 related / depth-2+ related. Previously, v0.4.0 added six sections — New Pairs, Liquidity Moves, Delegations &amp; Rewards totals, dormant returns, New Faces (full-history related-address expansion + automatic additions), and the [42] price; v0.3.2 reclassified Xenia from core infrastructure to an ordinary validator — a classification correction; v0.3.1 added the definition of estimated relations next to the Latest activity filters; and v0.3.0 completed Phase 3: estimated-address watching + validator-list auto-refresh, and a "日本語 | English" language switch at the top right)
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -305,11 +296,10 @@ const amtStr = (a) => a ? `${a.amount} ${sym(a.symbol)}` : '';
 
 let FEED = null;
 
-// Display-name helpers (v0.3.0): validator X is also known as Rioshi
-// (user-provided fact). Display-only suffix — monikers and filter values
-// stay the raw chain moniker. valName is for HTML, valNameText for text.
-const valName = (n) => n === 'X' ? 'X <span class="alias">(Rioshi)</span>' : n;
-const valNameText = (n) => n === 'X' ? 'X (Rioshi)' : n;
+// Display-name helpers: names are the raw chain monikers. valName is for
+// HTML contexts, valNameText for plain-text contexts (dropdown options).
+const valName = (n) => n;
+const valNameText = (n) => n;
 
 function tierBadge(ev){
   if (ev.actorIsCore) return '<span class="badge core">Core (infrastructure)</span>';
@@ -478,7 +468,6 @@ function renderEvent(ev){
   const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "Validator's own USDT bridge-out" : ev.actorTier === 'related' ? "Related wallet's USDT bridge-out" : 'USDT bridge-out'}</span>` : '';
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
   const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 Snipe (${ageEn(ev.pairAgeSecs)})</span>` : '';
-  const prelist = ev.isPrelist ? ` <span class="badge prelist">🕑 Pre-14:00 listing-day buy (${valName('X')})</span>` : '';
   const dormant = ev.isDormantReturn ? ` <span class="badge dormant">😴 First move in ${ev.dormantDays} days</span>` : '';
   const newface = ev.isNewCounterparty ? ` <span class="badge newface">👤 New counterparty</span>` : '';
   const added = ev.watchlistAdded ? ` <span class="badge added">Added to the watchlist</span>` : '';
@@ -488,7 +477,7 @@ function renderEvent(ev){
   return `<div class="ev${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
     <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
-    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${prelist}${dormant}${newface}${added}</div>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${dormant}${newface}${added}</div>
     <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
     ${relationLine(ev)}
     <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
@@ -613,17 +602,8 @@ function applyFilters(){
   // 👤 New faces (v0.4.0): first-appearance counterparties in the whole record.
   const newfaces = FEED.events.filter((ev) => ev.isNewCounterparty && ev.actorTier !== 'estimated');
   document.getElementById('newfaces').innerHTML = newfaces.length ? newfaces.slice(0,100).map(renderEvent).join('') : '<p class="empty">No new faces yet.</p>';
-  // 🕑 Purchases before 14:00 on listing day section (v0.2.5, user-narrowed): ONLY buys by X / X-related
-  // before 14:00 JST on listing day 2026-06-30 (window epochs below).
-  // Display capped at 100 with the total shown (records are never dropped).
-  const prelists = FEED.events.filter((ev) => ev.isPrelist && ev.actorTier !== 'estimated' && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
-    .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
-  document.getElementById('prelistRule').textContent = 'About this section: only the BUYS of [42] and DONT (PANIC) made by validator X (Rioshi) itself and the addresses directly related to X (Rioshi) before 14:00 JST on listing day (June 30, 2026). All other moves are in the regular record.' + (prelists.length ? ` (${prelists.length} matching buys)` : '');
-  document.getElementById('prelists').innerHTML = prelists.length
-    ? prelists.slice(0,100).map(renderEvent).join('') + (prelists.length > 100 ? `<p class="empty">Showing the 100 most recent of ${prelists.length} moves (all of them are kept in the record)</p>` : '')
-    : '<p class="empty">No matching pre-listing buys.</p>';
 }
-if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.prelist, section.snipes, section.bridge, section.bridgechart, section.trades, section.tradesnf, section.trading, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.snipes, section.bridge, section.bridgechart, section.trades, section.tradesnf, section.trading, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
   const h = sec.querySelector('h2');
   if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
 }

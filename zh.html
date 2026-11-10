@@ -12,10 +12,6 @@
   .sub{color:var(--sub);font-size:.9rem}
   .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem}
   .status b{color:var(--ok)}
-  section.prelist{background:#1d1030;border:2px solid #9333ea;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 22px rgba(147,51,234,.5)}
-  section.prelist h2{color:#e9d5ff;font-size:1.3rem}
-  section.prelist .rule{color:#c084fc}
-  .badge.prelist{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
   section.trades{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
   section.tradesnf{background:#211a0c;border:1px dashed #6b5518;border-radius:10px;padding:6px 14px 12px}
   section.trades h2,section.tradesnf h2{color:#ffd166}
@@ -64,10 +60,10 @@
   .empty{color:var(--sub);padding:18px 0}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
-  section.prelist>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.trades>h2,section.tradesnf>h2,section.trading>h2,section.fold>h2{cursor:pointer;user-select:none}
-  section.prelist>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.trades>h2::after,section.tradesnf>h2::after,section.trading>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
-  section.prelist.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.trades.open>h2::after,section.tradesnf.open>h2::after,section.trading.open>h2::after,section.fold.open>h2::after{content:' ▼'}
-  section.prelist:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.trades:not(.open)>:not(h2),section.tradesnf:not(.open)>:not(h2),section.trading:not(.open)>:not(h2){display:none}
+  section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.trades>h2,section.tradesnf>h2,section.trading>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.trades>h2::after,section.tradesnf>h2::after,section.trading>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.snipes.open>h2::after,section.bridge.open>h2::after,section.trades.open>h2::after,section.tradesnf.open>h2::after,section.trading.open>h2::after,section.fold.open>h2::after{content:' ▼'}
+  section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.trades:not(.open)>:not(h2),section.tradesnf:not(.open)>:not(h2),section.trading:not(.open)>:not(h2){display:none}
   section.fold:not(.open)>.fold-body{display:none}
   section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.fold>h2{margin-top:8px}
@@ -129,17 +125,12 @@
 <header>
   <div class="head-row"><h1>42 链验证者实时追踪</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <b>简体中文</b> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <a href="ar.html">العربية</a> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.6.0</span></div></div>
   <p class="sub">本页面从新区块中自动收集验证者本人及其关联地址（仅限与他们直接交易过的人）的动态（EVM 侧 + Cosmos 侧，v0.5.2）。程序（合约）地址不计为某个人的关联，关联也不会经由它们追溯。一个地址不会仅仅因为是共享钱包就被当作基础设施；唯一的判断标准是它是否为程序（合约）。本站仅追踪验证者本人以及通过直接交易与之关联的地址。其之外的地址（第 2 层及更深）以及关联仅属推定的地址均不在追踪范围内。关联地址是过去与该验证者有过交易的「其他人的地址」，未必是验证者本人的钱包。其动态与验证者本人的动态分开显示。「关联地址」仅指与验证者有过至少两次直接交易，或有过双向往来的地址。只有一次的单向交易不计为关联。</p>
-  <nav class="topnav"><a href="home-zh.html">🏠 首页</a><a href="#sec-prelist">🕑 上市日14点前的买入</a><a href="#sec-snipes">🎯 抢购</a><a href="#sec-bridge">🌉 跨链转出</a><a href="#sec-bridgechart">📊 总额</a><a href="#sec-trades">💱 交易</a><a href="#sec-tradesnf">💱 交易（不含 FISH 小额卖出）</a><a href="#sec-trading">📈 交易汇总</a><a href="#sec-lp">💧 流动性</a><a href="#sec-dormant">😴 久违动态</a><a href="#sec-newfaces">👤 新面孔</a><a href="#sec-newpairs">🆕 新交易对</a><a href="#sec-feed">最新动态</a><a href="#sec-staking">🏦 质押</a><a href="#sec-validators">验证者</a></nav>
+  <nav class="topnav"><a href="home-zh.html">🏠 首页</a><a href="#sec-snipes">🎯 抢购</a><a href="#sec-bridge">🌉 跨链转出</a><a href="#sec-bridgechart">📊 总额</a><a href="#sec-trades">💱 交易</a><a href="#sec-tradesnf">💱 交易（不含 FISH 小额卖出）</a><a href="#sec-trading">📈 交易汇总</a><a href="#sec-lp">💧 流动性</a><a href="#sec-dormant">😴 久违动态</a><a href="#sec-newfaces">👤 新面孔</a><a href="#sec-newpairs">🆕 新交易对</a><a href="#sec-feed">最新动态</a><a href="#sec-staking">🏦 质押</a><a href="#sec-validators">验证者</a></nav>
   <div class="status" id="status">正在加载…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
 </header>
 <main>
-  <section class="prelist" id="sec-prelist">
-    <h2>🕑 上市日14点前的买入 — X<span class="alias"> (Rioshi)</span></h2>
-    <p class="rule" id="prelistRule"></p>
-    <div id="prelists"><p class="empty">正在加载…</p></div>
-  </section>
-
+  
   <section class="snipes" id="sec-snipes">
     <h2>🎯 抢购警报</h2>
     <p class="rule" id="snipeRule"></p>
@@ -269,10 +260,10 @@
 <footer>
   数据来源：42 链区块本身（通过 RPC）。覆盖范围仅限 42 链上的交易（EVM 链 ID 421018 及其 Cosmos 侧 infinite_421018-1）。不包括 QL1 或任何其他链上的交易。点击交易或地址可打开官方浏览器 scan.infinitedrive.xyz。
   显示的代币主要是 Don't Panic 上线的 17 个代币（其他代币标注为非上线代币）。没有任何动态会因金额大小而被丢弃——小额转账全部记录。
-  范围：EVM 侧 + Cosmos 侧（转账、委托、奖励领取）。只要目标合约和方法能识别，操作类型就以具体名称显示（Fluke 参与、NFT 铸造、奖励领取、跨链发送等）；无法识别的会如实显示为「未分类操作（方法 / 目标）」。跨链转出栏目只涵盖把 USDT 转出到外部链的动态（其他代币的跨链发送作为普通动态记录，不在绿色栏目中显示；入链收款为普通收款）。推定地址（第 3 阶段）：无法通过直接转账确认关联的地址也会被监控，用三种方式推定——经池、两跳和共享交易对手。它们的动态只出现在「最新动态」中，带虚线边框、「推定」徽章并显示依据；永不计入上市日14点前的买入 / 抢购 / 交易 / 跨链转出 / 总额栏目（那些栏目只收录已确认信息）。验证者列表在每次运行时从链上刷新：新加入的验证者会被自动添加，离开验证者集合的验证者仍作为历史保留监控（标注为不活跃）。本站不会向外部发布任何内容（没有 X 机器人）——提醒只在本网站内。
+  范围：EVM 侧 + Cosmos 侧（转账、委托、奖励领取）。只要目标合约和方法能识别，操作类型就以具体名称显示（Fluke 参与、NFT 铸造、奖励领取、跨链发送等）；无法识别的会如实显示为「未分类操作（方法 / 目标）」。跨链转出栏目只涵盖把 USDT 转出到外部链的动态（其他代币的跨链发送作为普通动态记录，不在绿色栏目中显示；入链收款为普通收款）。推定地址（第 3 阶段）：无法通过直接转账确认关联的地址也会被监控，用三种方式推定——经池、两跳和共享交易对手。它们的动态只出现在「最新动态」中，带虚线边框、「推定」徽章并显示依据；永不计入抢购 / 交易 / 跨链转出 / 总额栏目（那些栏目只收录已确认信息）。验证者列表在每次运行时从链上刷新：新加入的验证者会被自动添加，离开验证者集合的验证者仍作为历史保留监控（标注为不活跃）。本站不会向外部发布任何内容（没有 X 机器人）——提醒只在本网站内。
   关联地址的范围（v0.4.0）：除与验证者有过发送或接收的每个地址外，还对全部记录（包括过去）应用了全历史展开（交易对手的交易对手，不设上限）（系统 / 交易对 / 代币合约，以及只能经由推定地址到达的联系人除外）。新交易对手出现时，也会被当场自动作为关联地址加入。/ 新交易对栏目涵盖由 Don't Panic 工厂创建的交易对，只显示至少包含 17 个上线代币之一的交易对。/ [42] 价格由 42/USDT 池子的储备计算；池子较小，因此该数字存在误差范围。
-  Cosmos 侧的交易链接打开我们自己的 Cosmos 浏览器（42 Cosmos Scan）。标题只显示实际发生动态的地址本身；关联验证者在单独一行列出并设有上限（与多位验证者交易的地址带有「共享交易对手」标记）。验证者 X 也被称为 Rioshi，名字旁以小字显示为 (Rioshi)。
-  <br>版本：<b>v0.6.0</b>（v0.6.0：将“⭐值得关注”栏目改为“💱交易”（验证者本人＋第 1 层关联的全部兑换）、“💱交易（不含 FISH 小额卖出）”（同一列表去除收到不足 10 [42]／10 USDT 的 FISH 卖出）和“📈交易汇总”（按期间、按代币的买入／卖出汇总；不含 FISH）。v0.5.3：将追踪范围限定为第 1 层（移除带证据的第 2 层及更深关联与推定地址，并删除其记录），并完整补回缺失的历史记录（Guide/Starlight 奖励流除外）。v0.5.2：修正了归属显示——按验证者筛选时，本人动态与关联地址动态分成两组显示，验证者列表中的件数也按本人／关联分开统计，他人的交易不再显示为验证者本人的动态；同时收紧了「关联」的定义（仅与验证者有至少两次直接交易、或有双向往来的地址才算关联；只有一次单向往来的地址保留为候选，第二次直接交易时自动恢复为关联）。v0.5.1：修复页眉布局（标题改为整行显示，语言切换在窄屏上自动换行）。v0.5.0：本站现已提供八种语言——日本語、English、简体中文、Español、हिन्दी、العربية、Português 和 Français——每种语言都从同一份 feed.json 渲染，由结构化字段组装，而非使用保存的日语摘要。v0.4.3：在每个页面的页眉右上角、语言切换旁添加了版本徽章。v0.4.2：将所有基础设施（合约）地址从人物关系图中移除——关联只经由个人钱包（EOA）计算，永不经由合约；跨链转出总额图表现按验证者逐一统计（全部 23 位，深度不限，共享钱包计入每位相连验证者的柱子）。v0.4.1：跨链转出总额图表现按深度拆分每根柱子——验证者本人 / 第 1 层关联 / 第 2 层及更深关联。此前，v0.4.0 增加了六个栏目——新交易对、流动性动态、委托与奖励总计、久违回归、新面孔（全历史关联地址展开 + 自动加入）以及 [42] 价格；v0.3.2 将 Xenia 从核心基础设施重新归类为普通验证者——一次分类纠正；v0.3.1 在「最新动态」筛选旁增加了推定关联的定义；v0.3.0 完成了第 3 阶段：推定地址监控 + 验证者列表自动刷新、在 X 旁标注 (Rioshi) 别名，以及右上角的「日本語 | English」语言切换）
+ Cosmos 侧的交易链接打开我们自己的 Cosmos 浏览器（42 Cosmos Scan）。标题只显示实际发生动态的地址本身；关联验证者在单独一行列出并设有上限（与多位验证者交易的地址带有「共享交易对手」标记）。
+  <br>版本：<b>v0.6.0</b>（v0.6.0：将“⭐值得关注”栏目改为“💱交易”（验证者本人＋第 1 层关联的全部兑换）、“💱交易（不含 FISH 小额卖出）”（同一列表去除收到不足 10 [42]／10 USDT 的 FISH 卖出）和“📈交易汇总”（按期间、按代币的买入／卖出汇总；不含 FISH）。v0.5.3：将追踪范围限定为第 1 层（移除带证据的第 2 层及更深关联与推定地址，并删除其记录），并完整补回缺失的历史记录（Guide/Starlight 奖励流除外）。v0.5.2：修正了归属显示——按验证者筛选时，本人动态与关联地址动态分成两组显示，验证者列表中的件数也按本人／关联分开统计，他人的交易不再显示为验证者本人的动态；同时收紧了「关联」的定义（仅与验证者有至少两次直接交易、或有双向往来的地址才算关联；只有一次单向往来的地址保留为候选，第二次直接交易时自动恢复为关联）。v0.5.1：修复页眉布局（标题改为整行显示，语言切换在窄屏上自动换行）。v0.5.0：本站现已提供八种语言——日本語、English、简体中文、Español、हिन्दी、العربية、Português 和 Français——每种语言都从同一份 feed.json 渲染，由结构化字段组装，而非使用保存的日语摘要。v0.4.3：在每个页面的页眉右上角、语言切换旁添加了版本徽章。v0.4.2：将所有基础设施（合约）地址从人物关系图中移除——关联只经由个人钱包（EOA）计算，永不经由合约；跨链转出总额图表现按验证者逐一统计（全部 23 位，深度不限，共享钱包计入每位相连验证者的柱子）。v0.4.1：跨链转出总额图表现按深度拆分每根柱子——验证者本人 / 第 1 层关联 / 第 2 层及更深关联。此前，v0.4.0 增加了六个栏目——新交易对、流动性动态、委托与奖励总计、久违回归、新面孔（全历史关联地址展开 + 自动加入）以及 [42] 价格；v0.3.2 将 Xenia 从核心基础设施重新归类为普通验证者——一次分类纠正；v0.3.1 在「最新动态」筛选旁增加了推定关联的定义；v0.3.0 完成了第 3 阶段：推定地址监控 + 验证者列表自动刷新、以及右上角的「日本語 | English」语言切换）
 </footer>
 <script>
 const SCAN = 'https://scan.infinitedrive.xyz';
@@ -305,11 +296,10 @@ const amtStr = (a) => a ? `${a.amount} ${sym(a.symbol)}` : '';
 
 let FEED = null;
 
-// Display-name helpers (v0.3.0): validator X is also known as Rioshi
-// (user-provided fact). Display-only suffix — monikers and filter values
-// stay the raw chain moniker. valName is for HTML, valNameText for text.
-const valName = (n) => n === 'X' ? 'X <span class="alias">(Rioshi)</span>' : n;
-const valNameText = (n) => n === 'X' ? 'X (Rioshi)' : n;
+// Display-name helpers: names are the raw chain monikers. valName is for
+// HTML contexts, valNameText for plain-text contexts (dropdown options).
+const valName = (n) => n;
+const valNameText = (n) => n;
 
 function tierBadge(ev){
   if (ev.actorIsCore) return '<span class="badge core">核心（基础设施）</span>';
@@ -478,7 +468,6 @@ function renderEvent(ev){
   const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "验证者本人的 USDT 跨链转出" : ev.actorTier === 'related' ? "关联钱包的 USDT 跨链转出" : 'USDT 跨链转出'}</span>` : '';
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
   const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 抢购（${ageEn(ev.pairAgeSecs)}）</span>` : '';
-  const prelist = ev.isPrelist ? ` <span class="badge prelist">🕑 上市日14点前买入（${valName('X')}）</span>` : '';
   const dormant = ev.isDormantReturn ? ` <span class="badge dormant">😴 ${ev.dormantDays} 天来的首次动态</span>` : '';
   const newface = ev.isNewCounterparty ? ` <span class="badge newface">👤 新交易对手</span>` : '';
   const added = ev.watchlistAdded ? ` <span class="badge added">已加入监控列表</span>` : '';
@@ -488,7 +477,7 @@ function renderEvent(ev){
   return `<div class="ev${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
     <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
-    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${prelist}${dormant}${newface}${added}</div>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${dormant}${newface}${added}</div>
     <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
     ${relationLine(ev)}
     <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
@@ -613,17 +602,8 @@ function applyFilters(){
   // 👤 New faces (v0.4.0): first-appearance counterparties in the whole record.
   const newfaces = FEED.events.filter((ev) => ev.isNewCounterparty && ev.actorTier !== 'estimated');
   document.getElementById('newfaces').innerHTML = newfaces.length ? newfaces.slice(0,100).map(renderEvent).join('') : '<p class="empty">尚无新面孔。</p>';
-  // ⚠ Pre-listing section (v0.2.5, user-narrowed): ONLY buys by X / X-related
-  // before 14:00 JST on listing day 2026-06-30 (window epochs below).
-  // Display capped at 100 with the total shown (records are never dropped).
-  const prelists = FEED.events.filter((ev) => ev.isPrelist && ev.actorTier !== 'estimated' && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
-    .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
-  document.getElementById('prelistRule').textContent = '本栏目说明：仅收录验证者 X (Rioshi) 本人及与 X (Rioshi) 直接关联的地址在上市日（2026 年 6 月 30 日）14:00 JST 之前对 [42] 和 DONT (PANIC) 的买入。其他所有动态都在常规记录中。' + (prelists.length ? `（${prelists.length} 笔符合的买入）` : '');
-  document.getElementById('prelists').innerHTML = prelists.length
-    ? prelists.slice(0,100).map(renderEvent).join('') + (prelists.length > 100 ? `<p class="empty">显示 ${prelists.length} 条动态中最近的 100 条（全部都保留在记录中）</p>` : '')
-    : '<p class="empty">没有符合条件的上市前买入。</p>';
 }
-if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.prelist, section.snipes, section.bridge, section.bridgechart, section.trades, section.tradesnf, section.trading, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.snipes, section.bridge, section.bridgechart, section.trades, section.tradesnf, section.trading, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
   const h = sec.querySelector('h2');
   if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
 }

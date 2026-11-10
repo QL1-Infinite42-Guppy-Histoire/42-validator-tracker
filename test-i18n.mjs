@@ -68,7 +68,7 @@ for (const L of LANGS) {
   check(`${tag} localized snipe heading`, html.includes(L.snipeH2));
   check(`${tag} no EN/JP feed heading left`, !html.includes('<h2>Latest activity</h2>') && !html.includes('<h2>最新の動き</h2>'));
   check(`${tag} home title localized`, home.includes(`<title>${L.homeTitle}</title>`));
-  check(`${tag} home cards point to ${L.file}`, (home.match(new RegExp(`href="${L.file}#`, 'g')) || []).length === 14, // v0.6.0: 14 cards (trading + trading-no-small-FISH + trading summary added; estimated-def card gone since v0.5.3)
+  check(`${tag} home cards point to ${L.file}`, (home.match(new RegExp(`href="${L.file}#`, 'g')) || []).length === 13, // 13 cards since 2026-11-10 (the prelist card was removed with its section; v0.6.0 had brought it to 14)
     String((home.match(new RegExp(`href="${L.file}#`, 'g')) || []).length));
 
   // renderer harness (mirrors test-en.mjs)

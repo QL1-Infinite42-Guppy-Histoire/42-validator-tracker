@@ -51,24 +51,19 @@ check('stored bridge-send-other >= 11 (v0.2.3 demotions; backfills may add more)
 check('bridge-send-other kept no marker', bso.every((e) => !(e.notableReasons || []).includes('bridge-out')));
 check('EN bridge badge wording (validator)', renderEvent({ ...bo.find((e) => e.actorTier === 'validator') }).includes("Validator's own USDT bridge-out"));
 
-// v0.2.4 stored-data invariants: buys-only snipes + prelist backfill
+// v0.2.4 stored-data invariants: buys-only snipes (the prelist flag/section was removed 2026-11-10)
 const snipes = events.filter((e) => e.isSnipe);
 check('stored snipes are buys only (>= 51; the 52nd belonged to a one-off candidate purged in v0.5.2)', snipes.length >= 51 && snipes.every((e) => e.type === 'swap-buy'), String(snipes.length));
 check('no LP add carries a snipe flag', events.every((e) => e.type !== 'lp-add' || !e.isSnipe));
-const prelist = events.filter((e) => e.isPrelist);
-// v0.4.1: 682 — the contract audit cleared exactly one prelist flag: an
-// event by 0xc46b052a... (a payment-router contract, bytecode-identical to
-// FoxxOnePaymentRouterV1) that had counted as "X-related" through it.
-check('stored prelist events exist (>= 682)', prelist.length >= 682, String(prelist.length));
 const anchor = events.find((e) => e.txHash === '0x1f5bc6205f0c8e9f1b204cd6f40e1398fe98adcecbaac284e8f60f2d9f3d6cc1');
-check('listing-day anchor buy (0xa8d5d100, 2026-06-30 13:31 JST) is prelist-flagged', !!anchor && anchor.isPrelist === true && anchor.actor === '0xa8d5d10095d0d94b758e2d74c00107cfca311fd3');
+check('listing-day anchor buy (0xa8d5d100, 2026-06-30 13:31 JST) remains a normal record, unflagged', !!anchor && anchor.actor === '0xa8d5d10095d0d94b758e2d74c00107cfca311fd3' && !('isPrelist' in anchor));
 check('anchor renders in English without Japanese', !!anchor && !JA.test(renderEvent(anchor)), anchor ? summaryEn(anchor) : '');
 
 // template-level checks
 check('en.html links back to index.html', html.includes('href="index.html"'));
 check('en.html has English section headings', html.includes('Snipe Alerts') && html.includes('Bridge Withdrawals (USDT, outbound)') && html.includes('Trading') && html.includes('Trading summary') && html.includes('Latest activity'));
-check('en.html has Pre-listing Watch section', html.includes('🕑 Purchases before 14:00 on listing day — X') && html.includes('id="prelists"'));
-check('jp index.html has Pre-listing section', jpHtml.includes('🕑 上場日14時前の購入') && jpHtml.includes('id="prelists"'));
+check('en.html has no prelist section (removed 2026-11-10)', !html.includes('sec-prelist') && !html.includes('id="prelists"') && !html.includes('Rioshi'));
+check('jp index.html has no prelist section (removed 2026-11-10)', !jpHtml.includes('sec-prelist') && !jpHtml.includes('id="prelists"') && !jpHtml.includes('Rioshi'));
 check('en.html template contains no Japanese summary text', !html.includes('ブリッジで外部へ送信：') && !html.includes('を送金'));
 
 console.log(fails === 0 ? 'ALL PASS' : `${fails} FAILED`);
