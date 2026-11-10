@@ -4,7 +4,7 @@
 // The 148 addresses added by the closure were not watched before, so the
 // live collector never recorded their past moves. This script rebuilds
 // them with the collector's own classifiers — the same method as the
-// earlier estimates / snipe / insider backfills:
+// earlier estimates / snipe / prelist backfills:
 //  - EVM: every flow-index tx involving a closure actor is re-fetched
 //    (tx + receipt) and classified; new events are flagged backfill:true.
 //  - Cosmos: the six staking/bank actions' full history is re-queried via

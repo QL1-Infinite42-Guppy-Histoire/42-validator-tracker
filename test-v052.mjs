@@ -12,12 +12,12 @@
 //  (3) FEED SPLIT COUNTS: feed.json per-validator selfActivity /
 //      relatedActivity equal the recomputation for all 23 validators.
 //  (4) TIGHTENING STATE: 87 depth-1 entries judged -> 50 related kept,
-//      37 demoted to (non-displayed) candidates; the 2 insider-protected
+//      37 demoted to (non-displayed) candidates; the 2 prelist-protected
 //      X wallets remain related; no candidate appears in feed validators'
 //      related counts; Sirius has 0 related addresses.
 //  (5) ALL 8 tracker pages carry the standing disclaimer + the new
 //      related-definition sentence + the strengthened bridge note; all
-//      8 home pages carry the insider self/related split element.
+//      8 home pages carry the prelist self/related split element.
 // Run: node test-v052.mjs (exit 1 on failure)
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -46,7 +46,7 @@ const wir42 = validators.find((v) => v.label === 'Woman-In-Red-42');
 check('Sirius Cybernetics: self activity = 0', recompute(sirius).self === 0, String(recompute(sirius).self));
 check('Sirius Cybernetics: related activity = 0', recompute(sirius).related === 0, String(recompute(sirius).related));
 check('Woman-In-Red-42: self activity = 32', recompute(wir42).self === 32, String(recompute(wir42).self));
-check('Woman-In-Red-42: related activity = 80 (v0.5.3 backfill gave 70; +10 of live data since — two of her related wallets act hourly; value at v0.6.0 data)', recompute(wir42).related === 80, String(recompute(wir42).related));
+check('Woman-In-Red-42: related activity = 81 (v0.5.3 backfill gave 70; +11 of live data since — two of her related wallets act hourly; value at 2026-11-10 republication data)', recompute(wir42).related === 81, String(recompute(wir42).related));
 
 // ---- (3) feed split counts ----
 for (const fv of feed.validators) {
@@ -65,7 +65,7 @@ check('candidates are not watched', cands.every((e) => e.watch === false && (e.r
 check('candidates keep their direct-dealing stats', cands.every((e) => e.directStats && Object.values(e.directStats).every((s) => s.out + s.in <= 1)));
 for (const a of ['0xc8de941efb92925bfd359a7a380399e47bc2b242', '0xf75b159860f3de7f229e22d08eab844fd97baade']) {
   const e = watchlist.entries.find((x) => x.address === a);
-  check(`insider-protected X wallet stays related: …${a.slice(-4)}`, !!e && e.tier === 'related' && (e.relatedValidators ?? []).includes('X'));
+  check(`prelist-protected X wallet stays related: …${a.slice(-4)}`, !!e && e.tier === 'related' && (e.relatedValidators ?? []).includes('X'));
 }
 check('no candidate-actor events remain in the record (except pair-created chain news, the standing exception)', events.every((e) => !cands.some((c) => c.address === e.actor) || e.type === 'pair-created'));
 const feedSirius = feed.validators.find((v) => v.moniker === 'Sirius Cybernetics');
@@ -149,7 +149,7 @@ for (const f of Object.keys(DISCLAIMER)) {
 }
 for (const f of ['home.html', 'home-en.html', 'home-zh.html', 'home-es.html', 'home-hi.html', 'home-ar.html', 'home-pt.html', 'home-fr.html']) {
   const html = read(f);
-  check(`${f}: insider card carries the self/related split`, html.includes('id="c-insider-sub"') && html.includes('insSelf'));
+  check(`${f}: prelist card carries the self/related split`, html.includes('id="c-prelist-sub"') && html.includes('preSelf'));
 }
 
 process.exit(fails ? 1 : 0);

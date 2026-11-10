@@ -6,7 +6,7 @@
 //    and every event they authored is purged — the same treatment as the
 //    v0.4.2 general-address purge. Events where a removed address appears
 //    only as a counterparty stay (status quo of every earlier purge).
-//  - X's two insider-protected wallets are depth-1 related and are NOT
+//  - X's two prelist-protected wallets are depth-1 related and are NOT
 //    touched.
 // After this repair the watched set is validators (23) + confirmed
 // depth-1 related (50) = 73 addresses. The matching collector change
@@ -23,7 +23,7 @@ import { fileURLToPath } from 'node:url';
 import {
   recomputeWatchlistSummary, makeCtx, enrichEvent,
   computeHistoryFlags, computeBridgeChart, computeStakingStats, selectFeedEvents,
-  hexToBech32, NOTABLE_42_THRESHOLD, SNIPE_RULE, BRIDGE_OUT_RULE, INSIDER_RULE,
+  hexToBech32, NOTABLE_42_THRESHOLD, SNIPE_RULE, BRIDGE_OUT_RULE, PRELIST_RULE,
   ESTIMATED_RULE, DORMANT_RULE,
 } from './collector.mjs';
 
@@ -104,7 +104,7 @@ const feed = {
     lastProcessedAt: state.updatedAt, totalEvents: events.length,
     watchSummary: watchlist.summary,
     notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）`,
-    snipeRule: SNIPE_RULE, bridgeOutRule: BRIDGE_OUT_RULE, insiderRule: INSIDER_RULE,
+    snipeRule: SNIPE_RULE, bridgeOutRule: BRIDGE_OUT_RULE, prelistRule: PRELIST_RULE,
     estimatedRule: ESTIMATED_RULE, dormantRule: DORMANT_RULE,
     ...(oldFeed.status?.chainValidators ? { chainValidators: oldFeed.status.chainValidators } : {}),
     ...(oldFeed.status?.validatorsAdded ? { validatorsAdded: oldFeed.status.validatorsAdded } : {}),
@@ -119,7 +119,7 @@ const feed = {
 const split = {};
 for (const v of validators) split[v.moniker] = { self: v.selfActivity, related: v.relatedActivity, relatedAddresses: v.relatedCount };
 console.log('bridge total:', feed.stats.bridge.total, '/', feed.stats.bridge.count, 'events; segs:', JSON.stringify(feed.stats.bridge.segTotals));
-console.log('insider-flagged events:', events.filter((e) => e.isInsider).length, '| snipe:', events.filter((e) => e.isSnipe).length, '| dormant:', events.filter((e) => e.isDormantReturn).length);
+console.log('prelist-flagged events:', events.filter((e) => e.isPrelist).length, '| snipe:', events.filter((e) => e.isSnipe).length, '| dormant:', events.filter((e) => e.isDormantReturn).length);
 console.log('summary after:', JSON.stringify(watchlist.summary));
 
 if (!dryRun) {

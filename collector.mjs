@@ -16,7 +16,7 @@
 // v0.3.2: Xenia reclassified from core to ordinary validator per user
 // correction; v0.3.0: EVM side + Cosmos side, estimated tier +
 // validator-list auto-refresh; v0.2.4: USDT-only bridge-out section,
-// buys-only snipes, insider flag for X).
+// buys-only snipes, prelist flag for X).
 //
 // Polls the 42 Chain EVM RPC for new blocks, decodes receipts with NO external
 // dependencies (topic hashes are the standard ERC-20 / Uniswap V2 ones,
@@ -68,16 +68,16 @@
 //    the USDT BridgeRouter) is "bridge-out"; bridge sends of any other
 //    token are recorded as plain "bridge-send-other" moves.
 //  - v0.2.4: snipes are BUYS ONLY (user rule) — LP adds no longer count.
-//    Plus the ⚠ Insider flag (isInsider): validator X itself or an
+//    Plus the 🕑 Purchases before 14:00 on listing day flag (isPrelist): validator X itself or an
 //    X-related wallet moving [42] or DONT (whitelist PANIC contract);
-//    insider events are pinned into the feed like snipes/bridge-outs.
+//    prelist events are pinned into the feed like snipes/bridge-outs.
 //  - v0.3.0 (Phase 3): ESTIMATED addresses. A third watch tier built from
 //    the 2026-10-31 flow-map research (build-estimates.mjs): through-pool
 //    matches (relaxed FIFO, 24h / 10%), 2-hop paths over confirmed legs,
 //    and shared counterparties of >= 2 validators that are not already
 //    watched. Estimated actors are watched live on BOTH sides like the
 //    other tiers, but their events are tagged actorTier "estimated" with a
-//    concrete estimateBasis, are NEVER flagged snipe / insider / bridge-out
+//    concrete estimateBasis, are NEVER flagged snipe / prelist / bridge-out
 //    (enrichEvent strips those), are NOT pinned into the feed, and appear
 //    ONLY in the main feed with 推定 styling — the special sections and
 //    the USDT totals stay confirmed-only by construction AND by explicit
@@ -240,7 +240,7 @@ export const NFT_COLLECTIONS = {
 // are plain transfers, never glowing.
 export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター本人または直接関連ウォレットが、USDTをブリッジ経由で42チェーンから外部チェーンへ送り出した動き。専用の「ブリッジ出金（USDT・外部へ）」欄で緑色に光って表示されます（他の欄とは分けて、専用欄だけに表示します）。USDT以外の銘柄のブリッジ送信は通常の動きとして記録し、この欄には入れません。入金（42チェーン側での受取）は通常の送金・受取として扱い、特別表示はしません';
 
-// ---------------- v0.2.4: ⚠ Insider section (validator X) ----------------
+// ---------------- v0.2.4: 🕑 Purchases before 14:00 on listing day section (validator X) ----------------
 // User rule: a dedicated warning-style section at the very top of the site
 // showing ONLY validator X's own moves and X-related wallets' moves in
 // [42] and DONT. Relations are the watchlist's CONFIRMED direct relations
@@ -249,11 +249,11 @@ export const BRIDGE_OUT_RULE = 'ブリッジ出金の定義：バリデーター
 // FISH/42 pair and the DEX router also carry an X relation in the
 // watchlist, but they are infrastructure — they appear as counterparties,
 // never as the acting wallet. Xenia is a separate validator and is not
-// part of X's insider set either.)
+// part of X's prelist set either.)
 export const X_VALIDATOR_ADDR = '0xdb34ff92995c74d170755a563a1a2c35a3db4738'; // watchlist validator entry, moniker 'X'
 export const DONT_TOKEN = '0xfaa842c8871f7f99c183f77871f79ce07dd056cd'; // whitelist PANIC contract == DONT
-export const INSIDER_RULE = 'インサイダー欄：リスティング当日（2026年6月30日）14時00分（日本時間）より前に、バリデーターX（Rioshi）本人とX（Rioshi）の直接関連アドレスが行った [42] と DONT（PANIC）の「買い」だけを表示します。それ以外の動きは通常の記録に含まれます';
-export const ESTIMATED_RULE = '推定アドレスについて（v0.3.0 / Phase 3）：直接の送金が確認できないつながりを、次の3つの方法で推定したアドレスです。①プール経由（プールの反対側の売買と、金額差10%以内・24時間以内で一致）②2ホップ経由（バリデーター→このアドレス→バリデーターの両レッグとも確認済みの送金）③共通の相手先（2名以上のバリデーターと直接取引した第三者で、まだ確定関連に入っていないもの）。推定アドレスの動きは「最新の動き」にだけ、推定バッジと根拠つきで表示します。インサイダー／スナイプ／売買／ブリッジ出金／総額グラフの特別欄は、確定情報（本人＋直接関連）だけを使い、推定は一切含みません';
+export const PRELIST_RULE = 'この欄について：2026年6月30日（[42] と DONT のリスティング当日）の14時00分（日本時間）より前に、バリデーターX（Rioshi）本人とX（Rioshi）の直接関連アドレスが行った [42] と DONT（PANIC）の「買い」だけを表示します。それ以外の動きは通常の記録に含まれます';
+export const ESTIMATED_RULE = '推定アドレスについて（v0.3.0 / Phase 3）：直接の送金が確認できないつながりを、次の3つの方法で推定したアドレスです。①プール経由（プールの反対側の売買と、金額差10%以内・24時間以内で一致）②2ホップ経由（バリデーター→このアドレス→バリデーターの両レッグとも確認済みの送金）③共通の相手先（2名以上のバリデーターと直接取引した第三者で、まだ確定関連に入っていないもの）。推定アドレスの動きは「最新の動き」にだけ、推定バッジと根拠つきで表示します。上場日14時前の購入／スナイプ／売買／ブリッジ出金／総額グラフの特別欄は、確定情報（本人＋直接関連）だけを使い、推定は一切含みません';
 
 // ---------------- v0.4.0: pairs / dormant / new faces / price ----------------
 // The 42/USDT pair (Don't Panic factory) whose reserves price [42].
@@ -770,10 +770,10 @@ export function recomputeWatchlistSummary(watchlist) {
   s.autoAddedLive = watchlist.entries.filter((e) => e.autoAdded && e.addedVia === 'live').length;
   return s;
 }
-export function isInsiderEvent(ev, ctx) {
+export function isPrelistEvent(ev, ctx) {
   const ae = ctx.entry(ev.actor);
   if (!ae) return false;
-  // v0.4.0: the Insider definition says DIRECTLY related — the recursive
+  // v0.4.0: the Pre-listing definition says DIRECTLY related — the recursive
   // closure entries (depth >= 2) are related, but not direct, so they stay
   // out of this section even when X is among their inherited names.
   const xSide = (ae.tier === 'validator' && ae.label === 'X')
@@ -1279,12 +1279,12 @@ export function enrichEvent(ev, ctx, creations = {}) {
   // (pre-v0.2.4) snipe flag loses it. The event itself is kept as a normal
   // record — only the flag is removed.
   if (ev.type !== 'swap-buy' && ev.isSnipe) set('isSnipe', false);
-  // v0.2.4 (Part C): insider flag for the ⚠ Insider section (validator X).
-  // v0.4.0: pair-created events are never insider/snipe material.
-  set('isInsider', ev.type === 'pair-created' ? false : isInsiderEvent(ev, ctx));
+  // v0.2.4 (Part C): prelist flag for the 🕑 Purchases before 14:00 on listing day section (validator X).
+  // v0.4.0: pair-created events are never prelist/snipe material.
+  set('isPrelist', ev.type === 'pair-created' ? false : isPrelistEvent(ev, ctx));
   // v0.3.0 (Phase 3): estimated tier guard. An estimated actor's events keep
   // the 推定 tag + the concrete basis from the watchlist entry, and NEVER
-  // carry the confirmed-only markers: no snipe, no insider, no bridge-out
+  // carry the confirmed-only markers: no snipe, no prelist, no bridge-out
   // (its bridge sends are demoted to the plain bridge-send-other type, so
   // the USDT totals chart cannot include them), no shared-counterparty
   // badge, and no feed pinning (selectFeedEvents pins on those flags).
@@ -1294,7 +1294,7 @@ export function enrichEvent(ev, ctx, creations = {}) {
     const basis = { type: estEntry.basisType, validators: estEntry.relatedValidators ?? [], text: estEntry.basisText ?? '', textEn: estEntry.basisTextEn ?? '' };
     if (JSON.stringify(ev.estimateBasis) !== JSON.stringify(basis)) { ev.estimateBasis = basis; changed = true; }
     if (ev.isSnipe) set('isSnipe', false);
-    if (ev.isInsider) set('isInsider', false);
+    if (ev.isPrelist) set('isPrelist', false);
     if (ev.actorShared) set('actorShared', false);
     if (ev.type === 'bridge-out') {
       set('type', 'bridge-send-other');
@@ -1887,7 +1887,7 @@ export async function refreshValidatorList(watchlist, { fetchValidators = fetchC
 }
 
 // Feed selection: the latest 500 events, PLUS pinned categories
-// (deduplicated, sort order preserved). Snipe / bridge-out / insider events
+// (deduplicated, sort order preserved). Snipe / bridge-out / prelist events
 // are pinned without a cap (they feed the ⚠/🎯/🌉 sections and the
 // historical backfills must stay visible permanently). v0.4.0 adds capped
 // pins for the new sections: pair-created (latest 100), LP moves (latest
@@ -1904,7 +1904,7 @@ export function selectFeedEvents(sorted) {
     }
     return out;
   };
-  const pinned = sorted.filter((e) => (e.isSnipe || e.type === 'bridge-out' || e.isInsider) && !seenIds.has(e.id));
+  const pinned = sorted.filter((e) => (e.isSnipe || e.type === 'bridge-out' || e.isPrelist) && !seenIds.has(e.id));
   for (const e of pinned) seenIds.add(e.id);
   return [
     ...head, ...pinned,
@@ -2044,7 +2044,7 @@ async function main() {
         notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）`,
         snipeRule: SNIPE_RULE,
         bridgeOutRule: BRIDGE_OUT_RULE,
-        insiderRule: INSIDER_RULE,
+        prelistRule: PRELIST_RULE,
         estimatedRule: ESTIMATED_RULE,
         dormantRule: DORMANT_RULE,
         ...(validatorRefresh ? {

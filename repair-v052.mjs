@@ -15,7 +15,7 @@
 // differences are post-snapshot growth, ours higher).
 //
 // Protections / scope guards (per the approved spec):
-//  - X insider-section wallets: an entry eligible for the insider
+//  - X prelist-section wallets: an entry eligible for the prelist
 //    section (related, not pair/core, depth<=1, X among its relations)
 //    KEEPS its X relation even if it fails the new rule (2 such wallets,
 //    flagged in the report), because the section's membership is a
@@ -37,7 +37,7 @@ import { fileURLToPath } from 'node:url';
 import {
   buildExcludedSet, recomputeWatchlistSummary, makeCtx, enrichEvent,
   computeHistoryFlags, computeBridgeChart, computeStakingStats, selectFeedEvents,
-  hexToBech32, NOTABLE_42_THRESHOLD, SNIPE_RULE, BRIDGE_OUT_RULE, INSIDER_RULE,
+  hexToBech32, NOTABLE_42_THRESHOLD, SNIPE_RULE, BRIDGE_OUT_RULE, PRELIST_RULE,
   ESTIMATED_RULE, DORMANT_RULE,
 } from './collector.mjs';
 
@@ -89,7 +89,7 @@ for (const e of events) {
 }
 
 // ---------- judgment ----------
-const isInsiderEligible = (e) => e.tier === 'related' && !e.isPair && !e.isCore && (e.depth ?? 1) <= 1 && (e.relatedValidators ?? []).includes('X');
+const isPrelistEligible = (e) => e.tier === 'related' && !e.isPair && !e.isCore && (e.depth ?? 1) <= 1 && (e.relatedValidators ?? []).includes('X');
 const decisions = [];
 const demoted = new Set();
 for (const e of d1) {
@@ -102,10 +102,10 @@ for (const e of d1) {
   const keep = [], drop = [];
   for (const [name, s] of Object.entries(perVal)) (s.total >= 2 ? keep : drop).push(name);
   let protectedX = false;
-  if (drop.includes('X') && isInsiderEligible(e)) { keep.push('X'); drop.splice(drop.indexOf('X'), 1); protectedX = true; e.protected = 'insider-x'; }
+  if (drop.includes('X') && isPrelistEligible(e)) { keep.push('X'); drop.splice(drop.indexOf('X'), 1); protectedX = true; e.protected = 'prelist-x'; }
   if (keep.length) {
     e.relatedValidators = keep.sort();
-    decisions.push({ address: e.address, action: protectedX ? 'kept (insider-protected)' : (drop.length ? 'kept (relations pruned)' : 'kept'), keep, drop, protectedX, perVal });
+    decisions.push({ address: e.address, action: protectedX ? 'kept (prelist-protected)' : (drop.length ? 'kept (relations pruned)' : 'kept'), keep, drop, protectedX, perVal });
   } else {
     e.tier = 'candidate'; e.watch = false; e.relatedValidators = [];
     e.demotedAt = 'v0.5.2';
@@ -117,7 +117,7 @@ for (const e of d1) {
 const kept = decisions.filter((d) => d.action.startsWith('kept'));
 const prunedRelations = decisions.reduce((n, d) => n + (d.drop?.length ?? 0), 0);
 console.log(`judged ${d1.length} depth-1 entries: kept ${kept.length} (pruned relations ${prunedRelations}), demoted to candidate ${demoted.size}`);
-for (const d of decisions.filter((d) => d.protectedX)) console.log(`  insider-protected (fails the rule vs X, kept): ${d.address} ${JSON.stringify(d.perVal)}`);
+for (const d of decisions.filter((d) => d.protectedX)) console.log(`  prelist-protected (fails the rule vs X, kept): ${d.address} ${JSON.stringify(d.perVal)}`);
 
 // ---------- purge demoted actors' events ----------
 const beforeEvents = events.length;
@@ -164,7 +164,7 @@ const feed = {
     lastProcessedAt: state.updatedAt, totalEvents: events.length,
     watchSummary: watchlist.summary,
     notableRule: `注目ルール：①バリデーター本人の売買 ②${NOTABLE_42_THRESHOLD.toLocaleString()} [42]以上の移動（ブリッジで外部へ送信は専用の緑色の欄に分けて表示）`,
-    snipeRule: SNIPE_RULE, bridgeOutRule: BRIDGE_OUT_RULE, insiderRule: INSIDER_RULE,
+    snipeRule: SNIPE_RULE, bridgeOutRule: BRIDGE_OUT_RULE, prelistRule: PRELIST_RULE,
     estimatedRule: ESTIMATED_RULE, dormantRule: DORMANT_RULE,
     ...(oldFeed.status?.chainValidators ? { chainValidators: oldFeed.status.chainValidators } : {}),
     ...(oldFeed.status?.validatorsAdded ? { validatorsAdded: oldFeed.status.validatorsAdded } : {}),
@@ -194,7 +194,7 @@ if (!dryRun) {
     kept: kept.length, prunedRelations,
     demotedToCandidate: demoted.size,
     removedNoBasis: 0,
-    insiderProtected: decisions.filter((d) => d.protectedX).map((d) => ({ address: d.address, perVal: d.perVal, note: 'fails the new rule vs X (single one-way contact) but kept as related per the approved spec: insider-section membership is not dropped; flagged here as a warning' })),
+    prelistProtected: decisions.filter((d) => d.protectedX).map((d) => ({ address: d.address, perVal: d.perVal, note: 'fails the new rule vs X (single one-way contact) but kept as related per the approved spec: prelist-section membership is not dropped; flagged here as a warning' })),
     eventsBefore: beforeEvents, eventsAfter: events.length,
     eventsPurged: beforeEvents - events.length,
     splitAfter: split,

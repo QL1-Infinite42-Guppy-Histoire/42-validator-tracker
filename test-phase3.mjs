@@ -4,7 +4,7 @@
 //    (counts per tier + spot checks), the estimated tier is well-formed.
 //  - estimated tier tagging in enrichEvent: estimateBasis attached,
 //    actorTier 'estimated', and the confirmed-only markers (isSnipe /
-//    isInsider / bridge-out type+reason / actorShared) are stripped even
+//    isPrelist / bridge-out type+reason / actorShared) are stripped even
 //    when the raw event would otherwise qualify.
 //  - selectFeedEvents never pins an (enriched) estimated event.
 //  - refreshValidatorList: adds a new bonded validator with its chain
@@ -73,10 +73,10 @@ const storedEst = events.find((e) => e.actorTier === 'estimated');
 check('no stored estimated events remain (v0.5.3)', !storedEst && events.every((e) => e.actorTier !== 'estimated'), String(events.filter((e) => e.actorTier === 'estimated').length));
 if (storedEst) {
   const ev = JSON.parse(JSON.stringify(storedEst));
-  delete ev.estimateBasis; ev.isSnipe = true; ev.isInsider = true; ev.actorShared = true;
+  delete ev.estimateBasis; ev.isSnipe = true; ev.isPrelist = true; ev.actorShared = true;
   enrichEvent(ev, ctx, {});
   check('enrich re-attaches estimateBasis', !!ev.estimateBasis && ev.estimateBasis.type === storedEst.estimateBasis.type);
-  check('enrich strips isSnipe/isInsider/actorShared for estimated', ev.isSnipe === false && ev.isInsider === false && ev.actorShared === false);
+  check('enrich strips isSnipe/isPrelist/actorShared for estimated', ev.isSnipe === false && ev.isPrelist === false && ev.actorShared === false);
 }
 // v0.3.2 repair: enrichEvent re-derives the core flags from the watchlist,
 // so a stored Xenia event that still carries the old core classification is
@@ -102,19 +102,19 @@ check('no stored event marks Xenia as core (actor or counterparty)', events.ever
 const feedXenia = (feed.validators || []).find((v) => v.moniker === 'Xenia');
 check('feed validators list: Xenia isCore false', feedXenia?.isCore === false);
 
-// Flip a REAL X-related insider event's actor to estimated tier in a cloned
+// Flip a REAL X-related prelist event's actor to estimated tier in a cloned
 // watchlist: even with a fresh pair (snipe window) the flags must not stick,
 // and a bridge-out by that actor must be demoted.
 const wl2 = JSON.parse(JSON.stringify(watchlist));
-const insiderEv = events.find((e) => e.isInsider && e.type === 'swap-buy');
-const relEntry = wl2.entries.find((e) => e.address === insiderEv.actor);
+const prelistEv = events.find((e) => e.isPrelist && e.type === 'swap-buy');
+const relEntry = wl2.entries.find((e) => e.address === prelistEv.actor);
 relEntry.tier = 'estimated'; relEntry.basisType = 'pool'; relEntry.basisText = 'テスト用根拠'; relEntry.basisTextEn = 'test basis';
 const ctx2 = makeCtx(wl2, registries, {});
-const ev2 = JSON.parse(JSON.stringify(insiderEv));
+const ev2 = JSON.parse(JSON.stringify(prelistEv));
 ev2.isSnipe = false;
-enrichEvent(ev2, ctx2, { [String(insiderEv.pair).toLowerCase()]: { createdTs: insiderEv.ts - 60 } });
+enrichEvent(ev2, ctx2, { [String(prelistEv.pair).toLowerCase()]: { createdTs: prelistEv.ts - 60 } });
 check('estimated actor never snipes (fresh pair)', ev2.isSnipe === false);
-check('estimated actor never insider (X-linked [42] buy)', ev2.isInsider === false);
+check('estimated actor never prelist (X-linked [42] buy)', ev2.isPrelist === false);
 check('flipped event carries the basis', ev2.estimateBasis?.text === 'テスト用根拠');
 const boEv = events.find((e) => e.type === 'bridge-out');
 const wl3 = JSON.parse(JSON.stringify(watchlist));
@@ -129,7 +129,7 @@ check('estimated bridge send keeps no bridge-out marker', !(ev3.notableReasons |
 // ---------- feed selection: estimated never pinned ----------
 {
   const dummies = Array.from({ length: 600 }, (_, i) => ({ id: 'd' + i, block: 5000000 - i, logIndex: 0, type: 'transfer' }));
-  const oldEst = { id: 'old-est', block: 100, logIndex: 0, type: 'transfer', actorTier: 'estimated', isSnipe: false, isInsider: false };
+  const oldEst = { id: 'old-est', block: 100, logIndex: 0, type: 'transfer', actorTier: 'estimated', isSnipe: false, isPrelist: false };
   const oldSnipe = { id: 'old-snipe', block: 99, logIndex: 0, type: 'swap-buy', actorTier: 'related', isSnipe: true };
   const sel = selectFeedEvents([...dummies, oldEst, oldSnipe]);
   check('estimated event outside head-500 is NOT pinned into feed', !sel.some((e) => e.id === 'old-est'));
@@ -157,11 +157,11 @@ check('estimated bridge send keeps no bridge-out marker', !(ev3.notableReasons |
 // ---------- stored-data + feed invariants ----------
 const storedEstAll = events.filter((e) => e.actorTier === 'estimated');
 check('stored estimated events all carry estimateBasis', storedEstAll.every((e) => !!e.estimateBasis?.text && !!e.estimateBasis?.textEn));
-check('stored estimated events: no snipe/insider/bridge-out', storedEstAll.every((e) => !e.isSnipe && !e.isInsider && e.type !== 'bridge-out' && !(e.notableReasons || []).includes('bridge-out')));
+check('stored estimated events: no snipe/prelist/bridge-out', storedEstAll.every((e) => !e.isSnipe && !e.isPrelist && e.type !== 'bridge-out' && !(e.notableReasons || []).includes('bridge-out')));
 check('feed.json contains no estimated events (v0.5.3)', feed.events.every((e) => e.actorTier !== 'estimated'), String(feed.events.filter((e) => e.actorTier === 'estimated').length));
 check('feed status has estimatedRule + chainValidators', !!feed.status.estimatedRule && !!feed.status.chainValidators);
 check('feed validators carry estimatedCount; link total = 0 (v0.5.3)', feed.validators.every((v) => typeof v.estimatedCount === 'number') && feed.validators.reduce((t, v) => t + v.estimatedCount, 0) === 0);
-check('feed insiderRule names X (Rioshi)', (feed.status.insiderRule || '').includes('X（Rioshi）'));
+check('feed prelistRule names X (Rioshi)', (feed.status.prelistRule || '').includes('X（Rioshi）'));
 
 // ---------- frontend statics ----------
 const jp = read('index.html'), en = read('en.html'), home = read('home.html'), homeEn = read('home-en.html');
@@ -180,7 +180,7 @@ check('en.html: estimated relation line removed (v0.5.3)', !en.includes('estimat
 check('index.html: estimated relation line removed (v0.5.3)', !jp.includes('推定の根拠'));
 for (const [name, html] of [['home.html', home], ['home-en.html', homeEn]]) {
   check(`${name}: language switch top-right`, html.includes('class="langsw"') && html.includes('id="langOther"'));
-  check(`${name}: insider card names X (Rioshi)`, html.includes('(Rioshi)') && html.includes('X（Rioshi）') || html.includes('X (Rioshi)'));
+  check(`${name}: prelist card names X (Rioshi)`, html.includes('(Rioshi)') && html.includes('X（Rioshi）') || html.includes('X (Rioshi)'));
   check(`${name}: counts exclude estimated from special sections`, html.includes("actorTier !== 'estimated'"));
   check(`${name}: version v0.4.2`, html.includes('v0.4.2'));
 }

@@ -7,7 +7,7 @@
 // script rebuilds their past EVM events from the chain-wide flow index
 // (~/workspace/42-flowmap/flows.jsonl, snapshot block 4,193,609) with the
 // collector's own classifier — the same method as the earlier snipe /
-// bridge-out / insider backfills. Rebuilt events are flagged
+// bridge-out / prelist backfills. Rebuilt events are flagged
 // `backfill: true` and appended to events.jsonl (deduplicated by id).
 // Estimated events are never pinned into feed.json; feed visibility
 // follows the normal latest-500 rule. (Recent activity after the index

@@ -40,7 +40,7 @@ const lc = (a) => String(a).toLowerCase();
 const pairEvents = events.filter((e) => e.type === 'pair-created');
 check('stored pair-created events exist', pairEvents.length >= 60, String(pairEvents.length));
 check('pair-created events carry pairSymbols/pairWhitelist/firstMint field', pairEvents.every((e) => Array.isArray(e.pairSymbols) && Array.isArray(e.pairWhitelist) && 'firstMint' in e));
-check('pair-created events are never snipe/insider flagged', pairEvents.every((e) => !e.isSnipe && !e.isInsider));
+check('pair-created events are never snipe/prelist flagged', pairEvents.every((e) => !e.isSnipe && !e.isPrelist));
 const displayedPairs = pairEvents.filter((e) => (e.pairWhitelist || []).some(Boolean));
 const hiddenPairs = pairEvents.filter((e) => !(e.pairWhitelist || []).some(Boolean));
 check('display rule: at-least-one-whitelisted pairs exist', displayedPairs.length > 0, String(displayedPairs.length));
@@ -245,7 +245,7 @@ check('price change24hPct is number or null', feed.status.price.change24hPct ===
   const jp = read('index.html'), en = read('en.html'), home = read('home.html'), homeEn = read('home-en.html');
   // v0.4.1 reorder (user): coloured special sections on top, plain data
   // sections below; New Pairs moved down into the plain group.
-  const order = ['sec-insider', 'sec-snipes', 'sec-bridge', 'sec-bridgechart', 'sec-trades', 'sec-tradesnf', 'sec-trading', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-newpairs', 'sec-feed', 'sec-staking', 'sec-validators'];
+  const order = ['sec-prelist', 'sec-snipes', 'sec-bridge', 'sec-bridgechart', 'sec-trades', 'sec-tradesnf', 'sec-trading', 'sec-lp', 'sec-dormant', 'sec-newfaces', 'sec-newpairs', 'sec-feed', 'sec-staking', 'sec-validators'];
   for (const [name, html] of [['index.html', jp], ['en.html', en]]) {
     const idx = order.map((id) => html.indexOf(`id="${id}"`));
     check(`${name}: all 14 sections present in order`, idx.every((v, i) => v > -1 && (i === 0 || v > idx[i - 1])));

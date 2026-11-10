@@ -12,10 +12,10 @@
   .sub{color:var(--sub);font-size:.9rem}
   .status{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:.9rem}
   .status b{color:var(--ok)}
-  section.insider{background:#1d1030;border:2px solid #9333ea;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 22px rgba(147,51,234,.5)}
-  section.insider h2{color:#e9d5ff;font-size:1.3rem}
-  section.insider .rule{color:#c084fc}
-  .badge.insider{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
+  section.prelist{background:#1d1030;border:2px solid #9333ea;border-radius:10px;padding:6px 14px 12px;box-shadow:0 0 22px rgba(147,51,234,.5)}
+  section.prelist h2{color:#e9d5ff;font-size:1.3rem}
+  section.prelist .rule{color:#c084fc}
+  .badge.prelist{color:#fff;background:#7e22ce;border-color:#c084fc;font-weight:700;box-shadow:0 0 10px rgba(192,132,252,.7)}
   section.trades{background:#2a2110;border:1px solid #6b5518;border-radius:10px;padding:6px 14px 12px}
   section.tradesnf{background:#211a0c;border:1px dashed #6b5518;border-radius:10px;padding:6px 14px 12px}
   section.trades h2,section.tradesnf h2{color:#ffd166}
@@ -64,10 +64,10 @@
   .empty{color:var(--sub);padding:18px 0}
   footer{color:var(--sub);font-size:.82rem;max-width:980px;margin:0 auto;padding:16px}
   .topnav{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.topnav a{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:.88rem;color:var(--txt)}
-  section.insider>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.trades>h2,section.tradesnf>h2,section.trading>h2,section.fold>h2{cursor:pointer;user-select:none}
-  section.insider>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.trades>h2::after,section.tradesnf>h2::after,section.trading>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
-  section.insider.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.trades.open>h2::after,section.tradesnf.open>h2::after,section.trading.open>h2::after,section.fold.open>h2::after{content:' ▼'}
-  section.insider:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.trades:not(.open)>:not(h2),section.tradesnf:not(.open)>:not(h2),section.trading:not(.open)>:not(h2){display:none}
+  section.prelist>h2,section.snipes>h2,section.bridge>h2,section.bridgechart>h2,section.trades>h2,section.tradesnf>h2,section.trading>h2,section.fold>h2{cursor:pointer;user-select:none}
+  section.prelist>h2::after,section.snipes>h2::after,section.bridge>h2,section.bridgechart>h2::after,section.trades>h2::after,section.tradesnf>h2::after,section.trading>h2::after,section.fold>h2::after{content:' ▶';font-size:.75em;color:var(--sub)}
+  section.prelist.open>h2::after,section.snipes.open>h2::after,section.bridge.open>h2::after,section.trades.open>h2::after,section.tradesnf.open>h2::after,section.trading.open>h2::after,section.fold.open>h2::after{content:' ▼'}
+  section.prelist:not(.open)>:not(h2),section.snipes:not(.open)>:not(h2),section.bridge:not(.open)>:not(h2),section.bridgechart:not(.open)>:not(h2),section.trades:not(.open)>:not(h2),section.tradesnf:not(.open)>:not(h2),section.trading:not(.open)>:not(h2){display:none}
   section.fold:not(.open)>.fold-body{display:none}
   section.fold{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:6px 14px 12px;margin-top:22px}
   section.fold>h2{margin-top:8px}
@@ -151,15 +151,15 @@
 <header>
   <div class="head-row"><h1>متتبع المدققين على 42 Chain في الوقت الفعلي</h1><div class="langsw"><a href="index.html" id="langOther">日本語</a> | <a href="en.html">English</a> | <a href="zh.html">简体中文</a> | <a href="es.html">Español</a> | <a href="hi.html">हिन्दी</a> | <b>العربية</b> | <a href="pt.html">Português</a> | <a href="fr.html">Français</a> <span class="verbadge">v0.6.0</span></div></div>
   <p class="sub">تجمع هذه الصفحة تلقائيًا، من الكتل الجديدة، حركات المدققين أنفسهم وعناوينهم ذات الصلة (فقط من تعامل معهم مباشرة) (جانب EVM + جانب Cosmos، v0.6.0). لا تُحسب عناوين البرامج (العقود) كعلاقات لأي شخص، ولا تُتتبّع الروابط عبرها أبدًا. لا يُعامل أي عنوان كبنية تحتية لمجرد كونه محفظة مشتركة؛ فالمعيار الوحيد هو ما إذا كان برنامجًا (عقدًا). يتتبع هذا الموقع المدققين أنفسهم فقط والعناوين ذات الصلة المرتبطة بهم عبر معاملات مباشرة. لا تُتتبّع العناوين الأبعد من ذلك (العمق 2+) ولا العناوين التي يكون ارتباطها تقديريًا فقط. العناوين ذات الصلة هي عناوين لأشخاص آخرين أجروا معاملات مع ذلك المدقق في الماضي؛ وليست بالضرورة محافظ المدقق نفسه. تُعرض أنشطتها منفصلة عن نشاط المدقق نفسه. يعني «العنوان ذو الصلة» فقط العنوان الذي تعامل مباشرة مع المدقق مرتين على الأقل، أو في كلا الاتجاهين. المعاملة الواحدة في اتجاه واحد لا تُعدّ صلة.</p>
-  <nav class="topnav"><a href="home-ar.html">🏠 الصفحة الرئيسية</a><a href="#sec-insider">⚠ المطلعون</a><a href="#sec-snipes">🎯 القنص</a><a href="#sec-bridge">🌉 السحب عبر الجسر</a><a href="#sec-bridgechart">📊 الإجماليات</a><a href="#sec-trades">💱 التداول</a><a href="#sec-tradesnf">💱 التداول (باستثناء مبيعات FISH الصغيرة)</a><a href="#sec-trading">📈 ملخص التداول</a><a href="#sec-lp">💧 السيولة</a><a href="#sec-dormant">😴 الخاملون</a><a href="#sec-newfaces">👤 وجوه جديدة</a><a href="#sec-newpairs">🆕 أزواج جديدة</a><a href="#sec-feed">أحدث نشاط</a><a href="#sec-staking">🏦 التخزين</a><a href="#sec-validators">المدققون</a></nav>
+  <nav class="topnav"><a href="home-ar.html">🏠 الصفحة الرئيسية</a><a href="#sec-prelist">🕑 المشتريات قبل 14:00 في يوم الإدراج</a><a href="#sec-snipes">🎯 القنص</a><a href="#sec-bridge">🌉 السحب عبر الجسر</a><a href="#sec-bridgechart">📊 الإجماليات</a><a href="#sec-trades">💱 التداول</a><a href="#sec-tradesnf">💱 التداول (باستثناء مبيعات FISH الصغيرة)</a><a href="#sec-trading">📈 ملخص التداول</a><a href="#sec-lp">💧 السيولة</a><a href="#sec-dormant">😴 الخاملون</a><a href="#sec-newfaces">👤 وجوه جديدة</a><a href="#sec-newpairs">🆕 أزواج جديدة</a><a href="#sec-feed">أحدث نشاط</a><a href="#sec-staking">🏦 التخزين</a><a href="#sec-validators">المدققون</a></nav>
   <div class="status" id="status">جارٍ التحميل…</div>
   <div class="pricebar" id="pricebar" style="display:none"></div>
 </header>
 <main>
-  <section class="insider" id="sec-insider">
-    <h2>⚠ مراقبة المطلعين — X<span class="alias"> (Rioshi)</span></h2>
-    <p class="rule" id="insiderRule"></p>
-    <div id="insiders"><p class="empty">جارٍ التحميل…</p></div>
+  <section class="prelist" id="sec-prelist">
+    <h2>🕑 المشتريات قبل 14:00 في يوم الإدراج — X<span class="alias"> (Rioshi)</span></h2>
+    <p class="rule" id="prelistRule"></p>
+    <div id="prelists"><p class="empty">جارٍ التحميل…</p></div>
   </section>
 
   <section class="snipes" id="sec-snipes">
@@ -291,7 +291,7 @@
 <footer>
   مصدر البيانات: كتل 42 Chain نفسها (عبر RPC). تقتصر التغطية على معاملات 42 Chain فقط (معرّف سلسلة EVM 421018 وجانبها Cosmos، infinite_421018-1). لا تُضمّن معاملات QL1 أو أي سلسلة أخرى. النقر على معاملة أو عنوان يفتح المستكشف الرسمي، scan.infinitedrive.xyz.
   الرموز المعروضة هي أساسًا الرموز الـ17 المدرجة على Don't Panic (أي شيء آخر يُوسم كرمز غير مدرج). لا تُسقط أي حركة بسبب حجمها — تُسجّل التحويلات الصغيرة كلها.
-  النطاق: جانب EVM + جانب Cosmos (التحويلات، التفويضات، مطالبات المكافآت). تُعرض أنواع الإجراءات بأسماء ملموسة حيثما يحددها عقد الوجهة والطريقة (مشاركة Fluke، سكّ NFT، مطالبة بالمكافأة، إرسال عبر الجسر، وهكذا)؛ أي شيء لا يمكن تحديده يُعرض بصدق على أنه «إجراء غير مصنّف (الطريقة / الوجهة)». يغطي قسم السحب عبر الجسر فقط الحركات التي ترسل USDT إلى سلسلة خارجية (تُسجّل عمليات الإرسال عبر الجسر للرموز الأخرى كحركات عادية ولا تُعرض في القسم الأخضر؛ الإيصالات الواردة إيصالات عادية). العناوين التقديرية (المرحلة 3): تُراقب أيضًا العناوين التي لا يمكن تأكيد ارتباطها بتحويل مباشر، والمقدّرة بثلاث طرق — عبر المجمع، قفزتان، وطرف مقابل مشترك. تظهر حركاتها فقط في أحدث نشاط، بحد متقطع وشارة تقديري والأساس المعروض؛ ولا تُضمّن أبدًا في أقسام المطلعين / القنص / التداول / السحب عبر الجسر / الإجماليات (تلك تبقى مؤكدة فقط). تُحدّث قائمة المدققين من السلسلة في كل تشغيل: يُضاف المدققون المرتبطون حديثًا تلقائيًا، ويبقى المدققون الذين يغادرون المجموعة المرتبطة خاضعين للمراقبة كسجل (موسومون بأنهم غير نشطين). لا يُنشر أي شيء خارجيًا (لا بوت X) — التنبيهات تعيش على هذا الموقع فقط.
+  النطاق: جانب EVM + جانب Cosmos (التحويلات، التفويضات، مطالبات المكافآت). تُعرض أنواع الإجراءات بأسماء ملموسة حيثما يحددها عقد الوجهة والطريقة (مشاركة Fluke، سكّ NFT، مطالبة بالمكافأة، إرسال عبر الجسر، وهكذا)؛ أي شيء لا يمكن تحديده يُعرض بصدق على أنه «إجراء غير مصنّف (الطريقة / الوجهة)». يغطي قسم السحب عبر الجسر فقط الحركات التي ترسل USDT إلى سلسلة خارجية (تُسجّل عمليات الإرسال عبر الجسر للرموز الأخرى كحركات عادية ولا تُعرض في القسم الأخضر؛ الإيصالات الواردة إيصالات عادية). العناوين التقديرية (المرحلة 3): تُراقب أيضًا العناوين التي لا يمكن تأكيد ارتباطها بتحويل مباشر، والمقدّرة بثلاث طرق — عبر المجمع، قفزتان، وطرف مقابل مشترك. تظهر حركاتها فقط في أحدث نشاط، بحد متقطع وشارة تقديري والأساس المعروض؛ ولا تُضمّن أبدًا في أقسام المشتريات قبل 14:00 في يوم الإدراج / القنص / التداول / السحب عبر الجسر / الإجماليات (تلك تبقى مؤكدة فقط). تُحدّث قائمة المدققين من السلسلة في كل تشغيل: يُضاف المدققون المرتبطون حديثًا تلقائيًا، ويبقى المدققون الذين يغادرون المجموعة المرتبطة خاضعين للمراقبة كسجل (موسومون بأنهم غير نشطين). لا يُنشر أي شيء خارجيًا (لا بوت X) — التنبيهات تعيش على هذا الموقع فقط.
   نطاق العناوين ذات الصلة (v0.4.0): بالإضافة إلى كل عنوان أرسل إلى مدقق أو تلقى منه، طُبّق توسيع السجل الكامل (الأطراف المقابلة للأطراف المقابلة، من دون حد) على السجل بأكمله، بما في ذلك الماضي (تُستبعد عقود النظام / الأزواج / الرموز، وجهات الاتصال التي لا يمكن الوصول إليها إلا عبر عنوان تقديري). عندما يظهر طرف مقابل جديد، يُضاف أيضًا تلقائيًا كعنوان ذي صلة على الفور. / يغطي قسم الأزواج الجديدة الأزواج التي أنشأتها مصنع Don't Panic ويعرض فقط الأزواج التي تحتوي على واحد على الأقل من الرموز الـ17 المدرجة. / يُحسب سعر [42] من احتياطيات مجمع 42/USDT؛ المجمع صغير، لذا للرقم هامش خطأ.
   روابط معاملات جانب Cosmos تفتح ماسِح Cosmos الخاص بنا (42 Cosmos Scan). تُظهر العناوين فقط العنوان الذي تحرك فعليًا؛ تُدرج المدققون ذوو الصلة في سطر منفصل، بحد أقصى (العنوان الذي يتعامل مع العديد من المدققين يحصل على علامة «طرف مقابل مشترك»). المدقق X معروف أيضًا باسم Rioshi، ويظهر بنص صغير كـ (Rioshi) بجانب الاسم.
   <br>الإصدار: <b>v0.6.0</b> (v0.6.0: استُبدل قسم ⭐ جدير بالملاحظة بقسمي 💱 التداول (جميع عمليات تبادل المدققين + المرتبطين من المستوى الأول) و💱 التداول (باستثناء مبيعات FISH الصغيرة) — القائمة نفسها دون مبيعات FISH التي استلمت أقل من 10 [42] / 10 USDT — وبقسم 📈 ملخص التداول (مجاميع الشراء/البيع حسب الفترة والرمز؛ FISH مستثنى). v0.5.3: حُصر النطاق في العمق 1 (أُزيلت العناوين ذات الصلة من العمق 2+ ذات الدليل والعناوين التقديرية مع سجلاتها) واكتُمل السجل التاريخي الناقص بالكامل (باستثناء تدفقات مكافآت Guide/Starlight). v0.5.2: تم إصلاح عرض النسبة — عند التصفية حسب مدقق، يُعرض نشاطه الذاتي ونشاط العناوين ذات الصلة الآن في مجموعتين منفصلتين، وتنقسم أعداد النشاط في قائمة المدققين بالطريقة نفسها، حتى لا تُعرض معاملات الآخرين أبدًا على أنها نشاط المدقق نفسه؛ كما تم تشديد تعريف «ذو الصلة» (لا تُعدّ العناوين ذات صلة إلا إذا تعاملت مباشرة مع المدقق مرتين على الأقل، أو في كلا الاتجاهين؛ أما الاتصال الواحد في اتجاه واحد فيُحتفظ به كمرشح ويُرقّى تلقائيًا عند تعامله المباشر الثاني). v0.5.1: إصلاح تخطيط الترويسة (أصبح العنوان بعرض كامل ويلتف مبدّل اللغة على الشاشات الضيقة). v0.5.0: الموقع متاح الآن بثماني لغات — 日本語 وEnglish و简体中文 وEspañol وहिन्दी والعربية وPortuguês وFrançais — كل لغة تُعرَض من نفس feed.json، مركّبة من الحقول المنظمة بدلًا من الملخصات اليابانية المخزّنة. v0.4.3: توجد الآن شارة إصدار في أعلى يمين الترويسة، بجانب مبدّل اللغة، على كل صفحة. v0.4.2: أُزيلت كل عناوين البنية التحتية (العقود) من مخطط الأشخاص — تُحسب العلاقات عبر المحافظ الشخصية (EOA) فقط، ولا عبر عقد أبدًا؛ يُجمّع الآن رسم إجماليات السحب عبر الجسر لكل مدقق (الكل 23، عمق غير محدود، المحافظ المشتركة تُحسب في عمود كل مدقق متصل). v0.4.1: يقسّم الآن رسم إجماليات السحب عبر الجسر كل عمود حسب العمق — المدقق نفسه / ذو الصلة من العمق 1 / ذو الصلة من العمق 2+. في السابق، أضاف v0.4.0 ستة أقسام — أزواج جديدة، حركات سيولة، إجماليات التفويضات والمكافآت، عودات الخاملين، وجوه جديدة (توسيع العناوين ذات الصلة عبر السجل الكامل + الإضافات التلقائية)، وسعر [42]؛ أعاد v0.3.2 تصنيف Xenia من بنية تحتية أساسية إلى مدقق عادي — تصحيح تصنيف؛ أضاف v0.3.1 تعريف العلاقات التقديرية بجانب مرشحات أحدث نشاط؛ وأكمل v0.3.0 المرحلة 3: مراقبة العناوين التقديرية + التحديث التلقائي لقائمة المدققين، والاسم المستعار (Rioshi) بجانب X، ومبدّل لغة «日本語 | English» في أعلى اليمين)
@@ -500,7 +500,7 @@ function renderEvent(ev){
   const bridgeBadge = isBridgeOut ? ` <span class="badge bridgeout">🌉 ${ev.actorTier === 'validator' ? "سحب USDT عبر الجسر من المدقق نفسه" : ev.actorTier === 'related' ? "سحب USDT عبر الجسر من محفظة ذات صلة" : 'سحب USDT عبر الجسر'}</span>` : '';
   const cosmos = ev.chain === 'cosmos' ? ' <span class="badge cosmos">Cosmos</span>' : '';
   const snipe = ev.isSnipe ? ` <span class="badge snipe">🎯 قنص (${ageEn(ev.pairAgeSecs)})</span>` : '';
-  const insider = ev.isInsider ? ` <span class="badge insider">⚠ مطّلع (${valName('X')})</span>` : '';
+  const prelist = ev.isPrelist ? ` <span class="badge prelist">🕑 شراء قبل 14:00 في يوم الإدراج (${valName('X')})</span>` : '';
   const dormant = ev.isDormantReturn ? ` <span class="badge dormant">😴 أول حركة منذ ${ev.dormantDays} يومًا</span>` : '';
   const newface = ev.isNewCounterparty ? ` <span class="badge newface">👤 طرف مقابل جديد</span>` : '';
   const added = ev.watchlistAdded ? ` <span class="badge added">أُضيف إلى قائمة المراقبة</span>` : '';
@@ -510,7 +510,7 @@ function renderEvent(ev){
   return `<div class="ev${isBridgeOut ? ' bridgeout' : ''}${ev.actorTier === 'estimated' ? ' estimated' : ''}${lpCls}">
     <div class="bigname${bn.cls}">${bn.main}<span class="sub">${bn.sub}</span></div>
     <div class="top"><span class="time">${jstEn(ev.ts)} (block ${ev.block})</span>
-    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${insider}${dormant}${newface}${added}</div>
+    <span class="badge type">${TYPE_EN[ev.type] || ev.type}</span>${tierBadge(ev)}${bridgeBadge}${wl}${pairWl}${cosmos}${snipe}${prelist}${dormant}${newface}${added}</div>
     <div class="summary"><b class="${ev.actorTier === 'validator' ? 'who-self' : 'who-rel'}">${whoLabel(ev)}</b> ${addrLink(ev.actor)}: ${summaryEn(ev)}</div>
     ${relationLine(ev)}
     <div class="meta">${cp} / ${txLink(ev)}</div></div>`;
@@ -635,17 +635,17 @@ function applyFilters(){
   // 👤 New faces (v0.4.0): first-appearance counterparties in the whole record.
   const newfaces = FEED.events.filter((ev) => ev.isNewCounterparty && ev.actorTier !== 'estimated');
   document.getElementById('newfaces').innerHTML = newfaces.length ? newfaces.slice(0,100).map(renderEvent).join('') : '<p class="empty">لا توجد وجوه جديدة بعد.</p>';
-  // ⚠ Insider section (v0.2.5, user-narrowed): ONLY buys by X / X-related
+  // ⚠ Pre-listing section (v0.2.5, user-narrowed): ONLY buys by X / X-related
   // before 14:00 JST on listing day 2026-06-30 (window epochs below).
   // Display capped at 100 with the total shown (records are never dropped).
-  const insiders = FEED.events.filter((ev) => ev.isInsider && ev.actorTier !== 'estimated' && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
+  const prelists = FEED.events.filter((ev) => ev.isPrelist && ev.actorTier !== 'estimated' && ev.type === 'swap-buy' && ev.ts >= 1782745200 && ev.ts < 1782795600)
     .sort((a, b) => (b.block - a.block) || ((b.logIndex ?? -1) - (a.logIndex ?? -1)) || (b.ts - a.ts));
-  document.getElementById('insiderRule').textContent = 'مراقبة المطلعين: فقط عمليات شراء [42] وDONT ‏(PANIC) التي قام بها المدقق X ‏(Rioshi) نفسه والعناوين ذات الصلة المباشرة بـ X ‏(Rioshi) قبل الساعة 14:00 JST في يوم الإدراج (30 يونيو 2026). كل الحركات الأخرى في السجل العادي.' + (insiders.length ? ` ‏(${insiders.length} عملية شراء مطابقة)` : '');
-  document.getElementById('insiders').innerHTML = insiders.length
-    ? insiders.slice(0,100).map(renderEvent).join('') + (insiders.length > 100 ? `<p class="empty">عرض أحدث 100 من ${insiders.length} حركة (كلها محفوظة في السجل)</p>` : '')
+  document.getElementById('prelistRule').textContent = 'حول هذا القسم: فقط عمليات شراء [42] وDONT ‏(PANIC) التي قام بها المدقق X ‏(Rioshi) نفسه والعناوين ذات الصلة المباشرة بـ X ‏(Rioshi) قبل الساعة 14:00 JST في يوم الإدراج (30 يونيو 2026). كل الحركات الأخرى في السجل العادي.' + (prelists.length ? ` ‏(${prelists.length} عملية شراء مطابقة)` : '');
+  document.getElementById('prelists').innerHTML = prelists.length
+    ? prelists.slice(0,100).map(renderEvent).join('') + (prelists.length > 100 ? `<p class="empty">عرض أحدث 100 من ${prelists.length} حركة (كلها محفوظة في السجل)</p>` : '')
     : '<p class="empty">لا توجد عمليات شراء مطابقة قبل الإدراج.</p>';
 }
-if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.insider, section.snipes, section.bridge, section.bridgechart, section.trades, section.tradesnf, section.trading, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
+if (document.querySelectorAll) for (const sec of document.querySelectorAll('section.prelist, section.snipes, section.bridge, section.bridgechart, section.trades, section.tradesnf, section.trading, section.fold, section.newpairs, section.lp, section.dormant, section.newfaces, section.staking')) {
   const h = sec.querySelector('h2');
   if (h) h.addEventListener('click', () => sec.classList.toggle('open'));
 }

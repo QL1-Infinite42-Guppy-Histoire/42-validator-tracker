@@ -6,7 +6,7 @@
 //      depth >= 2; the 37 one-off candidates stay unwatched.
 //  (2) The 16 removed entries (12 evidence-kept depth>=2 + 4 estimated,
 //      listed in v053-scope-report.json) are absent from the watchlist
-//      and have no actor events left. The two protected X insider
+//      and have no actor events left. The two protected X prelist
 //      wallets (…b242 / …aade) stay related.
 //  (3) Guide-reward exclusion: the Starlight fund/claim txs identified
 //      in the audit are absent; no reward-claim-starlight events exist;
@@ -53,7 +53,7 @@ check('removed entries are absent from the watchlist', [...removedAddrs].every((
 check('no actor events remain for removed entries (except pair-created chain news, the standing exception)', events.every((e) => !removedAddrs.has((e.actor || '').toLowerCase()) || e.type === 'pair-created'), String(events.filter((e) => removedAddrs.has((e.actor || '').toLowerCase()) && e.type !== 'pair-created').length));
 for (const a of ['0xc8de941efb92925bfd359a7a380399e47bc2b242', '0xf75b159860f3de7f229e22d08eab844fd97baade']) {
   const e = ent.get(a);
-  check(`protected X insider wallet stays related: …${a.slice(-4)}`, !!e && e.tier === 'related' && e.watch === true && (e.relatedValidators ?? []).includes('X'));
+  check(`protected X prelist wallet stays related: …${a.slice(-4)}`, !!e && e.tier === 'related' && e.watch === true && (e.relatedValidators ?? []).includes('X'));
 }
 
 // ---------- (3) guide-reward exclusion ----------

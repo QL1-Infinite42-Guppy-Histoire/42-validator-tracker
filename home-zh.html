@@ -19,8 +19,8 @@
   a.card p{color:var(--sub);font-size:.9rem;margin:0}
   a.card .count{font-size:1.5rem;font-weight:700;margin-top:8px}
   a.card .segsub{font-size:.85rem;color:var(--sub);margin-top:3px}
-  a.card.insider{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
-  a.card.insider h2{color:#e9d5ff}
+  a.card.prelist{background:#1d1030;border:2px solid #9333ea;box-shadow:0 0 22px rgba(147,51,234,.45)}
+  a.card.prelist h2{color:#e9d5ff}
   a.card.snipes{background:#33121a;border:2px solid #ff5964;box-shadow:0 0 18px rgba(255,89,100,.25)}
   a.card.snipes h2{color:#ff8fa3}
   a.card.bridge{background:#0e2416;border:2px solid #2f9e44}
@@ -53,11 +53,11 @@
 </header>
 <main>
   <div class="cards">
-    <a class="card insider" href="zh.html#sec-insider">
-      <h2>⚠ 内幕观察 — X<span class="alias"> (Rioshi)</span></h2>
+    <a class="card prelist" href="zh.html#sec-prelist">
+      <h2>🕑 上市日14点前的买入 — X<span class="alias"> (Rioshi)</span></h2>
       <p>仅收录验证者 X (Rioshi) 本人及 X (Rioshi) 关联地址在上市日（2026 年 6 月 30 日）14:00 JST 之前对 [42] 和 DONT 的买入。</p>
-      <div class="count" id="c-insider">—</div>
-      <div class="segsub" id="c-insider-sub">—</div>
+      <div class="count" id="c-prelist">—</div>
+      <div class="segsub" id="c-prelist-sub">—</div>
     </a>
     <a class="card snipes" href="zh.html#sec-snipes">
       <h2>🎯 抢购警报</h2>
@@ -140,11 +140,11 @@
     const s = FEED.status, ev = FEED.events;
     document.getElementById('status').innerHTML =
       `最后处理的区块：<b>${s.lastProcessedBlock ?? '—'}</b> / Cosmos 侧：<b>${s.lastProcessedCosmosBlock ?? '—'}</b> / 更新：${s.lastProcessedAt ? new Date(s.lastProcessedAt).toLocaleString('zh-CN',{timeZone:'Asia/Tokyo'}) + ' JST' : '—'} / 已记录动态：${s.totalEvents}`;
-    const insider = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
-    document.getElementById('c-insider').textContent = insider;
+    const prelist = ev.filter((e) => e.isPrelist && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600).length;
+    document.getElementById('c-prelist').textContent = prelist;
     const xAddr = (FEED.validators.find((v) => v.moniker === 'X') || {}).address;
-    const insSelf = ev.filter((e) => e.isInsider && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600 && e.actor === xAddr).length;
-    document.getElementById('c-insider-sub').textContent = `本人 ${insSelf} / 关联 ${insider - insSelf}`;
+    const preSelf = ev.filter((e) => e.isPrelist && e.actorTier !== 'estimated' && e.type === 'swap-buy' && e.ts >= 1782745200 && e.ts < 1782795600 && e.actor === xAddr).length;
+    document.getElementById('c-prelist-sub').textContent = `本人 ${preSelf} / 关联 ${prelist - preSelf}`;
     document.getElementById('c-snipes').textContent = ev.filter((e) => e.isSnipe && e.actorTier !== 'estimated').length;
     document.getElementById('c-bridge').textContent = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated').length;
     const bouts = ev.filter((e) => e.type === 'bridge-out' && e.actorTier !== 'estimated');
