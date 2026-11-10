@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-10T13:45:11.758Z",
+ "generatedAt": "2026-11-10T13:50:11.222Z",
  "status": {
-  "lastProcessedBlock": 4361291,
-  "latestBlockSeen": 4361291,
-  "lastProcessedCosmosBlock": 4361291,
-  "lastProcessedAt": "2026-11-10T13:45:11.636Z",
-  "totalEvents": 10870,
+  "lastProcessedBlock": 4361346,
+  "latestBlockSeen": 4361346,
+  "lastProcessedCosmosBlock": 4361346,
+  "lastProcessedAt": "2026-11-10T13:50:11.111Z",
+  "totalEvents": 10871,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-10T13:45:11.781Z"
+   "checkedAt": "2026-11-10T13:50:11.245Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63268231,
-   "updatedAt": "2026-11-10T13:45:11.000Z",
+   "updatedAt": "2026-11-10T13:50:11.000Z",
    "change24hPct": -0.95
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4360853,
+    "toBlock": 4361330,
     "fromTs": 1770178474,
-    "toTs": 1794315936
+    "toTs": 1794318513
    },
    "totals": {
     "delegate": {
@@ -784,7 +784,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 114,
-   "relatedActivity": 133,
+   "relatedActivity": 134,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -911,6 +911,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0xaadc82cdf1aa98e2e66085f6128cda9a8caeb36952e9126f013d332e7bb9b2f3:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1794318513,
+   "block": 4361330,
+   "txHash": "0xaadc82cdf1aa98e2e66085f6128cda9a8caeb36952e9126f013d332e7bb9b2f3",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xf525bf77d97c8d9bfda54c2aeb84f6d019ff9dd583c1d1d54440d64ae7738b62:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794315936,
@@ -20993,48 +21026,6 @@
    ],
    "whitelisted": true,
    "summary": "286.317179 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x6ed89e9ea1a73ddf1b3fc2543f1e6769bcd8fd9244911c8b0a4486241b8cc97b:123:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794132773,
-   "block": 4326958,
-   "txHash": "0x6ed89e9ea1a73ddf1b3fc2543f1e6769bcd8fd9244911c8b0a4486241b8cc97b",
-   "logIndex": 123,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "286431752573018821797",
-    "amount": "286.431752",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "286.431752 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
