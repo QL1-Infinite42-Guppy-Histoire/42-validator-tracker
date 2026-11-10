@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-10T17:05:14.564Z",
+ "generatedAt": "2026-11-10T17:10:11.671Z",
  "status": {
-  "lastProcessedBlock": 4363513,
-  "latestBlockSeen": 4363513,
-  "lastProcessedCosmosBlock": 4363513,
-  "lastProcessedAt": "2026-11-10T17:05:14.256Z",
-  "totalEvents": 10878,
+  "lastProcessedBlock": 4363568,
+  "latestBlockSeen": 4363568,
+  "lastProcessedCosmosBlock": 4363568,
+  "lastProcessedAt": "2026-11-10T17:10:11.563Z",
+  "totalEvents": 10879,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-10T17:05:14.584Z"
+   "checkedAt": "2026-11-10T17:10:11.687Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63297151,
-   "updatedAt": "2026-11-10T17:05:14.000Z",
+   "updatedAt": "2026-11-10T17:10:11.000Z",
    "change24hPct": -0.9
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4363463,
+    "toBlock": 4363518,
     "fromTs": 1770178474,
-    "toTs": 1794330035
+    "toTs": 1794330333
    },
    "totals": {
     "delegate": {
@@ -806,7 +806,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 301,
+   "relatedActivity": 302,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -911,6 +911,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0x87fb6b8cdeccb2654f88b27a84347ec378334e4873a808918291d15b63311019:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794330333,
+   "block": 4363518,
+   "txHash": "0x87fb6b8cdeccb2654f88b27a84347ec378334e4873a808918291d15b63311019",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xff102cc5ab2e19c876125cb75ccaa198f203d9843a5c5dba64461a8fc55c37f2:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794330035,
@@ -20921,48 +20954,6 @@
    ],
    "whitelisted": true,
    "summary": "283.806277 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x6ed89e9ea1a73ddf1b3fc2543f1e6769bcd8fd9244911c8b0a4486241b8cc97b:147:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794132773,
-   "block": 4326958,
-   "txHash": "0x6ed89e9ea1a73ddf1b3fc2543f1e6769bcd8fd9244911c8b0a4486241b8cc97b",
-   "logIndex": 147,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "1137044379840343282620",
-    "amount": "1,137.044379",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "1,137.044379 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
