@@ -62,8 +62,8 @@ check('anchor renders in English without Japanese', !!anchor && !JA.test(renderE
 // template-level checks
 check('en.html links back to index.html', html.includes('href="index.html"'));
 check('en.html has English section headings', html.includes('Snipe Alerts') && html.includes('Bridge Withdrawals (USDT, outbound)') && html.includes('Trading') && html.includes('Trading summary') && html.includes('Latest activity'));
-check('en.html has no prelist section (removed 2026-11-10)', !html.includes('sec-prelist') && !html.includes('id="prelists"') && !html.includes('Rioshi'));
-check('jp index.html has no prelist section (removed 2026-11-10)', !jpHtml.includes('sec-prelist') && !jpHtml.includes('id="prelists"') && !jpHtml.includes('Rioshi'));
+check('en.html has no prelist section (removed 2026-11-10)', !html.includes('sec-prelist') && !html.includes('id="prelists"'));
+check('jp index.html has no prelist section (removed 2026-11-10)', !jpHtml.includes('sec-prelist') && !jpHtml.includes('id="prelists"'));
 check('en.html template contains no Japanese summary text', !html.includes('ブリッジで外部へ送信：') && !html.includes('を送金'));
 
 console.log(fails === 0 ? 'ALL PASS' : `${fails} FAILED`);

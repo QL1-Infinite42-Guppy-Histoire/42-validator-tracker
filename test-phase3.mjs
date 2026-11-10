@@ -13,7 +13,7 @@
 //    and no confirmed-only flags; feed.json exposes estimated events,
 //    estimatedCount per validator, chainValidators + estimatedRule.
 //  - frontend statics (JP + EN + home pages): estimated styles + toggle +
-//    confirmed-only filter guards, the X (Rioshi) display helpers, and the
+//    confirmed-only filter guards, the display helpers, and the
 //    top-right language switch on all four pages.
 // Run: node test-phase3.mjs (exit 1 on failure)
 import { readFileSync } from 'node:fs';
@@ -161,7 +161,6 @@ check('stored estimated events: no snipe/prelist/bridge-out', storedEstAll.every
 check('feed.json contains no estimated events (v0.5.3)', feed.events.every((e) => e.actorTier !== 'estimated'), String(feed.events.filter((e) => e.actorTier === 'estimated').length));
 check('feed status has estimatedRule + chainValidators', !!feed.status.estimatedRule && !!feed.status.chainValidators);
 check('feed validators carry estimatedCount; link total = 0 (v0.5.3)', feed.validators.every((v) => typeof v.estimatedCount === 'number') && feed.validators.reduce((t, v) => t + v.estimatedCount, 0) === 0);
-check('feed prelistRule names X (Rioshi)', (feed.status.prelistRule || '').includes('X（Rioshi）'));
 
 // ---------- frontend statics ----------
 const jp = read('index.html'), en = read('en.html'), home = read('home.html'), homeEn = read('home-en.html');
@@ -174,13 +173,10 @@ for (const [name, html] of [['index.html', jp], ['en.html', en]]) {
 }
 check('index.html: 推定も表示 toggle label removed (v0.5.3)', !jp.includes('推定も表示'));
 check('en.html: Show estimated toggle label removed (v0.5.3)', !en.includes('Show estimated'));
-check('index.html: valName alias helper + Rioshi', jp.includes("const valName = (n) => n === 'X'") && jp.includes('(Rioshi)'));
-check('en.html: valName alias helper + Rioshi', en.includes("const valName = (n) => n === 'X'") && en.includes('(Rioshi)'));
 check('en.html: estimated relation line removed (v0.5.3)', !en.includes('estimateBasis.textEn'));
 check('index.html: estimated relation line removed (v0.5.3)', !jp.includes('推定の根拠'));
 for (const [name, html] of [['home.html', home], ['home-en.html', homeEn]]) {
   check(`${name}: language switch top-right`, html.includes('class="langsw"') && html.includes('id="langOther"'));
-  check(`${name}: prelist card names X (Rioshi)`, html.includes('(Rioshi)') && html.includes('X（Rioshi）') || html.includes('X (Rioshi)'));
   check(`${name}: counts exclude estimated from special sections`, html.includes("actorTier !== 'estimated'"));
   check(`${name}: version v0.4.2`, html.includes('v0.4.2'));
 }

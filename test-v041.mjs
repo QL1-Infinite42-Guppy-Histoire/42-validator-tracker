@@ -113,7 +113,7 @@ function loadPage(file) {
   return { html, els, api: sandbox.__api };
 }
 const stripTags = (s) => s.replace(/<[^>]*>/g, '');
-const normName = (s) => stripTags(s).replace(' (Rioshi)', '');
+const normName = (s) => stripTags(s);
 function parseRows(chartHtml) {
   return chartHtml.split('<div class="bchart-row">').slice(1).map((part) => {
     const name = normName(part.match(/<div class="bchart-name">([\s\S]*?)<\/div>/)[1]);
