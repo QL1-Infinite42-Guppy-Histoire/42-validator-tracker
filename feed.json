@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-11T18:34:35.863Z",
+ "generatedAt": "2026-11-11T18:35:13.898Z",
  "status": {
-  "lastProcessedBlock": 4380491,
-  "latestBlockSeen": 4380491,
-  "lastProcessedCosmosBlock": 4380491,
-  "lastProcessedAt": "2026-11-11T18:34:35.725Z",
-  "totalEvents": 11001,
+  "lastProcessedBlock": 4380498,
+  "latestBlockSeen": 4380498,
+  "lastProcessedCosmosBlock": 4380498,
+  "lastProcessedAt": "2026-11-11T18:35:13.509Z",
+  "totalEvents": 11002,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-11T18:34:35.885Z"
+   "checkedAt": "2026-11-11T18:35:13.919Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63073536,
-   "updatedAt": "2026-11-11T18:34:35.000Z",
+   "updatedAt": "2026-11-11T18:35:13.000Z",
    "change24hPct": -0.35
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4380365,
+    "toBlock": 4380497,
     "fromTs": 1770178474,
-    "toTs": 1794421388
+    "toTs": 1794422101
    },
    "totals": {
     "delegate": {
@@ -796,7 +796,7 @@
    "isCore": false,
    "relatedCount": 3,
    "selfActivity": 115,
-   "relatedActivity": 134,
+   "relatedActivity": 135,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -923,6 +923,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0xa3dfb7a06b9e2285f889039e535d5e4589aaeff0368bfc0f43c28919828027a0:tx:bridge-delivery:0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "ts": 1794422101,
+   "block": 4380497,
+   "txHash": "0xa3dfb7a06b9e2285f889039e535d5e4589aaeff0368bfc0f43c28919828027a0",
+   "logIndex": null,
+   "type": "bridge-delivery",
+   "actor": "0x1a8645abc18ac51227378165f7a9cb993e3fa46f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xac70cdd7f2b712aef7a20661e0c2e96e1da1d63e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "DRIVESTATS"
+   ],
+   "method": "0x7c39d130",
+   "actionLabel": "ブリッジ配送処理",
+   "destLabel": "Hyperlaneメールボックス",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ブリッジ配送の処理（Hyperlaneメールボックスの process）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "DRIVESTATS"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xa58519320d286d61f36e90cfc13dcf0331a5d277f2369bc1107f1acb134bf990:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
    "ts": 1794421388,
@@ -20580,48 +20613,6 @@
    ],
    "whitelisted": true,
    "summary": "517.695215 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x31dcad557383462e29ed7226553a37735362338e08b3a05b5710dbe3f33650e2:66:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794133955,
-   "block": 4327177,
-   "txHash": "0x31dcad557383462e29ed7226553a37735362338e08b3a05b5710dbe3f33650e2",
-   "logIndex": 66,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "518109703581557878580",
-    "amount": "518.109703",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "518.109703 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
