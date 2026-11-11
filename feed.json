@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-11T14:05:12.735Z",
+ "generatedAt": "2026-11-11T14:10:18.052Z",
  "status": {
-  "lastProcessedBlock": 4377501,
-  "latestBlockSeen": 4377501,
-  "lastProcessedCosmosBlock": 4377501,
-  "lastProcessedAt": "2026-11-11T14:05:12.591Z",
-  "totalEvents": 10977,
+  "lastProcessedBlock": 4377558,
+  "latestBlockSeen": 4377558,
+  "lastProcessedCosmosBlock": 4377558,
+  "lastProcessedAt": "2026-11-11T14:10:17.914Z",
+  "totalEvents": 10978,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,22 +31,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-11T14:05:12.757Z"
+   "checkedAt": "2026-11-11T14:10:18.072Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63073536,
-   "updatedAt": "2026-11-11T14:05:12.000Z",
-   "change24hPct": -0.37
+   "updatedAt": "2026-11-11T14:10:17.000Z",
+   "change24hPct": -0.35
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4377452,
+    "toBlock": 4377507,
     "fromTs": 1770178474,
-    "toTs": 1794405636
+    "toTs": 1794405933
    },
    "totals": {
     "delegate": {
@@ -806,7 +806,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 344,
+   "relatedActivity": 345,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -911,6 +911,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0xf9821cea9c8c2cfa9e9d025b0eac257be1037e30404ebc87de7f2d8ab799f37e:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794405933,
+   "block": 4377507,
+   "txHash": "0xf9821cea9c8c2cfa9e9d025b0eac257be1037e30404ebc87de7f2d8ab799f37e",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xca92db586c2e8d81cb3ee0e62bbb129339d2f80e15d23c048ccafee9236241fb:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794405636,
@@ -20650,48 +20683,6 @@
    ],
    "whitelisted": true,
    "summary": "1,059.710127 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x1164c5c7a2f741f21a396e5d1889dd348db89f5177946569e20ed17c271d5bec:144:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794133572,
-   "block": 4327106,
-   "txHash": "0x1164c5c7a2f741f21a396e5d1889dd348db89f5177946569e20ed17c271d5bec",
-   "logIndex": 144,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "265033545259289741914",
-    "amount": "265.033545",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "265.033545 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
