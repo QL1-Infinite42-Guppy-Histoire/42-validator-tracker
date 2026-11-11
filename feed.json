@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-11T04:00:19.134Z",
+ "generatedAt": "2026-11-11T04:05:11.406Z",
  "status": {
-  "lastProcessedBlock": 4370786,
-  "latestBlockSeen": 4370786,
-  "lastProcessedCosmosBlock": 4370786,
-  "lastProcessedAt": "2026-11-11T04:00:18.726Z",
-  "totalEvents": 10934,
+  "lastProcessedBlock": 4370840,
+  "latestBlockSeen": 4370840,
+  "lastProcessedCosmosBlock": 4370840,
+  "lastProcessedAt": "2026-11-11T04:05:11.300Z",
+  "totalEvents": 10935,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-11T04:00:19.652Z"
+   "checkedAt": "2026-11-11T04:05:11.432Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63297151,
-   "updatedAt": "2026-11-11T04:00:18.000Z",
+   "updatedAt": "2026-11-11T04:05:11.000Z",
    "change24hPct": -0.9
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4370180,
+    "toBlock": 4370791,
     "fromTs": 1770178474,
-    "toTs": 1794366334
+    "toTs": 1794369635
    },
    "totals": {
     "delegate": {
@@ -806,7 +806,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 323,
+   "relatedActivity": 324,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -911,6 +911,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0xc48fe41d54f9e01a5847570e51ca43816b2daad5243de9e063b0f22f9695e802:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1794369635,
+   "block": 4370791,
+   "txHash": "0xc48fe41d54f9e01a5847570e51ca43816b2daad5243de9e063b0f22f9695e802",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xa456d7c25aa127530baf710d8454de386c34c1b67e5bce1710d69d8e1869ffce:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794366334,
@@ -20867,48 +20900,6 @@
    ],
    "whitelisted": true,
    "summary": "272.345189 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x1164c5c7a2f741f21a396e5d1889dd348db89f5177946569e20ed17c271d5bec:15:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794133572,
-   "block": 4327106,
-   "txHash": "0x1164c5c7a2f741f21a396e5d1889dd348db89f5177946569e20ed17c271d5bec",
-   "logIndex": 15,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "545126479953437968118",
-    "amount": "545.126479",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "545.126479 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
