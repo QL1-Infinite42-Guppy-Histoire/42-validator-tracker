@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-11T10:05:15.777Z",
+ "generatedAt": "2026-11-11T10:10:11.805Z",
  "status": {
-  "lastProcessedBlock": 4374838,
-  "latestBlockSeen": 4374838,
-  "lastProcessedCosmosBlock": 4374838,
-  "lastProcessedAt": "2026-11-11T10:05:15.618Z",
-  "totalEvents": 10954,
+  "lastProcessedBlock": 4374893,
+  "latestBlockSeen": 4374893,
+  "lastProcessedCosmosBlock": 4374893,
+  "lastProcessedAt": "2026-11-11T10:10:11.674Z",
+  "totalEvents": 10955,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-11T10:05:16.121Z"
+   "checkedAt": "2026-11-11T10:10:11.832Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63297151,
-   "updatedAt": "2026-11-11T10:05:15.000Z",
+   "updatedAt": "2026-11-11T10:10:11.000Z",
    "change24hPct": -0.55
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4374788,
+    "toBlock": 4374843,
     "fromTs": 1770178474,
-    "toTs": 1794391235
+    "toTs": 1794391532
    },
    "totals": {
     "delegate": {
@@ -806,7 +806,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 336,
+   "relatedActivity": 337,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -911,6 +911,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0x5cd1ec248ee184f6fea9c57823c5cfe5223a57169db9201837f5417698a6bdd8:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794391532,
+   "block": 4374843,
+   "txHash": "0x5cd1ec248ee184f6fea9c57823c5cfe5223a57169db9201837f5417698a6bdd8",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xecb51efb6e2e7adbcba618ce2715e41f2d0d5b55b667b8adf3e4b8e1c9321622:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794391235,
@@ -20742,48 +20775,6 @@
    ],
    "whitelisted": true,
    "summary": "269.203225 CAT42 を受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x1164c5c7a2f741f21a396e5d1889dd348db89f5177946569e20ed17c271d5bec:75:transfer:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794133572,
-   "block": 4327106,
-   "txHash": "0x1164c5c7a2f741f21a396e5d1889dd348db89f5177946569e20ed17c271d5bec",
-   "logIndex": 75,
-   "type": "transfer",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "in",
-   "amount": {
-    "token": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-    "symbol": "CAT42",
-    "amountRaw": "538837520504042051576",
-    "amount": "538.837520",
-    "whitelisted": true
-   },
-   "from": "0x7386719ebbbeb4d810ff89027bfb8a1cdf696310",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "CAT42"
-   ],
-   "whitelisted": true,
-   "summary": "538.837520 CAT42 を受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
