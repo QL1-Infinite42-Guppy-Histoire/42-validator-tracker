@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-12T22:05:12.159Z",
+ "generatedAt": "2026-11-12T22:10:10.824Z",
  "status": {
-  "lastProcessedBlock": 4398821,
-  "latestBlockSeen": 4398821,
-  "lastProcessedCosmosBlock": 4398821,
-  "lastProcessedAt": "2026-11-12T22:05:12.041Z",
-  "totalEvents": 11135,
+  "lastProcessedBlock": 4398876,
+  "latestBlockSeen": 4398876,
+  "lastProcessedCosmosBlock": 4398876,
+  "lastProcessedAt": "2026-11-12T22:10:10.709Z",
+  "totalEvents": 11137,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-12T22:05:12.186Z"
+   "checkedAt": "2026-11-12T22:10:11.110Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63199826,
-   "updatedAt": "2026-11-12T22:05:12.000Z",
+   "updatedAt": "2026-11-12T22:10:10.000Z",
    "change24hPct": -0.39
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4398771,
+    "toBlock": 4398872,
     "fromTs": 1770178474,
-    "toTs": 1794520835
+    "toTs": 1794521381
    },
    "totals": {
     "delegate": {
@@ -735,7 +735,7 @@
    "isCore": false,
    "relatedCount": 2,
    "selfActivity": 80,
-   "relatedActivity": 172,
+   "relatedActivity": 173,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -812,7 +812,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 409,
+   "relatedActivity": 410,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -917,6 +917,72 @@
   }
  ],
  "events": [
+  {
+   "id": "0xc6ce501c7b36c987f8e9929509f0a1159d29313f6ddcfb1f966459435d75f749:tx:reward-claim-fish:0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
+   "ts": 1794521381,
+   "block": 4398872,
+   "txHash": "0xc6ce501c7b36c987f8e9929509f0a1159d29313f6ddcfb1f966459435d75f749",
+   "logIndex": null,
+   "type": "reward-claim-fish",
+   "actor": "0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "CCUK"
+   ],
+   "method": "0x5c74910f",
+   "actionLabel": "報酬請求（FISH配布）",
+   "destLabel": "FISH報酬コントラクト",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "報酬請求（FISH配布）：1.964929 FISH を受け取り",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "CCUK"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
+  {
+   "id": "0x849a2cb2cae62a698ccdcd090ce2492a7573b650d470ac2102d28f5354745cd5:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794521137,
+   "block": 4398827,
+   "txHash": "0x849a2cb2cae62a698ccdcd090ce2492a7573b650d470ac2102d28f5354745cd5",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x036535405cdde7519f57d496613d1c159a4044cb438c6e8abe20f7edad1f0928:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794520835,
@@ -20325,72 +20391,6 @@
    "ts": 1794168334,
    "block": 4333538,
    "txHash": "0x268c8723251e02e1b50fccde32b3990b173df1b2afe6801dabe602e2622b12c2",
-   "logIndex": null,
-   "type": "token-burn",
-   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x87157886",
-   "actionLabel": "FISHバーン（運営）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x1375fe0c4a3c0b10fe1ac0394075b36c6edb71f56e0d525c1e02cd11c7fd1cc2:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "ts": 1794168036,
-   "block": 4333483,
-   "txHash": "0x1375fe0c4a3c0b10fe1ac0394075b36c6edb71f56e0d525c1e02cd11c7fd1cc2",
-   "logIndex": null,
-   "type": "unclassified",
-   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
-   "counterpartyLabel": "コントラクト（未分類）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x98869d1f",
-   "actionLabel": null,
-   "destLabel": "コントラクト（未分類）",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0xa213324432fb6cf16b57ae56b9fb6f60631e1c051bf04b046b5524ce473219db:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "ts": 1794164737,
-   "block": 4332873,
-   "txHash": "0xa213324432fb6cf16b57ae56b9fb6f60631e1c051bf04b046b5524ce473219db",
    "logIndex": null,
    "type": "token-burn",
    "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
