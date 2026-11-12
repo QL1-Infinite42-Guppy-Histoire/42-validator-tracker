@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-12T18:05:16.241Z",
+ "generatedAt": "2026-11-12T18:10:12.328Z",
  "status": {
-  "lastProcessedBlock": 4396155,
-  "latestBlockSeen": 4396155,
-  "lastProcessedCosmosBlock": 4396155,
-  "lastProcessedAt": "2026-11-12T18:05:16.015Z",
-  "totalEvents": 11113,
+  "lastProcessedBlock": 4396210,
+  "latestBlockSeen": 4396210,
+  "lastProcessedCosmosBlock": 4396210,
+  "lastProcessedAt": "2026-11-12T18:10:12.206Z",
+  "totalEvents": 11114,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-12T18:05:16.319Z"
+   "checkedAt": "2026-11-12T18:10:12.350Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63199826,
-   "updatedAt": "2026-11-12T18:05:16.000Z",
+   "updatedAt": "2026-11-12T18:10:12.000Z",
    "change24hPct": 0.2
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4396106,
+    "toBlock": 4396161,
     "fromTs": 1770178474,
-    "toTs": 1794506439
+    "toTs": 1794506737
    },
    "totals": {
     "delegate": {
@@ -812,7 +812,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 401,
+   "relatedActivity": 402,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -917,6 +917,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0x4a456b1f916fe7ed6b16f0f1d1b20981abb3d327c2c58698563ea3d710971910:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794506737,
+   "block": 4396161,
+   "txHash": "0x4a456b1f916fe7ed6b16f0f1d1b20981abb3d327c2c58698563ea3d710971910",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x306311e73a2ef5327dbe81a52d0bfa14262bb35e37f2337650ffcb0dd380bb86:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794506439,
@@ -20455,48 +20488,6 @@
    "pairCreatedTs": 1788365400,
    "pairAgeSecs": 5790197,
    "isSnipe": false
-  },
-  {
-   "id": "0xa047ccdaffeb62db0c64061b17baa6fa25785fb1f23aebe1185d0e2ed1a46c6a:tx:transfer:0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "ts": 1794155527,
-   "block": 4331169,
-   "txHash": "0xa047ccdaffeb62db0c64061b17baa6fa25785fb1f23aebe1185d0e2ed1a46c6a",
-   "logIndex": null,
-   "type": "transfer",
-   "actor": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "176294570374136269665",
-    "amount": "176.294570",
-    "whitelisted": true
-   },
-   "from": "0xaf24c1b76522c0757ded0520e01c6f068e500eb9",
-   "to": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "176.294570 [42] を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
   },
   {
    "id": "0xdaadacc3a0b4268de7f9bf16d28632d60de0edebe25b39ebf7d1470bbfc3c836:0:bridge-out:0xce702e79ea9ae38fb80ee8ee8f586b2195140fcb",
