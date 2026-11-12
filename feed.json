@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-12T03:40:10.011Z",
+ "generatedAt": "2026-11-12T03:45:11.299Z",
  "status": {
-  "lastProcessedBlock": 4386549,
-  "latestBlockSeen": 4386549,
-  "lastProcessedCosmosBlock": 4386549,
-  "lastProcessedAt": "2026-11-12T03:40:09.926Z",
-  "totalEvents": 11065,
+  "lastProcessedBlock": 4386605,
+  "latestBlockSeen": 4386605,
+  "lastProcessedCosmosBlock": 4386605,
+  "lastProcessedAt": "2026-11-12T03:45:11.200Z",
+  "totalEvents": 11067,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-12T03:40:10.027Z"
+   "checkedAt": "2026-11-12T03:45:11.408Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63446925,
-   "updatedAt": "2026-11-12T03:40:09.000Z",
+   "updatedAt": "2026-11-12T03:45:11.000Z",
    "change24hPct": 0.24
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4386541,
+    "toBlock": 4386605,
     "fromTs": 1770178474,
-    "toTs": 1794454758
+    "toTs": 1794455104
    },
    "totals": {
     "delegate": {
@@ -800,7 +800,7 @@
    "bech32": "infinite1cqetnszns65pkq3p546ah88kvm4uxp28x0m05e",
    "isCore": false,
    "relatedCount": 1,
-   "selfActivity": 329,
+   "selfActivity": 331,
    "relatedActivity": 6,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -917,6 +917,70 @@
   }
  ],
  "events": [
+  {
+   "id": "0xd05eaebd200028555fa6f74fe756442719dacba3e7958a9c30a85d0309030a49:tx:approve:0xc032b9c05386a81b0221a575db9cf666ebc30547",
+   "ts": 1794455104,
+   "block": 4386605,
+   "txHash": "0xd05eaebd200028555fa6f74fe756442719dacba3e7958a9c30a85d0309030a49",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0xc032b9c05386a81b0221a575db9cf666ebc30547",
+   "actorLabel": "panda42",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "panda42",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "ZAPの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
+  {
+   "id": "0xc5ea2d4545f813e9ebf8324e09f135785f12b4fa909b8040d56e147c9d62fe1a:tx:approve:0xc032b9c05386a81b0221a575db9cf666ebc30547",
+   "ts": 1794455093,
+   "block": 4386603,
+   "txHash": "0xc5ea2d4545f813e9ebf8324e09f135785f12b4fa909b8040d56e147c9d62fe1a",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0xc032b9c05386a81b0221a575db9cf666ebc30547",
+   "actorLabel": "panda42",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "panda42",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x9bf455601c6980599d7d4b9867d961a5eec1bdcb7eaee77b9eb29e99f1433e4b:3:swap-sell:0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
    "ts": 1794454758,
@@ -20533,88 +20597,6 @@
    "ts": 1794147707,
    "block": 4329722,
    "txHash": "0x3e4385e1869777ea16d321209a016f887b23a9c9d57a86a9ce7dcab964813e70",
-   "logIndex": 0,
-   "type": "transfer",
-   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "FoxxOne"
-   ],
-   "direction": "out",
-   "amount": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "50000000000000000000",
-    "amount": "50",
-    "whitelisted": true
-   },
-   "from": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "to": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "tokens": [
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "FoxxOne"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x7b0e5668ce6b98452eb10519f750863b1988647713db6125dfeb41c818e51c08:0:nft-mint:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "ts": 1794147685,
-   "block": 4329718,
-   "txHash": "0x7b0e5668ce6b98452eb10519f750863b1988647713db6125dfeb41c818e51c08",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "FoxxOne"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "5052"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #5052 を新規発行で受取",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "FoxxOne"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0xc471512daef0871e3fe4067a9c6459ac3ce1c05b1bad4a372e9785f53b29a44d:0:transfer:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "ts": 1794147663,
-   "block": 4329714,
-   "txHash": "0xc471512daef0871e3fe4067a9c6459ac3ce1c05b1bad4a372e9785f53b29a44d",
    "logIndex": 0,
    "type": "transfer",
    "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
