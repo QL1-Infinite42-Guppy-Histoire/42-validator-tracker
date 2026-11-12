@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-12T04:00:13.214Z",
+ "generatedAt": "2026-11-12T04:05:12.158Z",
  "status": {
-  "lastProcessedBlock": 4386772,
-  "latestBlockSeen": 4386772,
-  "lastProcessedCosmosBlock": 4386772,
-  "lastProcessedAt": "2026-11-12T04:00:13.007Z",
-  "totalEvents": 11070,
+  "lastProcessedBlock": 4386827,
+  "latestBlockSeen": 4386827,
+  "lastProcessedCosmosBlock": 4386827,
+  "lastProcessedAt": "2026-11-12T04:05:11.966Z",
+  "totalEvents": 11071,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-12T04:00:13.488Z"
+   "checkedAt": "2026-11-12T04:05:12.178Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63446925,
-   "updatedAt": "2026-11-12T04:00:13.000Z",
+   "updatedAt": "2026-11-12T04:05:12.000Z",
    "change24hPct": 0.24
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4386614,
+    "toBlock": 4386778,
     "fromTs": 1770178474,
-    "toTs": 1794455152
+    "toTs": 1794456039
    },
    "totals": {
     "delegate": {
@@ -812,7 +812,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 372,
+   "relatedActivity": 373,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -917,6 +917,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0x701ac26b18802f3d36c00d5d10a514d774599ab6a44509a3cfb0e6f8fd9b8c30:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1794456039,
+   "block": 4386778,
+   "txHash": "0x701ac26b18802f3d36c00d5d10a514d774599ab6a44509a3cfb0e6f8fd9b8c30",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x87dfdc977a679cb0f6defe200fff7c2672abcadf61fc5bd0d46cf1a9a77813ec:0:transfer:0xc032b9c05386a81b0221a575db9cf666ebc30547",
    "ts": 1794455152,
@@ -20582,61 +20615,6 @@
    ],
    "actorShared": false,
    "actorContractNote": null
-  },
-  {
-   "id": "0x4859592375268c63675349f68eba2da3f0f300496e35890d9909f69ab6b0fea3:4:swap-buy:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "ts": 1794148772,
-   "block": 4329919,
-   "txHash": "0x4859592375268c63675349f68eba2da3f0f300496e35890d9909f69ab6b0fea3",
-   "logIndex": 4,
-   "type": "swap-buy",
-   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xb647ce2aa7d436cce95dc961d066ef610ca451b7",
-   "counterpartyLabel": "ZAP/42 ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "FoxxOne"
-   ],
-   "sold": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "33272054070476537308",
-    "amount": "33.272054",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "200000000000000000000",
-    "amount": "200",
-    "whitelisted": true
-   },
-   "subjectSymbol": "ZAP",
-   "price": 0.16636027,
-   "priceUnit": "42/ZAP",
-   "pair": "0xb647ce2aa7d436cce95dc961d066ef610ca451b7",
-   "pairLabel": "ZAP/42 ペア",
-   "tokens": [
-    "42",
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "ZAPを買い（支払い 33.272054 42／価格 約0.16636027 42/ZAP）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "FoxxOne"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1785645202,
-   "pairAgeSecs": 8503570,
-   "isSnipe": false
   },
   {
    "id": "0xdaadacc3a0b4268de7f9bf16d28632d60de0edebe25b39ebf7d1470bbfc3c836:0:bridge-out:0xce702e79ea9ae38fb80ee8ee8f586b2195140fcb",
