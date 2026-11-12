@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-12T19:05:13.345Z",
+ "generatedAt": "2026-11-12T19:10:11.867Z",
  "status": {
-  "lastProcessedBlock": 4396821,
-  "latestBlockSeen": 4396821,
-  "lastProcessedCosmosBlock": 4396821,
-  "lastProcessedAt": "2026-11-12T19:05:13.203Z",
-  "totalEvents": 11115,
+  "lastProcessedBlock": 4396876,
+  "latestBlockSeen": 4396876,
+  "lastProcessedCosmosBlock": 4396876,
+  "lastProcessedAt": "2026-11-12T19:10:11.720Z",
+  "totalEvents": 11116,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-12T19:05:14.106Z"
+   "checkedAt": "2026-11-12T19:10:11.882Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63199826,
-   "updatedAt": "2026-11-12T19:05:13.000Z",
+   "updatedAt": "2026-11-12T19:10:11.000Z",
    "change24hPct": -0.39
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4396772,
+    "toBlock": 4396827,
     "fromTs": 1770178474,
-    "toTs": 1794510038
+    "toTs": 1794510335
    },
    "totals": {
     "delegate": {
@@ -812,7 +812,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 403,
+   "relatedActivity": 404,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -917,6 +917,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0x84b2e1d15d7e546486d1b37393a72a74ae930684ce54f92b5faa6cf039b469fe:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794510335,
+   "block": 4396827,
+   "txHash": "0x84b2e1d15d7e546486d1b37393a72a74ae930684ce54f92b5faa6cf039b469fe",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x3b13914e9c276c8f3eda2cb1a3dc12a060d96407bb278ed7bc1eb7f9b18218f0:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794510038,
@@ -20411,61 +20444,6 @@
    ],
    "actorShared": false,
    "actorContractNote": null
-  },
-  {
-   "id": "0xc8f1827fe9825417cd7ef8bbc98fb8cf337220d13b833bb5427e47cfa0156125:3:swap-buy:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794155619,
-   "block": 4331186,
-   "txHash": "0xc8f1827fe9825417cd7ef8bbc98fb8cf337220d13b833bb5427e47cfa0156125",
-   "logIndex": 3,
-   "type": "swap-buy",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
-   "counterpartyLabel": "FISH/ZAP ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "90140047898389996619",
-    "amount": "90.140047",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0x89195ca5c954b6f99b78f4a2aa5435a75dc5b256",
-    "symbol": "ZAP",
-    "amountRaw": "1063926310889539904917",
-    "amount": "1,063.926310",
-    "whitelisted": true
-   },
-   "subjectSymbol": "ZAP",
-   "price": 0.08472396,
-   "priceUnit": "FISH/ZAP",
-   "pair": "0x2128ac647fe532484c4c9f065cdf7fc14f9aa17e",
-   "pairLabel": "FISH/ZAP ペア",
-   "tokens": [
-    "FISH",
-    "ZAP"
-   ],
-   "whitelisted": true,
-   "summary": "ZAPを買い（支払い 90.140047 FISH／価格 約0.08472396 FISH/ZAP）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
-   "actorShared": false,
-   "actorContractNote": null,
-   "pairCreatedTs": 1788487977,
-   "pairAgeSecs": 5667642,
-   "isSnipe": false
   },
   {
    "id": "0xdaadacc3a0b4268de7f9bf16d28632d60de0edebe25b39ebf7d1470bbfc3c836:0:bridge-out:0xce702e79ea9ae38fb80ee8ee8f586b2195140fcb",
