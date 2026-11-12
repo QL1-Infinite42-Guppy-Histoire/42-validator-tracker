@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-12T22:00:11.744Z",
+ "generatedAt": "2026-11-12T22:05:12.159Z",
  "status": {
-  "lastProcessedBlock": 4398765,
-  "latestBlockSeen": 4398765,
-  "lastProcessedCosmosBlock": 4398765,
-  "lastProcessedAt": "2026-11-12T22:00:11.639Z",
-  "totalEvents": 11134,
+  "lastProcessedBlock": 4398821,
+  "latestBlockSeen": 4398821,
+  "lastProcessedCosmosBlock": 4398821,
+  "lastProcessedAt": "2026-11-12T22:05:12.041Z",
+  "totalEvents": 11135,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-12T22:00:11.760Z"
+   "checkedAt": "2026-11-12T22:05:12.186Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63199826,
-   "updatedAt": "2026-11-12T22:00:11.000Z",
+   "updatedAt": "2026-11-12T22:05:12.000Z",
    "change24hPct": -0.39
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4398160,
+    "toBlock": 4398771,
     "fromTs": 1770178474,
-    "toTs": 1794517537
+    "toTs": 1794520835
    },
    "totals": {
     "delegate": {
@@ -812,7 +812,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 408,
+   "relatedActivity": 409,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -917,6 +917,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0x036535405cdde7519f57d496613d1c159a4044cb438c6e8abe20f7edad1f0928:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "ts": 1794520835,
+   "block": 4398771,
+   "txHash": "0x036535405cdde7519f57d496613d1c159a4044cb438c6e8abe20f7edad1f0928",
+   "logIndex": null,
+   "type": "unclassified",
+   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
+   "counterpartyLabel": "コントラクト（未分類）",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x98869d1f",
+   "actionLabel": null,
+   "destLabel": "コントラクト（未分類）",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x4ac50be60cbefb596bc8842544eab43a71128b29efc11f8de9084f782296a034:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794517537,
@@ -20376,39 +20409,6 @@
    "tokens": [],
    "whitelisted": true,
    "summary": "FISHのバーン処理（運営側の定期バーン関数）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0xdc15902b7a7a2f62f423df34bba9dd911285ef91a1e1f94d180bd888c92e2d3b:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "ts": 1794164434,
-   "block": 4332817,
-   "txHash": "0xdc15902b7a7a2f62f423df34bba9dd911285ef91a1e1f94d180bd888c92e2d3b",
-   "logIndex": null,
-   "type": "unclassified",
-   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
-   "counterpartyLabel": "コントラクト（未分類）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x98869d1f",
-   "actionLabel": null,
-   "destLabel": "コントラクト（未分類）",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
