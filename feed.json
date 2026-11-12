@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-12T03:35:12.429Z",
+ "generatedAt": "2026-11-12T03:40:10.011Z",
  "status": {
-  "lastProcessedBlock": 4386494,
-  "latestBlockSeen": 4386494,
-  "lastProcessedCosmosBlock": 4386494,
-  "lastProcessedAt": "2026-11-12T03:35:12.274Z",
-  "totalEvents": 11064,
+  "lastProcessedBlock": 4386549,
+  "latestBlockSeen": 4386549,
+  "lastProcessedCosmosBlock": 4386549,
+  "lastProcessedAt": "2026-11-12T03:40:09.926Z",
+  "totalEvents": 11065,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-12T03:35:12.453Z"
+   "checkedAt": "2026-11-12T03:40:10.027Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63446925,
-   "updatedAt": "2026-11-12T03:35:12.000Z",
+   "updatedAt": "2026-11-12T03:40:09.000Z",
    "change24hPct": 0.24
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4386202,
+    "toBlock": 4386541,
     "fromTs": 1770178474,
-    "toTs": 1794452926
+    "toTs": 1794454758
    },
    "totals": {
     "delegate": {
@@ -855,7 +855,7 @@
    "bech32": "infinite1mxu8c4ahwtxhe3qc9z604dxmq44uyga09t066a",
    "isCore": false,
    "relatedCount": 1,
-   "selfActivity": 91,
+   "selfActivity": 92,
    "relatedActivity": 3,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -917,6 +917,59 @@
   }
  ],
  "events": [
+  {
+   "id": "0x9bf455601c6980599d7d4b9867d961a5eec1bdcb7eaee77b9eb29e99f1433e4b:3:swap-sell:0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
+   "ts": 1794454758,
+   "block": 4386541,
+   "txHash": "0x9bf455601c6980599d7d4b9867d961a5eec1bdcb7eaee77b9eb29e99f1433e4b",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
+   "actorLabel": "vethawk",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "vethawk",
+    "Xenia"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1835084215725996897",
+    "amount": "1.835084",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3611015471402534517",
+    "amount": "3.611015",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.96776553,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 3.611015 42／価格 約1.96776553 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xe56c43d881b7492891f11609077f8dcbc02babeb62bc5ff08373daa2ae2afb72:3:swap-sell:0x65b18070198ef86df379dd695ac8cb350cd2d03f",
    "ts": 1794452926,
@@ -20589,46 +20642,6 @@
    ],
    "whitelisted": true,
    "summary": "50 ZAP を送金",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "FoxxOne"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x81a79a7c37612a9a2dc17c44f925ea1e10c1543eea916e74b7f631ecf6b915f5:0:nft-mint:0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "ts": 1794147620,
-   "block": 4329706,
-   "txHash": "0x81a79a7c37612a9a2dc17c44f925ea1e10c1543eea916e74b7f631ecf6b915f5",
-   "logIndex": 0,
-   "type": "nft-mint",
-   "actor": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-   "counterpartyLabel": "Guide/Fluke",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "FoxxOne"
-   ],
-   "direction": "in",
-   "nft": {
-    "collection": "0xf349e469c474048ded6f9b914309e76880ed1bbd",
-    "collectionName": "Guide",
-    "tokenId": "5051"
-   },
-   "from": "0x0000000000000000000000000000000000000000",
-   "to": "0x7a8c5b813855b95663a29205bec9dd5bf0289fb4",
-   "tokens": [
-    "GUIDE"
-   ],
-   "whitelisted": true,
-   "summary": "NFTミント：Guide #5051 を新規発行で受取",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
