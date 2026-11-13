@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-13T00:30:29.033Z",
+ "generatedAt": "2026-11-13T00:35:13.405Z",
  "status": {
-  "lastProcessedBlock": 4400434,
-  "latestBlockSeen": 4400434,
-  "lastProcessedCosmosBlock": 4400434,
-  "lastProcessedAt": "2026-11-13T00:30:28.887Z",
-  "totalEvents": 11151,
+  "lastProcessedBlock": 4400487,
+  "latestBlockSeen": 4400487,
+  "lastProcessedCosmosBlock": 4400487,
+  "lastProcessedAt": "2026-11-13T00:35:13.249Z",
+  "totalEvents": 11156,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-13T00:30:29.063Z"
+   "checkedAt": "2026-11-13T00:35:13.442Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.63199826,
-   "updatedAt": "2026-11-13T00:30:28.000Z",
+   "updatedAt": "2026-11-13T00:35:13.000Z",
    "change24hPct": -0.39
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4400432,
+    "toBlock": 4400487,
     "fromTs": 1770178474,
-    "toTs": 1794529808
+    "toTs": 1794530105
    },
    "totals": {
     "delegate": {
@@ -822,7 +822,7 @@
    "bech32": "infinite1e8kas2zyra7f3zqeusyxwa72nvjlavkup7xat5",
    "isCore": false,
    "relatedCount": 1,
-   "selfActivity": 260,
+   "selfActivity": 264,
    "relatedActivity": 149,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -877,7 +877,7 @@
    "bech32": "infinite1mv60ly5et36dzur4tftr5x3vxk3ak3eclkqg0a",
    "isCore": false,
    "relatedCount": 6,
-   "selfActivity": 250,
+   "selfActivity": 251,
    "relatedActivity": 4513,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -917,6 +917,208 @@
   }
  ],
  "events": [
+  {
+   "id": "0x64dea4dfbfe518abd4554c288b8710cd2a56c36f347db6610cdc8e7c2c1caddd:tx:approve:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "ts": 1794530105,
+   "block": 4400487,
+   "txHash": "0x64dea4dfbfe518abd4554c288b8710cd2a56c36f347db6610cdc8e7c2c1caddd",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "actorLabel": "ayc",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "ayc",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": "FISH/42 ペア",
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "NUTRI-V2の使用許可（approve）：コントラクト（複数のFISHペアのLPシェアを保有する共有コントラクト） に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
+  {
+   "id": "0x9ea4231504767617ef8d7a8bd02ced24ba01472b9ad0c9fed2719e24161db3e2:6:lp-add:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "ts": 1794530051,
+   "block": 4400477,
+   "txHash": "0x9ea4231504767617ef8d7a8bd02ced24ba01472b9ad0c9fed2719e24161db3e2",
+   "logIndex": 6,
+   "type": "lp-add",
+   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "actorLabel": "ayc",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "ayc",
+    "Xenia"
+   ],
+   "amounts": [
+    {
+     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+     "symbol": "FISH",
+     "amountRaw": "2291476890687924686",
+     "amount": "2.291476",
+     "whitelisted": true
+    },
+    {
+     "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+     "symbol": "42",
+     "amountRaw": "4507582679863988108",
+     "amount": "4.507582",
+     "whitelisted": true
+    }
+   ],
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "LP追加：2.291476 FISH ＋ 4.507582 42（FISH/42 ペア）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788365400,
+   "pairAgeSecs": 6164651,
+   "isSnipe": false
+  },
+  {
+   "id": "0x43ba621e4b51296d3d2325626709329bf9fcaf73ef26c4e4c6faa49c00945c41:tx:approve:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "ts": 1794530013,
+   "block": 4400470,
+   "txHash": "0x43ba621e4b51296d3d2325626709329bf9fcaf73ef26c4e4c6faa49c00945c41",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "actorLabel": "ayc",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "ayc",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "42の使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
+  {
+   "id": "0x746f18feacc13707b1f4f13a81bb7748445f831085ae1ceb4a631cd61e86a0d4:tx:approve:0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "ts": 1794529975,
+   "block": 4400463,
+   "txHash": "0x746f18feacc13707b1f4f13a81bb7748445f831085ae1ceb4a631cd61e86a0d4",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0xc9edd828441f7c988819e4086777ca9b25feb2dc",
+   "actorLabel": "ayc",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "ayc",
+    "Xenia"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
+  {
+   "id": "0x8652dca87c63bf934029244a22a8d7cd8329d81be5232ab45aa9ad54bd5c5126:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
+   "ts": 1794529835,
+   "block": 4400437,
+   "txHash": "0x8652dca87c63bf934029244a22a8d7cd8329d81be5232ab45aa9ad54bd5c5126",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0xdb34ff92995c74d170755a563a1a2c35a3db4738",
+   "actorLabel": "X",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "X",
+    "Xenia"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "376385263960714532",
+    "amount": "0.376385",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "738180631498100521",
+    "amount": "0.738180",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.9612368,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 0.738180 42／価格 約1.9612368 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xecb4954edcf6ae9618eae69094736e81d08d85b346aef20744dfbe6fba4ea71b:3:swap-sell:0xf75b159860f3de7f229e22d08eab844fd97baade",
    "ts": 1794529808,
@@ -20299,171 +20501,6 @@
    "actorDepth": 0,
    "actorEvidence": null,
    "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x586b5368d4af949c90f6e4e969380d42ca3a8a5a59394f23d190aa5626ee0ddf:tx:reward-distribution-fish:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "ts": 1794182735,
-   "block": 4336203,
-   "txHash": "0x586b5368d4af949c90f6e4e969380d42ca3a8a5a59394f23d190aa5626ee0ddf",
-   "logIndex": null,
-   "type": "reward-distribution-fish",
-   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x0fb39e45",
-   "actionLabel": "FISH報酬の一括配布",
-   "destLabel": "FISH報酬コントラクト",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISH報酬の一括配布（報酬コントラクト経由）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x48524c5160df49af46c4c13565a125abd323909d4de5bc08fe50c7daf70b17a6:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "ts": 1794182437,
-   "block": 4336148,
-   "txHash": "0x48524c5160df49af46c4c13565a125abd323909d4de5bc08fe50c7daf70b17a6",
-   "logIndex": null,
-   "type": "unclassified",
-   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
-   "counterpartyLabel": "コントラクト（未分類）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x98869d1f",
-   "actionLabel": null,
-   "destLabel": "コントラクト（未分類）",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x03f9b413092d6d225eb93d6232aa226ba00bb214ad789f9dbe07fdc662508d1a:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "ts": 1794179135,
-   "block": 4335537,
-   "txHash": "0x03f9b413092d6d225eb93d6232aa226ba00bb214ad789f9dbe07fdc662508d1a",
-   "logIndex": null,
-   "type": "token-burn",
-   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x87157886",
-   "actionLabel": "FISHバーン（運営）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x00719460ddaee878024dec3c829db706ad5b3bf8ad367676d57c102ac582e8bd:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "ts": 1794178838,
-   "block": 4335482,
-   "txHash": "0x00719460ddaee878024dec3c829db706ad5b3bf8ad367676d57c102ac582e8bd",
-   "logIndex": null,
-   "type": "unclassified",
-   "actor": "0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x9f19a936de2e628eb5b46e03a01f1269dff2b45a",
-   "counterpartyLabel": "コントラクト（未分類）",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x98869d1f",
-   "actionLabel": null,
-   "destLabel": "コントラクト（未分類）",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "未分類の操作（メソッド 0x98869d1f／宛先 コントラクト（未分類）（…B45A））",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x26192a52c252d8e5847bed7bf0b1915c47fc02c0a8c0bc05845077e6a1cfaa86:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "ts": 1794175537,
-   "block": 4334871,
-   "txHash": "0x26192a52c252d8e5847bed7bf0b1915c47fc02c0a8c0bc05845077e6a1cfaa86",
-   "logIndex": null,
-   "type": "token-burn",
-   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x87157886",
-   "actionLabel": "FISHバーン（運営）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
    "actorShared": false,
    "actorContractNote": null
   },
