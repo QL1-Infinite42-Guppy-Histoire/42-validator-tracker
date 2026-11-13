@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-13T12:05:11.051Z",
+ "generatedAt": "2026-11-13T12:10:10.841Z",
  "status": {
-  "lastProcessedBlock": 4408148,
-  "latestBlockSeen": 4408148,
-  "lastProcessedCosmosBlock": 4408148,
-  "lastProcessedAt": "2026-11-13T12:05:10.947Z",
-  "totalEvents": 11220,
+  "lastProcessedBlock": 4408204,
+  "latestBlockSeen": 4408204,
+  "lastProcessedCosmosBlock": 4408204,
+  "lastProcessedAt": "2026-11-13T12:10:10.733Z",
+  "totalEvents": 11221,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,22 +31,22 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-13T12:05:11.251Z"
+   "checkedAt": "2026-11-13T12:10:10.864Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.6374052,
-   "updatedAt": "2026-11-13T12:05:10.000Z",
-   "change24hPct": 0.59
+   "updatedAt": "2026-11-13T12:10:10.000Z",
+   "change24hPct": 0.86
   }
  },
  "stats": {
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4408099,
+    "toBlock": 4408155,
     "fromTs": 1770178474,
-    "toTs": 1794571235
+    "toTs": 1794571537
    },
    "totals": {
     "delegate": {
@@ -584,8 +584,8 @@
       "sellAmt": 1794.019616
      },
      "QOM": {
-      "buyN": 55,
-      "buyAmt": 989681627967.0089,
+      "buyN": 54,
+      "buyAmt": 984791902957.9879,
       "sellN": 2,
       "sellAmt": 373775013.987699
      },
@@ -650,7 +650,7 @@
       "sellAmt": 976.481631
      }
     },
-    "buyTotal": 147,
+    "buyTotal": 146,
     "sellTotal": 8
    }
   }
@@ -806,7 +806,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 438,
+   "relatedActivity": 439,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -911,6 +911,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0xfbd901ec1346a05d892ef5f648324e9d9a1275a012b354355286629e94c47e9e:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794571537,
+   "block": 4408155,
+   "txHash": "0xfbd901ec1346a05d892ef5f648324e9d9a1275a012b354355286629e94c47e9e",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x45dd29103999c9f588c3ccaa130daa3fcd60abb0449a3fca4732e9e135e156a9:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794571235,
@@ -20359,37 +20392,6 @@
    "pairCreatedTs": 1788365400,
    "pairAgeSecs": 5840570,
    "isSnipe": false
-  },
-  {
-   "id": "0xf8207ada158a3074c4af751005e4bcaf893572fef18211d9af51b127421b8a12:tx:approve:0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41",
-   "ts": 1794205960,
-   "block": 4340501,
-   "txHash": "0xf8207ada158a3074c4af751005e4bcaf893572fef18211d9af51b127421b8a12",
-   "logIndex": null,
-   "type": "approve",
-   "actor": "0x46c7ca2e2ef5304cbf9baf5ae2a2ede7dcd5de41",
-   "actorLabel": "farmer",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "farmer"
-   ],
-   "method": "0x095ea7b3",
-   "actionLabel": "使用許可（approve）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "42の使用許可（approve）：DEXルーター に利用を許可",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null
   },
   {
    "id": "0xdaadacc3a0b4268de7f9bf16d28632d60de0edebe25b39ebf7d1470bbfc3c836:0:bridge-out:0xce702e79ea9ae38fb80ee8ee8f586b2195140fcb",
