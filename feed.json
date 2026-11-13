@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-13T20:05:27.975Z",
+ "generatedAt": "2026-11-13T20:10:13.589Z",
  "status": {
-  "lastProcessedBlock": 4413479,
-  "latestBlockSeen": 4413479,
-  "lastProcessedCosmosBlock": 4413479,
-  "lastProcessedAt": "2026-11-13T20:05:27.601Z",
-  "totalEvents": 11236,
+  "lastProcessedBlock": 4413532,
+  "latestBlockSeen": 4413532,
+  "lastProcessedCosmosBlock": 4413532,
+  "lastProcessedAt": "2026-11-13T20:10:13.435Z",
+  "totalEvents": 11237,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-13T20:05:28.676Z"
+   "checkedAt": "2026-11-13T20:10:13.605Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.6374052,
-   "updatedAt": "2026-11-13T20:05:27.000Z",
+   "updatedAt": "2026-11-13T20:10:13.000Z",
    "change24hPct": 0.86
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4413427,
+    "toBlock": 4413482,
     "fromTs": 1770178474,
-    "toTs": 1794600037
+    "toTs": 1794600335
    },
    "totals": {
     "delegate": {
@@ -528,15 +528,8 @@
   },
   "trading": {
    "24h": {
-    "tokens": {
-     "QOM": {
-      "buyN": 1,
-      "buyAmt": 7709248667.139267,
-      "sellN": 0,
-      "sellAmt": 0
-     }
-    },
-    "buyTotal": 1,
+    "tokens": {},
+    "buyTotal": 0,
     "sellTotal": 0
    },
    "7d": {
@@ -806,7 +799,7 @@
    "isCore": false,
    "relatedCount": 9,
    "selfActivity": 32,
-   "relatedActivity": 454,
+   "relatedActivity": 455,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -911,6 +904,39 @@
   }
  ],
  "events": [
+  {
+   "id": "0xbbbe8676ed061851331535ed0b2c393c5a411d247f4bc7145be5ce42f5d5bc0e:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "ts": 1794600335,
+   "block": 4413482,
+   "txHash": "0xbbbe8676ed061851331535ed0b2c393c5a411d247f4bc7145be5ce42f5d5bc0e",
+   "logIndex": null,
+   "type": "token-burn",
+   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "Woman-In-Red-42"
+   ],
+   "method": "0x87157886",
+   "actionLabel": "FISHバーン（運営）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHのバーン処理（運営側の定期バーン関数）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "Woman-In-Red-42"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xcf38d9f1bf486eddb7c218cfab2d66e5dc4ee4fe5795fb1498ba6157c4edd35b:tx:unclassified:0x7e99b2886e16f8ac32610b0c8542c01ee7872b12",
    "ts": 1794600037,
@@ -20281,46 +20307,6 @@
    "whitelisted": true,
    "actionLabel": "報酬請求（委任報酬）",
    "summary": "報酬請求（委任報酬）：CCUK 分 207.560784 [42]",
-   "notableReasons": [],
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "cosmos:3EC775213F95138BBF54718254E9F3CFE4C6FADD635C615EB93E0DEAFE3B6753:1:commission:0x73fb550c4fb705719aab3ed7199c489ebccdfad1",
-   "chain": "cosmos",
-   "ts": 1794223306,
-   "block": 4343712,
-   "txHash": "3EC775213F95138BBF54718254E9F3CFE4C6FADD635C615EB93E0DEAFE3B6753",
-   "logIndex": null,
-   "type": "commission",
-   "actor": "0x73fb550c4fb705719aab3ed7199c489ebccdfad1",
-   "actorLabel": "CCUK",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": null,
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "CCUK",
-    "Xenia"
-   ],
-   "amount": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "denom": "drop",
-    "symbol": "42",
-    "amountRaw": "23117193667104930473",
-    "amount": "23.117193",
-    "whitelisted": true
-   },
-   "tokens": [
-    "42"
-   ],
-   "whitelisted": true,
-   "actionLabel": "バリデーター報酬請求（コミッション）",
-   "summary": "バリデーター報酬請求（コミッション）：23.117193 [42]",
    "notableReasons": [],
    "actorDepth": 0,
    "actorEvidence": null,
