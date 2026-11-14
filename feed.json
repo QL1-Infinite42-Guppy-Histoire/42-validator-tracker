@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-14T07:15:11.204Z",
+ "generatedAt": "2026-11-14T07:20:10.904Z",
  "status": {
-  "lastProcessedBlock": 4420920,
-  "latestBlockSeen": 4420920,
-  "lastProcessedCosmosBlock": 4420920,
-  "lastProcessedAt": "2026-11-14T07:15:11.100Z",
-  "totalEvents": 11315,
+  "lastProcessedBlock": 4420975,
+  "latestBlockSeen": 4420975,
+  "lastProcessedCosmosBlock": 4420975,
+  "lastProcessedAt": "2026-11-14T07:20:10.593Z",
+  "totalEvents": 11316,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-14T07:15:11.226Z"
+   "checkedAt": "2026-11-14T07:20:11.285Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69650289,
-   "updatedAt": "2026-11-14T07:15:11.000Z",
+   "updatedAt": "2026-11-14T07:20:10.000Z",
    "change24hPct": 8.88
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4420814,
+    "toBlock": 4420927,
     "fromTs": 1770178474,
-    "toTs": 1794639933
+    "toTs": 1794640542
    },
    "totals": {
     "delegate": {
@@ -722,7 +722,7 @@
    "isCore": false,
    "relatedCount": 2,
    "selfActivity": 80,
-   "relatedActivity": 174,
+   "relatedActivity": 175,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -904,6 +904,58 @@
   }
  ],
  "events": [
+  {
+   "id": "0x04e0d65eb234049890abdb158c637e3d48919394eb3009dd57211938769df929:3:swap-sell:0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
+   "ts": 1794640542,
+   "block": 4420927,
+   "txHash": "0x04e0d65eb234049890abdb158c637e3d48919394eb3009dd57211938769df929",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0xa99deddda5cb637f8104fc9e1c4a6b2167e2ec61",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "CCUK"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1485793948950756642",
+    "amount": "1.485793",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "2878778870608984990",
+    "amount": "2.878778",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.93753573,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 2.878778 42／価格 約1.93753573 42/FISH）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "CCUK"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xcee8e72198e9eb65d3910d541d6130d009ef0e928821bab0e04d90b5cde983db:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794639933,
@@ -20519,39 +20571,6 @@
    "actorEvidence": null,
    "actorValidators": [
     "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x2c02f75b1efe215e1f9def983865fd7b2f8af9ef689505a6cc1708cd35f78b4b:tx:reward-claim-fish:0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "ts": 1794283207,
-   "block": 4354796,
-   "txHash": "0x2c02f75b1efe215e1f9def983865fd7b2f8af9ef689505a6cc1708cd35f78b4b",
-   "logIndex": null,
-   "type": "reward-claim-fish",
-   "actor": "0x5af775f3bec809b893de59e2f06ef995d280111a",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X"
-   ],
-   "method": "0x5c74910f",
-   "actionLabel": "報酬請求（FISH配布）",
-   "destLabel": "FISH報酬コントラクト",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "報酬請求（FISH配布）：3.396925 FISH を受け取り",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
    ],
    "actorShared": false,
    "actorContractNote": null
