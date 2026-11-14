@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-14T00:35:10.654Z",
+ "generatedAt": "2026-11-14T00:40:13.034Z",
  "status": {
-  "lastProcessedBlock": 4416473,
-  "latestBlockSeen": 4416473,
-  "lastProcessedCosmosBlock": 4416473,
-  "lastProcessedAt": "2026-11-14T00:35:10.497Z",
-  "totalEvents": 11269,
+  "lastProcessedBlock": 4416529,
+  "latestBlockSeen": 4416529,
+  "lastProcessedCosmosBlock": 4416529,
+  "lastProcessedAt": "2026-11-14T00:40:12.692Z",
+  "totalEvents": 11272,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-14T00:35:10.688Z"
+   "checkedAt": "2026-11-14T00:40:13.054Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69650289,
-   "updatedAt": "2026-11-14T00:35:10.000Z",
+   "updatedAt": "2026-11-14T00:40:12.000Z",
    "change24hPct": 10.21
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4416211,
+    "toBlock": 4416529,
     "fromTs": 1770178474,
-    "toTs": 1794615084
+    "toTs": 1794616800
    },
    "totals": {
     "delegate": {
@@ -810,7 +810,7 @@
    "isCore": false,
    "relatedCount": 1,
    "selfActivity": 265,
-   "relatedActivity": 154,
+   "relatedActivity": 157,
    "autoAddedCount": 0,
    "estimatedCount": 0
   },
@@ -904,6 +904,126 @@
   }
  ],
  "events": [
+  {
+   "id": "0x119d7760fcf662be70daa78482d7c793c873e35f982a52548d70e4e20589a796:6:lp-add:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "ts": 1794616800,
+   "block": 4416529,
+   "txHash": "0x119d7760fcf662be70daa78482d7c793c873e35f982a52548d70e4e20589a796",
+   "logIndex": 6,
+   "type": "lp-add",
+   "actor": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "ayc"
+   ],
+   "amounts": [
+    {
+     "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+     "symbol": "FISH",
+     "amountRaw": "34086729643568041",
+     "amount": "0.034086",
+     "whitelisted": true
+    },
+    {
+     "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+     "symbol": "42",
+     "amountRaw": "66339397630576842",
+     "amount": "0.066339",
+     "whitelisted": true
+    }
+   ],
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "LP追加：0.034086 FISH ＋ 0.066339 42（FISH/42 ペア）",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "ayc"
+   ],
+   "actorShared": false,
+   "actorContractNote": null,
+   "pairCreatedTs": 1788365400,
+   "pairAgeSecs": 6251400,
+   "isSnipe": false
+  },
+  {
+   "id": "0x0bcd525a55e6c4194ceafc171f0a88672096298014372978d7a725d712d05ae4:tx:approve:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "ts": 1794616789,
+   "block": 4416527,
+   "txHash": "0x0bcd525a55e6c4194ceafc171f0a88672096298014372978d7a725d712d05ae4",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "ayc"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "42の使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "ayc"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
+  {
+   "id": "0x422091be5bf012a0ed2d6030ede9878d63fd1cd0dadafff15d9f51cfcfaaa670:tx:approve:0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "ts": 1794616779,
+   "block": 4416525,
+   "txHash": "0x422091be5bf012a0ed2d6030ede9878d63fd1cd0dadafff15d9f51cfcfaaa670",
+   "logIndex": null,
+   "type": "approve",
+   "actor": "0x56e7c30767ca10babb9cbdf686f3c2ac78e67f9f",
+   "actorLabel": null,
+   "actorTier": "related",
+   "actorIsCore": false,
+   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+   "counterpartyLabel": null,
+   "counterpartyIsCore": false,
+   "validatorNames": [
+    "ayc"
+   ],
+   "method": "0x095ea7b3",
+   "actionLabel": "使用許可（approve）",
+   "destLabel": null,
+   "tokens": [],
+   "whitelisted": true,
+   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
+   "notableReasons": [],
+   "chain": "evm",
+   "actorDepth": 1,
+   "actorEvidence": null,
+   "actorValidators": [
+    "ayc"
+   ],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x5e1dbad82b09f401fc19f44f55b677e50dc6828441deb0d7338ef13ad393bdcf:3:swap-sell:0xfbbd8bd81226ac65d164bb6f7562122487e137b5",
    "ts": 1794615084,
@@ -20313,143 +20433,6 @@
    "actorDepth": 0,
    "actorEvidence": null,
    "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0xfd834c3d5023da46ec061dabf11f375f0faddb0bef772f367d6cd6dc843ad75d:3:swap-sell:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
-   "ts": 1794256411,
-   "block": 4349836,
-   "txHash": "0xfd834c3d5023da46ec061dabf11f375f0faddb0bef772f367d6cd6dc843ad75d",
-   "logIndex": 3,
-   "type": "swap-sell",
-   "actor": "0xdb34ff92995c74d170755a563a1a2c35a3db4738",
-   "actorLabel": "X",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
-   "counterpartyLabel": "FISH/42 ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X",
-    "Xenia"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "1846829820905865935",
-    "amount": "1.846829",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "3682130868503464132",
-    "amount": "3.682130",
-    "whitelisted": true
-   },
-   "subjectSymbol": "FISH",
-   "price": 1.99375753,
-   "priceUnit": "42/FISH",
-   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
-   "pairLabel": "FISH/42 ペア",
-   "tokens": [
-    "FISH",
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "FISHを売り（受取 3.682130 42／価格 約1.99375753 42/FISH）",
-   "notableReasons": [
-    "バリデーター本人の売買"
-   ],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0xd26ad49696bc371d4df7a3e6762b66003a920bef2deda41c8467e50a0ba72f50:tx:reward-claim-fish:0xdb34ff92995c74d170755a563a1a2c35a3db4738",
-   "ts": 1794256383,
-   "block": 4349831,
-   "txHash": "0xd26ad49696bc371d4df7a3e6762b66003a920bef2deda41c8467e50a0ba72f50",
-   "logIndex": null,
-   "type": "reward-claim-fish",
-   "actor": "0xdb34ff92995c74d170755a563a1a2c35a3db4738",
-   "actorLabel": "X",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "X",
-    "Xenia"
-   ],
-   "method": "0x5c74910f",
-   "actionLabel": "報酬請求（FISH配布）",
-   "destLabel": "FISH報酬コントラクト",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "報酬請求（FISH配布）：1.846829 FISH を受け取り",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x268895d2994e272529e592ec30d537fb81b1c18074973946e0c5c7541dfa45a2:3:swap-sell:0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "ts": 1794256351,
-   "block": 4349825,
-   "txHash": "0x268895d2994e272529e592ec30d537fb81b1c18074973946e0c5c7541dfa45a2",
-   "logIndex": 3,
-   "type": "swap-sell",
-   "actor": "0xf75b159860f3de7f229e22d08eab844fd97baade",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
-   "counterpartyLabel": "FISH/42 ペア",
-   "counterpartyIsCore": true,
-   "validatorNames": [
-    "X"
-   ],
-   "sold": {
-    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-    "symbol": "FISH",
-    "amountRaw": "92147320461176322",
-    "amount": "0.092147",
-    "whitelisted": true
-   },
-   "bought": {
-    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    "symbol": "42",
-    "amountRaw": "183734012598807010",
-    "amount": "0.183734",
-    "whitelisted": true
-   },
-   "subjectSymbol": "FISH",
-   "price": 1.99391596,
-   "priceUnit": "42/FISH",
-   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
-   "pairLabel": "FISH/42 ペア",
-   "tokens": [
-    "FISH",
-    "42"
-   ],
-   "whitelisted": true,
-   "summary": "FISHを売り（受取 0.183734 42／価格 約1.99391596 42/FISH）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "X"
-   ],
    "actorShared": false,
    "actorContractNote": null
   },
