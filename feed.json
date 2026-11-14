@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-14T01:20:11.640Z",
+ "generatedAt": "2026-11-14T01:25:12.285Z",
  "status": {
-  "lastProcessedBlock": 4416973,
-  "latestBlockSeen": 4416973,
-  "lastProcessedCosmosBlock": 4416973,
-  "lastProcessedAt": "2026-11-14T01:20:11.499Z",
-  "totalEvents": 11288,
+  "lastProcessedBlock": 4417029,
+  "latestBlockSeen": 4417029,
+  "lastProcessedCosmosBlock": 4417029,
+  "lastProcessedAt": "2026-11-14T01:25:12.099Z",
+  "totalEvents": 11289,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-14T01:20:11.655Z"
+   "checkedAt": "2026-11-14T01:25:12.307Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69650289,
-   "updatedAt": "2026-11-14T01:20:11.000Z",
+   "updatedAt": "2026-11-14T01:25:12.000Z",
    "change24hPct": 10.21
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4416813,
+    "toBlock": 4417001,
     "fromTs": 1770178474,
-    "toTs": 1794618335
+    "toTs": 1794619350
    },
    "totals": {
     "delegate": {
@@ -666,7 +666,7 @@
    "bech32": "infinite1ylwxwkdnygtv08s78ftu6ezpteqndhd79q4l0c",
    "isCore": false,
    "relatedCount": 1,
-   "selfActivity": 99,
+   "selfActivity": 100,
    "relatedActivity": 4,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -904,6 +904,59 @@
   }
  ],
  "events": [
+  {
+   "id": "0x5d32c22fa1beae0a9e9471d659c5b2edc18eacc7fa7c70768101f99197cc9686:3:swap-sell:0x27dc6759b32216c79e1e3a57cd64415e4136ddbe",
+   "ts": 1794619350,
+   "block": 4417001,
+   "txHash": "0x5d32c22fa1beae0a9e9471d659c5b2edc18eacc7fa7c70768101f99197cc9686",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0x27dc6759b32216c79e1e3a57cd64415e4136ddbe",
+   "actorLabel": "Popo",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "Popo",
+    "Xenia"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1570151247621777033",
+    "amount": "1.570151",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3045459202055891123",
+    "amount": "3.045459",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.93959608,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 3.045459 42／価格 約1.93959608 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x8c61d6b02104e061b02ee262697e8e1a87bfba618f890ec74d666546d13ac191:tx:token-burn:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
    "ts": 1794618335,
@@ -20464,39 +20517,6 @@
    "tokens": [],
    "whitelisted": true,
    "summary": "FISHのバーン処理（運営側の定期バーン関数）",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 1,
-   "actorEvidence": null,
-   "actorValidators": [
-    "Woman-In-Red-42"
-   ],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0x373d077d0f2495df0d921f2e03ac0b6681041aac8e1b6384e0f496c156a5cb9f:tx:reward-distribution-fish:0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "ts": 1794269134,
-   "block": 4352191,
-   "txHash": "0x373d077d0f2495df0d921f2e03ac0b6681041aac8e1b6384e0f496c156a5cb9f",
-   "logIndex": null,
-   "type": "reward-distribution-fish",
-   "actor": "0xbfc5dd3a9434bed286853f03b353eacde6d84f29",
-   "actorLabel": null,
-   "actorTier": "related",
-   "actorIsCore": false,
-   "counterparty": "0x4a1b11e7acf1d99cf8cee3b1f3cae9218d9cd04e",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "Woman-In-Red-42"
-   ],
-   "method": "0x0fb39e45",
-   "actionLabel": "FISH報酬の一括配布",
-   "destLabel": "FISH報酬コントラクト",
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISH報酬の一括配布（報酬コントラクト経由）",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 1,
