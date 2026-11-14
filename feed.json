@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-14T01:40:18.520Z",
+ "generatedAt": "2026-11-14T01:45:11.603Z",
  "status": {
-  "lastProcessedBlock": 4417197,
-  "latestBlockSeen": 4417197,
-  "lastProcessedCosmosBlock": 4417197,
-  "lastProcessedAt": "2026-11-14T01:40:18.045Z",
-  "totalEvents": 11290,
+  "lastProcessedBlock": 4417251,
+  "latestBlockSeen": 4417251,
+  "lastProcessedCosmosBlock": 4417251,
+  "lastProcessedAt": "2026-11-14T01:45:11.473Z",
+  "totalEvents": 11291,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-14T01:40:19.161Z"
+   "checkedAt": "2026-11-14T01:45:11.631Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69650289,
-   "updatedAt": "2026-11-14T01:40:18.000Z",
+   "updatedAt": "2026-11-14T01:45:11.000Z",
    "change24hPct": 10.27
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4417112,
+    "toBlock": 4417223,
     "fromTs": 1770178474,
-    "toTs": 1794619950
+    "toTs": 1794620549
    },
    "totals": {
     "delegate": {
@@ -853,7 +853,7 @@
    "bech32": "infinite1m83mwjfpfnulgzsrwunskuaunahu2wzvgrga3f",
    "isCore": false,
    "relatedCount": 1,
-   "selfActivity": 96,
+   "selfActivity": 97,
    "relatedActivity": 3,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -904,6 +904,59 @@
   }
  ],
  "events": [
+  {
+   "id": "0x514c47dde31cf5ae53205d36ec0964bbba12177b131ec6d2e834d135282ff02e:3:swap-sell:0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "ts": 1794620549,
+   "block": 4417223,
+   "txHash": "0x514c47dde31cf5ae53205d36ec0964bbba12177b131ec6d2e834d135282ff02e",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0xd9e3b749214cf9f40a0377270b73bc9f6fc5384c",
+   "actorLabel": "the_rider",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "the_rider",
+    "Xenia"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "1755602623908044463",
+    "amount": "1.755602",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3404375091756178911",
+    "amount": "3.404375",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.93914901,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 3.404375 42／価格 約1.93914901 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0xdae78d60052611bb7a3a469a3cc6b3390aa0c988e5b9eabc5636008dd0db1682:3:swap-sell:0xad41107e260541c237d943487ea73f2040c7daf4",
    "ts": 1794619950,
@@ -20506,38 +20559,6 @@
    "tokens": [],
    "whitelisted": true,
    "summary": "ZAPの使用許可（approve）：DEXルーター に利用を許可",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null
-  },
-  {
-   "id": "0xf13aa5a3feb111fba94ec31230c8e0de02a54040ba41f20774fecec2bd9d0d96:tx:approve:0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "ts": 1794269609,
-   "block": 4352279,
-   "txHash": "0xf13aa5a3feb111fba94ec31230c8e0de02a54040ba41f20774fecec2bd9d0d96",
-   "logIndex": null,
-   "type": "approve",
-   "actor": "0xc032b9c05386a81b0221a575db9cf666ebc30547",
-   "actorLabel": "panda42",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "panda42",
-    "Xenia"
-   ],
-   "method": "0x095ea7b3",
-   "actionLabel": "使用許可（approve）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "FISHの使用許可（approve）：DEXルーター に利用を許可",
    "notableReasons": [],
    "chain": "evm",
    "actorDepth": 0,
