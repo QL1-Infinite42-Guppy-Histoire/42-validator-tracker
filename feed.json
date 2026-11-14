@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-14T02:30:10.361Z",
+ "generatedAt": "2026-11-14T02:35:12.456Z",
  "status": {
-  "lastProcessedBlock": 4417751,
-  "latestBlockSeen": 4417751,
-  "lastProcessedCosmosBlock": 4417751,
-  "lastProcessedAt": "2026-11-14T02:30:10.268Z",
-  "totalEvents": 11296,
+  "lastProcessedBlock": 4417807,
+  "latestBlockSeen": 4417807,
+  "lastProcessedCosmosBlock": 4417807,
+  "lastProcessedAt": "2026-11-14T02:35:12.315Z",
+  "totalEvents": 11297,
   "watchSummary": {
    "validators": 23,
    "directRelated": 51,
@@ -31,12 +31,12 @@
   "chainValidators": {
    "bonded": 23,
    "total": 25,
-   "checkedAt": "2026-11-14T02:30:10.380Z"
+   "checkedAt": "2026-11-14T02:35:12.483Z"
   },
   "actionRule": "操作の種類は、宛先コントラクトとメソッドから判別できた範囲で具体名を表示します（Fluke参加・NFTミント・報酬請求など）。判別できないものは「未分類の操作（メソッド／宛先）」と正直に表示します。",
   "price": {
    "usdt": 0.69650289,
-   "updatedAt": "2026-11-14T02:30:10.000Z",
+   "updatedAt": "2026-11-14T02:35:12.000Z",
    "change24hPct": 10.27
   }
  },
@@ -44,9 +44,9 @@
   "staking": {
    "range": {
     "fromBlock": 17619,
-    "toBlock": 4417668,
+    "toBlock": 4417779,
     "fromTs": 1770178474,
-    "toTs": 1794622952
+    "toTs": 1794623551
    },
    "totals": {
     "delegate": {
@@ -732,7 +732,7 @@
    "bech32": "infinite1w5r75nwcwg3gdznmyte5al2jvrrncm9rwtxfqa",
    "isCore": false,
    "relatedCount": 2,
-   "selfActivity": 118,
+   "selfActivity": 119,
    "relatedActivity": 5,
    "autoAddedCount": 0,
    "estimatedCount": 0
@@ -904,6 +904,58 @@
   }
  ],
  "events": [
+  {
+   "id": "0x028774c8a70242d2e7b04666ab871fe500f1879897e45d6548d2dd02417f6b6e:3:swap-sell:0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
+   "ts": 1794623551,
+   "block": 4417779,
+   "txHash": "0x028774c8a70242d2e7b04666ab871fe500f1879897e45d6548d2dd02417f6b6e",
+   "logIndex": 3,
+   "type": "swap-sell",
+   "actor": "0x7507ea4dd87222868a7b22f34efd5260c73c6ca3",
+   "actorLabel": "dudenode",
+   "actorTier": "validator",
+   "actorIsCore": false,
+   "counterparty": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "counterpartyLabel": "FISH/42 ペア",
+   "counterpartyIsCore": true,
+   "validatorNames": [
+    "dudenode"
+   ],
+   "sold": {
+    "token": "0x2c32120a12b754272d9e85c57f64b50ca2c43513",
+    "symbol": "FISH",
+    "amountRaw": "2004640246345748072",
+    "amount": "2.004640",
+    "whitelisted": true
+   },
+   "bought": {
+    "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "symbol": "42",
+    "amountRaw": "3885372337095628377",
+    "amount": "3.885372",
+    "whitelisted": true
+   },
+   "subjectSymbol": "FISH",
+   "price": 1.93818933,
+   "priceUnit": "42/FISH",
+   "pair": "0x46cce7b6b48e1627d7e3f69a68f425cba833dcc3",
+   "pairLabel": "FISH/42 ペア",
+   "tokens": [
+    "FISH",
+    "42"
+   ],
+   "whitelisted": true,
+   "summary": "FISHを売り（受取 3.885372 42／価格 約1.93818933 42/FISH）",
+   "notableReasons": [
+    "バリデーター本人の売買"
+   ],
+   "chain": "evm",
+   "actorDepth": 0,
+   "actorEvidence": null,
+   "actorValidators": [],
+   "actorShared": false,
+   "actorContractNote": null
+  },
   {
    "id": "0x11a2a9ecfd5d2beeb1c2893fa1f8fa6753531fdf9e234906a4fcc84d2f703aee:3:swap-sell:0xd9b87c57b772cd7cc41828b4fab4db056bc223af",
    "ts": 1794622952,
@@ -20556,38 +20608,6 @@
    "pairCreatedTs": 1788365400,
    "pairAgeSecs": 5904404,
    "isSnipe": false
-  },
-  {
-   "id": "0x0447643086773089f1907a4f0312f6c96c9e7891192f3c02cdb564d4f823554e:tx:approve:0xfbbd8bd81226ac65d164bb6f7562122487e137b5",
-   "ts": 1794269788,
-   "block": 4352312,
-   "txHash": "0x0447643086773089f1907a4f0312f6c96c9e7891192f3c02cdb564d4f823554e",
-   "logIndex": null,
-   "type": "approve",
-   "actor": "0xfbbd8bd81226ac65d164bb6f7562122487e137b5",
-   "actorLabel": "PhoenixRing",
-   "actorTier": "validator",
-   "actorIsCore": false,
-   "counterparty": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-   "counterpartyLabel": null,
-   "counterpartyIsCore": false,
-   "validatorNames": [
-    "PhoenixRing",
-    "Xenia"
-   ],
-   "method": "0x095ea7b3",
-   "actionLabel": "使用許可（approve）",
-   "destLabel": null,
-   "tokens": [],
-   "whitelisted": true,
-   "summary": "42の使用許可（approve）：DEXルーター に利用を許可",
-   "notableReasons": [],
-   "chain": "evm",
-   "actorDepth": 0,
-   "actorEvidence": null,
-   "actorValidators": [],
-   "actorShared": false,
-   "actorContractNote": null
   },
   {
    "id": "0xdaadacc3a0b4268de7f9bf16d28632d60de0edebe25b39ebf7d1470bbfc3c836:0:bridge-out:0xce702e79ea9ae38fb80ee8ee8f586b2195140fcb",
